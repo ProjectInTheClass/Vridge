@@ -50,23 +50,8 @@ class PostingViewController: UIViewController {
     // MARK: - Selectors
     
     func handleAddPhoto() {
-        present(picker, animated: true, completion: nil)
-        
-        picker.didFinishPicking { (items, cancelled) in
-            if cancelled {
-                self.picker.dismiss(animated: true, completion: nil)
-                return
-            }
-            
-            var imageArray = [UIImage]()
-            
-            for item in items {
-                switch item {
-                case .photo(let photo): imageArray.append(photo.image) // array에 이미지들을 저장.
-                default: print("Error")
-                }
-            }
-            self.images = imageArray
+        ImagePicker.shared.addPhoto(view: self, picker: picker) { images in
+            self.images = images
             self.collectionView.reloadData()
             self.picker.dismiss(animated: true, completion: nil)
         }
@@ -77,7 +62,8 @@ class PostingViewController: UIViewController {
     }
     
     @objc func handleNext() {
-        print("Handle add")
+        print("DEBUG: Upload photos and words to realtime database.")
+        // 글 에 담길 항목 모두 담고 + REF_USER.uid.child(point) += 1
     }
     
     
