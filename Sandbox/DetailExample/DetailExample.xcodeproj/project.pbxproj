@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3D7F9CA825296B87006E23F4 /* VegetarianTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9CA725296B87006E23F4 /* VegetarianTypeModel.swift */; };
+<<<<<<< Updated upstream
+=======
+		3D7F9CC82529914B006E23F4 /* FirstTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CC72529914B006E23F4 /* FirstTab.storyboard */; };
+		3D7F9CCB25299150006E23F4 /* SecondTab.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CCA25299150006E23F4 /* SecondTab.storyboard */; };
+		3D7F9CCE2529921D006E23F4 /* SecondMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9CCD2529921D006E23F4 /* SecondMainViewController.swift */; };
+		3D7F9CD125299224006E23F4 /* SecondDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD025299224006E23F4 /* SecondDetailViewController.swift */; };
+		9F9269132529786A00BA290B /* VegetarianDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9269122529786A00BA290B /* VegetarianDetailViewController.swift */; };
+>>>>>>> Stashed changes
 		BB85E28725296202006BFCF5 /* VegetarianTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85E28625296202006BFCF5 /* VegetarianTypeViewController.swift */; };
 		BBE3AF58252960440063191C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE3AF57252960440063191C /* AppDelegate.swift */; };
 		BBE3AF5A252960440063191C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE3AF59252960440063191C /* SceneDelegate.swift */; };
@@ -19,6 +27,14 @@
 
 /* Begin PBXFileReference section */
 		3D7F9CA725296B87006E23F4 /* VegetarianTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegetarianTypeModel.swift; sourceTree = "<group>"; };
+<<<<<<< Updated upstream
+=======
+		3D7F9CC72529914B006E23F4 /* FirstTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FirstTab.storyboard; sourceTree = "<group>"; };
+		3D7F9CCA25299150006E23F4 /* SecondTab.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SecondTab.storyboard; sourceTree = "<group>"; };
+		3D7F9CCD2529921D006E23F4 /* SecondMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondMainViewController.swift; sourceTree = "<group>"; };
+		3D7F9CD025299224006E23F4 /* SecondDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondDetailViewController.swift; sourceTree = "<group>"; };
+		9F9269122529786A00BA290B /* VegetarianDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegetarianDetailViewController.swift; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		BB85E28625296202006BFCF5 /* VegetarianTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegetarianTypeViewController.swift; sourceTree = "<group>"; };
 		BBE3AF54252960440063191C /* DetailExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DetailExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBE3AF57252960440063191C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +57,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D7F9CC62529913B006E23F4 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				BBE3AF5D252960440063191C /* Main.storyboard */,
+				3D7F9CC72529914B006E23F4 /* FirstTab.storyboard */,
+				3D7F9CCA25299150006E23F4 /* SecondTab.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		BBE3AF4B252960440063191C = {
 			isa = PBXGroup;
 			children = (
@@ -63,12 +89,18 @@
 				BBE3AF57252960440063191C /* AppDelegate.swift */,
 				BBE3AF59252960440063191C /* SceneDelegate.swift */,
 				BBE3AF5B252960440063191C /* ViewController.swift */,
-				BBE3AF5D252960440063191C /* Main.storyboard */,
+				3D7F9CC62529913B006E23F4 /* Storyboards */,
 				BBE3AF60252960460063191C /* Assets.xcassets */,
 				BBE3AF62252960460063191C /* LaunchScreen.storyboard */,
 				BBE3AF65252960460063191C /* Info.plist */,
 				BB85E28625296202006BFCF5 /* VegetarianTypeViewController.swift */,
 				3D7F9CA725296B87006E23F4 /* VegetarianTypeModel.swift */,
+<<<<<<< Updated upstream
+=======
+				9F9269122529786A00BA290B /* VegetarianDetailViewController.swift */,
+				3D7F9CCD2529921D006E23F4 /* SecondMainViewController.swift */,
+				3D7F9CD025299224006E23F4 /* SecondDetailViewController.swift */,
+>>>>>>> Stashed changes
 			);
 			path = DetailExample;
 			sourceTree = "<group>";
@@ -132,6 +164,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBE3AF64252960460063191C /* LaunchScreen.storyboard in Resources */,
+				3D7F9CC82529914B006E23F4 /* FirstTab.storyboard in Resources */,
+				3D7F9CCB25299150006E23F4 /* SecondTab.storyboard in Resources */,
 				BBE3AF61252960460063191C /* Assets.xcassets in Resources */,
 				BBE3AF5F252960440063191C /* Main.storyboard in Resources */,
 			);
@@ -144,7 +178,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D7F9CCE2529921D006E23F4 /* SecondMainViewController.swift in Sources */,
 				BB85E28725296202006BFCF5 /* VegetarianTypeViewController.swift in Sources */,
+<<<<<<< Updated upstream
+=======
+				3D7F9CD125299224006E23F4 /* SecondDetailViewController.swift in Sources */,
+				9F9269132529786A00BA290B /* VegetarianDetailViewController.swift in Sources */,
+>>>>>>> Stashed changes
 				BBE3AF5C252960440063191C /* ViewController.swift in Sources */,
 				BBE3AF58252960440063191C /* AppDelegate.swift in Sources */,
 				3D7F9CA825296B87006E23F4 /* VegetarianTypeModel.swift in Sources */,
