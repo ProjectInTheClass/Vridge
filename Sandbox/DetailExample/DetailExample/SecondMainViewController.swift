@@ -10,6 +10,13 @@ import UIKit
 
 class SecondMainViewController: UIViewController {
 
+    // MARK: - Properties
+    
+    @IBOutlet weak var centerLabel: UILabel!
+    
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

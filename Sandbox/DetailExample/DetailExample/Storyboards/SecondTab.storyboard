@@ -24,16 +24,30 @@
                                     <segue destination="N0P-od-Gbq" kind="show" id="mW9-bJ-yZf"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fru-43-gOv">
+                                <rect key="frame" x="107" y="164" width="200" height="20.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="iFa-jl-1kH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.72840558980000003" green="0.40944102110000002" blue="0.20843419890000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9Qv-WE-YXM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="qBv-2T-VIT" firstAttribute="centerY" secondItem="fkb-f5-GO6" secondAttribute="centerY" id="6EN-8C-luj"/>
+                            <constraint firstItem="Fru-43-gOv" firstAttribute="centerX" secondItem="fkb-f5-GO6" secondAttribute="centerX" id="gBy-4x-i02"/>
                             <constraint firstItem="qBv-2T-VIT" firstAttribute="centerX" secondItem="fkb-f5-GO6" secondAttribute="centerX" id="kMx-Z3-bDN"/>
+                            <constraint firstItem="Fru-43-gOv" firstAttribute="top" secondItem="9Qv-WE-YXM" secondAttribute="top" constant="120" id="ylL-oh-JDn"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Second" image="sparkle" catalog="system" id="gYZ-PL-Ni2"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="centerLabel" destination="Fru-43-gOv" id="Rn1-gP-GYX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zbk-TG-bqV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -52,12 +66,12 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="29"/>
                                 <state key="normal" title="CLOSE"/>
                                 <connections>
-                                    <action selector="closeButtonTapped:" destination="N0P-od-Gbq" eventType="touchUpInside" id="4Jk-Oz-pOS"/>
+                                    <action selector="closeButtonTapped:" destination="N0P-od-Gbq" eventType="touchUpInside" id="Ygi-D0-oag"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bqe-Id-roF"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemYellowColor"/>
                         <constraints>
                             <constraint firstItem="Fbd-hp-5ge" firstAttribute="centerX" secondItem="Ikt-0V-Fh6" secondAttribute="centerX" id="0p3-Gh-ZR9"/>
                             <constraint firstItem="Fbd-hp-5ge" firstAttribute="centerY" secondItem="Ikt-0V-Fh6" secondAttribute="centerY" id="vLy-EY-h7a"/>
@@ -74,6 +88,9 @@
         <image name="sparkle" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemYellowColor">
+            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -54,7 +54,6 @@ class VegetarianTypeViewController: UITableViewController {
             if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
                 detailVC.list = types[indexPath.row]
             }
-            
         }
     }
     
