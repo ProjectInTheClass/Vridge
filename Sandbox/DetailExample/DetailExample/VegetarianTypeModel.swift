@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct VegetarianTypeModel {
-    let types = ["vegan", "fruitarian", "pollo", "lacto",
-                 "ovo", "lacto-ovo", "flexitarian", "pesco"]
+struct Vegetarian {
+    var type: String
+    var description: String
 }
+
+var vegets: [Vegetarian] = []
+
+
