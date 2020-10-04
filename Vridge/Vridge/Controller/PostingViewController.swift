@@ -111,7 +111,7 @@ class PostingViewController: UIViewController {
         collectionView.anchor(top: textView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
                               paddingTop: 8, paddingLeft: 8, paddingRight: 8, height: 100)
     }
-
+    
 }
 
 // MARK: - UICollectionviewDataSource
@@ -129,7 +129,6 @@ extension PostingViewController: UICollectionViewDataSource {
         cell.imageView.image = images?[indexPath.item] ?? UIImage(systemName: "plus.circle")
         return cell
     }
-    
 }
 
 // MARK: - UICollectionviewDelegate
