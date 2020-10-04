@@ -15,11 +15,10 @@
 		3D1FA47F2526F30400C6388A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */; };
 		3D1FA4892526F51900C6388A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4882526F51900C6388A /* TabBarController.swift */; };
 		3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA48B2526FC9400C6388A /* Extension.swift */; };
-		3D1FA48F2527021500C6388A /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA48E2527021500C6388A /* CameraController.swift */; };
 		3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */; };
 		3D7F9CD925299552006E23F4 /* MyPageStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD825299552006E23F4 /* MyPageStoryboard.storyboard */; };
 		3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */; };
-		3D7F9D2B2529BB09006E23F4 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D2A2529BB09006E23F4 /* TestViewController.swift */; };
+		3D7F9D2B2529BB09006E23F4 /* PostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D2A2529BB09006E23F4 /* PostingViewController.swift */; };
 		3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */; };
 		3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */; };
 		3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */; };
@@ -37,11 +36,10 @@
 		3D1FA4802526F30400C6388A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D1FA4882526F51900C6388A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		3D1FA48B2526FC9400C6388A /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		3D1FA48E2527021500C6388A /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeStoryboard.storyboard; sourceTree = "<group>"; };
 		3D7F9CD825299552006E23F4 /* MyPageStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyPageStoryboard.storyboard; sourceTree = "<group>"; };
 		3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
-		3D7F9D2A2529BB09006E23F4 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		3D7F9D2A2529BB09006E23F4 /* PostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingViewController.swift; sourceTree = "<group>"; };
 		3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionTextView.swift; sourceTree = "<group>"; };
 		3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoCell.swift; sourceTree = "<group>"; };
@@ -146,8 +144,7 @@
 			children = (
 				3D1FA4882526F51900C6388A /* TabBarController.swift */,
 				3D1FA4762526F30100C6388A /* HomeViewController.swift */,
-				3D1FA48E2527021500C6388A /* CameraController.swift */,
-				3D7F9D2A2529BB09006E23F4 /* TestViewController.swift */,
+				3D7F9D2A2529BB09006E23F4 /* PostingViewController.swift */,
 				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
 			);
 			path = Controller;
@@ -277,9 +274,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D1FA48F2527021500C6388A /* CameraController.swift in Sources */,
 				3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */,
-				3D7F9D2B2529BB09006E23F4 /* TestViewController.swift in Sources */,
+				3D7F9D2B2529BB09006E23F4 /* PostingViewController.swift in Sources */,
 				3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */,
 				3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */,
 				3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */,
