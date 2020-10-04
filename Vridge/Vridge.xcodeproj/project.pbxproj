@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -19,6 +19,11 @@
 		3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */; };
 		3D7F9CD925299552006E23F4 /* MyPageStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD825299552006E23F4 /* MyPageStoryboard.storyboard */; };
 		3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */; };
+		3D7F9D2B2529BB09006E23F4 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D2A2529BB09006E23F4 /* TestViewController.swift */; };
+		3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */; };
+		3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */; };
+		3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */; };
+		C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33ACCF0421075477663B637 /* Pods_Vridge.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +41,13 @@
 		3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeStoryboard.storyboard; sourceTree = "<group>"; };
 		3D7F9CD825299552006E23F4 /* MyPageStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyPageStoryboard.storyboard; sourceTree = "<group>"; };
 		3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		3D7F9D2A2529BB09006E23F4 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionTextView.swift; sourceTree = "<group>"; };
+		3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoCell.swift; sourceTree = "<group>"; };
+		4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.debug.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.debug.xcconfig"; sourceTree = "<group>"; };
+		72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.release.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.release.xcconfig"; sourceTree = "<group>"; };
+		A33ACCF0421075477663B637 /* Pods_Vridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,17 +55,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3138EFDBBEB329C52D2D601E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */,
+				72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		3D1FA4662526F30000C6388A = {
 			isa = PBXGroup;
 			children = (
 				3D1FA4712526F30100C6388A /* Vridge */,
 				3D1FA4702526F30100C6388A /* Products */,
+				3138EFDBBEB329C52D2D601E /* Pods */,
+				EA8C7E823BE70EFB34DB1300 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,10 +94,10 @@
 			children = (
 				3D1FA4722526F30100C6388A /* AppDelegate.swift */,
 				3D1FA4742526F30100C6388A /* SceneDelegate.swift */,
-				3D1FA4882526F51900C6388A /* TabBarController.swift */,
-				3D1FA4762526F30100C6388A /* HomeViewController.swift */,
-				3D1FA48E2527021500C6388A /* CameraController.swift */,
-				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
+				3D7F9D222529B86C006E23F4 /* Model */,
+				3D7F9D232529B875006E23F4 /* View */,
+				3D7F9D242529B878006E23F4 /* ViewModel */,
+				3D7F9D252529B87D006E23F4 /* Controller */,
 				3D7F9CD425299538006E23F4 /* Storyboards */,
 				3D1FA47B2526F30400C6388A /* Assets.xcassets */,
 				3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */,
@@ -93,6 +117,50 @@
 			path = Storyboards;
 			sourceTree = "<group>";
 		};
+		3D7F9D222529B86C006E23F4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3D7F9D232529B875006E23F4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */,
+				3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */,
+				3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3D7F9D242529B878006E23F4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		3D7F9D252529B87D006E23F4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3D1FA4882526F51900C6388A /* TabBarController.swift */,
+				3D1FA4762526F30100C6388A /* HomeViewController.swift */,
+				3D1FA48E2527021500C6388A /* CameraController.swift */,
+				3D7F9D2A2529BB09006E23F4 /* TestViewController.swift */,
+				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EA8C7E823BE70EFB34DB1300 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A33ACCF0421075477663B637 /* Pods_Vridge.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -100,9 +168,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3D1FA4832526F30400C6388A /* Build configuration list for PBXNativeTarget "Vridge" */;
 			buildPhases = (
+				E2CABE02254594AD36123B94 /* [CP] Check Pods Manifest.lock */,
 				3D1FA46B2526F30000C6388A /* Sources */,
 				3D1FA46C2526F30000C6388A /* Frameworks */,
 				3D1FA46D2526F30000C6388A /* Resources */,
+				FA432716B723357500900218 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -160,6 +230,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		E2CABE02254594AD36123B94 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Vridge-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FA432716B723357500900218 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vridge/Pods-Vridge-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vridge/Pods-Vridge-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Vridge/Pods-Vridge-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3D1FA46B2526F30000C6388A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -167,9 +279,13 @@
 			files = (
 				3D1FA48F2527021500C6388A /* CameraController.swift in Sources */,
 				3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */,
+				3D7F9D2B2529BB09006E23F4 /* TestViewController.swift in Sources */,
 				3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */,
+				3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */,
 				3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */,
 				3D1FA4892526F51900C6388A /* TabBarController.swift in Sources */,
+				3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */,
+				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,
 				3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */,
 			);
@@ -315,6 +431,7 @@
 		};
 		3D1FA4842526F30400C6388A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -334,6 +451,7 @@
 		};
 		3D1FA4852526F30400C6388A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

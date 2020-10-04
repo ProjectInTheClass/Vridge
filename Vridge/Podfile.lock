@@ -1,0 +1,32 @@
+PODS:
+  - Kingfisher (4.10.1)
+  - PryntTrimmerView (4.0.2)
+  - SteviaLayout (4.7.3)
+  - TLPhotoPicker (2.1.2)
+  - YPImagePicker (4.4.0):
+    - PryntTrimmerView (~> 4.0.2)
+    - SteviaLayout (~> 4.7.3)
+
+DEPENDENCIES:
+  - Kingfisher (~> 4.7)
+  - TLPhotoPicker
+  - YPImagePicker
+
+SPEC REPOS:
+  trunk:
+    - Kingfisher
+    - PryntTrimmerView
+    - SteviaLayout
+    - TLPhotoPicker
+    - YPImagePicker
+
+SPEC CHECKSUMS:
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
+  SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
+  TLPhotoPicker: 569b457a661c0dc769efb2357e2497a088529b0e
+  YPImagePicker: 15aed8bcaa4dad976e11b6114126d731a2f9f3c9
+
+PODFILE CHECKSUM: 735288c5f41362f012ade7f4bb8e9c3086c4c6ac
+
+COCOAPODS: 1.9.1

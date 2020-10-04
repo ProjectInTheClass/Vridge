@@ -3,8 +3,12 @@
 
 target 'Vridge' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
 
+  pod 'Kingfisher', '~>4.7'
+  pod 'YPImagePicker'
+  pod "TLPhotoPicker"
+
+  use_frameworks!
   # Pods for Vridge
 
 end
