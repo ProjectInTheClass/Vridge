@@ -11,7 +11,7 @@ import YPImagePicker
 
 private let reusableIdentifier = "PostPhotoCell"
 
-class TestViewController: UIViewController {
+class PostingViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -19,7 +19,7 @@ class TestViewController: UIViewController {
         let tv = CaptionTextView()
         tv.isUserInteractionEnabled = true
         tv.layer.borderWidth = 1
-        tv.placeholderlabel.text = "오늘 하루 채식 식단을 기록해봐. \n단, 채식과 관련없는 내용은 지양해줘! \n* 200자까지 작성 할 수 있어"
+        tv.placeholderlabel.text = "오늘 하루 채식 식단을 기록해봐. \n단, 채식과 관련없는 내용은 지양해줘!\n최소 1장, 최대 3장의 사진을 꼭 올려라잉 \n* 200자까지 작성 할 수 있어"
         tv.layer.borderColor = UIColor.systemGroupedBackground.cgColor
         return tv
     }()
@@ -86,7 +86,6 @@ class TestViewController: UIViewController {
     func configureUI() {
         view.backgroundColor = .white
         navigationItem.title = "글 작성"
-        picker.delegate = self
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소",
                                                            style: .plain,
@@ -113,29 +112,11 @@ class TestViewController: UIViewController {
                               paddingTop: 8, paddingLeft: 8, paddingRight: 8, height: 100)
     }
 
-    
 }
-
-
-// MARK: - YPImagePickerDelegate
-
-extension TestViewController: YPImagePickerDelegate, UINavigationControllerDelegate {
-    
-    func noPhotos() {
-        print("DEBUG: no photos")
-    }
-    
-    func shouldAddToSelection(indexPath: IndexPath, numSelections: Int) -> Bool {
-        print("DEBUG: \(indexPath), \(numSelections)")
-        return true
-    }
-    
-}
-
 
 // MARK: - UICollectionviewDataSource
 
-extension TestViewController: UICollectionViewDataSource {
+extension PostingViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images?.count ?? 1
@@ -144,17 +125,16 @@ extension TestViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier,
                                                       for: indexPath) as! PostPhotoCell
-        cell.backgroundColor = .systemGroupedBackground
+//        cell.backgroundColor = .systemGroupedBackground
         cell.imageView.image = images?[indexPath.item] ?? UIImage(systemName: "plus.circle")
         return cell
     }
     
 }
 
-
 // MARK: - UICollectionviewDelegate
 
-extension TestViewController: UICollectionViewDelegate {
+extension PostingViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         handleAddPhoto()
@@ -163,7 +143,7 @@ extension TestViewController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension TestViewController: UICollectionViewDelegateFlowLayout {
+extension PostingViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         

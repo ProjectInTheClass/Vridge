@@ -26,8 +26,7 @@ class PostPhotoCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(imageView)
-//        imageView.addConstraintsToFillView(self)
-        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+        imageView.addConstraintsToFillView(self)
     }
     
     required init?(coder: NSCoder) {
