@@ -129,9 +129,7 @@ extension TestViewController: YPImagePickerDelegate, UINavigationControllerDeleg
         print("DEBUG: \(indexPath), \(numSelections)")
         return true
     }
-    
 }
-
 
 // MARK: - UICollectionviewDataSource
 
@@ -148,9 +146,7 @@ extension TestViewController: UICollectionViewDataSource {
         cell.imageView.image = images?[indexPath.item] ?? UIImage(systemName: "plus.circle")
         return cell
     }
-    
 }
-
 
 // MARK: - UICollectionviewDelegate
 
