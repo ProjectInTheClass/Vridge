@@ -10,8 +10,7 @@ import UIKit
 
 class VegetarianTypeViewController: UITableViewController {
     
-    let types = ["vegan", "fruitarian", "pollo", "lacto",
-                 "ovo", "lacto-ovo", "flexitarian", "pesco"]
+    let vegetarianTypeModel = VegetarianTypeModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,14 +25,14 @@ class VegetarianTypeViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return types.count
+        return vegetarianTypeModel.types.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VegetarianTypeCell", for: indexPath)
 
-        cell.textLabel?.text = types[indexPath.row]
+        cell.textLabel?.text = vegetarianTypeModel.types[indexPath.row]
 
         return cell
     }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D7F9CA825296B87006E23F4 /* VegetarianTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9CA725296B87006E23F4 /* VegetarianTypeModel.swift */; };
 		BB85E28725296202006BFCF5 /* VegetarianTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB85E28625296202006BFCF5 /* VegetarianTypeViewController.swift */; };
 		BBE3AF58252960440063191C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE3AF57252960440063191C /* AppDelegate.swift */; };
 		BBE3AF5A252960440063191C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE3AF59252960440063191C /* SceneDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D7F9CA725296B87006E23F4 /* VegetarianTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegetarianTypeModel.swift; sourceTree = "<group>"; };
 		BB85E28625296202006BFCF5 /* VegetarianTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VegetarianTypeViewController.swift; sourceTree = "<group>"; };
 		BBE3AF54252960440063191C /* DetailExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DetailExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBE3AF57252960440063191C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 				BBE3AF62252960460063191C /* LaunchScreen.storyboard */,
 				BBE3AF65252960460063191C /* Info.plist */,
 				BB85E28625296202006BFCF5 /* VegetarianTypeViewController.swift */,
+				3D7F9CA725296B87006E23F4 /* VegetarianTypeModel.swift */,
 			);
 			path = DetailExample;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				BB85E28725296202006BFCF5 /* VegetarianTypeViewController.swift in Sources */,
 				BBE3AF5C252960440063191C /* ViewController.swift in Sources */,
 				BBE3AF58252960440063191C /* AppDelegate.swift in Sources */,
+				3D7F9CA825296B87006E23F4 /* VegetarianTypeModel.swift in Sources */,
 				BBE3AF5A252960440063191C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
