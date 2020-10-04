@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hgG-wK-wwr">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Second-->
+        <scene sceneID="dSv-IP-8a3">
+            <objects>
+                <viewController id="hgG-wK-wwr" customClass="SecondMainViewController" customModule="DetailExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fkb-f5-GO6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qBv-2T-VIT">
+                                <rect key="frame" x="173.5" y="422" width="67" height="52"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                <state key="normal" title="Next"/>
+                                <connections>
+                                    <segue destination="N0P-od-Gbq" kind="show" id="mW9-bJ-yZf"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="9Qv-WE-YXM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qBv-2T-VIT" firstAttribute="centerY" secondItem="fkb-f5-GO6" secondAttribute="centerY" id="6EN-8C-luj"/>
+                            <constraint firstItem="qBv-2T-VIT" firstAttribute="centerX" secondItem="fkb-f5-GO6" secondAttribute="centerX" id="kMx-Z3-bDN"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Second" image="sparkle" catalog="system" id="gYZ-PL-Ni2"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zbk-TG-bqV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-322" y="77"/>
+        </scene>
+        <!--Second Detail View Controller-->
+        <scene sceneID="uDm-fD-QzG">
+            <objects>
+                <viewController id="N0P-od-Gbq" customClass="SecondDetailViewController" customModule="DetailExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ikt-0V-Fh6">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fbd-hp-5ge">
+                                <rect key="frame" x="161.5" y="397.5" width="91" height="47"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="29"/>
+                                <state key="normal" title="CLOSE"/>
+                                <connections>
+                                    <action selector="closeButtonTapped:" destination="N0P-od-Gbq" eventType="touchUpInside" id="4Jk-Oz-pOS"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Bqe-Id-roF"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Fbd-hp-5ge" firstAttribute="centerX" secondItem="Ikt-0V-Fh6" secondAttribute="centerX" id="0p3-Gh-ZR9"/>
+                            <constraint firstItem="Fbd-hp-5ge" firstAttribute="centerY" secondItem="Ikt-0V-Fh6" secondAttribute="centerY" id="vLy-EY-h7a"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="NRx-Q6-CaJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8DY-Gk-2uF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="610" y="84"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="sparkle" catalog="system" width="128" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
