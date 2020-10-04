@@ -2,42 +2,38 @@
 //  VegetarianTypeViewController.swift
 //  DetailExample
 //
-//  Created by 김루희 on 2020/10/04.
-//  Copyright © 2020 김루희. All rights reserved.
+//  Created by 박상욱 on 2020/10/04.
+//  Copyright © 2020 강민구. All rights reserved.
 //
 
 import UIKit
 
-
 class VegetarianTypeViewController: UITableViewController {
+    
+    let types = ["vegan", "fruitarian", "pollo", "lacto",
+                 "ovo", "lacto-ovo", "flexitarian", "pesco"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        tableView.tableFooterView = UIView()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 8
+        return types.count
     }
 
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "VegetarianTypeCell", for: indexPath)
 
-        cell.textLabel?.text =
+        cell.textLabel?.text = types[indexPath.row]
 
         return cell
     }
