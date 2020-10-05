@@ -23,7 +23,7 @@ class PostPhotoCell: UICollectionViewCell {
     
     let label: UILabel = {
         let label = UILabel()
-        label.text = "THis is a TEST laBel"
+        label.text = "TEST LABEL MAN"
         return label
     }()
     
