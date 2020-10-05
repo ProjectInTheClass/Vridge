@@ -32,6 +32,12 @@ class PostingViewController: UIViewController {
         return cv
     }()
     
+    private let label: UILabel = {
+        let label = UILabel()
+        label.text = "This is a test label man"
+        return label
+    }()
+    
     private var images: [UIImage]?
     
     var config = ImagePicker.shared.imagePickerView
