@@ -27,6 +27,8 @@ class PostPhotoCell: UICollectionViewCell {
         return label
     }()
     
+    let newLabel = UILabel()
+    
     
     // MARK: - Lifecycle
     
