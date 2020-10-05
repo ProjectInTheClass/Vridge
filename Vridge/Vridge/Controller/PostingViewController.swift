@@ -19,7 +19,7 @@ class PostingViewController: UIViewController {
         let tv = CaptionTextView()
         tv.isUserInteractionEnabled = true
         tv.layer.borderWidth = 1
-        tv.placeholderlabel.text = "오늘 하루 채식 식단을 기록해봐. \n단, 채식과 관련없는 내용은 지양해줘!\n최소 1장, 최대 3장의 사진을 꼭 올려라잉 \n* 200자까지 작성 할 수 있어"
+        tv.placeholderlabel.text = "오늘 하루 채식 식단을 기록해봐.\n단, 채식과 관련없는 내용은 지양해줘!\n최소 1장, 최대 3장의 사진을 꼭 올려라잉\n* 200자까지 작성 할 수 있어"
         tv.layer.borderColor = UIColor.systemGroupedBackground.cgColor
         return tv
     }()
