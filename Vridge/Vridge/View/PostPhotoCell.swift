@@ -17,7 +17,7 @@ class PostPhotoCell: UICollectionViewCell {
         iv.clipsToBounds = true
         iv.tintColor = .darkGray
         iv.layer.borderColor = UIColor.vridgeGreen.cgColor
-        iv.layer.borderWidth = 4
+        iv.layer.borderWidth = 1.2
         return iv
     }()
     
