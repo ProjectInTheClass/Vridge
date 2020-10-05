@@ -8,6 +8,7 @@
 import UIKit
 
 import YPImagePicker
+import Firebase
 
 private let reusableIdentifier = "PostPhotoCell"
 
@@ -83,6 +84,16 @@ class PostingViewController: UIViewController {
             alert.addAction(okButton)
             present(alert, animated: true, completion: nil)
         } else {
+            
+            guard let caption = textView.text else { return }
+            guard let images = images else { return }
+            PostService.shared.uploadPost(caption: caption, photo: images) {
+                // 이미지를 Storage에 upload 한 후, 그 주소를 db의 image child에 저장. 킹피셔 이용 불러오기.
+                // 굿.
+            }
+//            Database.database().reference().child("new-folder").updateChildValues(["content": content])
+            
+            
             print("DEBUG: Upload photos and words to realtime database.")
         }
         
