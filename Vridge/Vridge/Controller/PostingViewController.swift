@@ -34,7 +34,7 @@ class PostingViewController: UIViewController {
     
     private var images: [UIImage]?
     
-    var config = ImagePicker.shared.imagePickerView
+    private var config = ImagePicker.shared.imagePickerView
     lazy var picker = YPImagePicker(configuration: config)
     
     private lazy var recognizer = UITapGestureRecognizer(target: self,
