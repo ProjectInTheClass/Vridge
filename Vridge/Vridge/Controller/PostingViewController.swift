@@ -87,14 +87,13 @@ class PostingViewController: UIViewController {
             
             guard let caption = textView.text else { return }
             guard let images = images else { return }
-            PostService.shared.uploadPost(caption: caption, photo: images) {
-                // 이미지를 Storage에 upload 한 후, 그 주소를 db의 image child에 저장. 킹피셔 이용 불러오기.
-                // 굿. good job
+            
+            PostService.shared.uploadPost(caption: caption, photos: images) {
+                print("DEBUG: photo uploaded to Storage/post_images.")
             }
-//            Database.database().reference().child("new-folder").updateChildValues(["content": content])
             
+            dismiss(animated: true, completion: nil)
             
-            print("DEBUG: Upload photos and words to realtime database.")
         }
         
         // 글 에 담길 항목 모두 담고 + REF_USER.uid.child(point) += 1
