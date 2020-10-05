@@ -21,14 +21,6 @@ class PostPhotoCell: UICollectionViewCell {
         return iv
     }()
     
-    let label: UILabel = {
-        let label = UILabel()
-        label.text = "TEST LABEL MAN"
-        return label
-    }()
-    
-    let newLabel = UILabel()
-    
     
     // MARK: - Lifecycle
     
