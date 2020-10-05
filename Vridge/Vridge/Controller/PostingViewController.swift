@@ -37,7 +37,6 @@ class PostingViewController: UIViewController {
     var config = ImagePicker.shared.imagePickerView
     lazy var picker = YPImagePicker(configuration: config)
     
-    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
