@@ -9,6 +9,7 @@ import UIKit
 
 import YPImagePicker
 import Firebase
+import Kingfisher
 
 private let reusableIdentifier = "PostPhotoCell"
 
@@ -20,7 +21,6 @@ class PostingViewController: UIViewController {
         let tv = CaptionTextView()
         tv.isUserInteractionEnabled = true
         tv.layer.borderWidth = 1
-        tv.placeholderlabel.text = "오늘 하루 채식 식단을 기록해봐.\n단, 채식과 관련없는 내용은 지양해줘!\n최소 1장, 최대 3장의 사진을 꼭 올려라잉\n* 200자까지 작성 할 수 있어"
         tv.layer.borderColor = UIColor.systemGroupedBackground.cgColor
         return tv
     }()
@@ -38,8 +38,8 @@ class PostingViewController: UIViewController {
     private var config = ImagePicker.shared.imagePickerView
     lazy var picker = YPImagePicker(configuration: config)
     
-    private lazy var recognizer = UITapGestureRecognizer(target: self,
-                                                    action: #selector(handleViewTapped))
+    private let indicator = UIActivityIndicatorView()
+    
     
     // MARK: - Lifecycle
 
@@ -51,10 +51,6 @@ class PostingViewController: UIViewController {
     
     
     // MARK: - Selectors
-    
-    @objc func handleViewTapped() {
-        view.endEditing(true)
-    }
     
     @objc func handleCancel() {
         
@@ -75,7 +71,6 @@ class PostingViewController: UIViewController {
     }
     
     @objc func handleNext() {
-        
         if images == nil {
             let alert = UIAlertController(title: "",
                                           message: "최소 한 장의 사진을 올려주세요.",
@@ -85,13 +80,18 @@ class PostingViewController: UIViewController {
             present(alert, animated: true, completion: nil)
         } else {
             
+            indicator.startAnimating()
             guard let caption = textView.text else { return }
             guard let images = images else { return }
             
-            PostService.shared.uploadPost(caption: caption, photos: images) {
-                print("DEBUG: photo uploaded to Storage/post_images.")
+            PostService.shared.uploadPost(caption: caption, photos: images) { error in
+                if let err = error {
+                    print("DEBUG: failed with posting with error \(err.localizedDescription)")
+                }
             }
+            print("DEBUG: photo uploaded successfully to Storage/post_images.")
             
+            indicator.stopAnimating()
             dismiss(animated: true, completion: nil)
             
         }
@@ -108,7 +108,11 @@ class PostingViewController: UIViewController {
         navigationItem.title = "글 작성"
         textView.delegate = self
         
-        view.addGestureRecognizer(recognizer)
+        view.addSubview(indicator)
+        indicator.style = .large
+        indicator.color = .vridgeGreen
+        indicator.hidesWhenStopped = true
+        indicator.center = view.center
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"),
                                                            style: .plain,
