@@ -11,6 +11,8 @@ class NEWCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    let label = UILabel()
+    
     
     // MARK: - Lifecycle
     
