@@ -19,6 +19,7 @@ class PostingViewController: UIViewController {
         let tv = CaptionTextView()
         tv.isUserInteractionEnabled = true
         tv.layer.borderWidth = 1
+        
         tv.placeholderlabel.text = "오늘 하루 채식 식단을 기록해봐. \n단, 채식과 관련없는 내용은 지양해줘!\n최소 1장, 최대 3장의 사진을 꼭 올려라잉 \n* 200자까지 작성 할 수 있어"
         tv.layer.borderColor = UIColor.systemGroupedBackground.cgColor
         return tv
@@ -84,6 +85,7 @@ class PostingViewController: UIViewController {
     func configureUI() {
         view.backgroundColor = .white
         navigationItem.title = "글 작성"
+        textView.delegate = self
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"),
                                                            style: .plain,
@@ -150,5 +152,17 @@ extension PostingViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
+    }
+}
+
+
+extension PostingViewController: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        guard let words = textView.text else { return true }
+        
+        let newLength = words.count + text.count - range.length
+        return newLength <= 200
     }
 }
