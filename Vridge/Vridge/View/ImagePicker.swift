@@ -28,6 +28,7 @@ struct ImagePicker {
         config.wordings.next = "선택 완료"
         config.colors.multipleItemsSelectedCircleColor = .vridgeGreen
         config.colors.tintColor = .vridgeGreen
+        config.wordings.warningMaxItemsLimit = "최대 3장을 선택할 수 있습니다."
         return config
     }()
     

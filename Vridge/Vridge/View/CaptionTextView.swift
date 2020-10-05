@@ -19,6 +19,7 @@ class CaptionTextView: UITextView {
         label.lineBreakStrategy = .hangulWordPriority
         label.font = .systemFont(ofSize: 16)
         label.textColor = .darkGray
+        label.text = "오늘 하루 채식 식단을 기록해봐.\n단, 채식과 관련없는 내용은 지양해줘!\n최소 1장, 최대 3장의 사진을 꼭 올려라잉\n* 200자까지 작성 할 수 있어"
         return label
     }()
     

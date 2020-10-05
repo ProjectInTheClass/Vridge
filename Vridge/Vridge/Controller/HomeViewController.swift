@@ -7,10 +7,11 @@
 
 import UIKit
 
+import Kingfisher
+
 class HomeViewController: UIViewController {
     
     // MARK: - Properties
-    
     
     
     // MARK: - Lifecycle
