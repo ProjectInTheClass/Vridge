@@ -26,6 +26,8 @@ struct ImagePicker {
         config.wordings.cancel = "취소"
         config.wordings.libraryTitle = "앨범"
         config.wordings.next = "선택 완료"
+        config.colors.multipleItemsSelectedCircleColor = .vridgeGreen
+        config.colors.tintColor = .vridgeGreen
         return config
     }()
     

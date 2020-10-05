@@ -13,9 +13,11 @@ class PostPhotoCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleToFill
         iv.clipsToBounds = true
         iv.tintColor = .darkGray
+        iv.layer.borderColor = UIColor.vridgeGreen.cgColor
+        iv.layer.borderWidth = 4
         return iv
     }()
     

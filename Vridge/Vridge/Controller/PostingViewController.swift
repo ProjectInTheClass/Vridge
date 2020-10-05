@@ -62,8 +62,20 @@ class PostingViewController: UIViewController {
     }
     
     @objc func handleNext() {
-        print("DEBUG: Upload photos and words to realtime database.")
+        
+        if images == nil {
+            let alert = UIAlertController(title: "",
+                                          message: "최소 한 장의 사진을 올려주세요.",
+                                          preferredStyle: .alert)
+            let okButton = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alert.addAction(okButton)
+            present(alert, animated: true, completion: nil)
+        } else {
+            print("DEBUG: Upload photos and words to realtime database.")
+        }
+        
         // 글 에 담길 항목 모두 담고 + REF_USER.uid.child(point) += 1
+        // PostService.shared.upload
     }
     
     
@@ -73,7 +85,7 @@ class PostingViewController: UIViewController {
         view.backgroundColor = .white
         navigationItem.title = "글 작성"
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "취소",
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"),
                                                            style: .plain,
                                                            target: self,
                                                            action: #selector(handleCancel))
@@ -82,6 +94,7 @@ class PostingViewController: UIViewController {
                                                              style: .plain,
                                                              target: self,
                                                              action: #selector(handleNext))
+        navigationItem.rightBarButtonItem?.tintColor = .vridgeGreen
         
         view.addSubview(textView)
         view.addSubview(collectionView)
@@ -95,7 +108,7 @@ class PostingViewController: UIViewController {
                         right: view.rightAnchor, paddingTop: 20,
                         paddingLeft: 16, paddingRight: 16, height: 180)
         collectionView.anchor(top: textView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                              paddingTop: 8, paddingLeft: 8, paddingRight: 8, height: 100)
+                              paddingTop: 8, paddingLeft: 8, paddingRight: 8, height: 140)
     }
     
 }
@@ -111,7 +124,6 @@ extension PostingViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier,
                                                       for: indexPath) as! PostPhotoCell
-//        cell.backgroundColor = .systemGroupedBackground
         cell.imageView.image = images?[indexPath.item] ?? UIImage(systemName: "plus.circle")
         return cell
     }

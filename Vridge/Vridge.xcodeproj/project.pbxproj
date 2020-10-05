@@ -97,12 +97,20 @@
 				3D7F9D242529B878006E23F4 /* ViewModel */,
 				3D7F9D252529B87D006E23F4 /* Controller */,
 				3D7F9CD425299538006E23F4 /* Storyboards */,
-				3D1FA47B2526F30400C6388A /* Assets.xcassets */,
+				3D61FF53252AE61000AC90D2 /* Utils */,
 				3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */,
-				3D1FA48B2526FC9400C6388A /* Extension.swift */,
 				3D1FA4802526F30400C6388A /* Info.plist */,
+				3D1FA47B2526F30400C6388A /* Assets.xcassets */,
 			);
 			path = Vridge;
+			sourceTree = "<group>";
+		};
+		3D61FF53252AE61000AC90D2 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3D1FA48B2526FC9400C6388A /* Extension.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		3D7F9CD425299538006E23F4 /* Storyboards */ = {
