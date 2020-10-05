@@ -37,6 +37,8 @@ class PostingViewController: UIViewController {
     var config = ImagePicker.shared.imagePickerView
     lazy var picker = YPImagePicker(configuration: config)
     
+    private lazy var recognizer = UITapGestureRecognizer(target: self,
+                                                    action: #selector(handleViewTapped))
     
     // MARK: - Lifecycle
 
@@ -49,16 +51,26 @@ class PostingViewController: UIViewController {
     
     // MARK: - Selectors
     
-    func handleAddPhoto() {
-        ImagePicker.shared.addPhoto(view: self, picker: picker) { images in
-            self.images = images
-            self.collectionView.reloadData()
-            self.picker.dismiss(animated: true, completion: nil)
-        }
+    @objc func handleViewTapped() {
+        view.endEditing(true)
     }
     
     @objc func handleCancel() {
-        dismiss(animated: true, completion: nil)
+        
+        if textView.hasText {
+            let alert = UIAlertController(title: "이 페이지를 벗어날 거야?",
+                                          message: "지금까지 작성한\n글들은 저장되지 않아…!",
+                                          preferredStyle: .alert)
+            let noButton = UIAlertAction(title: "아니오", style: .default, handler: nil)
+            let yesButton = UIAlertAction(title: "예", style: .destructive) { _ in
+                self.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(noButton)
+            alert.addAction(yesButton)
+            present(alert, animated: true, completion: nil)
+        } else {
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     @objc func handleNext() {
@@ -86,6 +98,8 @@ class PostingViewController: UIViewController {
         navigationItem.title = "글 작성"
         textView.delegate = self
         
+        view.addGestureRecognizer(recognizer)
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"),
                                                            style: .plain,
                                                            target: self,
@@ -110,6 +124,14 @@ class PostingViewController: UIViewController {
                         paddingLeft: 16, paddingRight: 16, height: 180)
         collectionView.anchor(top: textView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
                               paddingTop: 8, paddingLeft: 8, paddingRight: 8, height: 140)
+    }
+    
+    func handleAddPhoto() {
+        ImagePicker.shared.addPhoto(view: self, picker: picker) { images in
+            self.images = images
+            self.collectionView.reloadData()
+            self.picker.dismiss(animated: true, completion: nil)
+        }
     }
     
 }
