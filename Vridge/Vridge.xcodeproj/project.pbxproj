@@ -22,6 +22,7 @@
 		3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */; };
 		3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */; };
 		3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */; };
+		3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */; };
 		C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33ACCF0421075477663B637 /* Pods_Vridge.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionTextView.swift; sourceTree = "<group>"; };
 		3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoCell.swift; sourceTree = "<group>"; };
+		3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.debug.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.debug.xcconfig"; sourceTree = "<group>"; };
 		72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.release.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.release.xcconfig"; sourceTree = "<group>"; };
 		A33ACCF0421075477663B637 /* Pods_Vridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,6 +102,7 @@
 				3D61FF53252AE61000AC90D2 /* Utils */,
 				3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */,
 				3D1FA4802526F30400C6388A /* Info.plist */,
+				3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */,
 				3D1FA47B2526F30400C6388A /* Assets.xcassets */,
 			);
 			path = Vridge;
@@ -230,6 +233,7 @@
 				3D1FA47C2526F30400C6388A /* Assets.xcassets in Resources */,
 				3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */,
 				3D1FA47A2526F30100C6388A /* Main.storyboard in Resources */,
+				3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
