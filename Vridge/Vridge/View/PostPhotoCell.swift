@@ -15,6 +15,7 @@ class PostPhotoCell: UICollectionViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleToFill
         iv.clipsToBounds = true
+        iv.tintColor = .yellow
         iv.tintColor = .vridgeGreen
         iv.layer.borderColor = UIColor.vridgeGreen.cgColor
         iv.layer.borderWidth = 1.2
