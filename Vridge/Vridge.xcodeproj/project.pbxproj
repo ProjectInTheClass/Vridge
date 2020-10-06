@@ -25,6 +25,7 @@
 		3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */; };
 		3DE6236A252B2925005F16A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62369252B2925005F16A9 /* Constants.swift */; };
 		3DE6236E252B298F005F16A9 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6236D252B298F005F16A9 /* PostService.swift */; };
+		3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62374252C180D005F16A9 /* LoginViewController.swift */; };
 		C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33ACCF0421075477663B637 /* Pods_Vridge.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		3DE62369252B2925005F16A9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3DE6236D252B298F005F16A9 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
+		3DE62374252C180D005F16A9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.debug.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.debug.xcconfig"; sourceTree = "<group>"; };
 		72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.release.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.release.xcconfig"; sourceTree = "<group>"; };
 		A33ACCF0421075477663B637 /* Pods_Vridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,6 +161,7 @@
 		3D7F9D252529B87D006E23F4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3DE62373252C17F1005F16A9 /* Authentication */,
 				3D1FA4882526F51900C6388A /* TabBarController.swift */,
 				3D1FA4762526F30100C6388A /* HomeViewController.swift */,
 				3D7F9D2A2529BB09006E23F4 /* PostingViewController.swift */,
@@ -173,6 +176,14 @@
 				3DE6236D252B298F005F16A9 /* PostService.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		3DE62373252C17F1005F16A9 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				3DE62374252C180D005F16A9 /* LoginViewController.swift */,
+			);
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		EA8C7E823BE70EFB34DB1300 /* Frameworks */ = {
@@ -311,6 +322,7 @@
 				3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */,
 				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,
+				3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */,
 				3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
