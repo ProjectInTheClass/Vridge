@@ -42,9 +42,11 @@ class TabBarController: UITabBarController {
     // MARK: - Selectors
     
     @objc func handleButtonTapped() {
-        let controller = PostingViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
+//        let controller = PostingViewController()
+//        let nav = UINavigationController(rootViewController: controller)
+//        nav.modalPresentationStyle = .fullScreen
+        
+        let nav = LoginViewController()
         present(nav, animated: true, completion: nil)
     }
     
