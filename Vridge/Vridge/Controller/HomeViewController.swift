@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     // MARK: - Properties
     
     let a = "b"
+    let c = "d"
     
     // MARK: - Lifecycle
 
