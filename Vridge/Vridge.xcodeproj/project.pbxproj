@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D15CD4A252C7DF9005879CD /* AuthService.swift */; };
 		3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4722526F30100C6388A /* AppDelegate.swift */; };
 		3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4742526F30100C6388A /* SceneDelegate.swift */; };
 		3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4762526F30100C6388A /* HomeViewController.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D15CD4A252C7DF9005879CD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		3D1FA46F2526F30100C6388A /* Vridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D1FA4722526F30100C6388A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D1FA4742526F30100C6388A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 		3DE6236C252B296F005F16A9 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				3D15CD4A252C7DF9005879CD /* AuthService.swift */,
 				3DE62384252C4B79005F16A9 /* UserService.swift */,
 				3DE6236D252B298F005F16A9 /* PostService.swift */,
 			);
@@ -340,6 +343,7 @@
 				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
 				3DE62385252C4B79005F16A9 /* UserService.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,
+				3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */,
 				3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */,
 				3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */,
 			);

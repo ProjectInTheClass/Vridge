@@ -22,7 +22,7 @@ class LoginViewController: UIViewController {
     
     private let label: UILabel = {
         let label = UILabel()
-        label.text = "이것은 임시 로그인 뷰"
+        label.text = "이것은 임시 로그인 뷰입니다."
         label.textColor = .black
         return label
     }()
@@ -160,15 +160,30 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             
             // Check to see if the user has already registered,
             // if already registered => No updateChildValues...
+            // else if => left user.... rejoining...
             // else => updateChildValues with default values.... sibal
+            
+            
             
             guard let email = appleIDCredential.email else {
                 // if user already once registered...
+                
                 Auth.auth().signIn(with: credential) { (result, error) in
                     guard let uid = result?.user.uid else { return }
                     guard let email = result?.user.email else { return }
                     REF_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
-                        guard let dictionary = snapshot.value as? [String: AnyObject] else { return }
+                        
+                        guard let dictionary = snapshot.value as? [String: AnyObject] else {
+                            // Deleted account and rejoining
+                            let values = ["uid": uid,
+                                          "email": email,
+                                          "point": 0] as [String: Any]
+                            REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
+                                print("DEBUG: This user has deleted id, and trying to rejoin")
+                                
+                            }
+                            return
+                        }
                         guard let point = dictionary["point"] as? Int else { return }
                         
                         let values = ["uid": uid,
