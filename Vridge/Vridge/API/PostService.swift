@@ -13,8 +13,12 @@ struct PostService {
     
     static let shared = PostService()
     
-    func uploadPost(caption: String?, photos: [UIImage?], completion: @escaping(Error?) -> Void) {
+    func uploadPost(caption: String?, photos: [UIImage?], indicator: UIActivityIndicatorView,
+                    view: UIViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
+            indicator.startAnimating()
         var urlString: [String] = []
+        
+        let uid = "thisIsUID" // 이 곳에 Auth.auth().currentUser?.uid
         
         for photo in photos {
             guard let imageData = photo?.jpegData(compressionQuality: 0.2) else { return }
@@ -33,16 +37,20 @@ struct PostService {
                         guard let caption = caption else { return }
                         
                         let values = ["caption": caption,
-                                      "image": urlString,
-                                      "uid": "this is user's uid",
+                                      "images": urlString,
+                                      "uid": "this is your uid.",
                                       "timestamp": "some number since 1970"] as [String: Any]
+                        
                         REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
-                            if let err = err {
-                                print("DEBUG: err occurs \(err.localizedDescription)")
+                            guard let postID = ref.key else { return }
+                            REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                            print("DEBUG: photo uploaded successfully to Storage/post_images.")
+                            DispatchQueue.main.async {
+                                indicator.stopAnimating()
                             }
+                            view.dismiss(animated: true, completion: nil)
                         }
-                        // urlString 1~3개를 이용하여 db의 user-posts에 넣고
-                        // posts에도 넣기.
+
                     }
                 }
             }

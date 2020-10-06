@@ -80,19 +80,15 @@ class PostingViewController: UIViewController {
             present(alert, animated: true, completion: nil)
             
         } else {
-            indicator.startAnimating()
             guard let caption = textView.text else { return }
             guard let images = images else { return }
             
-            PostService.shared.uploadPost(caption: caption, photos: images) { error in
-                if let err = error {
+            PostService.shared.uploadPost(caption: caption, photos: images,
+                                          indicator: indicator, view: self) { (err, ref) in
+                if let err = err {
                     print("DEBUG: failed with posting with error \(err.localizedDescription)")
                 }
             }
-            print("DEBUG: photo uploaded successfully to Storage/post_images.")
-            
-            indicator.stopAnimating()
-            dismiss(animated: true, completion: nil)
             
         }
         
@@ -108,11 +104,13 @@ class PostingViewController: UIViewController {
         navigationItem.title = "글 작성"
         textView.delegate = self
         
-        view.addSubview(indicator)
+        textView.addSubview(indicator)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
         indicator.style = .large
         indicator.color = .vridgeGreen
         indicator.hidesWhenStopped = true
-        indicator.center = view.center
+        indicator.centerX(inView: textView)
+        indicator.centerY(inView: textView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"),
                                                            style: .plain,

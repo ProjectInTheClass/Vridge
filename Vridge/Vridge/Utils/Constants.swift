@@ -15,3 +15,4 @@ let STORAGE_POST_IMAGES = STORAGE_REF.child("post_images")
 
 let DB_REF = Database.database().reference()
 let REF_POSTS = DB_REF.child("posts")
+let REF_USER_POSTS = DB_REF.child("user-posts")
