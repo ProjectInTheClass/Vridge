@@ -49,8 +49,5 @@ class TabBarController: UITabBarController {
         let nav = LoginViewController()
         present(nav, animated: true, completion: nil)
     }
-    
-
-    
 
 }

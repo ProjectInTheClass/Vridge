@@ -52,7 +52,7 @@ class LoginViewController: UIViewController {
         view.addSubview(appleLoginButton)
         view.addSubview(label)
         appleLoginButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                                paddingTop: 100, paddingLeft: 100, width: 100, height: 50)
+                                paddingTop: 100, paddingLeft: 10, width: 240, height: 50)
         label.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 10)
         label.centerX(inView: view)
     }
