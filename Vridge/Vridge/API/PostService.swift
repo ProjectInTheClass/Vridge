@@ -15,7 +15,8 @@ struct PostService {
     
     func uploadPost(caption: String?, photos: [UIImage?], indicator: UIActivityIndicatorView,
                     view: UIViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
-            indicator.startAnimating()
+        
+        indicator.startAnimating()
         var urlString: [String] = []
         
         let uid = "thisIsUID" // 이 곳에 Auth.auth().currentUser?.uid
@@ -50,7 +51,7 @@ struct PostService {
                             }
                             view.dismiss(animated: true, completion: nil)
                         }
-
+                        
                     }
                 }
             }

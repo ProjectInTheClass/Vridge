@@ -29,6 +29,7 @@
 		3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DE62379252C1FAB005F16A9 /* LoginStoryboard.storyboard */; };
 		3DE6237D252C343D005F16A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6237C252C343D005F16A9 /* User.swift */; };
 		3DE62380252C3557005F16A9 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6237F252C3557005F16A9 /* Post.swift */; };
+		3DE62385252C4B79005F16A9 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62384252C4B79005F16A9 /* UserService.swift */; };
 		C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33ACCF0421075477663B637 /* Pods_Vridge.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,8 @@
 		3DE62379252C1FAB005F16A9 /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		3DE6237C252C343D005F16A9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = Vridge/Storyboards/User.swift; sourceTree = SOURCE_ROOT; };
 		3DE6237F252C3557005F16A9 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Vridge/Storyboards/Post.swift; sourceTree = SOURCE_ROOT; };
+		3DE62384252C4B79005F16A9 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		3DE62388252C533C005F16A9 /* Vridge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vridge.entitlements; sourceTree = "<group>"; };
 		4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.debug.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.debug.xcconfig"; sourceTree = "<group>"; };
 		72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.release.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.release.xcconfig"; sourceTree = "<group>"; };
 		A33ACCF0421075477663B637 /* Pods_Vridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,6 +107,7 @@
 		3D1FA4712526F30100C6388A /* Vridge */ = {
 			isa = PBXGroup;
 			children = (
+				3DE62388252C533C005F16A9 /* Vridge.entitlements */,
 				3D1FA4722526F30100C6388A /* AppDelegate.swift */,
 				3D1FA4742526F30100C6388A /* SceneDelegate.swift */,
 				3D7F9D222529B86C006E23F4 /* Model */,
@@ -182,6 +186,7 @@
 		3DE6236C252B296F005F16A9 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				3DE62384252C4B79005F16A9 /* UserService.swift */,
 				3DE6236D252B298F005F16A9 /* PostService.swift */,
 			);
 			path = API;
@@ -333,6 +338,7 @@
 				3DE62380252C3557005F16A9 /* Post.swift in Sources */,
 				3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */,
 				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
+				3DE62385252C4B79005F16A9 /* UserService.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,
 				3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */,
 				3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */,
@@ -483,6 +489,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Vridge/Vridge.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3YAPL3Q6FM;
 				INFOPLIST_FILE = Vridge/Info.plist;
@@ -503,6 +510,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Vridge/Vridge.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3YAPL3Q6FM;
 				INFOPLIST_FILE = Vridge/Info.plist;
