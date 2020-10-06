@@ -78,8 +78,8 @@ class PostingViewController: UIViewController {
             let okButton = UIAlertAction(title: "확인", style: .default, handler: nil)
             alert.addAction(okButton)
             present(alert, animated: true, completion: nil)
-        } else {
             
+        } else {
             indicator.startAnimating()
             guard let caption = textView.text else { return }
             guard let images = images else { return }
@@ -137,7 +137,7 @@ class PostingViewController: UIViewController {
                         right: view.rightAnchor, paddingTop: 20,
                         paddingLeft: 16, paddingRight: 16, height: 180)
         collectionView.anchor(top: textView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                              paddingTop: 8, paddingLeft: 8, paddingRight: 8, height: 140)
+                              paddingTop: 8, paddingLeft: 16, paddingRight: 16, height: 140)
     }
     
     func handleAddPhoto() {
