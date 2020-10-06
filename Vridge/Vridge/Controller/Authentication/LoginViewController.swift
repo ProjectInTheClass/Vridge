@@ -156,61 +156,13 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
             
-            //            appleIDCredential.email
-            
-            // Check to see if the user has already registered,
-            // if already registered => No updateChildValues...
-            // else if => left user.... rejoining...
-            // else => updateChildValues with default values.... sibal
-            
-            
-            
             guard let email = appleIDCredential.email else {
-                // if user already once registered...
-                
-                Auth.auth().signIn(with: credential) { (result, error) in
-                    guard let uid = result?.user.uid else { return }
-                    guard let email = result?.user.email else { return }
-                    REF_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
-                        
-                        guard let dictionary = snapshot.value as? [String: AnyObject] else {
-                            // Deleted account and rejoining
-                            let values = ["uid": uid,
-                                          "email": email,
-                                          "point": 0] as [String: Any]
-                            REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
-                                print("DEBUG: This user has deleted id, and trying to rejoin")
-                                
-                            }
-                            return
-                        }
-                        guard let point = dictionary["point"] as? Int else { return }
-                        
-                        let values = ["uid": uid,
-                                      "email": email,
-                                      "point": point] as [String: Any]
-                        
-                        REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
-                            print("DEBUG: Existed user logged in.")
-                            self.dismiss(animated: true, completion: nil)
-                        }
-                    }
-                }
+                // handle if user already once registered... or ex user rejoining...
+                AuthService.shared.loginExistUser(viewController: self, credential: credential)
                 return
             }
-            // if user hasn't registered yet...
-            Auth.auth().signIn(with: credential) { (result, error) in
-                guard let uid = result?.user.uid else { return }
-                
-                let values = ["uid": uid,
-                              "email": email,
-                              "point": 0] as [String: Any]
-                
-                REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
-                    print("DEBUG: New user's email is \(email)")
-                    print("DEBUG: New user logged in.")
-                }
-            }
+//             handle if user hasn't registered...
+            AuthService.shared.signInNewUser(viewController: self, credential: credential, email: email)
             return
         }
     }
