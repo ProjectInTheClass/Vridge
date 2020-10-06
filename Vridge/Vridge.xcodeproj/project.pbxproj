@@ -26,6 +26,9 @@
 		3DE6236A252B2925005F16A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62369252B2925005F16A9 /* Constants.swift */; };
 		3DE6236E252B298F005F16A9 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6236D252B298F005F16A9 /* PostService.swift */; };
 		3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62374252C180D005F16A9 /* LoginViewController.swift */; };
+		3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DE62379252C1FAB005F16A9 /* LoginStoryboard.storyboard */; };
+		3DE6237D252C343D005F16A9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6237C252C343D005F16A9 /* User.swift */; };
+		3DE62380252C3557005F16A9 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6237F252C3557005F16A9 /* Post.swift */; };
 		C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33ACCF0421075477663B637 /* Pods_Vridge.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +54,9 @@
 		3DE62369252B2925005F16A9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3DE6236D252B298F005F16A9 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		3DE62374252C180D005F16A9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3DE62379252C1FAB005F16A9 /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
+		3DE6237C252C343D005F16A9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = User.swift; path = Vridge/Storyboards/User.swift; sourceTree = SOURCE_ROOT; };
+		3DE6237F252C3557005F16A9 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Vridge/Storyboards/Post.swift; sourceTree = SOURCE_ROOT; };
 		4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.debug.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.debug.xcconfig"; sourceTree = "<group>"; };
 		72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.release.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.release.xcconfig"; sourceTree = "<group>"; };
 		A33ACCF0421075477663B637 /* Pods_Vridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +136,7 @@
 				3D1FA4782526F30100C6388A /* Main.storyboard */,
 				3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */,
 				3D7F9CD825299552006E23F4 /* MyPageStoryboard.storyboard */,
+				3DE62379252C1FAB005F16A9 /* LoginStoryboard.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -137,6 +144,8 @@
 		3D7F9D222529B86C006E23F4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3DE6237C252C343D005F16A9 /* User.swift */,
+				3DE6237F252C3557005F16A9 /* Post.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -257,6 +266,7 @@
 				3D7F9CD925299552006E23F4 /* MyPageStoryboard.storyboard in Resources */,
 				3D1FA47C2526F30400C6388A /* Assets.xcassets in Resources */,
 				3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */,
+				3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */,
 				3D1FA47A2526F30100C6388A /* Main.storyboard in Resources */,
 				3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */,
 			);
@@ -317,8 +327,10 @@
 				3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */,
 				3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */,
 				3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */,
+				3DE6237D252C343D005F16A9 /* User.swift in Sources */,
 				3D1FA4892526F51900C6388A /* TabBarController.swift in Sources */,
 				3DE6236E252B298F005F16A9 /* PostService.swift in Sources */,
+				3DE62380252C3557005F16A9 /* Post.swift in Sources */,
 				3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */,
 				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,
