@@ -89,7 +89,6 @@ class PostingViewController: UIViewController {
                     print("DEBUG: failed with posting with error \(err.localizedDescription)")
                 }
             }
-            
         }
         
         // 글 에 담길 항목 모두 담고 + REF_USER.uid.child(point) += 1
@@ -102,6 +101,7 @@ class PostingViewController: UIViewController {
     func configureUI() {
         view.backgroundColor = .white
         navigationItem.title = "글 작성"
+        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         textView.delegate = self
         
         textView.addSubview(indicator)
