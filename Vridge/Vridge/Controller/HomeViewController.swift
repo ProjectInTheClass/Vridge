@@ -17,7 +17,7 @@ class HomeViewController: UIViewController {
     let c = "d"
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
     
     
     // MARK: - Helpers
-
-
+    
+    
 }
 

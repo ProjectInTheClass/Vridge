@@ -23,8 +23,8 @@ class CaptionTextView: UITextView {
         label.attributedText = text
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.font = .systemFont(ofSize: 16)
-        label.textColor = .darkGray
+        label.font = UIFont.SFRegular(size: 14)
+        label.textColor = .vridgePlaceholderColor
         return label
     }()
     
@@ -34,7 +34,7 @@ class CaptionTextView: UITextView {
         super.init(frame: frame, textContainer: textContainer)
         
         backgroundColor = .white
-        font = .systemFont(ofSize: 16)
+        font = UIFont.SFRegular(size: 14)
         isScrollEnabled = true
         
         addSubview(placeholderLabel)

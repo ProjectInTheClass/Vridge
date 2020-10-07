@@ -80,11 +80,7 @@ extension UIView {
             
             self.leftAnchor.constraint(equalTo: leftAnchor, constant: padding).isActive = true
         }
-        
-        
-        
     }
-    
     
     func setDimensions(width: CGFloat, height: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +99,6 @@ extension UIView {
         
         self.layer.borderColor = color
         self.layer.borderWidth = border
-        
     }
     
     func makeAcircle( dimension : Int) {
@@ -111,8 +106,6 @@ extension UIView {
         self.layer.cornerRadius = CGFloat(dimension / 2)
         self.clipsToBounds = true
         self.setDimensions(width: CGFloat(dimension), height: CGFloat(dimension))
-        
-        
     }
     
     func makeAborder(radius: Int) {
@@ -123,10 +116,6 @@ extension UIView {
     
 }
 
-
-
-
-
 extension UIColor {
     
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
@@ -134,6 +123,55 @@ extension UIColor {
     }
     
     static let vridgeGreen = UIColor.rgb(red: 31, green: 186, blue: 109)
+    static let vridgePlaceholderColor = UIColor.rgb(red: 192, green: 192, blue: 194)
+}
+
+extension UIFont {
+    
+    static func SFRegular(size: CGFloat) -> UIFont? {
+        let font = UIFont(name: "SFPro-Regular", size: size)
+        return font
+    }
+    
+    static func SFSemiBold(size: CGFloat) -> UIFont? {
+        let font = UIFont(name: "SFPro-Semibold", size: size)
+        return font
+    }
+    
+    static func SFBold(size: CGFloat) -> UIFont? {
+        let font = UIFont(name: "SFPro-Bold", size: size)
+        return font
+    }
+    
+    static func SFHeavy(size: CGFloat) -> UIFont? {
+        let font = UIFont(name: "SFPro-Heavy", size: size)
+        return font
+    }
+    
+    static func SFUltraLight(size: CGFloat) -> UIFont? {
+        let font = UIFont(name: "SFPro-Ultralight", size: size)
+        return font
+    }
+    
+    static func SFThin(size: CGFloat) -> UIFont? {
+        let font = UIFont(name: "SFPro-Thin", size: size)
+        return font
+    }
+    
+    static func SFLight(size: CGFloat) -> UIFont? {
+        let font = UIFont(name: "SFPro-Light", size: size)
+        return font
+    }
+    
+    static func SFMedium(size: CGFloat) -> UIFont? {
+        let font = UIFont(name: "SFPro-Medium", size: size)
+        return font
+    }
+    
+    static func SFBlack(size: CGFloat) -> UIFont? {
+        let font = UIFont(name: "SFPro-Black", size: size)
+        return font
+    }
     
 }
 

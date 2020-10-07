@@ -16,6 +16,7 @@
 		3D1FA47F2526F30400C6388A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */; };
 		3D1FA4892526F51900C6388A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4882526F51900C6388A /* TabBarController.swift */; };
 		3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA48B2526FC9400C6388A /* Extension.swift */; };
+		3D3E4B18252D866700E25323 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E4B17252D866700E25323 /* SF-Pro.ttf */; };
 		3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */; };
 		3D7F9CD925299552006E23F4 /* MyPageStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD825299552006E23F4 /* MyPageStoryboard.storyboard */; };
 		3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */; };
@@ -46,6 +47,7 @@
 		3D1FA4802526F30400C6388A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D1FA4882526F51900C6388A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		3D1FA48B2526FC9400C6388A /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		3D3E4B17252D866700E25323 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeStoryboard.storyboard; sourceTree = "<group>"; };
 		3D7F9CD825299552006E23F4 /* MyPageStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyPageStoryboard.storyboard; sourceTree = "<group>"; };
 		3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
@@ -119,12 +121,21 @@
 				3D7F9CD425299538006E23F4 /* Storyboards */,
 				3DE6236C252B296F005F16A9 /* API */,
 				3D61FF53252AE61000AC90D2 /* Utils */,
-				3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */,
+				3D3E4B16252D864E00E25323 /* Fonts */,
 				3D1FA4802526F30400C6388A /* Info.plist */,
 				3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */,
+				3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */,
 				3D1FA47B2526F30400C6388A /* Assets.xcassets */,
 			);
 			path = Vridge;
+			sourceTree = "<group>";
+		};
+		3D3E4B16252D864E00E25323 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				3D3E4B17252D866700E25323 /* SF-Pro.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		3D61FF53252AE61000AC90D2 /* Utils */ = {
@@ -275,6 +286,7 @@
 				3D1FA47C2526F30400C6388A /* Assets.xcassets in Resources */,
 				3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */,
 				3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */,
+				3D3E4B18252D866700E25323 /* SF-Pro.ttf in Resources */,
 				3D1FA47A2526F30100C6388A /* Main.storyboard in Resources */,
 				3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */,
 			);

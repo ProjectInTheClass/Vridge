@@ -34,9 +34,11 @@ class TabBarController: UITabBarController {
         
         postButton.centerX(inView: view)
         postButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 8)
-        postButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
-        postButton.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
-        postButton.layer.cornerRadius = view.frame.width * 0.2 / 2
+//        postButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
+//        postButton.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
+        postButton.widthAnchor.constraint(equalToConstant: 65).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        postButton.layer.cornerRadius = 65 / 2
     }
     
     
