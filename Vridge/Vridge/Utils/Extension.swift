@@ -124,6 +124,9 @@ extension UIColor {
     
     static let vridgeGreen = UIColor.rgb(red: 31, green: 186, blue: 109)
     static let vridgePlaceholderColor = UIColor.rgb(red: 192, green: 192, blue: 194)
+    static let vridgeBlack = UIColor.rgb(red: 21, green: 21, blue: 21)
+    static let vridgeGray = UIColor.rgb(red: 153, green: 153, blue: 153)
+    static let vridgeWhite = UIColor.rgb(red: 245, green: 245, blue: 245)
 }
 
 extension UIFont {

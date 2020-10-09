@@ -24,6 +24,16 @@
 		3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */; };
 		3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */; };
 		3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */; };
+		3D8B13452530BC990022AE88 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B13442530BC990022AE88 /* HomeHeaderView.swift */; };
+		3D8B13482530BCA00022AE88 /* HomeFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B13472530BCA00022AE88 /* HomeFeedCell.swift */; };
+		3D8B134B2530BCB80022AE88 /* FeedImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B134A2530BCB80022AE88 /* FeedImageCell.swift */; };
+		3D8B134E2530BCC20022AE88 /* RankingCustomTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B134D2530BCC20022AE88 /* RankingCustomTopView.swift */; };
+		3D8B13512530BCC70022AE88 /* RankingSecondView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B13502530BCC70022AE88 /* RankingSecondView.swift */; };
+		3D8B13542530BCCD0022AE88 /* RankingSecondViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B13532530BCCD0022AE88 /* RankingSecondViewCell.swift */; };
+		3D8B13572530BCD60022AE88 /* RankingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B13562530BCD60022AE88 /* RankingHeader.swift */; };
+		3D8B135A2530BCDD0022AE88 /* RankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B13592530BCDD0022AE88 /* RankingCell.swift */; };
+		3D8B135D2530BCEE0022AE88 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */; };
+		3D8B13602530BCFD0022AE88 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */; };
 		3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */; };
 		3DE6236A252B2925005F16A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62369252B2925005F16A9 /* Constants.swift */; };
 		3DE6236E252B298F005F16A9 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6236D252B298F005F16A9 /* PostService.swift */; };
@@ -55,6 +65,16 @@
 		3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionTextView.swift; sourceTree = "<group>"; };
 		3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoCell.swift; sourceTree = "<group>"; };
+		3D8B13442530BC990022AE88 /* HomeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
+		3D8B13472530BCA00022AE88 /* HomeFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeFeedCell.swift; sourceTree = "<group>"; };
+		3D8B134A2530BCB80022AE88 /* FeedImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedImageCell.swift; sourceTree = "<group>"; };
+		3D8B134D2530BCC20022AE88 /* RankingCustomTopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingCustomTopView.swift; sourceTree = "<group>"; };
+		3D8B13502530BCC70022AE88 /* RankingSecondView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingSecondView.swift; sourceTree = "<group>"; };
+		3D8B13532530BCCD0022AE88 /* RankingSecondViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingSecondViewCell.swift; sourceTree = "<group>"; };
+		3D8B13562530BCD60022AE88 /* RankingHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingHeader.swift; sourceTree = "<group>"; };
+		3D8B13592530BCDD0022AE88 /* RankingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingCell.swift; sourceTree = "<group>"; };
+		3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
+		3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
 		3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		3DE62369252B2925005F16A9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3DE6236D252B298F005F16A9 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
@@ -170,6 +190,8 @@
 		3D7F9D232529B875006E23F4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3D8B13622530C0B80022AE88 /* Home */,
+				3D8B13632530C10B0022AE88 /* Ranking */,
 				3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */,
 				3D7F9D3E2529EA86006E23F4 /* ImagePicker.swift */,
 				3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */,
@@ -180,6 +202,7 @@
 		3D7F9D242529B878006E23F4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -192,8 +215,31 @@
 				3D1FA4762526F30100C6388A /* HomeViewController.swift */,
 				3D7F9D2A2529BB09006E23F4 /* PostingViewController.swift */,
 				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
+				3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		3D8B13622530C0B80022AE88 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				3D8B13442530BC990022AE88 /* HomeHeaderView.swift */,
+				3D8B13472530BCA00022AE88 /* HomeFeedCell.swift */,
+				3D8B134A2530BCB80022AE88 /* FeedImageCell.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		3D8B13632530C10B0022AE88 /* Ranking */ = {
+			isa = PBXGroup;
+			children = (
+				3D8B134D2530BCC20022AE88 /* RankingCustomTopView.swift */,
+				3D8B13502530BCC70022AE88 /* RankingSecondView.swift */,
+				3D8B13532530BCCD0022AE88 /* RankingSecondViewCell.swift */,
+				3D8B13562530BCD60022AE88 /* RankingHeader.swift */,
+				3D8B13592530BCDD0022AE88 /* RankingCell.swift */,
+			);
+			path = Ranking;
 			sourceTree = "<group>";
 		};
 		3DE6236C252B296F005F16A9 /* API */ = {
@@ -342,20 +388,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */,
+				3D8B13512530BCC70022AE88 /* RankingSecondView.swift in Sources */,
 				3DE6236A252B2925005F16A9 /* Constants.swift in Sources */,
 				3D7F9D2B2529BB09006E23F4 /* PostingViewController.swift in Sources */,
 				3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */,
 				3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */,
 				3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */,
 				3DE6237D252C343D005F16A9 /* User.swift in Sources */,
+				3D8B135A2530BCDD0022AE88 /* RankingCell.swift in Sources */,
+				3D8B13482530BCA00022AE88 /* HomeFeedCell.swift in Sources */,
 				3D1FA4892526F51900C6388A /* TabBarController.swift in Sources */,
+				3D8B134B2530BCB80022AE88 /* FeedImageCell.swift in Sources */,
 				3DE6236E252B298F005F16A9 /* PostService.swift in Sources */,
 				3DE62380252C3557005F16A9 /* Post.swift in Sources */,
+				3D8B13602530BCFD0022AE88 /* RankingViewModel.swift in Sources */,
 				3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */,
+				3D8B135D2530BCEE0022AE88 /* RankingViewController.swift in Sources */,
 				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
+				3D8B13452530BC990022AE88 /* HomeHeaderView.swift in Sources */,
+				3D8B13542530BCCD0022AE88 /* RankingSecondViewCell.swift in Sources */,
+				3D8B13572530BCD60022AE88 /* RankingHeader.swift in Sources */,
 				3DE62385252C4B79005F16A9 /* UserService.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,
 				3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */,
+				3D8B134E2530BCC20022AE88 /* RankingCustomTopView.swift in Sources */,
 				3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */,
 				3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */,
 			);
