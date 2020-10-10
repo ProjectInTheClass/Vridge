@@ -14,8 +14,6 @@ struct AuthService {
     
     static let shared = AuthService()
     
-    // 이놈들을 이용하여 refactoring 하기
-    
     func signInNewUser(viewController: UIViewController, credential: AuthCredential, email: String) {
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }

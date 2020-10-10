@@ -28,29 +28,30 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
 
         view.addSubview(postButton)
         
         postButton.centerX(inView: view)
         postButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 8)
-        postButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
-        postButton.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
-        postButton.layer.cornerRadius = view.frame.width * 0.2 / 2
+//        postButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
+//        postButton.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
+        postButton.widthAnchor.constraint(equalToConstant: 65).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 65).isActive = true
+        postButton.layer.cornerRadius = 65 / 2
     }
     
     
     // MARK: - Selectors
     
     @objc func handleButtonTapped() {
-//        let controller = PostingViewController()
-//        let nav = UINavigationController(rootViewController: controller)
-//        nav.modalPresentationStyle = .fullScreen
+        let controller = PostingViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
         
-        let nav = LoginViewController()
+//        let nav = LoginViewController()
+        
         present(nav, animated: true, completion: nil)
     }
-    
-
-    
 
 }

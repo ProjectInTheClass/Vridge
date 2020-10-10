@@ -17,11 +17,19 @@ class PostingViewController: UIViewController {
     
     // MARK: - Properties
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "글 작성"
+        label.font = UIFont.SFRegular(size: 20)
+        return label
+    }()
+    
     private let textView: CaptionTextView = {
         let tv = CaptionTextView()
         tv.isUserInteractionEnabled = true
-        tv.layer.borderWidth = 1
-        tv.layer.borderColor = UIColor.systemGroupedBackground.cgColor
+        tv.contentInset = UIEdgeInsets(top: -6, left: 0, bottom: 0, right: 0)
+//        tv.layer.borderWidth = 1
+//        tv.layer.borderColor = UIColor.systemGroupedBackground.cgColor
         return tv
     }()
     
@@ -32,6 +40,16 @@ class PostingViewController: UIViewController {
         cv.backgroundColor = .clear
         return cv
     }()
+    
+    lazy var completeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.setTitle("완료", for: .normal)
+        button.tintColor = .vridgeGreen
+        button.titleLabel?.font = UIFont.SFSemiBold(size: 16)
+        return button
+    }()
+    
     
     private var images: [UIImage]?
     
@@ -78,7 +96,6 @@ class PostingViewController: UIViewController {
             let okButton = UIAlertAction(title: "확인", style: .default, handler: nil)
             alert.addAction(okButton)
             present(alert, animated: true, completion: nil)
-            
         } else {
             guard let caption = textView.text else { return }
             guard let images = images else { return }
@@ -89,10 +106,8 @@ class PostingViewController: UIViewController {
                     print("DEBUG: failed with posting with error \(err.localizedDescription)")
                 }
             }
-            
         }
-        
-        // 글 에 담길 항목 모두 담고 + REF_USER.uid.child(point) += 1
+        // 글에 담길 항목 모두 담고 + REF_USER.uid.child(point) += 1
         // PostService.shared.upload
     }
     
@@ -101,7 +116,8 @@ class PostingViewController: UIViewController {
     
     func configureUI() {
         view.backgroundColor = .white
-        navigationItem.title = "글 작성"
+        navigationItem.titleView = titleLabel
+        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         textView.delegate = self
         
         textView.addSubview(indicator)
@@ -112,15 +128,13 @@ class PostingViewController: UIViewController {
         indicator.centerX(inView: textView)
         indicator.centerY(inView: textView)
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"),
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "back5"),
                                                            style: .plain,
                                                            target: self,
                                                            action: #selector(handleCancel))
+        navigationItem.leftBarButtonItem?.tintColor = .black
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "올리기",
-                                                             style: .plain,
-                                                             target: self,
-                                                             action: #selector(handleNext))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
         navigationItem.rightBarButtonItem?.tintColor = .vridgeGreen
         
         view.addSubview(textView)
@@ -135,7 +149,7 @@ class PostingViewController: UIViewController {
                         right: view.rightAnchor, paddingTop: 20,
                         paddingLeft: 16, paddingRight: 16, height: 180)
         collectionView.anchor(top: textView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                              paddingTop: 8, paddingLeft: 16, paddingRight: 16, height: 140)
+                              paddingTop: 8, paddingLeft: 16, paddingRight: 16, height: 140)// height 수정필요
     }
     
     func handleAddPhoto() {
@@ -145,7 +159,6 @@ class PostingViewController: UIViewController {
             self.picker.dismiss(animated: true, completion: nil)
         }
     }
-    
 }
 
 // MARK: - UICollectionviewDataSource
@@ -160,6 +173,7 @@ extension PostingViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reusableIdentifier,
                                                       for: indexPath) as! PostPhotoCell
         cell.imageView.image = images?[indexPath.item] ?? UIImage(systemName: "plus.circle")
+        cell.imageView.layer.borderWidth = images?[indexPath.item] == nil ? 0: 4
         return cell
     }
 }
@@ -185,6 +199,10 @@ extension PostingViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 }
 
