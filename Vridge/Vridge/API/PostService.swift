@@ -59,11 +59,13 @@ struct PostService {
     }
     
     // 모든 게시글 다 보기
-    func fetchPosts() {
+    func fetchPosts(completion: @escaping([Post]) -> Void) {
+        
+        var posts = [Post]()
         REF_POSTS.observe(.childAdded) { snapshot in
             guard let dic = snapshot.value as? [String: Any] else { return }
-            guard let images = dic["image"] as? [String] else { return }
-            print("DEBUG: values are '\(images)'")
+            guard let images = dic["images"] as? [String] else { return }
+            completion(posts)
         }
     }
     

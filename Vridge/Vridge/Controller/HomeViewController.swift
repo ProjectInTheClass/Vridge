@@ -21,6 +21,10 @@ class HomeViewController: UIViewController {
         return label
     }()
     
+    private var posts = [Post]() {
+        didSet { tableView.reloadData() }
+    }
+    
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
     
@@ -31,6 +35,7 @@ class HomeViewController: UIViewController {
         
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         configureUI()
+        fetchPosts()
     }
     
     
@@ -68,6 +73,12 @@ class HomeViewController: UIViewController {
         
     }
     
+    func fetchPosts() {
+        PostService.shared.fetchPosts { photos in
+            self.posts = photos
+        }
+    }
+    
     func showReportAlert() {
         let alert = UIAlertController(title: "", message: "신고가 정상적으로 반영되었습니다\n신속히 처리하도록 하겠습니다",
                                       preferredStyle: .alert)
@@ -88,6 +99,8 @@ extension HomeViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! HomeFeedCell
         
         cell.delegate = self
+        cell.posts = posts
+        print("DEBUG: photos are fxr \(posts)")
         return cell
     }
     

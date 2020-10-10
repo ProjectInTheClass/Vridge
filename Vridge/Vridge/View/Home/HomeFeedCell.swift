@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Kingfisher
+
 protocol HomeFeedCellDelegate: class {
     func reportDidTap()
 }
@@ -18,6 +20,10 @@ class HomeFeedCell: UITableViewCell {
     // MARK: - Properties
     
     weak var delegate: HomeFeedCellDelegate?
+    
+    lazy var posts = [Post]() {
+        didSet { collectionView.reloadData() }
+    }
     
     let profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -147,7 +153,7 @@ class HomeFeedCell: UITableViewCell {
 extension HomeFeedCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -155,6 +161,8 @@ extension HomeFeedCell: UICollectionViewDataSource {
                                                       for: indexPath) as! FeedImageCell
         
         cell.backgroundColor = .vridgeGreen
+        cell.posts = posts
+//        cell.feedImages.kf.setImage(with: URL(string: photos[indexPath.row]))
         return cell
     }
     
