@@ -19,7 +19,9 @@ for i in occupation {
     }
 }
 print(answer1)
-
+    
+let result1Array = occupation.filter{$0.count == 3}
+print(result1Array)
 // MARK: - Question 2
 
 let numbers = [1, 3, 7, 11, 13, 17, 19, 28, 37, 51]
@@ -31,7 +33,8 @@ for i in numbers {
 }
 print(answer2)
 
-
+let result2Array = numbers.map{($0 + 2) * 3}
+print(result2Array)
 // MARK: - Question 3
 
 let nums = [30, 1, 2]
@@ -43,7 +46,8 @@ for i in nums {
 }
 print(answer3)
 
-
+let result3 = nums.reduce(0){ $0 + $1 }
+print(result3)
 // MARK: - Question 4
 
 let nums4 = [36, 200, 400, 17, 29, 113]
@@ -57,7 +61,8 @@ for i in nums4 {
 }
 print(answer4)
 
-
+let result4Array = nums4.filter{$0 % 2 != 0}
+print(result4Array)
 // MARK: - Question 5
 
 let nums5 = [32, 64, 912, 179, 361, 754]
@@ -71,3 +76,6 @@ for i in nums5 {
 }
 
 print(answer5)
+
+let result5Array = nums5.filter{$0 < 100}
+print(result5Array)
