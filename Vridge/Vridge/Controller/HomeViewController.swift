@@ -25,7 +25,19 @@ class HomeViewController: UIViewController {
         didSet { tableView.reloadData() }
     }
     
+    var user: [User]? {
+        didSet { print("DEBUG: user did set") }
+    }
+    
     private let tableView = UITableView(frame: .zero, style: .grouped)
+    
+    lazy var indicator: UIActivityIndicatorView = {
+        let ic = UIActivityIndicatorView()
+        ic.color = .vridgeBlack
+        ic.style = .large
+        ic.center = view.center
+        return ic
+    }()
     
     
     // MARK: - Lifecycle
@@ -36,6 +48,9 @@ class HomeViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         configureUI()
         fetchPosts()
+        
+        view.addSubview(indicator)
+        indicator.startAnimating()
     }
     
     
@@ -63,6 +78,7 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
@@ -74,8 +90,9 @@ class HomeViewController: UIViewController {
     }
     
     func fetchPosts() {
-        PostService.shared.fetchPosts { photos in
-            self.posts = photos
+        PostService.shared.fetchPosts { posts in
+            self.posts = posts
+            self.indicator.stopAnimating()
         }
     }
     
@@ -92,15 +109,15 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! HomeFeedCell
         
         cell.delegate = self
-        cell.posts = posts
-        print("DEBUG: photos are fxr \(posts)")
+        cell.posts = posts[indexPath.row]
+        
         return cell
     }
     
@@ -126,6 +143,10 @@ extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.estimatedRowHeight
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
 }
 

@@ -11,8 +11,8 @@ class FeedImageCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    var posts = [Post]() {
-        didSet { configureUI() }
+    var imageURL: String? {
+        didSet { configure() }
     }
     
     let feedImages: UIImageView = {
@@ -31,6 +31,7 @@ class FeedImageCell: UICollectionViewCell {
         
         addSubview(feedImages)
         feedImages.addConstraintsToFillView(self)
+        prepareForReuse()
     }
     
     required init?(coder: NSCoder) {
@@ -43,9 +44,16 @@ class FeedImageCell: UICollectionViewCell {
     
     // MARK: - Helpers
     
-    func configureUI() {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        feedImages.image = nil
+    }
+    
+    func configure() {
         
-//        feedImages.kf.setImage(with: URL(string: photos[0]))
+        guard let url = imageURL else { return }
+        
+        feedImages.kf.setImage(with: URL(string: url))
     }
     
 }

@@ -7,9 +7,20 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+import Firebase
+
+class MainTabBarController: UITabBarController {
     
     // MARK: - Properties
+    
+    var user: [User]? {
+        didSet {
+            guard let nav = viewControllers?[0] as? UINavigationController else { return }
+            guard let home = nav.viewControllers.first as? HomeViewController else { return }
+            
+            home.user = user
+        }
+    }
     
     private lazy var postButton: UIButton = {
         let button = UIButton(type: .system)
@@ -29,13 +40,13 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
+        
+        fetchUser()
 
         view.addSubview(postButton)
         
         postButton.centerX(inView: view)
         postButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 8)
-//        postButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
-//        postButton.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2).isActive = true
         postButton.widthAnchor.constraint(equalToConstant: 65).isActive = true
         postButton.heightAnchor.constraint(equalToConstant: 65).isActive = true
         postButton.layer.cornerRadius = 65 / 2
@@ -52,6 +63,18 @@ class TabBarController: UITabBarController {
 //        let nav = LoginViewController()
         
         present(nav, animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - Helpers
+    
+    func fetchUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        UserService.shared.fetchUser(uid: uid) { user in
+//            print("DEBUG: What the heck users are \(user)")
+            self.user?.append(user)
+        }
     }
 
 }

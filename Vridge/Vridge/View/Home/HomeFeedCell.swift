@@ -21,11 +21,11 @@ class HomeFeedCell: UITableViewCell {
     
     weak var delegate: HomeFeedCellDelegate?
     
-    lazy var posts = [Post]() {
-        didSet { collectionView.reloadData() }
+    var posts: Post? {
+        didSet { collectionView.reloadData(); configure() }
     }
     
-    let profileImageView: UIImageView = {
+    private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.setDimensions(width: 45, height: 45)
         iv.layer.cornerRadius = 45 / 2
@@ -33,6 +33,9 @@ class HomeFeedCell: UITableViewCell {
         iv.contentMode = .scaleAspectFit
         iv.backgroundColor = .vridgePlaceholderColor
         iv.clipsToBounds = true
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleImageTapped))
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(recognizer)
         return iv
     }()
     
@@ -46,25 +49,28 @@ class HomeFeedCell: UITableViewCell {
         return cv
     }()
     
-    let pageControl: UIPageControl = {
+    lazy var pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.currentPageIndicatorTintColor = .black
         pc.pageIndicatorTintColor = .vridgePlaceholderColor
-        pc.numberOfPages = 3
         pc.isEnabled = false
-        pc.preferredIndicatorImage = UIImage(named: "indicatorUnselect")
+//        pc.preferredIndicatorImage = UIImage(named: "indicatorUnselect")
         return pc
     }()
     
-    lazy var userNameAndType: UILabel = {
+    lazy var username: UILabel = {
         let label = UILabel()
-        let title = NSMutableAttributedString(string: "브릿지 짱짱", //user.username
-                                              attributes: [.font: UIFont.SFSemiBold(size: 14)!,
-                                                           .foregroundColor: UIColor.vridgeBlack])
-        title.append(NSAttributedString(string: " @vegan", //user.type
-                                        attributes: [.font: UIFont.SFRegular(size: 14)!,
-                                                     .foregroundColor: UIColor.vridgeGreen]))
-        label.attributedText = title
+        label.font = UIFont.SFSemiBold(size: 14)
+        label.textColor = .vridgeBlack
+        label.text = "user name man"
+        return label
+    }()
+    
+    lazy var type: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.SFRegular(size: 14)
+        label.textColor = .vridgeGreen
+        label.text = "@ vegan"
         return label
     }()
     
@@ -104,7 +110,12 @@ class HomeFeedCell: UITableViewCell {
         collectionView.register(FeedImageCell.self, forCellWithReuseIdentifier: feedCell)
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = .brown
+        collectionView.backgroundColor = .clear
+        
+        let userNameAndType = UIStackView(arrangedSubviews: [username, type])
+        userNameAndType.spacing = 4
+        userNameAndType.alignment = .leading
+        userNameAndType.distribution = .fillProportionally
         
         let stack = UIStackView(arrangedSubviews: [userNameAndType, time])
         stack.axis = .vertical
@@ -133,7 +144,6 @@ class HomeFeedCell: UITableViewCell {
         pageControl.centerX(inView: collectionView)
         reportButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 11)
         
-        pageControl.numberOfPages = 3
     }
     
     required init?(coder: NSCoder) {
@@ -146,23 +156,50 @@ class HomeFeedCell: UITableViewCell {
     @objc func handleReportTapped() {
         delegate?.reportDidTap()
     }
+    
+    @objc func handleImageTapped() {
+        print("DEBUG: profile image tapped")
+    }
+    
+    
+    // MARK: - Helpers
+    
+    func configure() {
+        guard let posts = posts else { return }
+        
+        let numberOfPages = posts.images.count
+        pageControl.numberOfPages = numberOfPages
+        pageControl.isHidden = numberOfPages == 1 ? true : false
+        captionLabel.text = posts.caption
+        username.text = posts.user.username
+//        prepareForReuse()
+    }
+    
 }
 
 // MARK: - UICollectionViewDataSource
 
 extension HomeFeedCell: UICollectionViewDataSource {
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return posts!.images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: feedCell,
                                                       for: indexPath) as! FeedImageCell
         
-        cell.backgroundColor = .vridgeGreen
-        cell.posts = posts
-//        cell.feedImages.kf.setImage(with: URL(string: photos[indexPath.row]))
+        
+        
+        cell.backgroundColor = .clear
+        cell.imageURL = posts?.images[indexPath.row]
+        
         return cell
     }
     
