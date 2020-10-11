@@ -41,7 +41,7 @@ class HomeViewController: UIViewController {
     
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -83,7 +83,7 @@ class HomeViewController: UIViewController {
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
         view.addSubview(tableView)
-
+        
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
         
@@ -103,16 +103,14 @@ class HomeViewController: UIViewController {
         alert.addAction(okButton)
         present(alert, animated: true, completion: nil)
     }
-
-}
-
-extension HomeViewController: UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // MARK: - UITableViewDataSource/Delegate
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! HomeFeedCell
         
         cell.delegate = self
@@ -121,7 +119,7 @@ extension HomeViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = HomeHeaderView()
         
         header.backgroundColor = .white
@@ -129,11 +127,7 @@ extension HomeViewController: UITableViewDataSource {
         return header
     }
     
-}
-
-extension HomeViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 167
     }
     
@@ -141,13 +135,15 @@ extension HomeViewController: UITableViewDelegate {
         return 600
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.estimatedRowHeight
     }
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
     }
+    
+    
 }
 
 

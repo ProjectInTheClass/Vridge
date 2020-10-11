@@ -85,7 +85,39 @@ class RankingViewController: UIViewController {
         
     }
 
+// MARK: - UITableViewDataSource/Delegate
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID,
+                                                 for: indexPath) as! RankingCell
+        cell.backgroundColor = .vridgeWhite
+        cell.number.text = "\(indexPath.row + 9994)"
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = RankingHeader()
+        header.backgroundColor = .white
+        return header
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 243
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 92
+    }
+
 }
+
+
+// MARK: - RankingCustomTopViewDelegate
 
 extension RankingViewController: RankingCustomTopViewDelegate {
     
@@ -108,35 +140,4 @@ extension RankingViewController: RankingSecondViewDelegate {
     }
 }
 
-extension RankingViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID,
-                                                 for: indexPath) as! RankingCell
-        cell.backgroundColor = .vridgeWhite
-        cell.number.text = "\(indexPath.row + 9994)"
-        return cell
-    }
-}
 
-extension RankingViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = RankingHeader()
-        header.backgroundColor = .white
-        return header
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 243
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return 92
-    }
-}
