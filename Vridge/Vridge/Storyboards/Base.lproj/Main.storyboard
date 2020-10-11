@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hb9-4F-xJQ">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,7 +12,7 @@
             <objects>
                 <viewController id="tZo-yR-i6d" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="b9v-Ea-3yq">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="dKx-QH-p7M"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -25,10 +24,10 @@
             </objects>
             <point key="canvasLocation" x="1293" y="626"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar Controller-->
         <scene sceneID="adc-pb-fDq">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="hb9-4F-xJQ" customClass="TabBarController" customModule="Vridge" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="hb9-4F-xJQ" customClass="MainTabBarController" customModule="Vridge" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="V9P-fz-tpd">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>

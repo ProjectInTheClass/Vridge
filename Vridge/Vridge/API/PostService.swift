@@ -16,10 +16,10 @@ struct PostService {
     func uploadPost(caption: String?, photos: [UIImage?], indicator: UIActivityIndicatorView,
                     view: UIViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
         
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
         indicator.startAnimating()
         var urlString: [String] = []
-        
-        let uid = "thisIsUID" // 이 곳에 Auth.auth().currentUser?.uid
         
         for photo in photos {
             guard let imageData = photo?.jpegData(compressionQuality: 0.2) else { return }
@@ -39,8 +39,8 @@ struct PostService {
                         
                         let values = ["caption": caption,
                                       "images": urlString,
-                                      "uid": "this is your uid.",
-                                      "timestamp": "some number since 1970"] as [String: Any]
+                                      "uid": uid,
+                                      "timestamp": 276293865925] as [String: Any]
                         
                         REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
                             guard let postID = ref.key else { return }
@@ -60,12 +60,18 @@ struct PostService {
     
     // 모든 게시글 다 보기
     func fetchPosts(completion: @escaping([Post]) -> Void) {
+        var post = [Post]()
         
-        var posts = [Post]()
         REF_POSTS.observe(.childAdded) { snapshot in
-            guard let dic = snapshot.value as? [String: Any] else { return }
-            guard let images = dic["images"] as? [String] else { return }
-            completion(posts)
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            guard let uid = dictionary["uid"] as? String else { return }
+            let postID = snapshot.key
+
+            UserService.shared.fetchUser(uid: uid) { user in
+                let posts = Post(user: user, postID: postID, dictionary: dictionary)
+                post.append(posts)
+                completion(post)
+            }
         }
     }
     

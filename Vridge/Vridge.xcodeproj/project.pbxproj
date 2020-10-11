@@ -14,7 +14,7 @@
 		3D1FA47A2526F30100C6388A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D1FA4782526F30100C6388A /* Main.storyboard */; };
 		3D1FA47C2526F30400C6388A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D1FA47B2526F30400C6388A /* Assets.xcassets */; };
 		3D1FA47F2526F30400C6388A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */; };
-		3D1FA4892526F51900C6388A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4882526F51900C6388A /* TabBarController.swift */; };
+		3D1FA4892526F51900C6388A /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4882526F51900C6388A /* MainTabBarController.swift */; };
 		3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA48B2526FC9400C6388A /* Extension.swift */; };
 		3D3E4B18252D866700E25323 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E4B17252D866700E25323 /* SF-Pro.ttf */; };
 		3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */; };
@@ -55,7 +55,7 @@
 		3D1FA47B2526F30400C6388A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3D1FA47E2526F30400C6388A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D1FA4802526F30400C6388A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3D1FA4882526F51900C6388A /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		3D1FA4882526F51900C6388A /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		3D1FA48B2526FC9400C6388A /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		3D3E4B17252D866700E25323 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeStoryboard.storyboard; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				3DE62373252C17F1005F16A9 /* Authentication */,
-				3D1FA4882526F51900C6388A /* TabBarController.swift */,
+				3D1FA4882526F51900C6388A /* MainTabBarController.swift */,
 				3D1FA4762526F30100C6388A /* HomeViewController.swift */,
 				3D7F9D2A2529BB09006E23F4 /* PostingViewController.swift */,
 				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
@@ -397,7 +397,7 @@
 				3DE6237D252C343D005F16A9 /* User.swift in Sources */,
 				3D8B135A2530BCDD0022AE88 /* RankingCell.swift in Sources */,
 				3D8B13482530BCA00022AE88 /* HomeFeedCell.swift in Sources */,
-				3D1FA4892526F51900C6388A /* TabBarController.swift in Sources */,
+				3D1FA4892526F51900C6388A /* MainTabBarController.swift in Sources */,
 				3D8B134B2530BCB80022AE88 /* FeedImageCell.swift in Sources */,
 				3DE6236E252B298F005F16A9 /* PostService.swift in Sources */,
 				3DE62380252C3557005F16A9 /* Post.swift in Sources */,
@@ -490,7 +490,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -545,7 +545,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

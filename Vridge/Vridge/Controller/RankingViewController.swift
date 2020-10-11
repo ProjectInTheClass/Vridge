@@ -118,7 +118,7 @@ extension RankingViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID,
                                                  for: indexPath) as! RankingCell
         cell.backgroundColor = .vridgeWhite
-        cell.number.text = "\(indexPath.row + 4)"
+        cell.number.text = "\(indexPath.row + 9994)"
         return cell
     }
 }
