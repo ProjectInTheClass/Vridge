@@ -20,24 +20,24 @@ class RankingViewController: UIViewController {
         didSet { tableView.reloadData() }
     }
     
-//    private var allRank = [User]()
-//    private var myTypeRank = [User]()
-//
-//    private var currentDataSource: [User] {
-//        switch selectedFilter {
-//        case .all: return allRank
-//        case .myType: return myTypeRank
-//        }
-//    }
+    //    private var allRank = [User]()
+    //    private var myTypeRank = [User]()
+    //
+    //    private var currentDataSource: [User] {
+    //        switch selectedFilter {
+    //        case .all: return allRank
+    //        case .myType: return myTypeRank
+    //        }
+    //    }
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureUI()
         print("DEBUG: \(selectedFilter)")
     }
@@ -84,14 +84,17 @@ class RankingViewController: UIViewController {
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
         
     }
+}
 
 // MARK: - UITableViewDataSource/Delegate
+
+extension RankingViewController: UITableViewDataSource {
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID,
                                                  for: indexPath) as! RankingCell
         cell.backgroundColor = .vridgeWhite
@@ -99,21 +102,24 @@ class RankingViewController: UIViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = RankingHeader()
         header.backgroundColor = .white
         return header
     }
+}
+
+extension RankingViewController: UITableViewDelegate {
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 243
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 92
     }
-
+    
 }
 
 

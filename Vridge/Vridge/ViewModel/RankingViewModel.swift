@@ -23,7 +23,6 @@ struct RankingViewModel {
     
     let profileImage2: UIImageView = {
         let iv = UIImageView()
-//        iv.image = UIImage(systemName: "person")
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFit
         iv.setDimensions(width: 80, height: 80)

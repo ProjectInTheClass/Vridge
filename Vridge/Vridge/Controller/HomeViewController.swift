@@ -97,20 +97,23 @@ class HomeViewController: UIViewController {
     }
     
     func showReportAlert() {
-        let alert = UIAlertController(title: "", message: "신고가 정상적으로 반영되었습니다\n신속히 처리하도록 하겠습니다",
-                                      preferredStyle: .alert)
+        let alert = UIAlertController(title: noTitle, message: reportMessage, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "확인", style: .default, handler: nil)
         alert.addAction(okButton)
         present(alert, animated: true, completion: nil)
     }
+}
+
+
+// MARK: - UITableViewDataSource
+
+extension HomeViewController: UITableViewDataSource {
     
-    // MARK: - UITableViewDataSource/Delegate
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! HomeFeedCell
         
         cell.delegate = self
@@ -119,23 +122,31 @@ class HomeViewController: UIViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = HomeHeaderView()
         
         header.backgroundColor = .white
         
         return header
     }
+}
+
+
+// MARK: - UITableViewDelegate
+
+extension HomeViewController: UITableViewDelegate {
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 167
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        print("DEBUG: 600")
+        
         return 600
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableView.estimatedRowHeight
     }
     
@@ -143,12 +154,10 @@ class HomeViewController: UIViewController {
         return false
     }
     
-    
 }
 
-
 extension HomeViewController: HomeFeedCellDelegate {
-    
+
     func reportDidTap() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let reportButton = UIAlertAction(title: "신고하기", style: .default) { _ in
@@ -182,5 +191,5 @@ extension HomeViewController: HomeFeedCellDelegate {
         alert.addAction(cancelButton)
         present(alert, animated: true, completion: nil)
     }
-    
+
 }

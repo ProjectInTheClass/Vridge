@@ -68,6 +68,7 @@ struct PostService {
             let postID = snapshot.key
 
             UserService.shared.fetchUser(uid: uid) { user in
+                
                 let posts = Post(user: user, postID: postID, dictionary: dictionary)
                 post.append(posts)
                 completion(post)
