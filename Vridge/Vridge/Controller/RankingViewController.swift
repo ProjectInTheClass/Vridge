@@ -46,12 +46,14 @@ class RankingViewController: UIViewController {
         super.viewWillAppear(true)
         
         navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
         navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = false
     }
     
     
@@ -98,7 +100,7 @@ extension RankingViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID,
                                                  for: indexPath) as! RankingCell
         cell.backgroundColor = .vridgeWhite
-        cell.number.text = "\(indexPath.row + 9994)"
+        cell.number.text = "\(indexPath.row + 4)"
         return cell
     }
     

@@ -39,6 +39,12 @@ class HomeViewController: UIViewController {
         return ic
     }()
     
+    let refreshControl: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        return rc
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -56,7 +62,14 @@ class HomeViewController: UIViewController {
     
     // MARK: - Selectors
     
+    @objc func handleRefresh() {
+        print("DEBUG: Refresh feed")
+        fetchPosts()
+    }
+    
     @objc func handleShowRanking() {
+        NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
+        
         let controller = RankingViewController()
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -79,6 +92,7 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.refreshControl = refreshControl
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
@@ -93,6 +107,7 @@ class HomeViewController: UIViewController {
         PostService.shared.fetchPosts { posts in
             self.posts = posts
             self.indicator.stopAnimating()
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -141,8 +156,6 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("DEBUG: 600")
-        
         return 600
     }
     

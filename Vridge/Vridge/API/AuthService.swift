@@ -14,13 +14,15 @@ struct AuthService {
     
     static let shared = AuthService()
     
-    func signInNewUser(viewController: UIViewController, credential: AuthCredential, email: String) {
+    func signInNewUser(viewController: UIViewController, credential: AuthCredential,
+                       email: String, username: String) {
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             
             let values = ["uid": uid,
                           "email": email,
-                          "point": 0] as [String: Any]
+                          "point": 0,
+                          "username": username] as [String: Any]
             
             REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                 print("DEBUG: New user's email is \(email)")

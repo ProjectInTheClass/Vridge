@@ -156,13 +156,21 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
             
-            guard let email = appleIDCredential.email else {
+            guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
                 // handle if user already once registered... or ex user rejoining...
                 AuthService.shared.loginExistUser(viewController: self, credential: credential)
                 return
             }
 //             handle if user hasn't registered...
-            AuthService.shared.signInNewUser(viewController: self, credential: credential, email: email)
+            
+            let firstName = name.givenName ?? ""
+            let familyName = name.familyName ?? ""
+            let username = familyName + firstName
+            AuthService.shared.signInNewUser(viewController: self, credential: credential,
+                                             email: email, username: username)
+            
+            print("DEBUG: New user is '\(username)'")
+            
             return
         }
     }
