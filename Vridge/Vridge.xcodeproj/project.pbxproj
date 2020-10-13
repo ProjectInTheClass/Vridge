@@ -34,6 +34,7 @@
 		3D8B135A2530BCDD0022AE88 /* RankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B13592530BCDD0022AE88 /* RankingCell.swift */; };
 		3D8B135D2530BCEE0022AE88 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */; };
 		3D8B13602530BCFD0022AE88 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */; };
+		3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */; };
 		3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */; };
 		3DE6236A252B2925005F16A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62369252B2925005F16A9 /* Constants.swift */; };
 		3DE6236E252B298F005F16A9 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6236D252B298F005F16A9 /* PostService.swift */; };
@@ -76,6 +77,7 @@
 		3D8B13592530BCDD0022AE88 /* RankingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingCell.swift; sourceTree = "<group>"; };
 		3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
+		3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
 		3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		3DE62369252B2925005F16A9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3DE6236D252B298F005F16A9 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */,
+				3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -402,6 +405,7 @@
 				3D8B135A2530BCDD0022AE88 /* RankingCell.swift in Sources */,
 				3D8B13482530BCA00022AE88 /* HomeFeedCell.swift in Sources */,
 				3D1FA4892526F51900C6388A /* MainTabBarController.swift in Sources */,
+				3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */,
 				3D8B134B2530BCB80022AE88 /* FeedImageCell.swift in Sources */,
 				3DE6236E252B298F005F16A9 /* PostService.swift in Sources */,
 				3DE62380252C3557005F16A9 /* Post.swift in Sources */,

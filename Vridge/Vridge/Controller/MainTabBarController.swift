@@ -13,7 +13,7 @@ class MainTabBarController: UITabBarController {
     
     // MARK: - Properties
     
-    var user: [User]? {
+    var user: User? {
         didSet {
             guard let nav = viewControllers?[0] as? UINavigationController else { return }
             guard let home = nav.viewControllers.first as? HomeViewController else { return }
@@ -82,7 +82,7 @@ class MainTabBarController: UITabBarController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         UserService.shared.fetchUser(uid: uid) { user in
-            self.user?.append(user)
+            self.user = user
         }
     }
 

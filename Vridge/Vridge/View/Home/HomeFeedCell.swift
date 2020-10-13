@@ -10,7 +10,8 @@ import UIKit
 import Kingfisher
 
 protocol HomeFeedCellDelegate: class {
-    func reportDidTap()
+    func currentUserAmendTapped()
+    func reportButtonTapped()
 }
 
 private let feedCell = "FeedCell"
@@ -154,7 +155,11 @@ class HomeFeedCell: UITableViewCell {
     // MARK: - Selectors
     
     @objc func handleReportTapped() {
-        delegate?.reportDidTap()
+        if posts!.user.isCurrentUser {
+            delegate?.currentUserAmendTapped()
+        } else {
+            delegate?.reportButtonTapped()
+        }
     }
     
     @objc func handleImageTapped() {
@@ -172,6 +177,7 @@ class HomeFeedCell: UITableViewCell {
         pageControl.isHidden = numberOfPages == 1 ? true : false
         captionLabel.text = posts.caption
         username.text = posts.user.username
+        profileImageView.kf.setImage(with: posts.user.profileImageURL)
         var timestamp: String {
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfMonth]
@@ -181,7 +187,7 @@ class HomeFeedCell: UITableViewCell {
             let now = Date()
             return formatter.string(from: posts.timestamp, to: now) ?? "2분 전"
         }
-        time.text = "\(timestamp) 전"
+        time.text = "\(timestamp) 전 업로드"
         
     }
     

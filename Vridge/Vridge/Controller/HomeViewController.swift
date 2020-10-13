@@ -21,11 +21,13 @@ class HomeViewController: UIViewController {
         return label
     }()
     
+//    private lazy var viewModel = ActionSheetViewModel(user: user!)
+    
     private var posts = [Post]() {
         didSet { tableView.reloadData() }
     }
     
-    var user: [User]? {
+    var user: User? {
         didSet { print("DEBUG: user did set") }
     }
     
@@ -176,39 +178,16 @@ extension HomeViewController: UITableViewDelegate {
 }
 
 extension HomeViewController: HomeFeedCellDelegate {
-
-    func reportDidTap() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let reportButton = UIAlertAction(title: "신고하기", style: .default) { _ in
-            let alert = UIAlertController(title: "신고 사유 선택", message: nil, preferredStyle: .actionSheet)
-            let sexualHarass = UIAlertAction(title: "성적 수치심 유발", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let swear = UIAlertAction(title: "욕설/비하", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let fraud = UIAlertAction(title: "유출/사칭/사기", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let advertise = UIAlertAction(title: "상업적 광고 및 판매", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let nonsense = UIAlertAction(title: "채식과 관련 없음", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let cancelButton = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            alert.addAction(sexualHarass)
-            alert.addAction(swear)
-            alert.addAction(fraud)
-            alert.addAction(advertise)
-            alert.addAction(nonsense)
-            alert.addAction(cancelButton)
-            self.present(alert, animated: true, completion: nil)
-        }
-        let cancelButton = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alert.addAction(reportButton)
-        alert.addAction(cancelButton)
-        present(alert, animated: true, completion: nil)
+    
+    
+    func currentUserAmendTapped() {
+        let viewModel = ActionSheetViewModel()
+        present(viewModel.amendActionSheet(self), animated: true, completion: nil)
+    }
+    
+    func reportButtonTapped() {
+        let viewModel = ActionSheetViewModel()
+        present(viewModel.reportActionSheet(self), animated: true, completion: nil)
     }
 
 }
