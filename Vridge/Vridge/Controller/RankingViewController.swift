@@ -17,6 +17,10 @@ class RankingViewController: UIViewController {
         didSet { tableView.reloadData() }
     }
     
+    var totalUser: Int? {
+        didSet { fetchUserRanking() }
+    }
+    
     private let topView = RankingCustomTopView()
     private let secondView = RankingSecondView()
     
@@ -43,7 +47,7 @@ class RankingViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
-        fetchUserRanking()
+        fetchTotalUser()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +55,7 @@ class RankingViewController: UIViewController {
         
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = true
+        NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,9 +71,17 @@ class RankingViewController: UIViewController {
     
     // MARK: - Helpers
     
+    func fetchTotalUser() {
+        UserService.shared.fetchRanking { users in
+            self.totalUser = users.count
+        }
+    }
+    
     func fetchUserRanking() {
         UserService.shared.fetchRanking { users in
-            self.userRanking = users.sorted(by: { $0.point! > $1.point! })
+            if users.count == self.totalUser {
+                self.userRanking = users.sorted(by: { $0.point > $1.point })
+            }
         }
     }
     
@@ -111,6 +124,9 @@ extension RankingViewController: UITableViewDataSource {
                                                  for: indexPath) as! RankingCell
         cell.backgroundColor = .vridgeWhite
         cell.number.text = "\(indexPath.row + 4)"
+        cell.username.text = userRanking[indexPath.row + 3].username
+        cell.profileImage.kf.setImage(with: userRanking[indexPath.row + 3].profileImageURL)
+        cell.pointLabel.text = "\(userRanking[indexPath.row + 3].point)"
         
         return cell
     }

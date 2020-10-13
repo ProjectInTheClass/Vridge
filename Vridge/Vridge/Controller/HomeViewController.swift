@@ -111,7 +111,7 @@ class HomeViewController: UIViewController {
     
     func fetchPosts() {
         PostService.shared.fetchPosts { posts in
-            self.posts = posts
+            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
             self.indicator.stopAnimating()
             self.tableView.refreshControl?.endRefreshing()
         }

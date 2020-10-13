@@ -40,7 +40,7 @@ struct PostService {
                         let values = ["caption": caption,
                                       "images": urlString,
                                       "uid": uid,
-                                      "timestamp": 276293865925] as [String: Any]
+                                      "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
                         
                         REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
                             guard let postID = ref.key else { return }

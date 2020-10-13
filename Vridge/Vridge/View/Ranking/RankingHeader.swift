@@ -14,7 +14,6 @@ class RankingHeader: UIView {
     var userRanking = [User]() {
         didSet {
             setImage()
-            reloadInputViews()
         }
     }
     
@@ -243,14 +242,14 @@ class RankingHeader: UIView {
         username2.text = userRanking[1].username
         username3.text = userRanking[2].username
         
-        point1.text = String(userRanking[0].point!)
-        point2.text = String(userRanking[1].point!)
-        point3.text = String(userRanking[2].point!)
+        point1.text = String(userRanking[0].point)
+        point2.text = String(userRanking[1].point)
+        point3.text = String(userRanking[2].point)
     }
     
     func fetchUserRanking() {
         UserService.shared.fetchRanking { users in
-            let user = users.sorted(by: { $0.point! > $1.point! })
+            let user = users.sorted(by: { $0.point > $1.point })
             
             if user.count == self.totalUser {
                 self.userRanking = user
