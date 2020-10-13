@@ -17,6 +17,7 @@ let DB_REF = Database.database().reference()
 let REF_POSTS = DB_REF.child("posts")
 let REF_USER_POSTS = DB_REF.child("user-posts")
 let REF_USERS = DB_REF.child("users")
+let REF_USER_POINT = DB_REF.child("user-point")
 
 let reportMessage = "신고가 정상적으로 반영되었습니다\n신속히 처리하도록 하겠습니다"
 let noTitle = ""

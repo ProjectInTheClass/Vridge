@@ -59,6 +59,12 @@ class HomeViewController: UIViewController {
         indicator.startAnimating()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
+    }
+    
     
     // MARK: - Selectors
     

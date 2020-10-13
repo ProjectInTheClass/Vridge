@@ -13,6 +13,10 @@ class RankingViewController: UIViewController {
     
     // MARK: - Properties
     
+    var userRanking = [User]() {
+        didSet { tableView.reloadData() }
+    }
+    
     private let topView = RankingCustomTopView()
     private let secondView = RankingSecondView()
     
@@ -20,15 +24,15 @@ class RankingViewController: UIViewController {
         didSet { tableView.reloadData() }
     }
     
-    //    private var allRank = [User]()
-    //    private var myTypeRank = [User]()
-    //
-    //    private var currentDataSource: [User] {
-    //        switch selectedFilter {
-    //        case .all: return allRank
-    //        case .myType: return myTypeRank
-    //        }
-    //    }
+//        private var allRank = [User]()
+//        private var myTypeRank = [User]()
+//
+//        private var currentDataSource: [User] {
+//            switch selectedFilter {
+//            case .all: return allRank
+//            case .myType: return myTypeRank
+//            }
+//        }
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -39,7 +43,7 @@ class RankingViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
-        print("DEBUG: \(selectedFilter)")
+        fetchUserRanking()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +65,12 @@ class RankingViewController: UIViewController {
     
     
     // MARK: - Helpers
+    
+    func fetchUserRanking() {
+        UserService.shared.fetchRanking { users in
+            self.userRanking = users.sorted(by: { $0.point! > $1.point! })
+        }
+    }
     
     func configureUI() {
         
@@ -93,7 +103,7 @@ class RankingViewController: UIViewController {
 extension RankingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return userRanking.count - 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -101,6 +111,7 @@ extension RankingViewController: UITableViewDataSource {
                                                  for: indexPath) as! RankingCell
         cell.backgroundColor = .vridgeWhite
         cell.number.text = "\(indexPath.row + 4)"
+        
         return cell
     }
     
@@ -118,8 +129,11 @@ extension RankingViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return 92
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
     
 }

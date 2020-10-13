@@ -12,7 +12,7 @@ struct User {
     let uid: String
     var username: String
     let email: String
-    var point: Int!
+    var point: Int?
     var profileImageURL: URL?
     
     

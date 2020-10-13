@@ -27,4 +27,19 @@ struct UserService {
     func userLogin() {
         
     }
+    
+    
+    func fetchRanking(completion: @escaping(([User]) -> Void)) {
+        
+        var users = [User]()
+        REF_USER_POINT.observe(.childAdded) { snapshot in
+            let uid = snapshot.key
+            let point = snapshot.value
+            
+            self.fetchUser(uid: uid) { user in
+                users.append(user)
+                completion(users)
+            }
+        }
+    }
 }

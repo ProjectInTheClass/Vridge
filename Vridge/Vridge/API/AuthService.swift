@@ -27,6 +27,7 @@ struct AuthService {
             REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                 print("DEBUG: New user's email is \(email)")
                 print("DEBUG: New user logged in.")
+                
                 viewController.dismiss(animated: true, completion: nil)
             }
         }
@@ -52,6 +53,11 @@ struct AuthService {
                 
                 REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                     print("DEBUG: Existed user logged in.")
+                    
+                    REF_USER_POINT.updateChildValues([uid: 0]) { (err, ref) in
+                        print("DEBUG: point updated")
+                    }
+                    
                     viewController.dismiss(animated: true, completion: nil)
                 }
             }

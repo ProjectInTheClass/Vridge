@@ -55,7 +55,6 @@ class RankingCustomTopView: UIView {
     }
     
     @objc func handleBackToMain() {
-        NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
         delegate?.handleBackToMain()
     }
     

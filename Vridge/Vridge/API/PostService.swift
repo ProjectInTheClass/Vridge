@@ -44,7 +44,11 @@ struct PostService {
                         
                         REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
                             guard let postID = ref.key else { return }
-                            REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                            
+                            pointUp { (error, ref) in
+                                REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                            }
+                            
                             print("DEBUG: photo uploaded successfully to Storage/post_images.")
                             DispatchQueue.main.async {
                                 indicator.stopAnimating()
@@ -66,7 +70,7 @@ struct PostService {
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             guard let uid = dictionary["uid"] as? String else { return }
             let postID = snapshot.key
-
+            
             UserService.shared.fetchUser(uid: uid) { user in
                 
                 let posts = Post(user: user, postID: postID, dictionary: dictionary)
@@ -76,9 +80,24 @@ struct PostService {
         }
     }
     
-    // 내 타입 게시글만 보기
-    func fetchPosts(type: String) {
-        // type을 enum으로 만들어 놓기.
-    }
     
+    func pointUp(completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
+            let currentPoint = snapshot.value as! Int
+            print("DEBUG: snapshot value is \(currentPoint)")
+            
+            REF_USER_POINT.updateChildValues([uid: currentPoint + 1]) { (err, ref) in
+                REF_USERS.child(uid).updateChildValues(["point": currentPoint + 1], withCompletionBlock: completion)
+            }
+        }
+        
+        
+        // 내 타입 게시글만 보기
+        func fetchPosts(type: String) {
+            // type을 enum으로 만들어 놓기.
+        }
+        
+    }
 }
