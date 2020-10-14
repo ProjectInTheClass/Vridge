@@ -108,6 +108,9 @@ class HomeFeedCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(cellToFirst),
+                                               name: Notification.Name("cellToFirst"), object: nil)
+        
         contentView.isUserInteractionEnabled = false
         
         collectionView.register(FeedImageCell.self, forCellWithReuseIdentifier: feedCell)
@@ -155,6 +158,14 @@ class HomeFeedCell: UITableViewCell {
     
     
     // MARK: - Selectors
+    
+    @objc func cellToFirst() {
+        // e.g 맨 위에 있던 포스트의 '두 번째' 사진을 보고있다가 그 상태에서 새로운 포스트로 사진을 '두 장이상' 올리면
+        // 새로운 포스트의 '두 번째'로 스크롤이 이미 이동해있는 것을 방지하기 위해 첫 번 째 셀로 이동시키는 코드.
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        pageControl.currentPage = 0
+        print("DEBUG: celltoFIRst man")
+    }
     
     @objc func handleReportTapped() {
         guard let posts = posts else { return }

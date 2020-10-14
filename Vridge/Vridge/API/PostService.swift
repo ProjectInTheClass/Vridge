@@ -21,63 +21,176 @@ struct PostService {
         indicator.startAnimating()
         var urlString: [String] = []
         
-//        switch photos.count {
-//        case 1:
-//        case 2:
-//        case 3:
-//        default:
-//            print(fatalError())
-//        }
-        
-        for photo in photos {
-            guard let imageData = photo?.jpegData(compressionQuality: 0.25) else { return }
+        guard let imageData1 = photos[0]?.jpegData(compressionQuality: 0.25) else { return }
+        switch photos.count {
+        case 1:
+            
             let filename = NSUUID().uuidString
             let storageRef = STORAGE_POST_IMAGES.child(filename)
-            print("DEBUG: uploading images = \(photo)")
             
-            storageRef.putData(imageData, metadata: nil) { (meta, err) in
+            storageRef.putData(imageData1, metadata: nil) { (meta, err) in
                 storageRef.downloadURL { (url, err) in
                     guard let imageURL = url?.absoluteString else { return }
                     urlString.append(imageURL)
-                    print("DEBUG: uploading image URLs = \(urlString)")
                     
+                    guard let caption = caption else { return }
                     
+                    let values = ["caption": caption,
+                                  "images": urlString,
+                                  "uid": uid,
+                                  "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
                     
-                    
-                    // 사진을 Storage에 저장한 후, url을 다운로드 하는 과정에서 순서가 뒤바뀜.
-                    
-                    
-                    // 해결책 --
-                    // 위에 있는 switch문으로 한 번 바꿔서 실행을 해보자! 개노가다
-                    
-                    
-                    
-                    if photos.count == urlString.count {
-                        guard let caption = caption else { return }
+                    REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
+                        guard let postID = ref.key else { return }
                         
-                        let values = ["caption": caption,
-                                      "images": urlString,
-                                      "uid": uid,
-                                      "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
-                        
-                        REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
-                            guard let postID = ref.key else { return }
-                            
-                            pointUp { (error, ref) in
-                                REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
-                            }
-                            
-                            print("DEBUG: photo uploaded successfully to Storage/post_images.")
-                            DispatchQueue.main.async {
-                                indicator.stopAnimating()
-                            }
-                            view.dismiss(animated: true, completion: nil)
+                        pointUp { (error, ref) in
+                            REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
                         }
                         
+                        print("DEBUG: photo uploaded successfully to Storage/post_images.")
+                        DispatchQueue.main.async {
+                            indicator.stopAnimating()
+                        }
+                        view.dismiss(animated: true, completion: nil)
                     }
                 }
             }
+            
+        case 2:
+            guard let imageData2 = photos[1]?.jpegData(compressionQuality: 0.25) else { return }
+            
+            let filename = NSUUID().uuidString
+            let storageRef = STORAGE_POST_IMAGES.child(filename)
+            let filename2 = NSUUID().uuidString
+            let storageRef2 = STORAGE_POST_IMAGES.child(filename2)
+            
+            storageRef.putData(imageData1, metadata: nil) { (meta, err) in
+                storageRef.downloadURL { (url, err) in
+                    guard let imageURL1 = url?.absoluteString else { return }
+                    urlString.append(imageURL1)
+                    storageRef2.putData(imageData2, metadata: nil) { (meta, err) in
+                        storageRef2.downloadURL { (url, err) in
+                            guard let imageURL2 = url?.absoluteString else { return }
+                            urlString.append(imageURL2)
+                            
+                            guard let caption = caption else { return }
+                            
+                            let values = ["caption": caption,
+                                          "images": urlString,
+                                          "uid": uid,
+                                          "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
+                            
+                            REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
+                                guard let postID = ref.key else { return }
+                                
+                                pointUp { (error, ref) in
+                                    REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                                }
+                                
+                                print("DEBUG: photo uploaded successfully to Storage/post_images.")
+                                DispatchQueue.main.async {
+                                    indicator.stopAnimating()
+                                }
+                                view.dismiss(animated: true, completion: nil)
+                            }
+                        }
+                    }
+                }
+            }
+        default:
+            guard let imageData2 = photos[1]?.jpegData(compressionQuality: 0.25) else { return }
+            guard let imageData3 = photos[2]?.jpegData(compressionQuality: 0.25) else { return }
+            
+            let filename = NSUUID().uuidString
+            let storageRef = STORAGE_POST_IMAGES.child(filename)
+            let filename2 = NSUUID().uuidString
+            let storageRef2 = STORAGE_POST_IMAGES.child(filename2)
+            let filename3 = NSUUID().uuidString
+            let storageRef3 = STORAGE_POST_IMAGES.child(filename3)
+            
+            storageRef.putData(imageData1, metadata: nil) { (meta, err) in
+                storageRef.downloadURL { (url, err) in
+                    guard let imageURL1 = url?.absoluteString else { return }
+                    urlString.append(imageURL1)
+                    storageRef2.putData(imageData2, metadata: nil) { (meta, err) in
+                        storageRef2.downloadURL { (url, err) in
+                            guard let imageURL2 = url?.absoluteString else { return }
+                            urlString.append(imageURL2)
+                            storageRef3.putData(imageData3, metadata: nil) { (meta, err) in
+                                storageRef3.downloadURL { (url, err) in
+                                    guard let imageURL3 = url?.absoluteString else { return }
+                                    urlString.append(imageURL3)
+                                    
+                                    guard let caption = caption else { return }
+                                    
+                                    let values = ["caption": caption,
+                                                  "images": urlString,
+                                                  "uid": uid,
+                                                  "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
+                                    
+                                    REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
+                                        guard let postID = ref.key else { return }
+                                        
+                                        pointUp { (error, ref) in
+                                            REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                                        }
+                                        
+                                        print("DEBUG: photo uploaded successfully to Storage/post_images.")
+                                        DispatchQueue.main.async {
+                                            indicator.stopAnimating()
+                                        }
+                                        view.dismiss(animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+            
         }
+        
+        /*
+                for photo in photos {
+                    guard let imageData = photo?.jpegData(compressionQuality: 0.25) else { return }
+                    let filename = NSUUID().uuidString
+                    let storageRef = STORAGE_POST_IMAGES.child(filename)
+        
+                    storageRef.putData(imageData, metadata: nil) { (meta, err) in
+                        storageRef.downloadURL { (url, err) in
+                            // GUESS: downloadURL에서 사진 용량이 달라서 다운로드 시간이 다르게 되어
+                            // 사진 순서 역전 현상이 나타나는 듯함. 시바아아아아아알!!!!!!!!
+                            guard let imageURL = url?.absoluteString else { return }
+                            urlString.append(imageURL)
+
+                            if photos.count == urlString.count {
+                                guard let caption = caption else { return }
+        
+                                let values = ["caption": caption,
+                                              "images": urlString,
+                                              "uid": uid,
+                                              "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
+        
+                                REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
+                                    guard let postID = ref.key else { return }
+        
+                                    pointUp { (error, ref) in
+                                        REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                                    }
+        
+                                    DispatchQueue.main.async {
+                                        indicator.stopAnimating()
+                                    }
+                                    view.dismiss(animated: true, completion: nil)
+                                }
+        
+                            }
+                        }
+                    }
+                }
+        */
+         
     }
     
     // 모든 게시글 다 보기
@@ -152,7 +265,7 @@ struct PostService {
             component["timestamp"] = dictionary["timestamp"]
             component["uid"] = dictionary["uid"]
             component["images"] = dictionary["images"]
-
+            
             completion(component)
         }
     }

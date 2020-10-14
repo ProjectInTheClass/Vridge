@@ -116,6 +116,7 @@ class PostingViewController: UIViewController {
                     if let err = err {
                         print("DEBUG: failed posting with error \(err.localizedDescription)")
                     }
+                    NotificationCenter.default.post(name: Notification.Name("cellToFirst"), object: nil)
                 }
             }
         case .amend(_):
@@ -178,7 +179,6 @@ class PostingViewController: UIViewController {
     func handleAddPhoto() {
         ImagePicker.shared.addPhoto(view: self, picker: picker) { images in
             self.images = images
-            print("DEBUG: self images = \(self.images)")
             self.collectionView.reloadData()
             self.picker.dismiss(animated: true, completion: nil)
         }
