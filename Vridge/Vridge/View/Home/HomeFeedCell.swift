@@ -10,7 +10,8 @@ import UIKit
 import Kingfisher
 
 protocol HomeFeedCellDelegate: class {
-    func reportDidTap()
+    func currentUserAmendTapped(sender: Post, row: Int)
+    func reportButtonTapped(sender: Post, row: Int)
 }
 
 private let feedCell = "FeedCell"
@@ -24,6 +25,8 @@ class HomeFeedCell: UITableViewCell {
     var posts: Post? {
         didSet { collectionView.reloadData(); configure() }
     }
+    
+    var row: Int?
     
     private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -154,7 +157,14 @@ class HomeFeedCell: UITableViewCell {
     // MARK: - Selectors
     
     @objc func handleReportTapped() {
-        delegate?.reportDidTap()
+        guard let posts = posts else { return }
+        guard let row = row else { return }
+        
+        if posts.user.isCurrentUser {
+            delegate?.currentUserAmendTapped(sender: posts, row: row)
+        } else {
+            delegate?.reportButtonTapped(sender: posts, row: row)
+        }
     }
     
     @objc func handleImageTapped() {
@@ -172,7 +182,18 @@ class HomeFeedCell: UITableViewCell {
         pageControl.isHidden = numberOfPages == 1 ? true : false
         captionLabel.text = posts.caption
         username.text = posts.user.username
-//        prepareForReuse()
+        profileImageView.kf.setImage(with: posts.user.profileImageURL)
+        var timestamp: String {
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfMonth]
+            formatter.maximumUnitCount = 1
+            formatter.unitsStyle = .abbreviated
+            formatter.calendar?.locale = Locale(identifier: "ko_KR")
+            let now = Date()
+            return formatter.string(from: posts.timestamp, to: now) ?? "2분 전"
+        }
+        time.text = "\(timestamp) 전 업로드"
+        
     }
     
 }
@@ -181,12 +202,6 @@ class HomeFeedCell: UITableViewCell {
 
 extension HomeFeedCell: UICollectionViewDataSource {
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts!.images.count
     }
@@ -194,9 +209,6 @@ extension HomeFeedCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: feedCell,
                                                       for: indexPath) as! FeedImageCell
-        
-        
-        
         cell.backgroundColor = .clear
         cell.imageURL = posts?.images[indexPath.row]
         

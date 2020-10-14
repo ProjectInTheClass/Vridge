@@ -14,17 +14,20 @@ struct AuthService {
     
     static let shared = AuthService()
     
-    func signInNewUser(viewController: UIViewController, credential: AuthCredential, email: String) {
+    func signInNewUser(viewController: UIViewController, credential: AuthCredential,
+                       email: String, username: String) {
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             
             let values = ["uid": uid,
                           "email": email,
-                          "point": 0] as [String: Any]
+                          "point": 0,
+                          "username": username] as [String: Any]
             
             REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                 print("DEBUG: New user's email is \(email)")
                 print("DEBUG: New user logged in.")
+                
                 viewController.dismiss(animated: true, completion: nil)
             }
         }
@@ -50,6 +53,11 @@ struct AuthService {
                 
                 REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                     print("DEBUG: Existed user logged in.")
+                    
+                    REF_USER_POINT.updateChildValues([uid: 0]) { (err, ref) in
+                        print("DEBUG: point updated")
+                    }
+                    
                     viewController.dismiss(animated: true, completion: nil)
                 }
             }

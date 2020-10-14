@@ -13,6 +13,14 @@ class RankingViewController: UIViewController {
     
     // MARK: - Properties
     
+    var userRanking = [User]() {
+        didSet { tableView.reloadData() }
+    }
+    
+    var totalUser: Int? {
+        didSet { fetchUserRanking() }
+    }
+    
     private let topView = RankingCustomTopView()
     private let secondView = RankingSecondView()
     
@@ -20,15 +28,15 @@ class RankingViewController: UIViewController {
         didSet { tableView.reloadData() }
     }
     
-    //    private var allRank = [User]()
-    //    private var myTypeRank = [User]()
-    //
-    //    private var currentDataSource: [User] {
-    //        switch selectedFilter {
-    //        case .all: return allRank
-    //        case .myType: return myTypeRank
-    //        }
-    //    }
+//        private var allRank = [User]()
+//        private var myTypeRank = [User]()
+//
+//        private var currentDataSource: [User] {
+//            switch selectedFilter {
+//            case .all: return allRank
+//            case .myType: return myTypeRank
+//            }
+//        }
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -39,19 +47,22 @@ class RankingViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
-        print("DEBUG: \(selectedFilter)")
+        fetchTotalUser()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         navigationController?.navigationBar.isHidden = true
+        tabBarController?.tabBar.isHidden = true
+        NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
         navigationController?.navigationBar.isHidden = false
+        tabBarController?.tabBar.isHidden = false
     }
     
     
@@ -59,6 +70,20 @@ class RankingViewController: UIViewController {
     
     
     // MARK: - Helpers
+    
+    func fetchTotalUser() {
+        UserService.shared.fetchRanking { users in
+            self.totalUser = users.count
+        }
+    }
+    
+    func fetchUserRanking() {
+        UserService.shared.fetchRanking { users in
+            if users.count == self.totalUser {
+                self.userRanking = users.sorted(by: { $0.point > $1.point })
+            }
+        }
+    }
     
     func configureUI() {
         
@@ -91,14 +116,18 @@ class RankingViewController: UIViewController {
 extension RankingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return userRanking.count - 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID,
                                                  for: indexPath) as! RankingCell
         cell.backgroundColor = .vridgeWhite
-        cell.number.text = "\(indexPath.row + 9994)"
+        cell.number.text = "\(indexPath.row + 4)"
+        cell.username.text = userRanking[indexPath.row + 3].username
+        cell.profileImage.kf.setImage(with: userRanking[indexPath.row + 3].profileImageURL)
+        cell.pointLabel.text = "\(userRanking[indexPath.row + 3].point)"
+        
         return cell
     }
     
@@ -116,8 +145,11 @@ extension RankingViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return 92
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
     
 }

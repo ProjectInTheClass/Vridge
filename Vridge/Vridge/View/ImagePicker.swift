@@ -36,7 +36,7 @@ struct ImagePicker {
                   completion: @escaping([UIImage]?) -> Void) {
         view.present(picker, animated: true, completion: nil)
         
-        picker.didFinishPicking { (items, cancelled) in
+        picker.didFinishPicking { [unowned picker] (items, cancelled) in
             if cancelled {
                 picker.dismiss(animated: true, completion: nil)
                 return
@@ -47,6 +47,7 @@ struct ImagePicker {
             for item in items {
                 switch item {
                 case .photo(let photo): imageArray.append(photo.image) // array에 이미지들을 저장.
+                    print("DEBUG: photos are \(photo.image)")
                 default: print("Error")
                 }
             }

@@ -22,14 +22,16 @@ struct PostService {
         var urlString: [String] = []
         
         for photo in photos {
-            guard let imageData = photo?.jpegData(compressionQuality: 0.2) else { return }
+            guard let imageData = photo?.jpegData(compressionQuality: 0.25) else { return }
             let filename = NSUUID().uuidString
             let storageRef = STORAGE_POST_IMAGES.child(filename)
+            print("DEBUG: uploading images = \(photo)")
             
             storageRef.putData(imageData, metadata: nil) { (meta, err) in
                 storageRef.downloadURL { (url, err) in
                     guard let imageURL = url?.absoluteString else { return }
                     urlString.append(imageURL)
+                    print("DEBUG: uploading image URLs = \(urlString)")
                     
                     // 사진을 모두 storage에 저장한 후,
                     // 유저가 올린 사진의 갯수가 모두 추가 되었다면 db에 추가.
@@ -40,11 +42,15 @@ struct PostService {
                         let values = ["caption": caption,
                                       "images": urlString,
                                       "uid": uid,
-                                      "timestamp": 276293865925] as [String: Any]
+                                      "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
                         
                         REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
                             guard let postID = ref.key else { return }
-                            REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                            
+                            pointUp { (error, ref) in
+                                REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                            }
+                            
                             print("DEBUG: photo uploaded successfully to Storage/post_images.")
                             DispatchQueue.main.async {
                                 indicator.stopAnimating()
@@ -66,7 +72,7 @@ struct PostService {
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             guard let uid = dictionary["uid"] as? String else { return }
             let postID = snapshot.key
-
+            
             UserService.shared.fetchUser(uid: uid) { user in
                 
                 let posts = Post(user: user, postID: postID, dictionary: dictionary)
@@ -76,9 +82,82 @@ struct PostService {
         }
     }
     
+    
+    func pointUp(completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
+            let currentPoint = snapshot.value as! Int
+            print("DEBUG: snapshot value is \(currentPoint), about to plus one")
+            
+            REF_USER_POINT.updateChildValues([uid: currentPoint + 1]) { (err, ref) in
+                REF_USERS.child(uid).updateChildValues(["point": currentPoint + 1], withCompletionBlock: completion)
+            }
+        }
+    }
+    
+    func pointDown(completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
+            let currentPoint = snapshot.value as! Int
+            print("DEBUG: snapshot value is \(currentPoint), about to minus one")
+            
+            REF_USER_POINT.updateChildValues([uid: currentPoint - 1]) { (err, ref) in
+                REF_USERS.child(uid).updateChildValues(["point": currentPoint - 1], withCompletionBlock: completion)
+            }
+        }
+    }
+    
     // 내 타입 게시글만 보기
     func fetchPosts(type: String) {
         // type을 enum으로 만들어 놓기.
+    }
+    
+    
+    func deletePost(row: Int, viewController: HomeViewController, postId: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_POSTS.child(postId).removeValue { (err, ref) in
+            REF_USER_POSTS.child(uid).child(postId).removeValue { (err, ref) in
+                pointDown(completion: completion)
+                print("DEBUG: SUCCESSFULLY DELETE POST")
+                viewController.posts.remove(at: row)
+            }
+        }
+    }
+    
+    func amendPost(row: Int, viewController: HomeViewController, post: Post, completion: @escaping([String: Any]) -> Void) {
+        var component = [String: Any]()
+        
+        REF_POSTS.child(post.postID).observe(.value) { snapshot in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            component["caption"] = dictionary["caption"]
+            component["timestamp"] = dictionary["timestamp"]
+            component["uid"] = dictionary["uid"]
+            component["images"] = dictionary["images"]
+
+            completion(component)
+        }
+    }
+    
+    func amendUploadPost(viewController: HomeViewController, caption: String, post: Post, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        let values = ["caption": caption,
+                      "images": post.images,
+                      "uid": post.user.uid,
+                      "timestamp": post.timestamp.timeIntervalSince1970] as [String: Any]
+        
+        REF_POSTS.child(post.postID).updateChildValues(values, withCompletionBlock: completion)
+    }
+    
+    // 수정할 특정 포스트 가져오기
+    func fetchPost(post: Post, completion: @escaping([String: Any]) -> Void) {
+        let postID = post.postID
+        
+        REF_POSTS.child(postID).observe(.value) { snapshot in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            completion(dictionary)
+        }
     }
     
 }

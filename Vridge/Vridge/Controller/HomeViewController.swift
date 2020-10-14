@@ -21,15 +21,15 @@ class HomeViewController: UIViewController {
         return label
     }()
     
-    private var posts = [Post]() {
+    var posts = [Post]() {
         didSet { tableView.reloadData() }
     }
     
-    var user: [User]? {
+    var user: User? {
         didSet { print("DEBUG: user did set") }
     }
     
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    let tableView = UITableView(frame: .zero, style: .grouped)
     
     lazy var indicator: UIActivityIndicatorView = {
         let ic = UIActivityIndicatorView()
@@ -37,6 +37,12 @@ class HomeViewController: UIViewController {
         ic.style = .large
         ic.center = view.center
         return ic
+    }()
+    
+    let refreshControl: UIRefreshControl = {
+        let rc = UIRefreshControl()
+        rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        return rc
     }()
     
     
@@ -51,12 +57,30 @@ class HomeViewController: UIViewController {
         
         view.addSubview(indicator)
         indicator.startAnimating()
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain), name: Notification.Name("fetchAgain"), object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
     }
     
     
     // MARK: - Selectors
     
+    @objc func fetchAgain() {
+        fetchPosts()
+        print("DEBUG: it worked!!")
+    }
+    
+    @objc func handleRefresh() {
+        print("DEBUG: Refresh feed")
+        fetchPosts()
+    }
+    
     @objc func handleShowRanking() {
+        NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
+        
         let controller = RankingViewController()
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -79,6 +103,7 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
+        tableView.refreshControl = refreshControl
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
@@ -91,8 +116,9 @@ class HomeViewController: UIViewController {
     
     func fetchPosts() {
         PostService.shared.fetchPosts { posts in
-            self.posts = posts
+            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
             self.indicator.stopAnimating()
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
     
@@ -118,6 +144,7 @@ extension HomeViewController: UITableViewDataSource {
         
         cell.delegate = self
         cell.posts = posts[indexPath.row]
+        cell.row = indexPath.row
         
         return cell
     }
@@ -141,8 +168,6 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("DEBUG: 600")
-        
         return 600
     }
     
@@ -157,39 +182,16 @@ extension HomeViewController: UITableViewDelegate {
 }
 
 extension HomeViewController: HomeFeedCellDelegate {
-
-    func reportDidTap() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let reportButton = UIAlertAction(title: "신고하기", style: .default) { _ in
-            let alert = UIAlertController(title: "신고 사유 선택", message: nil, preferredStyle: .actionSheet)
-            let sexualHarass = UIAlertAction(title: "성적 수치심 유발", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let swear = UIAlertAction(title: "욕설/비하", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let fraud = UIAlertAction(title: "유출/사칭/사기", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let advertise = UIAlertAction(title: "상업적 광고 및 판매", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let nonsense = UIAlertAction(title: "채식과 관련 없음", style: .default) { _ in
-                self.showReportAlert()
-            }
-            let cancelButton = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-            alert.addAction(sexualHarass)
-            alert.addAction(swear)
-            alert.addAction(fraud)
-            alert.addAction(advertise)
-            alert.addAction(nonsense)
-            alert.addAction(cancelButton)
-            self.present(alert, animated: true, completion: nil)
-        }
-        let cancelButton = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alert.addAction(reportButton)
-        alert.addAction(cancelButton)
-        present(alert, animated: true, completion: nil)
+    
+    func currentUserAmendTapped(sender: Post, row: Int) {
+        let viewModel = ActionSheetViewModel()
+        present(viewModel.amendActionSheet(self, row: row, post: sender), animated: true)
     }
-
+    
+    func reportButtonTapped(sender: Post, row: Int) {
+        let viewModel = ActionSheetViewModel()
+        present(viewModel.reportActionSheet(self, post: sender), animated: true, completion: nil)
+        
+    }
+    
 }

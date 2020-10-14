@@ -27,6 +27,13 @@ class LoginViewController: UIViewController {
         return label
     }()
     
+    private let logOutButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Log out", for: .normal)
+        button.addTarget(self, action: #selector(handleLogOut), for: .touchUpInside)
+        return button
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -44,6 +51,14 @@ class LoginViewController: UIViewController {
         performSignin()
     }
     
+    @objc func handleLogOut() {
+        do {
+            try Auth.auth().signOut()
+        } catch (let err) {
+            print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
+        }
+    }
+    
     
     // MARK: - Helpers
     
@@ -51,10 +66,16 @@ class LoginViewController: UIViewController {
         
         view.addSubview(appleLoginButton)
         view.addSubview(label)
+        view.addSubview(logOutButton)
+        
         appleLoginButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                                 paddingTop: 100, paddingLeft: 10, width: 240, height: 50)
         label.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 10)
         label.centerX(inView: view)
+        logOutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor,
+                            paddingTop: 40, paddingRight: 40)
+        
+        
     }
     
     func performSignin() {
@@ -156,13 +177,21 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
             
-            guard let email = appleIDCredential.email else {
+            guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
                 // handle if user already once registered... or ex user rejoining...
                 AuthService.shared.loginExistUser(viewController: self, credential: credential)
                 return
             }
 //             handle if user hasn't registered...
-            AuthService.shared.signInNewUser(viewController: self, credential: credential, email: email)
+            
+            let firstName = name.givenName ?? ""
+            let familyName = name.familyName ?? ""
+            let username = familyName + firstName
+            AuthService.shared.signInNewUser(viewController: self, credential: credential,
+                                             email: email, username: username)
+            
+            print("DEBUG: New user is '\(username)'")
+            
             return
         }
     }

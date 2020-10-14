@@ -7,27 +7,30 @@
 
 import Foundation
 
+import Firebase
+
 struct User {
     
     let uid: String
     var username: String
     let email: String
-    var point: Int!
+    var point: Int
     var profileImageURL: URL?
+    
+    var isCurrentUser: Bool {
+        return Auth.auth().currentUser?.uid == uid
+    }
     
     
     init(uid: String, dictionary: [String: AnyObject]) {
         self.uid = uid
         self.username = dictionary["username"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
+        self.point = dictionary["point"] as? Int ?? 0
         
         if let imageURL = dictionary["profileImageURL"] as? String {
             guard let url = URL(string: imageURL) else { return }
             profileImageURL = url
-        }
-        
-        if let point = dictionary["point"] as? Int {
-            self.point = point
         }
         
     }

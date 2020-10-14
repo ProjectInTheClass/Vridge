@@ -17,9 +17,25 @@ enum RankingFilterOptions: Int, CaseIterable {
         case .myType: return "내 타입"
         }
     }
+    
 }
 
+
+
 struct RankingViewModel {
+    
+    var userRanking = [User]() {
+        didSet { setImage() }
+    }
+    
+    let a = [User]()
+    
+    
+    mutating func setImage() {
+        profileImage1.kf.setImage(with: userRanking[0].profileImageURL)
+        profileImage2.kf.setImage(with: userRanking[1].profileImageURL)
+        profileImage3.kf.setImage(with: userRanking[2].profileImageURL)
+    }
     
     let profileImage2: UIImageView = {
         let iv = UIImageView()
@@ -184,4 +200,13 @@ struct RankingViewModel {
         iv.contentMode = .scaleAspectFit
         return iv
     }()
+    
+    // MARK: - Helpers
+    
+//    mutating func fetchUserRanking() {
+//        
+//        UserService.shared.fetchRanking { users in
+//            userRanking.append(contentsOf: users)
+//        }
+//    }
 }
