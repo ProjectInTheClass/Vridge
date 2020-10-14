@@ -21,6 +21,14 @@ struct PostService {
         indicator.startAnimating()
         var urlString: [String] = []
         
+//        switch photos.count {
+//        case 1:
+//        case 2:
+//        case 3:
+//        default:
+//            print(fatalError())
+//        }
+        
         for photo in photos {
             guard let imageData = photo?.jpegData(compressionQuality: 0.25) else { return }
             let filename = NSUUID().uuidString
@@ -33,8 +41,16 @@ struct PostService {
                     urlString.append(imageURL)
                     print("DEBUG: uploading image URLs = \(urlString)")
                     
-                    // 사진을 모두 storage에 저장한 후,
-                    // 유저가 올린 사진의 갯수가 모두 추가 되었다면 db에 추가.
+                    
+                    
+                    
+                    // 사진을 Storage에 저장한 후, url을 다운로드 하는 과정에서 순서가 뒤바뀜.
+                    
+                    
+                    // 해결책 --
+                    // 위에 있는 switch문으로 한 번 바꿔서 실행을 해보자! 개노가다
+                    
+                    
                     
                     if photos.count == urlString.count {
                         guard let caption = caption else { return }
