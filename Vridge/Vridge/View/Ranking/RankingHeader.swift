@@ -233,6 +233,16 @@ class RankingHeader: UIView {
         }
     }
     
+    func fetchUserRanking() {
+        UserService.shared.fetchRanking { users in
+            let user = users.sorted(by: { $0.point > $1.point })
+            
+            if user.count == self.totalUser {
+                self.userRanking = user
+            }
+        }
+    }
+    
     func setImage() {
         profileImage1.kf.setImage(with: userRanking[0].profileImageURL)
         profileImage2.kf.setImage(with: userRanking[1].profileImageURL)
@@ -247,21 +257,7 @@ class RankingHeader: UIView {
         point3.text = String(userRanking[2].point)
     }
     
-    func fetchUserRanking() {
-        UserService.shared.fetchRanking { users in
-            let user = users.sorted(by: { $0.point > $1.point })
-            
-            if user.count == self.totalUser {
-                self.userRanking = user
-            }
-            print("DEBUG: THE ORDER IS \(self.userRanking)")
-            
-        }
-    }
-    
     func configureUI() {
-        
-//        print("DEBUG: userRanking is \(viewModel.fetchUserRanking())")
         
         let imageWithPoint2 = UIStackView(arrangedSubviews: [saladImage2, point2])
         imageWithPoint2.spacing = 0

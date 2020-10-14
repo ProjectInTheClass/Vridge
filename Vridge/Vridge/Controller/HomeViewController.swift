@@ -21,9 +21,7 @@ class HomeViewController: UIViewController {
         return label
     }()
     
-//    private lazy var viewModel = ActionSheetViewModel(user: user!)
-    
-    private var posts = [Post]() {
+    var posts = [Post]() {
         didSet { tableView.reloadData() }
     }
     
@@ -31,7 +29,7 @@ class HomeViewController: UIViewController {
         didSet { print("DEBUG: user did set") }
     }
     
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    let tableView = UITableView(frame: .zero, style: .grouped)
     
     lazy var indicator: UIActivityIndicatorView = {
         let ic = UIActivityIndicatorView()
@@ -59,16 +57,21 @@ class HomeViewController: UIViewController {
         
         view.addSubview(indicator)
         indicator.startAnimating()
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain), name: Notification.Name("fetchAgain"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
     }
     
     
     // MARK: - Selectors
+    
+    @objc func fetchAgain() {
+        fetchPosts()
+        print("DEBUG: it worked!!")
+    }
     
     @objc func handleRefresh() {
         print("DEBUG: Refresh feed")
@@ -141,6 +144,7 @@ extension HomeViewController: UITableViewDataSource {
         
         cell.delegate = self
         cell.posts = posts[indexPath.row]
+        cell.row = indexPath.row
         
         return cell
     }
@@ -179,15 +183,15 @@ extension HomeViewController: UITableViewDelegate {
 
 extension HomeViewController: HomeFeedCellDelegate {
     
-    
-    func currentUserAmendTapped() {
+    func currentUserAmendTapped(sender: Post, row: Int) {
         let viewModel = ActionSheetViewModel()
-        present(viewModel.amendActionSheet(self), animated: true, completion: nil)
+        present(viewModel.amendActionSheet(self, row: row, post: sender), animated: true)
     }
     
-    func reportButtonTapped() {
+    func reportButtonTapped(sender: Post, row: Int) {
         let viewModel = ActionSheetViewModel()
-        present(viewModel.reportActionSheet(self), animated: true, completion: nil)
+        present(viewModel.reportActionSheet(self, post: sender), animated: true, completion: nil)
+        
     }
-
+    
 }

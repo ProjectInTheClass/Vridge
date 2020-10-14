@@ -10,8 +10,8 @@ import UIKit
 import Kingfisher
 
 protocol HomeFeedCellDelegate: class {
-    func currentUserAmendTapped()
-    func reportButtonTapped()
+    func currentUserAmendTapped(sender: Post, row: Int)
+    func reportButtonTapped(sender: Post, row: Int)
 }
 
 private let feedCell = "FeedCell"
@@ -25,6 +25,8 @@ class HomeFeedCell: UITableViewCell {
     var posts: Post? {
         didSet { collectionView.reloadData(); configure() }
     }
+    
+    var row: Int?
     
     private lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
@@ -155,10 +157,13 @@ class HomeFeedCell: UITableViewCell {
     // MARK: - Selectors
     
     @objc func handleReportTapped() {
-        if posts!.user.isCurrentUser {
-            delegate?.currentUserAmendTapped()
+        guard let posts = posts else { return }
+        guard let row = row else { return }
+        
+        if posts.user.isCurrentUser {
+            delegate?.currentUserAmendTapped(sender: posts, row: row)
         } else {
-            delegate?.reportButtonTapped()
+            delegate?.reportButtonTapped(sender: posts, row: row)
         }
     }
     
@@ -196,12 +201,6 @@ class HomeFeedCell: UITableViewCell {
 // MARK: - UICollectionViewDataSource
 
 extension HomeFeedCell: UICollectionViewDataSource {
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        
-        
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return posts!.images.count

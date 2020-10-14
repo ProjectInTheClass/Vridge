@@ -9,10 +9,16 @@ import UIKit
 
 struct ActionSheetViewModel {
     
-    func amendActionSheet(_ viewController: UIViewController) -> UIAlertController {
+    func amendActionSheet(_ viewController: HomeViewController, row: Int, post: Post) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let amendButton = UIAlertAction(title: "수정하기", style: .default) { _ in
-            print("DEBUG: 수정하기로 이동")
+            // amend service
+            PostService.shared.amendPost(row: row, viewController: viewController, post: post) { posts in
+                let controller = PostingViewController(config: .amend(post), post: post)
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .fullScreen
+                viewController.present(nav, animated: true, completion: nil)
+            }
         }
         let deleteButton = UIAlertAction(title: "삭제하기", style: .destructive) { _ in
             let deleteAlert = UIAlertController(title: "정말 삭제할까?",
@@ -20,7 +26,9 @@ struct ActionSheetViewModel {
                                                 preferredStyle: .alert)
             let noButton = UIAlertAction(title: "아니오", style: .default, handler: nil)
             let okButton = UIAlertAction(title: "예", style: .destructive) { _ in
-                print("DEBUG: 삭제 처리")
+                // delete service
+                PostService.shared.deletePost(row: row, viewController: viewController, postId: post.postID) { (err, ref) in
+                }
             }
             deleteAlert.addAction(noButton)
             deleteAlert.addAction(okButton)
@@ -33,7 +41,7 @@ struct ActionSheetViewModel {
         return alert
     }
     
-    func reportActionSheet(_ viewController: HomeViewController) -> UIAlertController {
+    func reportActionSheet(_ viewController: HomeViewController, post: Post) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let reportButton = UIAlertAction(title: "신고하기", style: .default) { _ in
             let alert = UIAlertController(title: "신고 사유 선택", message: nil, preferredStyle: .actionSheet)
@@ -64,6 +72,36 @@ struct ActionSheetViewModel {
         let cancelButton = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(reportButton)
         alert.addAction(cancelButton)
+        return alert
+    }
+    
+    func photoUploadAlert(_ viewController: UIViewController) -> UIAlertController {
+        let alert = UIAlertController(title: "",
+                                      message: "최소 한 장의 사진을 올려주세요.",
+                                      preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okButton)
+        return alert
+    }
+    
+    func noPhotoChangeAllowed(_ viewController: UIViewController) -> UIAlertController {
+        let alert = UIAlertController(title: "", message: "사진은 수정할 수 없댜규!",
+                                      preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okButton)
+        return alert
+    }
+    
+    func leavingPostPage(_ viewController: UIViewController) -> UIAlertController {
+        let alert = UIAlertController(title: "이 페이지를 벗어날거야?",
+                                      message: "지금까지 작성한\n글들은 저장되지 않아…!",
+                                      preferredStyle: .alert)
+        let noButton = UIAlertAction(title: "아니오", style: .default, handler: nil)
+        let yesButton = UIAlertAction(title: "예", style: .destructive) { _ in
+            viewController.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(noButton)
+        alert.addAction(yesButton)
         return alert
     }
     
