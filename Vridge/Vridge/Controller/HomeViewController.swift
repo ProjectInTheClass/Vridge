@@ -210,6 +210,18 @@ extension HomeViewController: UITableViewDelegate {
         return false
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
+        if  indexPath.row == lastRowIndex {
+            let spinner = UIActivityIndicatorView(style: .large)
+            spinner.startAnimating()
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+
+            tableView.tableFooterView = spinner
+            tableView.tableFooterView?.isHidden = false
+        }
+    }
+    
 }
 
 extension HomeViewController: HomeFeedCellDelegate {

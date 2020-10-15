@@ -284,6 +284,7 @@ struct PostService {
             REF_USER_POSTS.child(uid).child(postId).removeValue { (err, ref) in
                 // 여기에서 Storage에 저장되어있는 이미지도 삭제해주어야 함.
                 // STORAGE_POST_IMAGES
+                // 근데 파일네임 어떻게 찾음?
                 pointDown(completion: completion)
                 print("DEBUG: SUCCESSFULLY DELETE POST")
                 viewController.posts.remove(at: row)
