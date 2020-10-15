@@ -159,6 +159,7 @@ struct PostService {
         
                     storageRef.putData(imageData, metadata: nil) { (meta, err) in
                         storageRef.downloadURL { (url, err) in
+         
                             // GUESS: downloadURL에서 사진 용량이 달라서 다운로드 시간이 다르게 되어
                             // 사진 순서 역전 현상이 나타나는 듯함. 시바아아아아아알!!!!!!!!
                             guard let imageURL = url?.absoluteString else { return }
@@ -193,11 +194,19 @@ struct PostService {
          
     }
     
+    func numberOfPosts(completion: @escaping(Int) -> Void) {
+        
+        REF_POSTS.observeSingleEvent(of: .value) { snapshot in
+            completion(Int(snapshot.childrenCount))
+        }
+    }
+    
+    
     // 모든 게시글 다 보기
     func fetchPosts(completion: @escaping([Post]) -> Void) {
         var post = [Post]()
         
-        REF_POSTS.observe(.childAdded) { snapshot in
+        REF_POSTS.queryLimited(toLast: UInt(POST_LOAD_AT_ONCE)).observe(.childAdded) { snapshot in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             guard let uid = dictionary["uid"] as? String else { return }
             let postID = snapshot.key
@@ -207,6 +216,30 @@ struct PostService {
                 let posts = Post(user: user, postID: postID, dictionary: dictionary)
                 post.append(posts)
                 completion(post)
+                
+//                REF_POSTS.removeAllObservers()
+            }
+        }
+    }
+    
+    func refetchPost(post: [Post], from: Int, upto: Int, completion: @escaping([Post]) -> Void) {
+        var post = [Post]()
+        
+        REF_POSTS.queryLimited(toLast: UInt(upto)).observe(.childAdded) { snapshot in
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            guard let uid = dictionary["uid"] as? String else { return }
+            let postID = snapshot.key
+            
+            UserService.shared.fetchUser(uid: uid) { user in
+                
+                let posts = Post(user: user, postID: postID, dictionary: dictionary)
+                post.append(posts)
+                
+                if post.count == upto {
+                    completion(post)
+                }
+                
+//                REF_POSTS.removeAllObservers()
             }
         }
     }
@@ -249,6 +282,8 @@ struct PostService {
         
         REF_POSTS.child(postId).removeValue { (err, ref) in
             REF_USER_POSTS.child(uid).child(postId).removeValue { (err, ref) in
+                // 여기에서 Storage에 저장되어있는 이미지도 삭제해주어야 함.
+                // STORAGE_POST_IMAGES
                 pointDown(completion: completion)
                 print("DEBUG: SUCCESSFULLY DELETE POST")
                 viewController.posts.remove(at: row)

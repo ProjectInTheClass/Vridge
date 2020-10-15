@@ -21,6 +21,8 @@ class HomeViewController: UIViewController {
         return label
     }()
     
+    var numberOfPost = 0
+    
     var posts = [Post]() {
         didSet { tableView.reloadData() }
     }
@@ -52,6 +54,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
+        numberOfPosts()
         configureUI()
         fetchPosts()
         
@@ -59,6 +62,7 @@ class HomeViewController: UIViewController {
         indicator.startAnimating()
         NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
                                                name: Notification.Name("fetchAgain"), object: nil)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,8 +93,23 @@ class HomeViewController: UIViewController {
     
     // MARK: - Helpers
     
+    func numberOfPosts() {
+        PostService.shared.numberOfPosts { nums in
+            self.numberOfPost = nums
+        }
+    }
+    
+    func loadMore() {
+        let from = posts.count
+//        let to = from + 3
+        let to = from + POST_LOAD_AT_ONCE >= numberOfPost ? numberOfPost : from + POST_LOAD_AT_ONCE
+        PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
+            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+        }
+        tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
+    }
+    
     func configureUI() {
-        
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logo)
         navigationItem.leftBarButtonItem?.tintColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "랭킹", style: .plain, target: self, action: #selector(handleShowRanking))
@@ -157,12 +176,23 @@ extension HomeViewController: UITableViewDataSource {
         
         return header
     }
+    
 }
 
 
 // MARK: - UITableViewDelegate
 
 extension HomeViewController: UITableViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let scrollHeight = scrollView.frame.size.height
+        if offsetY == contentHeight - scrollHeight
+        {
+            loadMore()
+        }
+    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 167

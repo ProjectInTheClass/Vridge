@@ -28,7 +28,9 @@ struct AuthService {
                 print("DEBUG: New user's email is \(email)")
                 print("DEBUG: New user logged in.")
                 
-                viewController.dismiss(animated: true, completion: nil)
+                let selectTypeController = SelectTypeViewController()
+                viewController.navigationController?.pushViewController(selectTypeController, animated: true)
+                
             }
         }
     }

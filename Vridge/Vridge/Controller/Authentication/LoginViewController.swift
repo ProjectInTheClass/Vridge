@@ -54,6 +54,7 @@ class LoginViewController: UIViewController {
     @objc func handleLogOut() {
         do {
             try Auth.auth().signOut()
+            print("DEBUG: logged out")
         } catch (let err) {
             print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
         }

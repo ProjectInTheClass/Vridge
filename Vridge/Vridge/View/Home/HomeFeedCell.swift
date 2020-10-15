@@ -57,7 +57,8 @@ class HomeFeedCell: UITableViewCell {
         pc.currentPageIndicatorTintColor = .black
         pc.pageIndicatorTintColor = .vridgePlaceholderColor
         pc.isEnabled = false
-//        pc.preferredIndicatorImage = UIImage(named: "indicatorUnselect")
+        pc.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+//        pc.preferredIndicatorImage = UIImage(named: "indicatorUnselect") //ios 14 and above
         return pc
     }()
     
@@ -123,30 +124,31 @@ class HomeFeedCell: UITableViewCell {
         userNameAndType.alignment = .leading
         userNameAndType.distribution = .fillProportionally
         
-        let stack = UIStackView(arrangedSubviews: [userNameAndType, time])
+        let stack = UIStackView(arrangedSubviews: [userNameAndType, time, captionLabel])
         stack.axis = .vertical
-        stack.spacing = 3
+        stack.setCustomSpacing(3, after: userNameAndType)
+        stack.setCustomSpacing(10, after: time)
         stack.alignment = .leading
         
-        let timeAndCaptionStack = UIStackView(arrangedSubviews: [stack, captionLabel])
-        timeAndCaptionStack.axis = .vertical
-        timeAndCaptionStack.spacing = 10
-        timeAndCaptionStack.alignment = .leading
+//        let timeAndCaptionStack = UIStackView(arrangedSubviews: [stack, captionLabel])
+//        timeAndCaptionStack.axis = .vertical
+//        timeAndCaptionStack.spacing = 10
+//        timeAndCaptionStack.alignment = .leading
         
         addSubview(profileImageView)
         addSubview(collectionView)
         addSubview(pageControl)
-        addSubview(timeAndCaptionStack)
+        addSubview(stack)
         addSubview(reportButton)
         
         profileImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 15, paddingLeft: 16)
-        timeAndCaptionStack.anchor(top: topAnchor, left: profileImageView.rightAnchor,
+        stack.anchor(top: topAnchor, left: profileImageView.rightAnchor,
                                    right: rightAnchor, paddingTop: 20, paddingLeft: 14,
                                    paddingRight: 16)
-        collectionView.anchor(top: captionLabel.bottomAnchor, left: leftAnchor, right: rightAnchor,
+        collectionView.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor,
                               paddingTop: 10, paddingLeft: 75, paddingRight: 16)
         pageControl.anchor(top: collectionView.bottomAnchor, bottom: bottomAnchor,
-                           paddingTop: 10, paddingBottom: 10)
+                           paddingTop: 4, paddingBottom: 4)
         pageControl.centerX(inView: collectionView)
         reportButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 11)
         
@@ -162,7 +164,8 @@ class HomeFeedCell: UITableViewCell {
     @objc func cellToFirst() {
         // e.g 맨 위에 있던 포스트의 '두 번째' 사진을 보고있다가 그 상태에서 새로운 포스트로 사진을 '두 장이상' 올리면
         // 새로운 포스트의 '두 번째'로 스크롤이 이미 이동해있는 것을 방지하기 위해 첫 번 째 셀로 이동시키는 코드.
-        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
+        // 페이지 컨트롤도 0으로 바꿔줌
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
         pageControl.currentPage = 0
         print("DEBUG: celltoFIRst man")
     }

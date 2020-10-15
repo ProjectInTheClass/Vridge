@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D15CD4A252C7DF9005879CD /* AuthService.swift */; };
+		3D15EE3225381C6900402476 /* SelectTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D15EE3125381C6900402476 /* SelectTypeViewController.swift */; };
 		3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4722526F30100C6388A /* AppDelegate.swift */; };
 		3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4742526F30100C6388A /* SceneDelegate.swift */; };
 		3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4762526F30100C6388A /* HomeViewController.swift */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		3D15CD4A252C7DF9005879CD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		3D15EE3125381C6900402476 /* SelectTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeViewController.swift; sourceTree = "<group>"; };
 		3D1FA46F2526F30100C6388A /* Vridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D1FA4722526F30100C6388A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D1FA4742526F30100C6388A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -265,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				3DE62374252C180D005F16A9 /* LoginViewController.swift */,
+				3D15EE3125381C6900402476 /* SelectTypeViewController.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -403,6 +406,7 @@
 				3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */,
 				3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */,
 				BB4E0E9B252F768D00442B83 /* SettingViewController.swift in Sources */,
+				3D15EE3225381C6900402476 /* SelectTypeViewController.swift in Sources */,
 				3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */,
 				3DE6237D252C343D005F16A9 /* User.swift in Sources */,
 				3D8B135A2530BCDD0022AE88 /* RankingCell.swift in Sources */,

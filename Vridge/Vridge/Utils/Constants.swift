@@ -9,6 +9,7 @@ import Foundation
 
 import Firebase
 
+let POST_LOAD_AT_ONCE = 10
 
 let STORAGE_REF = Storage.storage().reference()
 let STORAGE_POST_IMAGES = STORAGE_REF.child("post_images")
