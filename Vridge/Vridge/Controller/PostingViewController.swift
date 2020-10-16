@@ -88,7 +88,6 @@ class PostingViewController: UIViewController {
         case .amend(_):
             configureAmend()
         }
-        
     }
     
     
@@ -202,9 +201,12 @@ extension PostingViewController: UICollectionViewDataSource {
         case .post:
             cell.imageView.image = images?[indexPath.item] ?? UIImage(systemName: "plus.circle")
             cell.imageView.layer.borderWidth = images?[indexPath.item] == nil ? 0: 4
+            cell.numberingLabel.isHidden = images?[indexPath.item] == nil
+            cell.numberingLabel.text = String(indexPath.item + 1)
         case .amend(_):
             cell.imageView.kf.setImage(with: URL(string: viewModel.images[indexPath.item]))
             cell.imageView.layer.borderWidth = 4
+            cell.numberingLabel.text = String(indexPath.item + 1)
         }
         return cell
     }

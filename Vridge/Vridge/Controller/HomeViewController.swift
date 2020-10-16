@@ -101,8 +101,8 @@ class HomeViewController: UIViewController {
     
     func loadMore() {
         let from = posts.count
-//        let to = from + 3
         let to = from + POST_LOAD_AT_ONCE >= numberOfPost ? numberOfPost : from + POST_LOAD_AT_ONCE
+        
         PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
         }

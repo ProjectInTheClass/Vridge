@@ -21,13 +21,17 @@ class PostPhotoCell: UICollectionViewCell {
         return iv
     }()
     
-    let label: UILabel = {
+    let numberingLabel: UILabel = {
         let label = UILabel()
-        label.text = "TEST LABEL MAN"
+        label.backgroundColor = .vridgeGreen
+        label.textAlignment = .center
+        label.font = UIFont.SFRegular(size: 14)
+        label.setDimensions(width: 20, height: 20)
+        label.textColor = .white
+        label.layer.cornerRadius = 20 / 2
+        label.clipsToBounds = true
         return label
     }()
-    
-    let newLabel = UILabel()
     
     
     // MARK: - Lifecycle
@@ -36,7 +40,10 @@ class PostPhotoCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(imageView)
+        addSubview(numberingLabel)
+        
         imageView.addConstraintsToFillView(self)
+        numberingLabel.anchor(top: topAnchor, right: rightAnchor, paddingTop: 7, paddingRight: 7)
     }
     
     required init?(coder: NSCoder) {
