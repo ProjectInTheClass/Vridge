@@ -80,4 +80,43 @@ struct AuthService {
             }
         }
     }
+    
+    // 유저네임 등록 EASY man.
+    func submitUsername(username: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USERNAMES.updateChildValues([username: 1]) { (err, ref) in
+            REF_USERS.child(uid).updateChildValues(["username": username], withCompletionBlock: completion)
+        }
+    }
+    
+    // 유저 프로필사진 등록
+    func submitUserProfilePhotoURL(photo: UIImage, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        guard let imageData = photo.jpegData(compressionQuality: 0.3) else { return }
+        let storageRef = STORAGE_USER_PROFILE_IMAGES.child(uid)
+        storageRef.putData(imageData, metadata: nil) { (meta, err) in
+            storageRef.downloadURL { (url, err) in
+                guard let imageURL = url?.absoluteString else { return }
+                
+                REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL],
+                                                       withCompletionBlock: completion)
+            }
+        }
+    }
+    
+    
+    // 유저네임 중복확인.
+    func checkUserNameExistency(username: String, completion: @escaping(Bool) -> Void) {
+        REF_USERNAMES.child(username).observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                print("DEBUG: user exist, you can't use this id")
+                completion(false)
+            } else {
+                print("DEBUG: user not exist, you can use this id")
+                completion(true)
+            }
+        }
+    }
 }

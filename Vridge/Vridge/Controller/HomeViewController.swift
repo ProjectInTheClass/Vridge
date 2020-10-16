@@ -63,6 +63,7 @@ class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
                                                name: Notification.Name("fetchAgain"), object: nil)
         
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

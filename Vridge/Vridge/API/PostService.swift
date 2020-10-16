@@ -216,8 +216,6 @@ struct PostService {
                 let posts = Post(user: user, postID: postID, dictionary: dictionary)
                 post.append(posts)
                 completion(post)
-                
-//                REF_POSTS.removeAllObservers()
             }
         }
     }
@@ -238,8 +236,6 @@ struct PostService {
                 if post.count == upto {
                     completion(post)
                 }
-                
-//                REF_POSTS.removeAllObservers()
             }
         }
     }

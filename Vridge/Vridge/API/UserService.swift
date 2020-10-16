@@ -20,12 +20,7 @@ struct UserService {
             let user = User(uid: uid, dictionary: dictionary)
             
             completion(user)
-//            print("DEBUG: user name is \(user.username)")
         }
-    }
-    
-    func userLogin() {
-        
     }
     
     
@@ -34,7 +29,6 @@ struct UserService {
         var users = [User]()
         REF_USER_POINT.observe(.childAdded) { snapshot in
             let uid = snapshot.key
-            let point = snapshot.value
             
             self.fetchUser(uid: uid) { user in
                 users.append(user)
