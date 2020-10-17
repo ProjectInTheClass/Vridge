@@ -32,7 +32,7 @@ class HomeFeedCell: UITableViewCell {
         let iv = UIImageView()
         iv.setDimensions(width: 45, height: 45)
         iv.layer.cornerRadius = 45 / 2
-        iv.image = UIImage(systemName: "person")
+//        iv.image = UIImage(systemName: "person")
         iv.contentMode = .scaleAspectFit
         iv.backgroundColor = .vridgePlaceholderColor
         iv.clipsToBounds = true
