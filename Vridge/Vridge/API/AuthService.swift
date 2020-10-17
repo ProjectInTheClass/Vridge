@@ -90,8 +90,9 @@ struct AuthService {
         }
     }
     
-    // 유저 프로필사진 등록
-    func submitUserProfilePhotoURL(photo: UIImage, completion: @escaping(Error?, DatabaseReference) -> Void) {
+    // 유저 프로필사진, 채식타입 등록
+    func submitUserProfile(type: VegieTypes, photo: UIImage,
+                           completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         guard let imageData = photo.jpegData(compressionQuality: 0.3) else { return }
@@ -100,11 +101,13 @@ struct AuthService {
             storageRef.downloadURL { (url, err) in
                 guard let imageURL = url?.absoluteString else { return }
                 
-                REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL],
+                REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL,
+                                                        "type": type.typeName],
                                                        withCompletionBlock: completion)
             }
         }
     }
+    
     
     
     // 유저네임 중복확인.

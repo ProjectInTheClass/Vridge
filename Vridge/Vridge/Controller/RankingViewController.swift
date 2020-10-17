@@ -28,15 +28,15 @@ class RankingViewController: UIViewController {
         didSet { tableView.reloadData() }
     }
     
-//        private var allRank = [User]()
-//        private var myTypeRank = [User]()
-//
-//        private var currentDataSource: [User] {
-//            switch selectedFilter {
-//            case .all: return allRank
-//            case .myType: return myTypeRank
-//            }
-//        }
+        private var allRank = [User]()
+        private var myTypeRank = [User]()
+
+        private var currentDataSource: [User] {
+            switch selectedFilter {
+            case .all: return allRank
+            case .myType: return myTypeRank // users.child(uid).value에서 type이 뭔지 가져와서 해당하는 소스 가져오기.
+            }
+        }
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -72,8 +72,8 @@ class RankingViewController: UIViewController {
     // MARK: - Helpers
     
     func fetchTotalUser() {
-        UserService.shared.fetchRanking { users in
-            self.totalUser = users.count
+        UserService.shared.fetchTotalUser { numberOfUsers in
+            self.totalUser = numberOfUsers
         }
     }
     

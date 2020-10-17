@@ -195,6 +195,7 @@ class HomeFeedCell: UITableViewCell {
         pageControl.numberOfPages = numberOfPages
         pageControl.isHidden = numberOfPages == 1 ? true : false
         captionLabel.text = posts.caption
+        captionLabel.isHidden = posts.caption == "" ? true : false
         username.text = posts.user.username
         profileImageView.kf.setImage(with: posts.user.profileImageURL)
         var timestamp: String {

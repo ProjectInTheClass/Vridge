@@ -120,21 +120,21 @@ class RankingHeader: UIView {
     let username2: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 16)
-        label.text = "pinguo"
+        label.text = " "
         return label
     }()
     
     let username1: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 16)
-        label.text = "시드니"
+        label.text = " "
         return label
     }()
     
     let username3: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 16)
-        label.text = "열쇠고리"
+        label.text = " "
         return label
     }()
     
@@ -165,7 +165,7 @@ class RankingHeader: UIView {
     let point2: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFHeavy(size: 16)
-        label.text = "62"
+        label.text = " "
         label.textColor = .vridgeBlack
         return label
     }()
@@ -173,7 +173,7 @@ class RankingHeader: UIView {
     let point1: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFHeavy(size: 16)
-        label.text = "209"
+        label.text = " "
         label.textColor = .vridgeBlack
         return label
     }()
@@ -181,7 +181,7 @@ class RankingHeader: UIView {
     let point3: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFHeavy(size: 16)
-        label.text = "102"
+        label.text = " "
         label.textColor = .vridgeBlack
         return label
     }()
