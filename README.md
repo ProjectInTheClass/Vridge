@@ -42,10 +42,10 @@
 
 ---
 
-### 👨‍👨‍👧 Team Vegefe
+### 👨‍👨‍👧 Team Vridge
 | 👨🏻‍💻[강민구](https://github.com/minguking) | 👩🏻‍💻[김루희](https://github.com/heerucan) | 👨🏻‍💻[박상욱](https://github.com/haloswpark) |
 | :---: | :---: | :---: |
-| <img width="150" alt="스크린샷 2020-09-06 오후 3 52 58" src="https://user-images.githubusercontent.com/63235947/92320009-0b444300-f059-11ea-9ec2-ae9bb6d295f8.png"> | <img width='150' src="https://user-images.githubusercontent.com/63235947/92319855-9cb2b580-f057-11ea-843a-8fe6e7a1a390.png"> | <img width="150" alt="스크린샷 2020-09-06 오후 3 43 34" src="https://user-images.githubusercontent.com/63235947/92319861-bfdd6500-f057-11ea-969d-3e6c37862970.png"> |
+| <img width="150" src="https://user-images.githubusercontent.com/63235947/96337470-6179bc80-10c2-11eb-9857-a68c36b2f4dc.png"> | <img width='150' src="https://user-images.githubusercontent.com/63235947/96337483-76565000-10c2-11eb-9ae9-fed0571f445e.png"> | <img width="150" src="https://user-images.githubusercontent.com/63235947/96337493-84a46c00-10c2-11eb-8c98-24192c800f9b.png"> |
 | 코딩하는 개발자 | 디자인하는 개발자 | 기획하는 개발자 |
 | " 나는 개발자다! " | " 나도 개발자다! " | " 나 역시 개발자다! " |
 | 역할쏼라솰라 | 역할얄라얄라 | 역할숄라숄라 |
