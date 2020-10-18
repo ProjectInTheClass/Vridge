@@ -26,12 +26,12 @@ class PostingViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "글 작성"
-        label.font = UIFont.SFRegular(size: 18)
+        label.font = UIFont.SFSemiBold(size: 18)
         return label
     }()
     
     private var addphotoAttributedText: NSAttributedString {
-        let text = NSMutableAttributedString(string: "채식 사진", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14),.foregroundColor: UIColor.vridgeGreen])
+        let text = NSMutableAttributedString(string: "채식 사진", attributes: [.font: UIFont.SFRegular(size: 14)!,.foregroundColor: UIColor.vridgeGreen])
         text.append(NSAttributedString(string: "을 추가해주세요", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14), .foregroundColor: UIColor.black]))
         return text
     }
@@ -39,7 +39,6 @@ class PostingViewController: UIViewController {
     private lazy var addPhotoTitle: UILabel = {
         let label = UILabel()
         label.attributedText = addphotoAttributedText
-        label.font = UIFont.SFRegular(size: 18)
         return label
     }()
     
@@ -52,14 +51,14 @@ class PostingViewController: UIViewController {
     private lazy var captionTitle: UILabel = {
         let label = UILabel()
         label.attributedText = writeCaptionAttributedText
-        label.font = UIFont.SFRegular(size: 18)
         return label
     }()
     
     let textView: CaptionTextView = {
         let tv = CaptionTextView()
         tv.isUserInteractionEnabled = true
-        tv.contentInset = UIEdgeInsets(top: -6, left: 0, bottom: 0, right: 0)
+        tv.font = UIFont.SFRegular(size: 14)
+        tv.textContainerInset = UIEdgeInsets(top: 15, left: 12, bottom: 15, right: 15)
         tv.layer.cornerRadius = 8
         tv.layer.borderWidth = 2
         tv.layer.borderColor = UIColor.vridgePostingBorder.cgColor

@@ -39,8 +39,8 @@ class CaptionTextView: UITextView {
         
         addSubview(placeholderLabel)
         
-        placeholderLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
-                                paddingTop: 8, paddingLeft: 4, paddingRight: 4)
+        placeholderLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, right: rightAnchor,
+                                paddingTop: 15, paddingLeft: 15, paddingRight: 15)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextInputChange),
                                                name: UITextView.textDidChangeNotification,

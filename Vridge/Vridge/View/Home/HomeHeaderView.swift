@@ -44,7 +44,6 @@ class HomeHeaderView: UIView {
     }()
     
     var descriptionAttributed: NSAttributedString {
-        
         let head = NSMutableAttributedString(string: "브릿지와 함께 ", attributes: [.font: UIFont.SFLight(size: 28)!])
         head.append(NSAttributedString(string: "\(pointOrDays.text!)\(kkiOrIl.text!)",
                                               attributes: [.font: UIFont.SFBold(size: 28)!]))
@@ -55,22 +54,6 @@ class HomeHeaderView: UIView {
         head.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, head.length))
         return head
     }
-    
-    
-//    lazy var label2: UILabel = {
-//        let label = UILabel()
-//
-//        let text = NSMutableAttributedString(string: "브릿지와 함께 n끼째\n채식에 참여하고 있어요!")
-//        let style = NSMutableParagraphStyle()
-//        style.lineSpacing = 5
-//        text.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, text.length))
-//
-//        label.attributedText = text
-//        label.textAlignment = .left
-//        label.numberOfLines = 2
-//        label.font = UIFont.SFLight(size: 28)
-//        return label
-//    }()
     
     let underLine: UIView = {
         let view = UIView()
@@ -85,8 +68,6 @@ class HomeHeaderView: UIView {
         self.user = user
         self.point = point
         super.init(frame: frame)
-        
-//        fetchPoint()
         
         addSubview(usernameLabel)
         addSubview(descriptionLabel)
@@ -106,10 +87,4 @@ class HomeHeaderView: UIView {
     
     // MARK: - Helpers
     
-//    func fetchPoint() {
-//        UserService.shared.fetchUserPoint { point in
-//            self.point = point
-//            print("DEBUG: point set as \(point)")
-//        }
-//    }
 }

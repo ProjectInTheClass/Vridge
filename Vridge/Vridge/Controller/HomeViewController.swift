@@ -74,6 +74,7 @@ class HomeViewController: UIViewController {
         numberOfPosts()
         configureUI()
         fetchPosts()
+        fetchPoint()
         
         view.addSubview(indicator)
         indicator.startAnimating()
@@ -85,7 +86,7 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
-        fetchPoint()
+//        fetchPoint()
     }
     
     
@@ -93,12 +94,14 @@ class HomeViewController: UIViewController {
     
     @objc func fetchAgain() {
         fetchPosts()
+        fetchPoint()
         print("DEBUG: it worked!!")
     }
     
     @objc func handleRefresh() {
         print("DEBUG: Refresh feed")
         fetchPosts()
+        fetchPoint()
     }
     
     @objc func handleShowRanking() {
