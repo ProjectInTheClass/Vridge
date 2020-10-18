@@ -21,7 +21,7 @@ struct PostService {
         indicator.startAnimating()
         var urlString: [String] = []
         
-        guard let imageData1 = photos[0]?.jpegData(compressionQuality: 0.25) else { return }
+        guard let imageData1 = photos[0]?.jpegData(compressionQuality: 0.3) else { return }
         switch photos.count {
         case 1:
             

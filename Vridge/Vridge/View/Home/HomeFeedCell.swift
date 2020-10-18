@@ -32,7 +32,6 @@ class HomeFeedCell: UITableViewCell {
         let iv = UIImageView()
         iv.setDimensions(width: 45, height: 45)
         iv.layer.cornerRadius = 45 / 2
-//        iv.image = UIImage(systemName: "person")
         iv.contentMode = .scaleAspectFit
         iv.backgroundColor = .vridgePlaceholderColor
         iv.clipsToBounds = true
@@ -74,13 +73,11 @@ class HomeFeedCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
         label.textColor = .vridgeGreen
-        label.text = "@ vegan"
         return label
     }()
     
     let time: UILabel = {
         let label = UILabel()
-        label.text = "3분 전 업로드"
         label.font = UIFont.SFRegular(size: 12)
         label.textColor = .vridgeGray
         return label
@@ -88,7 +85,6 @@ class HomeFeedCell: UITableViewCell {
     
     let captionLabel: UILabel = {
         let label = UILabel()
-        label.text = "오늘 점심으로 먹은 샐러드볼! 오늘도 채식 인증 성공! 완전 배부르고 맛있었다. 진짜 상큼하고 아삭하고 건강한 맛"
         label.font = UIFont.SFRegular(size: 14)
         label.textColor = .vridgeBlack
         label.numberOfLines = 0
@@ -129,11 +125,6 @@ class HomeFeedCell: UITableViewCell {
         stack.setCustomSpacing(3, after: userNameAndType)
         stack.setCustomSpacing(10, after: time)
         stack.alignment = .leading
-        
-//        let timeAndCaptionStack = UIStackView(arrangedSubviews: [stack, captionLabel])
-//        timeAndCaptionStack.axis = .vertical
-//        timeAndCaptionStack.spacing = 10
-//        timeAndCaptionStack.alignment = .leading
         
         addSubview(profileImageView)
         addSubview(collectionView)

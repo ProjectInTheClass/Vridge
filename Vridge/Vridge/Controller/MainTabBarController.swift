@@ -21,16 +21,13 @@ class MainTabBarController: UITabBarController {
         }
     }
     
-    lazy var postButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.clipsToBounds = true
-        button.imageView?.clipsToBounds = true
-        button.backgroundColor = .systemGreen
-        button.setImage(UIImage(systemName: "camera"), for: .normal)
-        button.imageView?.contentMode = .scaleToFill
-        button.tintColor = .red
-        button.addTarget(self, action: #selector(handleButtonTapped), for: .touchUpInside)
-        return button
+    private lazy var postButton: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "icPost")
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleButtonTapped))
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(recognizer)
+        return iv
     }()
     
     
@@ -45,10 +42,10 @@ class MainTabBarController: UITabBarController {
         view.addSubview(postButton)
         
         postButton.centerX(inView: view)
-        postButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 8)
-        postButton.widthAnchor.constraint(equalToConstant: 65).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: 65).isActive = true
-        postButton.layer.cornerRadius = 65 / 2
+        postButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 0)
+        postButton.widthAnchor.constraint(equalToConstant: 64).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        postButton.layer.cornerRadius = 64 / 2
         
         NotificationCenter.default.addObserver(self, selector: #selector(hidePostButton), name: Notification.Name("hidePostButton"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPostButton), name: Notification.Name("showPostButton"), object: nil)

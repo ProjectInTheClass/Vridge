@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+    <defs>
+        <linearGradient id="ap1uvecpwb" x1=".762" x2=".239" y1=".066" y2=".974" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#5fda87"/>
+            <stop offset=".493" stop-color="#34e88e"/>
+            <stop offset="1" stop-color="#27ee65"/>
+        </linearGradient>
+        <filter id="0d7ntku58a" width="100" height="100" x="0" y="0" filterUnits="userSpaceOnUse">
+            <feOffset dy="3"/>
+            <feGaussianBlur result="blur" stdDeviation="6"/>
+            <feFlood flood-opacity=".161"/>
+            <feComposite in2="blur" operator="in"/>
+            <feComposite in="SourceGraphic"/>
+        </filter>
+    </defs>
+    <g filter="url(#0d7ntku58a)">
+        <rect width="64" height="64" fill="url(#ap1uvecpwb)" rx="32" transform="translate(18 15)"/>
+    </g>
+</svg>

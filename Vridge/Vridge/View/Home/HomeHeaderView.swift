@@ -11,27 +11,66 @@ class HomeHeaderView: UIView {
         
     // MARK: - Properties
     
-    let label1: UILabel = {
+    var user: User {
+        didSet { reloadInputViews() }
+    }
+    
+    var point: Int
+    
+    lazy var usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "브릿지 님,"
+        label.text = "\(user.username) 님,"
         label.font = UIFont.SFBold(size: 28)
         return label
     }()
     
-    let label2: UILabel = {
+    lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        
-        let text = NSMutableAttributedString(string: "오늘 하루도\n맛있는 채식하셨나요?")
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 5
-        text.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, text.length))
-        
-        label.attributedText = text
-        label.textAlignment = .left
+        label.attributedText = descriptionAttributed
         label.numberOfLines = 2
-        label.font = UIFont.SFLight(size: 28)
         return label
     }()
+    
+    lazy var kkiOrIl: UILabel = {
+        let label = UILabel()
+        label.text = point > 99 ? "일" : "끼"
+        return label
+    }()
+    
+    lazy var pointOrDays: UILabel = {
+        let label = UILabel()
+        label.text = point > 99 ? "\(Int(point / 3))" : "\(point)"
+        return label
+    }()
+    
+    var descriptionAttributed: NSAttributedString {
+        
+        let head = NSMutableAttributedString(string: "브릿지와 함께 ", attributes: [.font: UIFont.SFLight(size: 28)!])
+        head.append(NSAttributedString(string: "\(pointOrDays.text!)\(kkiOrIl.text!)",
+                                              attributes: [.font: UIFont.SFBold(size: 28)!]))
+        head.append(NSAttributedString(string: " 째\n채식에 참여하고 있어요!",
+                                       attributes: [.font: UIFont.SFLight(size: 28)!]))
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        head.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, head.length))
+        return head
+    }
+    
+    
+//    lazy var label2: UILabel = {
+//        let label = UILabel()
+//
+//        let text = NSMutableAttributedString(string: "브릿지와 함께 n끼째\n채식에 참여하고 있어요!")
+//        let style = NSMutableParagraphStyle()
+//        style.lineSpacing = 5
+//        text.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, text.length))
+//
+//        label.attributedText = text
+//        label.textAlignment = .left
+//        label.numberOfLines = 2
+//        label.font = UIFont.SFLight(size: 28)
+//        return label
+//    }()
     
     let underLine: UIView = {
         let view = UIView()
@@ -42,19 +81,35 @@ class HomeHeaderView: UIView {
     
     // MARK: - Lifecycle
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, user: User, point: Int) {
+        self.user = user
+        self.point = point
         super.init(frame: frame)
         
-        addSubview(label1)
-        addSubview(label2)
+//        fetchPoint()
+        
+        addSubview(usernameLabel)
+        addSubview(descriptionLabel)
         addSubview(underLine)
         
-        label1.anchor(top: topAnchor, left: leftAnchor, paddingTop: 22, paddingLeft: 20)
-        label2.anchor(top: label1.bottomAnchor, left: leftAnchor, paddingTop: 5, paddingLeft: 20)
+        usernameLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: 5, paddingLeft: 20)
+        descriptionLabel.anchor(top: usernameLabel.bottomAnchor, left: leftAnchor, paddingTop: 5, paddingLeft: 20)
         underLine.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 0.5)
+        
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    // MARK: - Helpers
+    
+//    func fetchPoint() {
+//        UserService.shared.fetchUserPoint { point in
+//            self.point = point
+//            print("DEBUG: point set as \(point)")
+//        }
+//    }
 }

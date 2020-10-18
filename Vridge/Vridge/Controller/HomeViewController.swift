@@ -14,11 +14,24 @@ class HomeViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let logo: UILabel = {
-        let label = UILabel()
-        label.text = "Vridge"
-        label.font = UIFont.SFBold(size: 18)
-        return label
+    private let vridgeLogo: UIImageView = {
+        let imgView = UIImageView()
+        imgView.image = UIImage(named: "imgVridgeLogo")
+        return imgView
+    }()
+    
+    private let vridgeText: UIImageView = {
+        let imgView = UIImageView()
+        imgView.image = UIImage(named: "imgVridgeText")
+        return imgView
+    }()
+    
+    private lazy var rankButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(UIImage(named: "btnRank"), for: .normal)
+        btn.addTarget(self, action: #selector(handleShowRanking), for: .touchUpInside)
+        btn.tintColor = .black
+        return btn
     }()
     
     var numberOfPost = 0
@@ -29,6 +42,10 @@ class HomeViewController: UIViewController {
     
     var user: User? {
         didSet { print("DEBUG: user did set") }
+    }
+    
+    var point: Int? {
+        didSet { tableView.reloadData() }
     }
     
     let tableView = UITableView(frame: .zero, style: .grouped)
@@ -68,6 +85,7 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
+        fetchPoint()
     }
     
     
@@ -93,6 +111,13 @@ class HomeViewController: UIViewController {
     
     // MARK: - Helpers
     
+    func fetchPoint() {
+        UserService.shared.fetchUserPoint { point in
+            self.point = point
+            print("DEBUG: point at home = \(point)")
+        }
+    }
+    
     func numberOfPosts() {
         PostService.shared.numberOfPosts { nums in
             self.numberOfPost = nums
@@ -110,10 +135,12 @@ class HomeViewController: UIViewController {
     }
     
     func configureUI() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logo)
-        navigationItem.leftBarButtonItem?.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "랭킹", style: .plain, target: self, action: #selector(handleShowRanking))
-        navigationItem.rightBarButtonItem?.tintColor = .black
+        let logoImage = UIBarButtonItem(customView: vridgeLogo)
+        let logoText = UIBarButtonItem(customView: vridgeText)
+        navigationItem.leftBarButtonItems = [logoImage, logoText]
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rankButton)
+        
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         
         //hide navigationBar borderLine
@@ -165,13 +192,17 @@ extension HomeViewController: UITableViewDataSource {
         cell.delegate = self
         cell.posts = posts[indexPath.row]
         cell.row = indexPath.row
+        cell.type.text = "@\(posts[indexPath.row].user.type)"
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = HomeHeaderView()
+        guard let user = user else { return nil }
+        guard let point = point else { return nil}
+        let header = HomeHeaderView(frame: .zero, user: user, point: point)
         
+//        header.pointOrDays.text = "\(user.point)"
         header.backgroundColor = .white
         
         return header
@@ -195,7 +226,7 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 167
+        return 137
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
