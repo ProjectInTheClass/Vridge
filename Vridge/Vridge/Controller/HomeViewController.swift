@@ -86,7 +86,6 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
-//        fetchPoint()
     }
     
     
@@ -117,7 +116,6 @@ class HomeViewController: UIViewController {
     func fetchPoint() {
         UserService.shared.fetchUserPoint { point in
             self.point = point
-            print("DEBUG: point at home = \(point)")
         }
     }
     
@@ -196,6 +194,7 @@ extension HomeViewController: UITableViewDataSource {
         cell.posts = posts[indexPath.row]
         cell.row = indexPath.row
         cell.type.text = "@\(posts[indexPath.row].user.type)"
+//        cell.type.textColor = posts[indexPath.row].user.type
         
         return cell
     }

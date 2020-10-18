@@ -108,8 +108,6 @@ struct AuthService {
         }
     }
     
-    
-    
     // 유저네임 중복확인.
     func checkUserNameExistency(username: String, completion: @escaping(Bool) -> Void) {
         REF_USERNAMES.child(username).observeSingleEvent(of: .value) { snapshot in

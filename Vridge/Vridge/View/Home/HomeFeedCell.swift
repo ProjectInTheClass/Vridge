@@ -65,7 +65,6 @@ class HomeFeedCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 14)
         label.textColor = .vridgeBlack
-        label.text = "user name man"
         return label
     }()
     
