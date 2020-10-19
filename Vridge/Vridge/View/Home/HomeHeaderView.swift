@@ -11,10 +11,7 @@ class HomeHeaderView: UIView {
         
     // MARK: - Properties
     
-    var user: User {
-        didSet { reloadInputViews() }
-    }
-    
+    var user: User
     var point: Int
     
     lazy var usernameLabel: UILabel = {

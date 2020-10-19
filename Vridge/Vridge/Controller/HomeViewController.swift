@@ -41,7 +41,7 @@ class HomeViewController: UIViewController {
     }
     
     var user: User? {
-        didSet { print("DEBUG: user did set") }
+        didSet { print("DEBUG: user did set as \(user?.username)") }
     }
     
     var point: Int? {
@@ -91,6 +91,7 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
+        tableView.reloadData()
     }
     
     
@@ -204,16 +205,17 @@ extension HomeViewController: UITableViewDataSource {
         cell.delegate = self
         cell.posts = posts[indexPath.row]
         cell.row = indexPath.row
-        cell.type.text = "@\(type!)"
+//        cell.type.text = "@\(type)"
 //        cell.type.textColor = posts[indexPath.row].user.vegieType?.typeColor
-        cell.type.textColor = Type.shared.typeColor(typeName: type!) // 별로 좋은 방법은 아닌데 일단 이 방법으로....
+//        cell.type.textColor = Type.shared.typeColor(typeName: type ?? "") // 별로 좋은 방법은 아닌데 일단 이 방법으로....
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let user = user else { return nil }
-        guard let point = point else { return nil}
+        guard let point = point else { return nil }
+        print("DEBUG: point rn is \(point)")
         let header = HomeHeaderView(frame: .zero, user: user, point: point)
         
         header.backgroundColor = .white

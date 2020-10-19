@@ -29,7 +29,8 @@ struct Type {
         case lacto_ovo  : return .vridge_typeLactoOvo
         case flexitarian: return .vridge_typeFlexitarian
         case pollo      : return .vridge_typePollo
-        default         : return .blue
+        case fruitarian : return .vridge_typeFruitarian
+        default         : return .black
         }
     }
 }

@@ -13,7 +13,7 @@ class RankingHeader: UIView {
     
     var userRanking = [User]() {
         didSet {
-            setImage()
+            configure()
         }
     }
     
@@ -141,7 +141,6 @@ class RankingHeader: UIView {
     let type2: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-        label.textColor = .vridgeGray
         label.text = "@flexitarian"
         return label
     }()
@@ -149,7 +148,6 @@ class RankingHeader: UIView {
     let type1: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-        label.textColor = .vridgeGray
         label.text = "@pollo"
         return label
     }()
@@ -157,7 +155,6 @@ class RankingHeader: UIView {
     let type3: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-        label.textColor = .vridgeGray
         label.text = "@lacto-ovo"
         return label
     }()
@@ -243,7 +240,7 @@ class RankingHeader: UIView {
         }
     }
     
-    func setImage() {
+    func configure() {
         profileImage1.kf.setImage(with: userRanking[0].profileImageURL)
         profileImage2.kf.setImage(with: userRanking[1].profileImageURL)
         profileImage3.kf.setImage(with: userRanking[2].profileImageURL)
@@ -255,6 +252,14 @@ class RankingHeader: UIView {
         point1.text = String(userRanking[0].point)
         point2.text = String(userRanking[1].point)
         point3.text = String(userRanking[2].point)
+        
+        type1.text = "@\(userRanking[0].type!)"
+        type2.text = "@\(userRanking[1].type!)"
+        type3.text = "@\(userRanking[2].type!)"
+
+        type1.textColor = Type.shared.typeColor(typeName: userRanking[0].type!)
+        type2.textColor = Type.shared.typeColor(typeName: userRanking[1].type!)
+        type3.textColor = Type.shared.typeColor(typeName: userRanking[2].type!)
     }
     
     func configureUI() {

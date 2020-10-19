@@ -37,29 +37,46 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         
+        configure()
         fetchUser()
-
-        view.addSubview(postButton)
-        
-        postButton.centerX(inView: view)
-        postButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 0)
-        postButton.widthAnchor.constraint(equalToConstant: 64).isActive = true
-        postButton.heightAnchor.constraint(equalToConstant: 64).isActive = true
-        postButton.layer.cornerRadius = 64 / 2
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(hidePostButton), name: Notification.Name("hidePostButton"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(showPostButton), name: Notification.Name("showPostButton"), object: nil)
+//        authenticateAndConfigureUI()
     }
+    
+    
+    // MARK: - API
+    
+    func fetchUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        UserService.shared.fetchUser(uid: uid) { user in
+            self.user = user
+        }
+    }
+    
+    func authenticateAndConfigureUI() {
+        if Auth.auth().currentUser == nil {
+            DispatchQueue.main.async {
+                let controller = LoginViewController()
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
+        } else {
+            fetchUser()
+        }
+    }
+    
     
     
     // MARK: - Selectors
     
     @objc func handleButtonTapped() {
+//        print("DEBUG: tapped!")
         let controller = PostingViewController(config: .post)
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         
 //        let controller = LoginViewController()
+//        controller.delegate = self
 //        let nav = UINavigationController(rootViewController: controller)
 //        nav.modalPresentationStyle = .fullScreen
         
@@ -80,13 +97,35 @@ class MainTabBarController: UITabBarController {
     
     // MARK: - Helpers
     
-    func fetchUser() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    func configure() {
+        view.addSubview(postButton)
         
-        UserService.shared.fetchUser(uid: uid) { user in
-            self.user = user
-            print("DEBUG: current user is \(user.type)")
-        }
+        postButton.centerX(inView: view)
+        postButton.anchor(bottom: view.safeAreaLayoutGuide.bottomAnchor, paddingBottom: 0)
+        postButton.widthAnchor.constraint(equalToConstant: 64).isActive = true
+        postButton.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        postButton.layer.cornerRadius = 64 / 2
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(hidePostButton), name: Notification.Name("hidePostButton"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPostButton), name: Notification.Name("showPostButton"), object: nil)
     }
 
+}
+
+extension MainTabBarController :LoginViewControllerDelegate {
+    
+    func userLogout() {
+        print("DEBUG: handle log out man")
+        do {
+            try Auth.auth().signOut()
+            print("DEBUG: logged out")
+            dismiss(animated: true) {
+                self.user = nil
+            }
+        } catch (let err) {
+            print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
+        }
+    }
+    
+    
 }

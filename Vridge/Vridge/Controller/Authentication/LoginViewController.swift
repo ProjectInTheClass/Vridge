@@ -10,9 +10,15 @@ import UIKit
 import AuthenticationServices
 import Firebase
 
+protocol LoginViewControllerDelegate: class {
+    func userLogout()
+}
+
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
+    
+    weak var delegate: LoginViewControllerDelegate?
     
     let appleLoginButton: ASAuthorizationAppleIDButton = {
         let button = ASAuthorizationAppleIDButton()
@@ -34,6 +40,13 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    private let browseButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("둘러보기", for: .normal)
+        button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
+        return button
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -47,17 +60,16 @@ class LoginViewController: UIViewController {
     
     // MARK: - Selectors
     
+    @objc func handleBrowse() {
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc func handleAppleLogin() {
         performSignin()
     }
     
     @objc func handleLogOut() {
-        do {
-            try Auth.auth().signOut()
-            print("DEBUG: logged out")
-        } catch (let err) {
-            print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
-        }
+        delegate?.userLogout()
     }
     
     
@@ -68,6 +80,7 @@ class LoginViewController: UIViewController {
         view.addSubview(appleLoginButton)
         view.addSubview(label)
         view.addSubview(logOutButton)
+        view.addSubview(browseButton)
         
         appleLoginButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                                 paddingTop: 100, paddingLeft: 10, width: 240, height: 50)
@@ -75,6 +88,7 @@ class LoginViewController: UIViewController {
         label.centerX(inView: view)
         logOutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor,
                             paddingTop: 40, paddingRight: 40)
+        browseButton.center(inView: view)
         
         
     }
@@ -180,7 +194,15 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             
             guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
                 // handle if user already once registered... or ex user rejoining...
-                AuthService.shared.loginExistUser(viewController: self, credential: credential)
+                AuthService.shared.loginExistUser(viewController: self, credential: credential) { (err, ref) in
+                    
+                    print("DEBUG: logged in and update home tab")
+                    guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+                    guard let tab = window.rootViewController as? MainTabBarController else { return }
+                    
+                    tab.fetchUser()
+                }
+                
                 return
             }
 //             handle if user hasn't registered...
@@ -191,6 +213,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             AuthService.shared.signInNewUser(viewController: self, credential: credential,
                                              email: email, username: username)
             
+            print("DEBUG: logged in and update home tab")
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? MainTabBarController else { return }
+            
+            tab.fetchUser()
             print("DEBUG: New user is '\(username)'")
             
             return
