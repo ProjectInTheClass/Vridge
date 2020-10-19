@@ -128,6 +128,7 @@ extension RankingViewController: UITableViewDataSource {
         cell.username.text = userRanking[indexPath.row + 3].username
         cell.profileImage.kf.setImage(with: userRanking[indexPath.row + 3].profileImageURL)
         cell.pointLabel.text = "\(userRanking[indexPath.row + 3].point)"
+        cell.type.text = userRanking[indexPath.row + 3].type
         cell.type.textColor = Type.shared.typeColor(typeName: userRanking[indexPath.row + 3].type!)
         
         return cell

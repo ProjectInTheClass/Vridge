@@ -23,7 +23,7 @@ struct UserService {
         }
     }
     
-    func fetchRanking(completion: @escaping(([User]) -> Void)) {
+    func fetchRanking(completion: @escaping([User]) -> Void) {
         var users = [User]()
 
         REF_USER_POINT.observe(.childAdded) { snapshot in

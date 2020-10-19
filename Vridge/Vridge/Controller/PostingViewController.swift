@@ -11,11 +11,17 @@ import YPImagePicker
 import Firebase
 import Kingfisher
 
+protocol PostingViewControllerDelegate: class {
+    func updateUser()
+}
+
 private let reusableIdentifier = "PostPhotoCell"
 
 class PostingViewController: UIViewController {
     
     // MARK: - Properties
+    
+    weak var delegate: PostingViewControllerDelegate?
     
     private var configuration: PostingConfiguration
     private lazy var viewModel = PostingViewModel(config: configuration)
@@ -169,6 +175,8 @@ class PostingViewController: UIViewController {
                     }
                     NotificationCenter.default.post(name: Notification.Name("cellToFirst"), object: nil)
                 }
+//                self.delegate?.updateUser()
+                print("DEBUG: upload from posting view")
             }
         case .amend(_):
             guard let caption = textView.text else { return }

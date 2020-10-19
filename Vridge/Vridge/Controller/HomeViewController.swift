@@ -10,9 +10,15 @@ import UIKit
 private let cellID = "cellID"
 private let headerID = "headerID"
 
+protocol HomeViewControllerDelgate: class {
+    func updateUsers()
+}
+
 class HomeViewController: UIViewController {
     
     // MARK: - Properties
+    
+    weak var delegates: HomeViewControllerDelgate?
     
     private let vridgeLogo: UIImageView = {
         let imgView = UIImageView()
@@ -41,7 +47,7 @@ class HomeViewController: UIViewController {
     }
     
     var user: User? {
-        didSet { print("DEBUG: user did set as \(user?.username)") }
+        didSet { print("DEBUG: user did set as \(user?.username)"); tableView.reloadData() }
     }
     
     var point: Int? {
@@ -91,7 +97,45 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
-        tableView.reloadData()
+    }
+    
+    
+    // MARK: - API
+    
+    func fetchUserType() {
+        UserService.shared.fetchUserType { type in
+            self.type = type
+        }
+    }
+    
+    func fetchPoint() {
+        UserService.shared.fetchUserPoint { point in
+            self.point = point
+        }
+    }
+    
+    func numberOfPosts() {
+        PostService.shared.numberOfPosts { nums in
+            self.numberOfPost = nums
+        }
+    }
+    
+    func fetchPosts() {
+        PostService.shared.fetchPosts { posts in
+            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+            self.indicator.stopAnimating()
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    func loadMore() {
+        let from = posts.count
+        let to = from + POST_LOAD_AT_ONCE >= numberOfPost ? numberOfPost : from + POST_LOAD_AT_ONCE
+        
+        PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
+            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+        }
+        tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
     }
     
     
@@ -119,34 +163,6 @@ class HomeViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func fetchUserType() {
-        UserService.shared.fetchUserType { type in
-            self.type = type
-        }
-    }
-    
-    func fetchPoint() {
-        UserService.shared.fetchUserPoint { point in
-            self.point = point
-        }
-    }
-    
-    func numberOfPosts() {
-        PostService.shared.numberOfPosts { nums in
-            self.numberOfPost = nums
-        }
-    }
-    
-    func loadMore() {
-        let from = posts.count
-        let to = from + POST_LOAD_AT_ONCE >= numberOfPost ? numberOfPost : from + POST_LOAD_AT_ONCE
-        
-        PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
-            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
-        }
-        tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
-    }
-    
     func configureUI() {
         let logoImage = UIBarButtonItem(customView: vridgeLogo)
         let logoText = UIBarButtonItem(customView: vridgeText)
@@ -172,14 +188,6 @@ class HomeViewController: UIViewController {
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
         
-    }
-    
-    func fetchPosts() {
-        PostService.shared.fetchPosts { posts in
-            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
-            self.indicator.stopAnimating()
-            self.tableView.refreshControl?.endRefreshing()
-        }
     }
     
     func showReportAlert() {
@@ -209,18 +217,26 @@ extension HomeViewController: UITableViewDataSource {
 //        cell.type.textColor = posts[indexPath.row].user.vegieType?.typeColor
 //        cell.type.textColor = Type.shared.typeColor(typeName: type ?? "") // 별로 좋은 방법은 아닌데 일단 이 방법으로....
         
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let user = user else { return nil }
-        guard let point = point else { return nil }
-        print("DEBUG: point rn is \(point)")
-        let header = HomeHeaderView(frame: .zero, user: user, point: point)
+//        guard let user = user else { return nil }
         
-        header.backgroundColor = .white
+        if user == nil {
+            let header = HomeHeaderView(frame: .zero, user: nil, point: user?.point ?? 0)
+            header.backgroundColor = .white
+            return header
+        } else {
+            let header = HomeHeaderView(frame: .zero, user: user, point: user!.point)
+            header.backgroundColor = .white
+            return header
+        }
         
-        return header
+        
+        
+//        return header
     }
     
 }
@@ -273,7 +289,8 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: HomeFeedCellDelegate {
     
     func currentUserAmendTapped(sender: Post, row: Int) {
-        let viewModel = ActionSheetViewModel()
+        var viewModel = ActionSheetViewModel()
+        viewModel.delegate = self
         present(viewModel.amendActionSheet(self, row: row, post: sender), animated: true)
     }
     
@@ -282,5 +299,15 @@ extension HomeViewController: HomeFeedCellDelegate {
         present(viewModel.reportActionSheet(self, post: sender), animated: true, completion: nil)
         
     }
+    
+}
+
+extension HomeViewController: ActionSheetViewModelDelegate {
+    
+    func updateUser() {
+        delegates?.updateUsers()
+        print("DEBUG: delegate passed to HOmeVIewCOntroller")
+    }
+    
     
 }

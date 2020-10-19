@@ -14,7 +14,7 @@ struct PostService {
     static let shared = PostService()
     
     func uploadPost(caption: String?, photos: [UIImage?], indicator: UIActivityIndicatorView,
-                    view: UIViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
+                    view: PostingViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -48,10 +48,13 @@ struct PostService {
                         }
                         
                         print("DEBUG: photo uploaded successfully to Storage/post_images.")
+                        
                         DispatchQueue.main.async {
                             indicator.stopAnimating()
                         }
-                        view.dismiss(animated: true, completion: nil)
+                        view.dismiss(animated: true) {
+                            view.delegate?.updateUser()
+                        }
                     }
                 }
             }

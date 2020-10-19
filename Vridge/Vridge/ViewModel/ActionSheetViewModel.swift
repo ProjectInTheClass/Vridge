@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol ActionSheetViewModelDelegate: class {
+    func updateUser()
+}
+
 struct ActionSheetViewModel {
+    
+    weak var delegate: ActionSheetViewModelDelegate?
     
     func amendActionSheet(_ viewController: HomeViewController, row: Int, post: Post) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -28,6 +34,7 @@ struct ActionSheetViewModel {
             let okButton = UIAlertAction(title: "예", style: .destructive) { _ in
                 // delete service
                 PostService.shared.deletePost(row: row, viewController: viewController, postId: post.postID) { (err, ref) in
+                    delegate?.updateUser()
                 }
             }
             deleteAlert.addAction(noButton)
