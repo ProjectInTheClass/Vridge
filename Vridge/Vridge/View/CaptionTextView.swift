@@ -15,7 +15,7 @@ class CaptionTextView: UITextView {
     let placeholderLabel: UILabel = {
         let label = UILabel()
         
-        let text = NSMutableAttributedString(string: "오늘 하루 채식 식단을 기록해봐.\n단, 채식과 관련없는 내용은 지양해줘!\n최소 1장, 최대 3장의 사진을 꼭 올려라잉\n* 200자까지 작성 할 수 있어")
+        let text = NSMutableAttributedString(string: "오늘 하루 채식 식단을 기록해보세요.\n단, 채식과 관련 없는 내용은 지양해 주세요.\n* 200자까지 작성 할 수 있어요.\n** 사진은 필수로 선택해 주셔야 해요.")
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
         text.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, text.length))
@@ -39,8 +39,8 @@ class CaptionTextView: UITextView {
         
         addSubview(placeholderLabel)
         
-        placeholderLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
-                                paddingTop: 8, paddingLeft: 4, paddingRight: 4)
+        placeholderLabel.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, right: rightAnchor,
+                                paddingTop: 15, paddingLeft: 15, paddingRight: 15)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextInputChange),
                                                name: UITextView.textDidChangeNotification,

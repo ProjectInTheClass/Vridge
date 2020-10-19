@@ -47,7 +47,7 @@ struct ImagePicker {
             for item in items {
                 switch item {
                 case .photo(let photo): imageArray.append(photo.image) // array에 이미지들을 저장.
-                    print("DEBUG: photos are \(photo.image)")
+//                    print("DEBUG: photos are \(photo.image)")
                 default: print("Error")
                 }
             }

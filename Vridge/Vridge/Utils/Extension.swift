@@ -122,11 +122,24 @@ extension UIColor {
         return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
     
+    static let vridgeTabBar = UIColor.rgb(red: 78, green: 223, blue: 138)
+    
     static let vridgeGreen = UIColor.rgb(red: 31, green: 186, blue: 109)
     static let vridgePlaceholderColor = UIColor.rgb(red: 192, green: 192, blue: 194)
     static let vridgeBlack = UIColor.rgb(red: 21, green: 21, blue: 21)
     static let vridgeGray = UIColor.rgb(red: 153, green: 153, blue: 153)
     static let vridgeWhite = UIColor.rgb(red: 245, green: 245, blue: 245)
+    static let vridgePostingBorder = UIColor.rgb(red: 245, green: 245, blue: 245)
+    
+    // type color
+    static let vridge_typeVegan = UIColor.rgb(red: 175, green: 219, blue: 84)
+    static let vridge_typeOvo = UIColor.rgb(red: 129, green: 229, blue: 144)
+    static let vridge_typeFruitarian = UIColor.rgb(red: 229, green: 196, blue: 66)
+    static let vridge_typeLacto = UIColor.rgb(red: 155, green: 225, blue: 99)
+    static let vridge_typeLactoOvo = UIColor.rgb(red: 109, green: 232, blue: 168)
+    static let vridge_typePesco = UIColor.rgb(red: 95, green: 218, blue: 135)
+    static let vridge_typePollo = UIColor.rgb(red: 52, green: 232, blue: 142)
+    static let vridge_typeFlexitarian = UIColor.rgb(red: 0, green: 238, blue: 126)
 }
 
 extension UIFont {

@@ -11,23 +11,28 @@ class PostPhotoCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    let addPhotoImage: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.tintColor = .black
+        return iv
+    }()
+    
+    let photoCount: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.SFRegular(size: 14)
+        return label
+    }()
+    
     let imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
-        iv.tintColor = .vridgePlaceholderColor
-        iv.layer.borderColor = UIColor.vridgeGreen.cgColor
-        iv.layer.borderWidth = 4
+        iv.tintColor = .black
+        iv.layer.cornerRadius = 8
         return iv
     }()
-    
-    let label: UILabel = {
-        let label = UILabel()
-        label.text = "TEST LABEL MAN"
-        return label
-    }()
-    
-    let newLabel = UILabel()
     
     
     // MARK: - Lifecycle
@@ -36,6 +41,7 @@ class PostPhotoCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(imageView)
+        
         imageView.addConstraintsToFillView(self)
     }
     

@@ -28,7 +28,9 @@ struct AuthService {
                 print("DEBUG: New user's email is \(email)")
                 print("DEBUG: New user logged in.")
                 
-                viewController.dismiss(animated: true, completion: nil)
+                let selectTypeController = SelectTypeViewController()
+                viewController.navigationController?.pushViewController(selectTypeController, animated: true)
+                
             }
         }
     }
@@ -75,6 +77,46 @@ struct AuthService {
                 REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                     print("DEBUG: This user has deleted id, and successfully rejoined")
                 }
+            }
+        }
+    }
+    
+    // 유저네임 등록 EASY man.
+    func submitUsername(username: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USERNAMES.updateChildValues([username: 1]) { (err, ref) in
+            REF_USERS.child(uid).updateChildValues(["username": username], withCompletionBlock: completion)
+        }
+    }
+    
+    // 유저 프로필사진, 채식타입 등록
+    func submitUserProfile(type: VegieTypes, photo: UIImage,
+                           completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        guard let imageData = photo.jpegData(compressionQuality: 0.3) else { return }
+        let storageRef = STORAGE_USER_PROFILE_IMAGES.child(uid)
+        storageRef.putData(imageData, metadata: nil) { (meta, err) in
+            storageRef.downloadURL { (url, err) in
+                guard let imageURL = url?.absoluteString else { return }
+                
+                REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL,
+                                                        "type": type.rawValue],
+                                                       withCompletionBlock: completion)
+            }
+        }
+    }
+    
+    // 유저네임 중복확인.
+    func checkUserNameExistency(username: String, completion: @escaping(Bool) -> Void) {
+        REF_USERNAMES.child(username).observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                print("DEBUG: user exist, you can't use this id")
+                completion(false)
+            } else {
+                print("DEBUG: user not exist, you can use this id")
+                completion(true)
             }
         }
     }

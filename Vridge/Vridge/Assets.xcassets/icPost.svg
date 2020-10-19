@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+    <defs>
+        <linearGradient id="linear-gradient" x1=".762" x2=".239" y1=".066" y2=".974" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#5fda87"/>
+            <stop offset=".493" stop-color="#34e88e"/>
+            <stop offset="1" stop-color="#27ee65"/>
+        </linearGradient>
+        <style>
+            .cls-2{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:3px}
+        </style>
+    </defs>
+    <g id="ic_post" transform="translate(-155 -715)">
+        <rect id="ic_posting" width="64" height="64" fill="url(#linear-gradient)" rx="32" transform="translate(155 715)"/>
+        <g id="그룹_6933" transform="translate(-11696.971 8986.352)">
+            <g id="그룹_6932" transform="translate(11872.255 -8240)">
+                <path id="선_1" d="M0 0L24 0" class="cls-2"/>
+            </g>
+            <path id="선_2" d="M0 0L24 0" class="cls-2" transform="rotate(90 10068.128 1816.128)"/>
+        </g>
+    </g>
+</svg>

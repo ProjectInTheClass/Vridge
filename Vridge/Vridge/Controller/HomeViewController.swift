@@ -14,12 +14,27 @@ class HomeViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let logo: UILabel = {
-        let label = UILabel()
-        label.text = "Vridge"
-        label.font = UIFont.SFBold(size: 18)
-        return label
+    private let vridgeLogo: UIImageView = {
+        let imgView = UIImageView()
+        imgView.image = UIImage(named: "imgVridgeLogo")
+        return imgView
     }()
+    
+    private let vridgeText: UIImageView = {
+        let imgView = UIImageView()
+        imgView.image = UIImage(named: "imgVridgeText")
+        return imgView
+    }()
+    
+    private lazy var rankButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(UIImage(named: "btnRank"), for: .normal)
+        btn.addTarget(self, action: #selector(handleShowRanking), for: .touchUpInside)
+        btn.tintColor = .black
+        return btn
+    }()
+    
+    var numberOfPost = 0
     
     var posts = [Post]() {
         didSet { tableView.reloadData() }
@@ -27,6 +42,14 @@ class HomeViewController: UIViewController {
     
     var user: User? {
         didSet { print("DEBUG: user did set") }
+    }
+    
+    var point: Int? {
+        didSet { tableView.reloadData() }
+    }
+    
+    var type: String? {
+        didSet { tableView.reloadData() }
     }
     
     let tableView = UITableView(frame: .zero, style: .grouped)
@@ -52,12 +75,17 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
+        numberOfPosts()
         configureUI()
         fetchPosts()
+        fetchPoint()
+        fetchUserType()
         
         view.addSubview(indicator)
         indicator.startAnimating()
-        NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain), name: Notification.Name("fetchAgain"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
+                                               name: Notification.Name("fetchAgain"), object: nil)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,12 +98,14 @@ class HomeViewController: UIViewController {
     
     @objc func fetchAgain() {
         fetchPosts()
+        fetchPoint()
         print("DEBUG: it worked!!")
     }
     
     @objc func handleRefresh() {
         print("DEBUG: Refresh feed")
         fetchPosts()
+        fetchPoint()
     }
     
     @objc func handleShowRanking() {
@@ -88,12 +118,41 @@ class HomeViewController: UIViewController {
     
     // MARK: - Helpers
     
-    func configureUI() {
+    func fetchUserType() {
+        UserService.shared.fetchUserType { type in
+            self.type = type
+        }
+    }
+    
+    func fetchPoint() {
+        UserService.shared.fetchUserPoint { point in
+            self.point = point
+        }
+    }
+    
+    func numberOfPosts() {
+        PostService.shared.numberOfPosts { nums in
+            self.numberOfPost = nums
+        }
+    }
+    
+    func loadMore() {
+        let from = posts.count
+        let to = from + POST_LOAD_AT_ONCE >= numberOfPost ? numberOfPost : from + POST_LOAD_AT_ONCE
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logo)
-        navigationItem.leftBarButtonItem?.tintColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "랭킹", style: .plain, target: self, action: #selector(handleShowRanking))
-        navigationItem.rightBarButtonItem?.tintColor = .black
+        PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
+            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+        }
+        tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
+    }
+    
+    func configureUI() {
+        let logoImage = UIBarButtonItem(customView: vridgeLogo)
+        let logoText = UIBarButtonItem(customView: vridgeText)
+        navigationItem.leftBarButtonItems = [logoImage, logoText]
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rankButton)
+        
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         
         //hide navigationBar borderLine
@@ -145,17 +204,23 @@ extension HomeViewController: UITableViewDataSource {
         cell.delegate = self
         cell.posts = posts[indexPath.row]
         cell.row = indexPath.row
+        cell.type.text = "@\(type!)"
+//        cell.type.textColor = posts[indexPath.row].user.vegieType?.typeColor
+        cell.type.textColor = Type.shared.typeColor(typeName: type!) // 별로 좋은 방법은 아닌데 일단 이 방법으로....
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = HomeHeaderView()
+        guard let user = user else { return nil }
+        guard let point = point else { return nil}
+        let header = HomeHeaderView(frame: .zero, user: user, point: point)
         
         header.backgroundColor = .white
         
         return header
     }
+    
 }
 
 
@@ -163,8 +228,18 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: UITableViewDelegate {
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let scrollHeight = scrollView.frame.size.height
+        if offsetY == contentHeight - scrollHeight
+        {
+            loadMore()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 167
+        return 137
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -177,6 +252,18 @@ extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
         return false
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
+        if  indexPath.row == lastRowIndex {
+            let spinner = UIActivityIndicatorView(style: .large)
+            spinner.startAnimating()
+            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+
+            tableView.tableFooterView = spinner
+            tableView.tableFooterView?.isHidden = false
+        }
     }
     
 }
