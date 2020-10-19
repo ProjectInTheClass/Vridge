@@ -35,7 +35,8 @@ struct AuthService {
         }
     }
     
-    func loginExistUser(viewController: UIViewController, credential: AuthCredential) {
+    func loginExistUser(viewController: UIViewController, credential: AuthCredential,
+                        completion: @escaping(Error?, DatabaseReference) -> Void) {
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             guard let email = result?.user.email else { return }
@@ -53,15 +54,17 @@ struct AuthService {
                               "email": email,
                               "point": point] as [String: Any]
                 
-                REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
-                    print("DEBUG: Existed user logged in.")
+                REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+                print("DEBUG: Existed user logged in.")
+                
+//                REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                     
-                    REF_USER_POINT.updateChildValues([uid: 0]) { (err, ref) in
-                        print("DEBUG: point updated")
-                    }
+                    
                     
                     viewController.dismiss(animated: true, completion: nil)
-                }
+//                    let controller = TestViewController()
+//                    viewController.navigationController?.pushViewController(controller, animated: true)
+//                }
             }
         }
     }

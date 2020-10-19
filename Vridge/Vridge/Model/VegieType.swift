@@ -58,3 +58,8 @@ enum VegieTypes: String, CaseIterable {
     }
     
 }
+
+struct vegieTypeViewModel  {
+    
+
+}

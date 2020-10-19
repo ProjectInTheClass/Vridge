@@ -47,7 +47,7 @@ class RankingCell: UITableViewCell {
     let type: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-        label.textColor = .vridgeGray
+//        label.textColor = .vridgeGray
         label.text = "@pollo"
         return label
     }()

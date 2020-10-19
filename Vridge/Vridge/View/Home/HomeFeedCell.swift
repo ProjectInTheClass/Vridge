@@ -186,6 +186,8 @@ class HomeFeedCell: UITableViewCell {
         captionLabel.text = posts.caption
         captionLabel.isHidden = posts.caption == "" ? true : false
         username.text = posts.user.username
+        type.text = "@\(posts.user.type!)"
+        type.textColor = Type.shared.typeColor(typeName: posts.user.type!)
         profileImageView.kf.setImage(with: posts.user.profileImageURL)
         var timestamp: String {
             let formatter = DateComponentsFormatter()
