@@ -13,10 +13,6 @@ class RankingViewController: UIViewController {
     
     // MARK: - Properties
     
-    var userRanking = [User]() {
-        didSet { tableView.reloadData() }
-    }
-    
     var totalUser: Int? {
         didSet { fetchUserRanking() }
     }
@@ -28,16 +24,21 @@ class RankingViewController: UIViewController {
         didSet { tableView.reloadData() }
     }
     
-        private var allRank = [User]()
-        private var myTypeRank = [User]()
-
-        private var currentDataSource: [User] {
-            switch selectedFilter {
-            case .all: return allRank
-            case .myType: return myTypeRank // users.child(uid) 에서 typeName을 가져와서
-                                            // user_(typeName).value에서 type이 뭔지 가져와서 해당하는 소스 가져오기.
-            }
+    private var allRank = [User]() {
+        didSet { tableView.reloadData() }
+    }
+    private var myTypeRank = [User]() {
+        didSet { tableView.reloadData() }
+    }
+    //didSet 해야할지도...
+    
+    private var currentDataSource: [User] {
+        switch selectedFilter {
+        case .all: return allRank
+        case .myType: return myTypeRank // users.child(uid) 에서 typeName을 가져와서
+        // user_(typeName).value에서 type이 뭔지 가져와서 해당하는 소스 가져오기.
         }
+    }
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -81,7 +82,7 @@ class RankingViewController: UIViewController {
     func fetchUserRanking() {
         UserService.shared.fetchRanking { users in
             if users.count == self.totalUser {
-                self.userRanking = users.sorted(by: { $0.point > $1.point })
+                self.allRank = users.sorted(by: { $0.point > $1.point })
             }
         }
     }
@@ -117,7 +118,7 @@ class RankingViewController: UIViewController {
 extension RankingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userRanking.count - 3
+        return currentDataSource.count - 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -125,16 +126,17 @@ extension RankingViewController: UITableViewDataSource {
                                                  for: indexPath) as! RankingCell
         cell.backgroundColor = .vridgeWhite
         cell.number.text = "\(indexPath.row + 4)"
-        cell.username.text = userRanking[indexPath.row + 3].username
-        cell.profileImage.kf.setImage(with: userRanking[indexPath.row + 3].profileImageURL)
-        cell.pointLabel.text = "\(userRanking[indexPath.row + 3].point)"
-        cell.type.text = userRanking[indexPath.row + 3].type
-        cell.type.textColor = Type.shared.typeColor(typeName: userRanking[indexPath.row + 3].type!)
+        cell.username.text = currentDataSource[indexPath.row + 3].username
+        cell.profileImage.kf.setImage(with: currentDataSource[indexPath.row + 3].profileImageURL)
+        cell.pointLabel.text = "\(currentDataSource[indexPath.row + 3].point)"
+        cell.type.text = currentDataSource[indexPath.row + 3].type
+        cell.type.textColor = Type.shared.typeColor(typeName: currentDataSource[indexPath.row + 3].type!)
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
         let header = RankingHeader()
         header.backgroundColor = .white
         return header

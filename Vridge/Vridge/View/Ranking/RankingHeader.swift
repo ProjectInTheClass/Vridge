@@ -12,11 +12,9 @@ class RankingHeader: UIView {
     // MARK: - Properties
     
     var userRanking = [User]() {
-        didSet {
-            configure()
-        }
+        didSet { configure() }
     }
-    
+
     var totalUser: Int? {
         didSet { fetchUserRanking() }
     }
