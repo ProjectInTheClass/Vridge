@@ -102,7 +102,7 @@ struct AuthService {
                 guard let imageURL = url?.absoluteString else { return }
                 
                 REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL,
-                                                        "type": type.typeName],
+                                                        "type": type.rawValue],
                                                        withCompletionBlock: completion)
             }
         }

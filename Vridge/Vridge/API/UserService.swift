@@ -50,4 +50,15 @@ struct UserService {
             completion(point)
         }
     }
+    
+    func fetchUserType(completion: @escaping(String) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
+            guard let dic = snapshot.value as? [String: Any] else { return }
+            guard let type = dic["type"] as? String else { return }
+            
+            completion(type)
+        }
+    }
 }

@@ -85,7 +85,7 @@ class MainTabBarController: UITabBarController {
         
         UserService.shared.fetchUser(uid: uid) { user in
             self.user = user
-            print("DEBUG: current user is \(user.username)")
+            print("DEBUG: current user is \(user.type)")
         }
     }
 

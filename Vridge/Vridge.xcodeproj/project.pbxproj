@@ -14,6 +14,7 @@
 		3D1D8809253ACAE6005A0FE9 /* VegieType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D8806253ACAE6005A0FE9 /* VegieType.swift */; };
 		3D1D880D253AD0B1005A0FE9 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D880C253AD0B1005A0FE9 /* TestViewController.swift */; };
 		3D1D8810253AD16D005A0FE9 /* TestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D880F253AD16D005A0FE9 /* TestCell.swift */; };
+		3D1D882E253C9211005A0FE9 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D882D253C9211005A0FE9 /* Type.swift */; };
 		3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4722526F30100C6388A /* AppDelegate.swift */; };
 		3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4742526F30100C6388A /* SceneDelegate.swift */; };
 		3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4762526F30100C6388A /* HomeViewController.swift */; };
@@ -60,6 +61,7 @@
 		3D1D8806253ACAE6005A0FE9 /* VegieType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VegieType.swift; sourceTree = "<group>"; };
 		3D1D880C253AD0B1005A0FE9 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		3D1D880F253AD16D005A0FE9 /* TestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCell.swift; sourceTree = "<group>"; };
+		3D1D882D253C9211005A0FE9 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		3D1FA46F2526F30100C6388A /* Vridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D1FA4722526F30100C6388A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D1FA4742526F30100C6388A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				3D1D8805253ACAE6005A0FE9 /* Post.swift */,
 				3D1D8804253ACAE6005A0FE9 /* User.swift */,
 				3D1D8806253ACAE6005A0FE9 /* VegieType.swift */,
+				3D1D882D253C9211005A0FE9 /* Type.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
 				3D8B13452530BC990022AE88 /* HomeHeaderView.swift in Sources */,
 				3D8B13542530BCCD0022AE88 /* RankingSecondViewCell.swift in Sources */,
+				3D1D882E253C9211005A0FE9 /* Type.swift in Sources */,
 				3D8B13572530BCD60022AE88 /* RankingHeader.swift in Sources */,
 				3DE62385252C4B79005F16A9 /* UserService.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,

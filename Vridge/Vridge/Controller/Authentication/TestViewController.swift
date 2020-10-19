@@ -56,7 +56,7 @@ extension TestViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let type = VegieTypes.allCases[indexPath.item].typeName
+        let type = VegieTypes.allCases[indexPath.item].rawValue
         print("DEBUG: tapped item is \(type)")
     }
     

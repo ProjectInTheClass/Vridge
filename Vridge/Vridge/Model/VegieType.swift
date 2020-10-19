@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum VegieTypes: Int, CaseIterable {
+enum VegieTypes: String, CaseIterable {
     case vegan
     case lacto
     case ovo

@@ -48,6 +48,10 @@ class HomeViewController: UIViewController {
         didSet { tableView.reloadData() }
     }
     
+    var type: String? {
+        didSet { tableView.reloadData() }
+    }
+    
     let tableView = UITableView(frame: .zero, style: .grouped)
     
     lazy var indicator: UIActivityIndicatorView = {
@@ -75,6 +79,7 @@ class HomeViewController: UIViewController {
         configureUI()
         fetchPosts()
         fetchPoint()
+        fetchUserType()
         
         view.addSubview(indicator)
         indicator.startAnimating()
@@ -112,6 +117,12 @@ class HomeViewController: UIViewController {
     
     
     // MARK: - Helpers
+    
+    func fetchUserType() {
+        UserService.shared.fetchUserType { type in
+            self.type = type
+        }
+    }
     
     func fetchPoint() {
         UserService.shared.fetchUserPoint { point in
@@ -193,8 +204,9 @@ extension HomeViewController: UITableViewDataSource {
         cell.delegate = self
         cell.posts = posts[indexPath.row]
         cell.row = indexPath.row
-        cell.type.text = "@\(posts[indexPath.row].user.type)"
-//        cell.type.textColor = posts[indexPath.row].user.type
+        cell.type.text = "@\(type!)"
+//        cell.type.textColor = posts[indexPath.row].user.vegieType?.typeColor
+        cell.type.textColor = Type.shared.typeColor(typeName: type!) // 별로 좋은 방법은 아닌데 일단 이 방법으로....
         
         return cell
     }
@@ -204,7 +216,6 @@ extension HomeViewController: UITableViewDataSource {
         guard let point = point else { return nil}
         let header = HomeHeaderView(frame: .zero, user: user, point: point)
         
-//        header.pointOrDays.text = "\(user.point)"
         header.backgroundColor = .white
         
         return header

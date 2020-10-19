@@ -71,7 +71,6 @@ class HomeFeedCell: UITableViewCell {
     lazy var type: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-        label.textColor = .vridgeGreen
         return label
     }()
     
