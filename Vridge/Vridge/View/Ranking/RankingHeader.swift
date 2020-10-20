@@ -139,21 +139,21 @@ class RankingHeader: UIView {
     let type2: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-        label.text = "@flexitarian"
+//        label.text = "@flexitarian"
         return label
     }()
     
     let type1: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-        label.text = "@pollo"
+//        label.text = "@pollo"
         return label
     }()
     
     let type3: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-        label.text = "@lacto-ovo"
+//        label.text = "@lacto-ovo"
         return label
     }()
     
@@ -183,21 +183,21 @@ class RankingHeader: UIView {
     
     let saladImage2: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "salad")
+//        iv.image = UIImage(named: "salad")
         iv.contentMode = .scaleAspectFit
         return iv
     }()
     
     let saladImage1: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "salad")
+//        iv.image = UIImage(named: "salad")
         iv.contentMode = .scaleAspectFit
         return iv
     }()
     
     let saladImage3: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "salad")
+//        iv.image = UIImage(named: "salad")
         iv.contentMode = .scaleAspectFit
         return iv
     }()
@@ -258,6 +258,10 @@ class RankingHeader: UIView {
         type1.textColor = Type.shared.typeColor(typeName: userRanking[0].type!)
         type2.textColor = Type.shared.typeColor(typeName: userRanking[1].type!)
         type3.textColor = Type.shared.typeColor(typeName: userRanking[2].type!)
+        
+        saladImage1.image = UIImage(named: "salad")
+        saladImage2.image = UIImage(named: "salad")
+        saladImage3.image = UIImage(named: "salad")
     }
     
     func configureUI() {
