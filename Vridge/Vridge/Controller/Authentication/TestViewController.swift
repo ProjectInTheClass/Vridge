@@ -50,7 +50,7 @@ extension TestViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! TestCell
         
         cell.backgroundColor = .red
-        cell.typeLabel.text = VegieTypes.allCases[indexPath.item].typeName
+        cell.typeLabel.text = VegieTypes.allCases[indexPath.item].rawValue
         cell.detailLabel.text = VegieTypes.allCases[indexPath.item].typeDetail
         return cell
     }

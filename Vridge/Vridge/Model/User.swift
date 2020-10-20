@@ -30,16 +30,19 @@ struct User {
         self.email = dictionary["email"] as? String ?? ""
         self.point = dictionary["point"] as? Int ?? 0
         
+        if let value = dictionary["type"] as? String {
+            self.vegieType = VegieTypes(rawValue: value)
+            self.type = vegieType?.rawValue
+        }
+        
         if let imageURL = dictionary["profileImageURL"] as? String {
             guard let url = URL(string: imageURL) else { return }
             profileImageURL = url
         }
         
-        if let type = dictionary["type"] as? String {
-            self.type = type
-        
-
-        }
+//        if let type = dictionary["type"] as? String {
+//            self.type = type
+//        }
         
     
         
