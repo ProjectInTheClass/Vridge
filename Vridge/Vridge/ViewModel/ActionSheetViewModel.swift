@@ -112,4 +112,19 @@ struct ActionSheetViewModel {
         return alert
     }
     
+    func pleaseLogin(_ viewController: UIViewController) -> UIAlertController {
+        let alert = UIAlertController(title: "회원가입 후 이용해주세요",
+                                      message: "가입하면 더 많은 서비스를\n이용할 수 있어요",
+                                      preferredStyle: .alert)
+        let noButton = UIAlertAction(title: "계속 둘러보기", style: .cancel, handler: nil)
+        let yesButton = UIAlertAction(title: "회원가입하기", style: .default) { _ in
+            let controller = UINavigationController(rootViewController: LoginViewController())
+            controller.modalPresentationStyle = .fullScreen
+            viewController.present(controller, animated: true, completion: nil)
+        }
+        alert.addAction(noButton)
+        alert.addAction(yesButton)
+        return alert
+    }
+    
 }

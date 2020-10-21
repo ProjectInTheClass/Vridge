@@ -15,7 +15,9 @@ class RankingViewController: UIViewController {
     
     // MARK: - Properties
     
-    var user: User?
+    var user: User? {
+        didSet { fetchTotalMyTypeUser() }
+    }
     
     var totalUser: Int? {
         didSet { fetchUserRanking() }
@@ -47,6 +49,8 @@ class RankingViewController: UIViewController {
         // user_(typeName).value에서 type이 뭔지 가져와서 해당하는 소스 가져오기.
         }
     }
+    
+    private let actionSheetViewModel = ActionSheetViewModel()
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
@@ -94,9 +98,12 @@ class RankingViewController: UIViewController {
     }
     
     func fetchTotalMyTypeUser() {
-        
-        UserService.shared.fetchTotalMyTypeUser(myType: (user?.vegieType)!) { numberOfMyTypeUsers in
-            self.totalMyTypeUser = numberOfMyTypeUsers
+        if Auth.auth().currentUser == nil {
+            print("DEBUG: no user exist")
+        } else {
+            UserService.shared.fetchTotalMyTypeUser(myType: (user?.vegieType)!) { numberOfMyTypeUsers in
+                self.totalMyTypeUser = numberOfMyTypeUsers
+            }
         }
     }
     
@@ -109,9 +116,13 @@ class RankingViewController: UIViewController {
     }
     
     func fetchMyTypeUserRanking() {
-        UserService.shared.fetchMyTypeRanking(myType: (user?.vegieType)!) { users in
-            if users.count == self.totalMyTypeUser {
-                self.myTypeRank = users.sorted(by: { $0.point > $1.point })
+        if Auth.auth().currentUser == nil {
+            print("DEBUG: no user exist2")
+        } else {
+            UserService.shared.fetchMyTypeRanking(myType: (user?.vegieType)!) { users in
+                if users.count == self.totalMyTypeUser {
+                    self.myTypeRank = users.sorted(by: { $0.point > $1.point })
+                }
             }
         }
     }
@@ -174,9 +185,15 @@ extension RankingViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let header = RankingHeader()
-        header.backgroundColor = .white
-        return header
+        if selectedFilter == .all {
+            let header = RankingHeader(user: allRank)
+            header.backgroundColor = .white
+            return header
+        } else {
+            let header = RankingHeader(user: myTypeRank)
+            header.backgroundColor = .white
+            return header
+        }
         
         
         // MARK: - ranking header, ranking update needed !!!!
@@ -215,6 +232,18 @@ extension RankingViewController: RankingCustomTopViewDelegate {
 }
 
 extension RankingViewController: RankingSecondViewDelegate {
+    
+    func showLogin() {
+        present(actionSheetViewModel.pleaseLogin(self), animated: true) {
+            guard let uid = Auth.auth().currentUser?.uid else { return }
+            UserService.shared.fetchUser(uid: uid) { user in
+                self.user = user
+                print("DEBUG: user from ranking is \(user.username)")
+            }
+            //로그인 뷰가 dismiss 된 후 기존의 ranking 뷰에서 내 타입 순위를 바로 볼 수 있게끔 바꿔보기.
+        }
+    }
+    
     
     func selection(_ view: RankingSecondView, didselect index: Int) {
         guard let filter = RankingFilterOptions(rawValue: index) else { return }

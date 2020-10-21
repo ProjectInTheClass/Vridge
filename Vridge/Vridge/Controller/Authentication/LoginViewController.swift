@@ -194,8 +194,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             
             guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
                 // handle if user already once registered... or ex user rejoining...
-                AuthService.shared.loginExistUser(viewController: self, credential: credential) { (err, ref) in
-                    
+                AuthService.shared.loginExistUser(viewController: self, credential: credential) { user in
                     print("DEBUG: logged in and update home tab")
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
                     guard let tab = window.rootViewController as? MainTabBarController else { return }

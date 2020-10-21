@@ -11,13 +11,7 @@ class RankingHeader: UIView {
     
     // MARK: - Properties
     
-    var userRanking = [User]() {
-        didSet { configure() }
-    }
-
-    var totalUser: Int? {
-        didSet { fetchUserRanking() }
-    }
+    var userRanking = [User]()
     
     lazy var profileImage2View: UIView = {
         let view = UIView()
@@ -139,21 +133,18 @@ class RankingHeader: UIView {
     let type2: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-//        label.text = "@flexitarian"
         return label
     }()
     
     let type1: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-//        label.text = "@pollo"
         return label
     }()
     
     let type3: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-//        label.text = "@lacto-ovo"
         return label
     }()
     
@@ -183,21 +174,18 @@ class RankingHeader: UIView {
     
     let saladImage2: UIImageView = {
         let iv = UIImageView()
-//        iv.image = UIImage(named: "salad")
         iv.contentMode = .scaleAspectFit
         return iv
     }()
     
     let saladImage1: UIImageView = {
         let iv = UIImageView()
-//        iv.image = UIImage(named: "salad")
         iv.contentMode = .scaleAspectFit
         return iv
     }()
     
     let saladImage3: UIImageView = {
         let iv = UIImageView()
-//        iv.image = UIImage(named: "salad")
         iv.contentMode = .scaleAspectFit
         return iv
     }()
@@ -205,11 +193,14 @@ class RankingHeader: UIView {
     
     // MARK: - Lifecycle
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(user: [User]) {
+        super.init(frame: .zero)
+        self.userRanking = user
         
         configureUI()
-        fetchTotalUser()
+        if userRanking.count >= 3 {
+            configure()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -221,22 +212,6 @@ class RankingHeader: UIView {
     
     
     // MARK: - Helpers
-    
-    func fetchTotalUser() {
-        UserService.shared.fetchRanking { users in
-            self.totalUser = users.count
-        }
-    }
-    
-    func fetchUserRanking() {
-        UserService.shared.fetchRanking { users in
-            let user = users.sorted(by: { $0.point > $1.point })
-            
-            if user.count == self.totalUser {
-                self.userRanking = user
-            }
-        }
-    }
     
     func configure() {
         profileImage1.kf.setImage(with: userRanking[0].profileImageURL)

@@ -36,7 +36,7 @@ struct AuthService {
     }
     
     func loginExistUser(viewController: UIViewController, credential: AuthCredential,
-                        completion: @escaping(Error?, DatabaseReference) -> Void) {
+                        completion: @escaping(User) -> Void) {
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             guard let email = result?.user.email else { return }
@@ -52,9 +52,13 @@ struct AuthService {
                 // guard let type = dictionary["type"] else { return }
                 let values = ["uid": uid,
                               "email": email,
-                              "point": point] as [String: Any]
+                              "point": point] as [String: AnyObject]
                 
-                REF_USERS.child(uid).updateChildValues(values, withCompletionBlock: completion)
+                let user = User(uid: uid, dictionary: values)
+                
+                REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
+                    completion(user)
+                }
                 print("DEBUG: Existed user logged in.")
                 
 //                REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
@@ -84,7 +88,7 @@ struct AuthService {
         }
     }
     
-    // 유저네임 등록 EASY man.
+    // 유저네임 등록 EASY man. 테스트 필요 API
     func submitUsername(username: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -93,7 +97,7 @@ struct AuthService {
         }
     }
     
-    // 유저 프로필사진, 채식타입 등록
+    // 유저 프로필사진, 채식타입 등록 테스트 필요 API
     func submitUserProfile(type: VegieType, photo: UIImage,
                            completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -105,13 +109,14 @@ struct AuthService {
                 guard let imageURL = url?.absoluteString else { return }
                 
                 REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL,
-                                                        "type": type.rawValue],
-                                                       withCompletionBlock: completion)
+                                                        "type": type.rawValue]) { (err, ref) in
+                    DB_REF.child("\(type.rawValue)").updateChildValues([uid: 0], withCompletionBlock: completion)
+                }
             }
         }
     }
     
-    // 유저네임 중복확인.
+    // 유저네임 중복확인. 테스트 필요 API
     func checkUserNameExistency(username: String, completion: @escaping(Bool) -> Void) {
         REF_USERNAMES.child(username).observeSingleEvent(of: .value) { snapshot in
             if snapshot.exists() {
