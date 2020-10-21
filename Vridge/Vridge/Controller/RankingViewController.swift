@@ -235,11 +235,7 @@ extension RankingViewController: RankingSecondViewDelegate {
     
     func showLogin() {
         present(actionSheetViewModel.pleaseLogin(self), animated: true) {
-            guard let uid = Auth.auth().currentUser?.uid else { return }
-            UserService.shared.fetchUser(uid: uid) { user in
-                self.user = user
-                print("DEBUG: user from ranking is \(user.username)")
-            }
+            self.navigationController?.popViewController(animated: true)
             //로그인 뷰가 dismiss 된 후 기존의 ranking 뷰에서 내 타입 순위를 바로 볼 수 있게끔 바꿔보기.
         }
     }

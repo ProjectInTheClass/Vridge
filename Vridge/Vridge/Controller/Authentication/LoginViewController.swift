@@ -200,6 +200,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
                     guard let tab = window.rootViewController as? MainTabBarController else { return }
                     
                     tab.fetchUser()
+//                    tab.user = user
                 }
                 
                 return

@@ -65,7 +65,12 @@ struct AuthService {
                     
                     
                     
-                    viewController.dismiss(animated: true, completion: nil)
+                viewController.dismiss(animated: true) {
+                    
+                    //여기서 뭔가를 해줘야 rankingViewController의 user에게 값을 전달 가능.
+                    
+                    
+                }
 //                    let controller = TestViewController()
 //                    viewController.navigationController?.pushViewController(controller, animated: true)
 //                }

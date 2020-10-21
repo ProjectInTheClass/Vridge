@@ -120,7 +120,10 @@ struct ActionSheetViewModel {
         let yesButton = UIAlertAction(title: "회원가입하기", style: .default) { _ in
             let controller = UINavigationController(rootViewController: LoginViewController())
             controller.modalPresentationStyle = .fullScreen
-            viewController.present(controller, animated: true, completion: nil)
+            viewController.present(controller, animated: true) {
+                // 랭킹뷰에서 메인으로 이동!
+                viewController.navigationController?.popViewController(animated: true)
+            }
         }
         alert.addAction(noButton)
         alert.addAction(yesButton)
