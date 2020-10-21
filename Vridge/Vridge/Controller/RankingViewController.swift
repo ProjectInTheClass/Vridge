@@ -7,14 +7,22 @@
 
 import UIKit
 
+import Firebase
+
 private let cellID = "rankingCell"
 
 class RankingViewController: UIViewController {
     
     // MARK: - Properties
     
+    var user: User?
+    
     var totalUser: Int? {
         didSet { fetchUserRanking() }
+    }
+    
+    var totalMyTypeUser: Int? {
+        didSet { fetchMyTypeUserRanking(); print("DEBUG: total mytype user is \(totalMyTypeUser)") }
     }
     
     private let topView = RankingCustomTopView()
@@ -45,11 +53,21 @@ class RankingViewController: UIViewController {
     
     // MARK: - Lifecycle
     
+    init(user: User?) {
+        super.init(nibName: nil, bundle: nil)
+        self.user = user
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureUI()
         fetchTotalUser()
+        fetchTotalMyTypeUser()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,15 +85,18 @@ class RankingViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
-    
-    // MARK: - Selectors
-    
-    
-    // MARK: - Helpers
+    // MARK: - API
     
     func fetchTotalUser() {
         UserService.shared.fetchTotalUser { numberOfUsers in
             self.totalUser = numberOfUsers
+        }
+    }
+    
+    func fetchTotalMyTypeUser() {
+        
+        UserService.shared.fetchTotalMyTypeUser(myType: (user?.vegieType)!) { numberOfMyTypeUsers in
+            self.totalMyTypeUser = numberOfMyTypeUsers
         }
     }
     
@@ -86,6 +107,22 @@ class RankingViewController: UIViewController {
             }
         }
     }
+    
+    func fetchMyTypeUserRanking() {
+        UserService.shared.fetchMyTypeRanking(myType: (user?.vegieType)!) { users in
+            if users.count == self.totalMyTypeUser {
+                self.myTypeRank = users.sorted(by: { $0.point > $1.point })
+            }
+        }
+    }
+    
+    
+    // MARK: - Selectors
+    
+    
+    // MARK: - Helpers
+    
+    
     
     func configureUI() {
         
@@ -129,7 +166,7 @@ extension RankingViewController: UITableViewDataSource {
         cell.username.text = currentDataSource[indexPath.row + 3].username
         cell.profileImage.kf.setImage(with: currentDataSource[indexPath.row + 3].profileImageURL)
         cell.pointLabel.text = "\(currentDataSource[indexPath.row + 3].point)"
-        cell.type.text = currentDataSource[indexPath.row + 3].type
+        cell.type.text = "@\(currentDataSource[indexPath.row + 3].type!)"
         cell.type.textColor = Type.shared.typeColor(typeName: currentDataSource[indexPath.row + 3].type!)
         
         return cell

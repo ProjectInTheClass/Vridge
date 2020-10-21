@@ -156,7 +156,7 @@ class HomeViewController: UIViewController {
     @objc func handleShowRanking() {
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
         
-        let controller = RankingViewController()
+        let controller = RankingViewController(user: user)
         navigationController?.pushViewController(controller, animated: true)
     }
     
