@@ -213,10 +213,6 @@ extension HomeViewController: UITableViewDataSource {
         cell.delegate = self
         cell.posts = posts[indexPath.row]
         cell.row = indexPath.row
-//        cell.type.text = "@\(type)"
-//        cell.type.textColor = posts[indexPath.row].user.vegieType?.typeColor
-//        cell.type.textColor = Type.shared.typeColor(typeName: type ?? "") // 별로 좋은 방법은 아닌데 일단 이 방법으로....
-        
         
         return cell
     }

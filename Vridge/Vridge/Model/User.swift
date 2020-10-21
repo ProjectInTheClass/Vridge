@@ -16,7 +16,7 @@ struct User {
     let email: String
     var point: Int
     var profileImageURL: URL?
-    var vegieType: VegieTypes?
+    var vegieType: VegieType?
     var type: String?
     
     var isCurrentUser: Bool {
@@ -30,8 +30,8 @@ struct User {
         self.email = dictionary["email"] as? String ?? ""
         self.point = dictionary["point"] as? Int ?? 0
         
-        if let value = dictionary["type"] as? String {
-            self.vegieType = VegieTypes(rawValue: value)
+        if let type = dictionary["type"] as? String {
+            self.vegieType = VegieType(rawValue: type)
             self.type = vegieType?.rawValue
         }
         

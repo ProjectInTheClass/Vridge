@@ -94,7 +94,7 @@ struct AuthService {
     }
     
     // 유저 프로필사진, 채식타입 등록
-    func submitUserProfile(type: VegieTypes, photo: UIImage,
+    func submitUserProfile(type: VegieType, photo: UIImage,
                            completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         

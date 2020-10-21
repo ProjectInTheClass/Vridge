@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum VegieTypes: String, CaseIterable {
+enum VegieType: String, CaseIterable {
     case vegan = "vegan"
     case lacto = "lacto"
     case ovo = "ovo"
@@ -16,20 +16,6 @@ enum VegieTypes: String, CaseIterable {
     case pollo = "pollo"
     case fruitarian = "fruitarian"
     case flexitarian = "flexitarian"
-    
-    
-//    var typeName: String {
-//        switch self {
-//        case .vegan: return "vegan"
-//        case .lacto: return "lacto"
-//        case .ovo: return "ovo"
-//        case .lacto_ovo: return "lacto_ovo"
-//        case .pesco: return "pesco"
-//        case .pollo: return "pollo"
-//        case .fruitarian: return "fruitarian"
-//        case .flexitarian: return "flexitarian"
-//        }
-//    }
     
     var typeDetail: String {
         switch self {
@@ -57,9 +43,4 @@ enum VegieTypes: String, CaseIterable {
         }
     }
     
-}
-
-struct vegieTypeViewModel  {
-    
-
 }
