@@ -6,7 +6,6 @@ target 'Vridge' do
 
   pod 'Kingfisher', '~>4.7'
   pod 'YPImagePicker'
-  pod "TLPhotoPicker"
   
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'

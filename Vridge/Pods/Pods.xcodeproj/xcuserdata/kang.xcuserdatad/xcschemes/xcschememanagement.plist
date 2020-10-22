@@ -144,26 +144,12 @@
 			<key>orderHint</key>
 			<integer>21</integer>
 		</dict>
-		<key>TLPhotoPicker-TLPhotoPicker.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>23</integer>
-		</dict>
-		<key>TLPhotoPicker.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>22</integer>
-		</dict>
 		<key>YPImagePicker.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>24</integer>
+			<integer>22</integer>
 		</dict>
 		<key>leveldb-library.xcscheme</key>
 		<dict>
