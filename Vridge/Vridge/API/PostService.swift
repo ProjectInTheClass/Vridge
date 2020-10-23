@@ -253,12 +253,12 @@ struct PostService {
             REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
                 guard let currentPoint = snapshot.value as? Int else { return }
                 print("DEBUG: snapshot value is \(currentPoint), about to plus one")
-                
+                // 가장 먼저 user-point 에서 +1
                 REF_USER_POINT.updateChildValues([uid: currentPoint + 1]) { (err, ref) in
+                    // 그 다음 users 에서 +1
                     REF_USERS.child(uid).updateChildValues(["point": currentPoint + 1]) { (err, ref) in
-                        
+                        // 마지막으로 type-point 에서 +1 해주기.
                         DB_REF.child("\(user.vegieType!.rawValue)-point").updateChildValues([uid: currentPoint + 1], withCompletionBlock: completion)
-                        // 마지막 함수 테스트 필요.
                     }
                 }
             }
@@ -270,12 +270,21 @@ struct PostService {
     func pointDown(completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
-            guard let currentPoint = snapshot.value as? Int else { return }
-            print("DEBUG: snapshot value is \(currentPoint), about to minus one")
+        UserService.shared.fetchUser(uid: uid) { user in
+            let user = user
             
-            REF_USER_POINT.updateChildValues([uid: currentPoint - 1]) { (err, ref) in
-                REF_USERS.child(uid).updateChildValues(["point": currentPoint - 1], withCompletionBlock: completion)
+            REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
+                guard let currentPoint = snapshot.value as? Int else { return }
+                print("DEBUG: snapshot value is \(currentPoint), about to minus one")
+                
+                // 가장 먼저 user-point 에서 -1
+                REF_USER_POINT.updateChildValues([uid: currentPoint - 1]) { (err, ref) in
+                    // 그 다음 users 에서 -1
+                    REF_USERS.child(uid).updateChildValues(["point": currentPoint - 1]) { (err, ref) in
+                        // 마지막으로 type-point 에서 -1 해주기.
+                        DB_REF.child("\(user.vegieType!.rawValue)-point").updateChildValues([uid: currentPoint - 1], withCompletionBlock: completion)
+                    }
+                }
             }
         }
     }
