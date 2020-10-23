@@ -29,6 +29,8 @@ class SelectTypeViewController: UIViewController {
     func configureUI() {
         
         view.backgroundColor = .yellow
+        
+        print("DEBUG: set username and pick Vegie type page.")
     }
     
 

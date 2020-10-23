@@ -248,7 +248,7 @@ struct PostService {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
-            let currentPoint = snapshot.value as! Int
+            guard let currentPoint = snapshot.value as? Int else { return }
             print("DEBUG: snapshot value is \(currentPoint), about to plus one")
             
             REF_USER_POINT.updateChildValues([uid: currentPoint + 1]) { (err, ref) in
@@ -261,7 +261,7 @@ struct PostService {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
-            let currentPoint = snapshot.value as! Int
+            guard let currentPoint = snapshot.value as? Int else { return }
             print("DEBUG: snapshot value is \(currentPoint), about to minus one")
             
             REF_USER_POINT.updateChildValues([uid: currentPoint - 1]) { (err, ref) in

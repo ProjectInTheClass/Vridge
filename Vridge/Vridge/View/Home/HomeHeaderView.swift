@@ -16,7 +16,6 @@ class HomeHeaderView: UIView {
     
     lazy var usernameLabel: UILabel = {
         let label = UILabel()
-//        label.text = "\(user.username) 님,"
         label.font = UIFont.SFBold(size: 28)
         return label
     }()

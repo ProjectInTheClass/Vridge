@@ -11,6 +11,8 @@ import Firebase
 
 let POST_LOAD_AT_ONCE = 10
 
+// MARK: - DB/Storage
+
 let STORAGE_REF = Storage.storage().reference()
 let STORAGE_POST_IMAGES = STORAGE_REF.child("post_images")
 let STORAGE_USER_PROFILE_IMAGES = STORAGE_REF.child("profile_images")
@@ -33,6 +35,34 @@ let REF_FRUITARIAN = DB_REF.child("fruitarian")
 let REF_FLEXITARIAN = DB_REF.child("flexitarian")
 
 
-// Strings
+// MARK: -  Strings
+
 let reportMessage = "신고가 정상적으로 반영되었습니다\n신속히 처리하도록 하겠습니다"
 let noTitle = ""
+let amendTitle = "수정하기"
+let deleteButtonTitle = "삭제하기"
+let deleteAlertTitle = "정말 삭제할까?"
+let deleteAlertMessage = "게시글을 삭제하면\n이전으로 되돌릴 수 없어…!"
+let reportButtonTitle = "신고하기"
+let reasonToReportTitle = "신고 사유 선택"
+let sexualHarassTitle = "성적 수치심 유발"
+let swearTitle = "욕설/비하"
+let fraudTitle = "유출/사칭/사기"
+let advertiseTitle = "상업적 광고 및 판매"
+let nonsenseTitle = "채식과 관련 없음"
+
+let minimumOnePhotoMsg = "최소 한 장의 사진을 올려주세요."
+let noPhotoChangeMsg = "사진은 수정할 수 없댜규!"
+let leavePageTitle = "이 페이지를 벗어날거야?"
+let leavePageMsg = "지금까지 작성한\n글들은 저장되지 않아…!"
+let pleaseLoginTitle = "회원가입 후 이용해주세요"
+let pleaseLoginMsg = "가입하면 더 많은 서비스를\n이용할 수 있어요"
+let keepBrowsing = "계속 둘러보기"
+let signUp = "회원가입하기"
+
+
+// answer
+let no = "아니오"
+let yes = "예"
+let cancel = "취소"
+let confirm = "확인"

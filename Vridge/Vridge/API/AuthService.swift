@@ -25,12 +25,13 @@ struct AuthService {
                           "username": username] as [String: Any]
             
             REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
-                print("DEBUG: New user's email is \(email)")
-                print("DEBUG: New user logged in.")
-                
-                let selectTypeController = SelectTypeViewController()
-                viewController.navigationController?.pushViewController(selectTypeController, animated: true)
-                
+                REF_USER_POINT.updateChildValues([uid: 0]) { (err, ref) in
+                    print("DEBUG: New user's email is \(email)")
+                    
+                    let selectTypeController = SelectTypeViewController()
+                    viewController.navigationController?.pushViewController(selectTypeController, animated: true)
+                    print("DEBUG: New user logged in.")
+                }
             }
         }
     }
@@ -65,15 +66,9 @@ struct AuthService {
                     
                     
                     
-                viewController.dismiss(animated: true) {
-                    
-                    //여기서 뭔가를 해줘야 rankingViewController의 user에게 값을 전달 가능.
-                    
-                    
-                }
+                viewController.dismiss(animated: true, completion: nil)
 //                    let controller = TestViewController()
 //                    viewController.navigationController?.pushViewController(controller, animated: true)
-//                }
             }
         }
     }
