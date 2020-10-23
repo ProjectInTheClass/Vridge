@@ -247,14 +247,24 @@ struct PostService {
     func pointUp(completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
-            guard let currentPoint = snapshot.value as? Int else { return }
-            print("DEBUG: snapshot value is \(currentPoint), about to plus one")
+        UserService.shared.fetchUser(uid: uid) { user in
+            let user = user
             
-            REF_USER_POINT.updateChildValues([uid: currentPoint + 1]) { (err, ref) in
-                REF_USERS.child(uid).updateChildValues(["point": currentPoint + 1], withCompletionBlock: completion)
+            REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
+                guard let currentPoint = snapshot.value as? Int else { return }
+                print("DEBUG: snapshot value is \(currentPoint), about to plus one")
+                
+                REF_USER_POINT.updateChildValues([uid: currentPoint + 1]) { (err, ref) in
+                    REF_USERS.child(uid).updateChildValues(["point": currentPoint + 1]) { (err, ref) in
+                        
+                        DB_REF.child("\(user.vegieType!.rawValue)-point").updateChildValues([uid: currentPoint + 1], withCompletionBlock: completion)
+                        // 마지막 함수 테스트 필요.
+                    }
+                }
             }
         }
+        
+        
     }
     
     func pointDown(completion: @escaping(Error?, DatabaseReference) -> Void) {
