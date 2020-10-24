@@ -44,31 +44,16 @@ struct AuthService {
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             guard let email = result?.user.email else { return }
+//            guard let username = result?.user.displayName
             REF_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
                 
-                guard let dictionary = snapshot.value as? [String: AnyObject] else {
+                guard (snapshot.value as? [String: AnyObject]) != nil else {
                     rejoinLeftUser(credential: credential, uid: uid, email: email) { (err, ref) in
                         print("DEBUG: left user rejoined...")
                     }
                     return
                 }
-                guard let point = dictionary["point"] as? Int else { return }
-                // 여기에 profileURL, 그리고 vegetarian type 추가 해야함.
-                // guard let profileURL = dictionary["profileURL"] else { return }
-                // guard let type = dictionary["type"] else { return }
-                let values = ["uid": uid,
-                              "email": email,
-                              "point": point] as [String: AnyObject]
-                
-                let user = User(uid: uid, dictionary: values)
-                
-                REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
-                    completion(user)
-                }
                 print("DEBUG: Existed user logged in.")
-                
-//                REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
-                    
                     
 //                viewController.dismiss(animated: true, completion: nil)
                 
@@ -108,19 +93,27 @@ struct AuthService {
     }
     
     // 유저 프로필사진, 채식타입 등록 테스트 필요 API
-    func submitUserProfile(type: VegieType, photo: UIImage,
+    func submitNewUserProfile(viewController: SelectTypeViewController, type: String, photo: UIImage,
                            completion: @escaping(Error?, DatabaseReference) -> Void) {
+        viewController.indicator.startAnimating()
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         guard let imageData = photo.jpegData(compressionQuality: 0.3) else { return }
-        let storageRef = STORAGE_USER_PROFILE_IMAGES.child(uid)
+        let storageRef = STORAGE_USER_PROFILE_IMAGES.child("profilePhoto of" + uid)
+        
         storageRef.putData(imageData, metadata: nil) { (meta, err) in
             storageRef.downloadURL { (url, err) in
                 guard let imageURL = url?.absoluteString else { return }
                 
                 REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL,
-                                                        "type": type.rawValue]) { (err, ref) in
-                    DB_REF.child("\(type.rawValue)").updateChildValues([uid: 0], withCompletionBlock: completion)
+                                                        "type": type]) { (err, ref) in
+                    DB_REF.child("\(type)-point").updateChildValues([uid: 13], withCompletionBlock: completion)
+                    viewController.indicator.stopAnimating()
+                    
+                    guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+                    guard let tab = window.rootViewController as? MainTabBarController else { return }
+                    
+                    tab.fetchUser()
                 }
             }
         }
@@ -156,10 +149,12 @@ struct AuthService {
         }
     }
     
-//     default로 채식타입 정하기 // 수정요망
+//     default로 채식타입 정하기 //
     func userDidSetType(type: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        REF_USERS.child(uid).updateChildValues(["type": type], withCompletionBlock: completion)
+        REF_USERS.child(uid).updateChildValues(["type": type]) { (err, ref) in
+            DB_REF.child("\(type)-point").updateChildValues([uid: 13], withCompletionBlock: completion)
+        }
     }
 }

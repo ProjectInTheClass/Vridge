@@ -190,7 +190,7 @@ class HomeFeedCell: UITableViewCell {
         // MARK: - enum 사용해서 수정하기
 //        type.textColor = posts.user.vegieType?.typeColor
         
-        type.text = posts.user.vegieType?.rawValue
+        type.text = "@\(posts.user.vegieType!.rawValue)"
         type.textColor = posts.user.vegieType?.typeColor
 //        type.textColor = Type.shared.typeColor(typeName: posts.user.type!)
         //

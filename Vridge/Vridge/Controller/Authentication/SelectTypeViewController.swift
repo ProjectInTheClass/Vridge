@@ -33,6 +33,13 @@ class SelectTypeViewController: UIViewController {
         return btn
     }()
     
+    var indicator: UIActivityIndicatorView = {
+        let idc = UIActivityIndicatorView(style: .large)
+        idc.color = .black
+        idc.hidesWhenStopped = true
+        return idc
+    }()
+    
     
     // MARK: - Lifecycle
 
@@ -54,17 +61,16 @@ class SelectTypeViewController: UIViewController {
             print("DEBUG: please select profile image")
             return
         }
+        guard let type = type else {
+            print("DEBUG: please select vegie type")
+            return
+        }
         
-        AuthService.shared.uploadProfilePhoto(profilePhoto: profileImage) { (err, ref) in
-            print("DEBUG: profile image did set")
-            guard let type = self.type else {
-                print("DEBUG: select one of the type, mate")
-                return
-            }
-            AuthService.shared.userDidSetType(type: type) { (err, ref) in
-                print("DEBUG: profile image set to db")
-                self.dismiss(animated: true, completion: nil)
-            }
+        
+        // existed user change vegie type으로 실행 시켜보기
+        AuthService.shared.submitNewUserProfile(viewController: self, type: type,
+                                             photo: profileImage) { (err, ref) in
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
@@ -78,6 +84,8 @@ class SelectTypeViewController: UIViewController {
         
         view.addSubview(profileImageButton)
         view.addSubview(tableView)
+        view.addSubview(indicator)
+        indicator.center = view.center
         
         tableView.register(TypeTestCell.self, forCellReuseIdentifier: cellID)
         tableView.delegate = self

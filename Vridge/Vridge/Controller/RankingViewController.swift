@@ -121,6 +121,7 @@ class RankingViewController: UIViewController {
         } else {
             UserService.shared.fetchMyTypeRanking(myType: (user?.vegieType)!) { users in
                 if users.count == self.totalMyTypeUser {
+                    print("DEBUG: user type is ===== \(self.user?.vegieType?.rawValue)")
                     self.myTypeRank = users.sorted(by: { $0.point > $1.point })
                 }
             }
