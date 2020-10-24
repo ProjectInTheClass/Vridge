@@ -14,8 +14,9 @@ struct AuthService {
     
     static let shared = AuthService()
     
-    func signInNewUser(viewController: UIViewController, credential: AuthCredential,
+    func signInNewUser(viewController: LoginViewController, credential: AuthCredential,
                        email: String, username: String) {
+        viewController.indicator.startAnimating()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             
@@ -31,20 +32,24 @@ struct AuthService {
                     let selectTypeController = SelectTypeViewController()
                     viewController.navigationController?.pushViewController(selectTypeController, animated: true)
                     print("DEBUG: New user logged in.")
+                    viewController.indicator.stopAnimating()
                 }
             }
         }
     }
     
-    func loginExistUser(viewController: UIViewController, credential: AuthCredential,
+    func loginExistUser(viewController: LoginViewController, credential: AuthCredential,
                         completion: @escaping(User) -> Void) {
+        viewController.indicator.startAnimating()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             guard let email = result?.user.email else { return }
             REF_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
                 
                 guard let dictionary = snapshot.value as? [String: AnyObject] else {
-                    rejoinLeftUser(credential: credential, uid: uid, email: email)
+                    rejoinLeftUser(credential: credential, uid: uid, email: email) { (err, ref) in
+                        print("DEBUG: left user rejoined...")
+                    }
                     return
                 }
                 guard let point = dictionary["point"] as? Int else { return }
@@ -65,15 +70,19 @@ struct AuthService {
 //                REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                     
                     
-                    
-                viewController.dismiss(animated: true, completion: nil)
-//                    let controller = TestViewController()
-//                    viewController.navigationController?.pushViewController(controller, animated: true)
+//                viewController.dismiss(animated: true, completion: nil)
+                
+                let selectTypeController = SelectTypeViewController()
+                viewController.navigationController?.pushViewController(selectTypeController, animated: true)
+                print("DEBUG: Existed user logged in.")
+                
+                viewController.indicator.stopAnimating()
             }
         }
     }
     
-    func rejoinLeftUser(credential: AuthCredential, uid: String, email: String) {
+    func rejoinLeftUser(credential: AuthCredential, uid: String, email: String,
+                        completion: @escaping(Error?, DatabaseReference) -> Void) {
         // Deleted account and rejoining
         
         Auth.auth().signIn(with: credential) { (result, error) in
@@ -82,7 +91,8 @@ struct AuthService {
                               "email": email,
                               "point": 0] as [String: Any]
                 REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
-                    print("DEBUG: This user has deleted id, and successfully rejoined")
+                    REF_USER_POINT.updateChildValues([uid: 0], withCompletionBlock: completion)
+                    print("DEBUG: This user has deleted id, and successfully rejoined with point 0")
                 }
             }
         }
@@ -127,5 +137,29 @@ struct AuthService {
                 completion(true)
             }
         }
+    }
+    
+    // 프로필 사진 올리기 테스트 필요 API
+    func uploadProfilePhoto(profilePhoto: UIImage, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let imageData = profilePhoto.jpegData(compressionQuality: 0.3) else { return }
+        
+        let filename = uid + "profilePhoto"
+        let storageRef = STORAGE_USER_PROFILE_IMAGES.child(filename)
+        
+        storageRef.putData(imageData, metadata: nil) { (meta, err) in
+            storageRef.downloadURL { (url, err) in
+                guard let imageURL = url?.absoluteString else { return }
+                
+                REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL], withCompletionBlock: completion)
+            }
+        }
+    }
+    
+//     default로 채식타입 정하기 // 수정요망
+    func userDidSetType(type: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USERS.child(uid).updateChildValues(["type": type], withCompletionBlock: completion)
     }
 }

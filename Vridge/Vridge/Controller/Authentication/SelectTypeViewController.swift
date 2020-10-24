@@ -7,9 +7,31 @@
 
 import UIKit
 
+private let cellID = "testCell"
+
 class SelectTypeViewController: UIViewController {
     
     // MARK: - Properties
+    
+    private let imagePicker = UIImagePickerController()
+    private var profileImage: UIImage?
+    
+    private let profileImageButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setImage(UIImage(systemName: "plus.circle"), for: .normal)
+        btn.addTarget(self, action: #selector(handleAddPhoto), for: .touchUpInside)
+        btn.setDimensions(width: 120, height: 120)
+        return btn
+    }()
+    
+    var type: String?
+    
+    private let tableView = UITableView()
+    
+    private lazy var okButton: UIBarButtonItem = {
+        let btn = UIBarButtonItem(title: "ok", style: .plain, target: self, action: #selector(handleRegistration))
+        return btn
+    }()
     
     
     // MARK: - Lifecycle
@@ -23,16 +45,97 @@ class SelectTypeViewController: UIViewController {
     
     // MARK: - Selectors
     
+    @objc func handleAddPhoto() {
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @objc func handleRegistration() {
+        guard let profileImage = profileImage else {
+            print("DEBUG: please select profile image")
+            return
+        }
+        
+        AuthService.shared.uploadProfilePhoto(profilePhoto: profileImage) { (err, ref) in
+            print("DEBUG: profile image did set")
+            guard let type = self.type else {
+                print("DEBUG: select one of the type, mate")
+                return
+            }
+            AuthService.shared.userDidSetType(type: type) { (err, ref) in
+                print("DEBUG: profile image set to db")
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
     
     // MARK: - Helpers
     
     func configureUI() {
+        view.backgroundColor = .systemPink
         
-        view.backgroundColor = .yellow
+        navigationItem.rightBarButtonItem = okButton
         
-        print("DEBUG: set username and pick Vegie type page.")
+        view.addSubview(profileImageButton)
+        view.addSubview(tableView)
+        
+        tableView.register(TypeTestCell.self, forCellReuseIdentifier: cellID)
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
+        profileImageButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 100)
+        profileImageButton.centerX(inView: view)
+        
+        tableView.anchor(top: profileImageButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 40, paddingLeft: 8, paddingRight: 8)
     }
     
 
 
+}
+
+extension SelectTypeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        guard let image = info[.editedImage] as? UIImage else { return }
+        self.profileImage = image
+        
+        profileImageButton.layer.cornerRadius = 120 / 2
+        profileImageButton.layer.masksToBounds = true
+        profileImageButton.imageView?.contentMode = .scaleAspectFill
+        profileImageButton.imageView?.clipsToBounds = true
+        profileImageButton.layer.borderColor = UIColor.white.cgColor
+        profileImageButton.layer.borderWidth = 1
+        
+        self.profileImageButton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+extension SelectTypeViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return VegieType.allCases.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TypeTestCell
+        
+        cell.textLabel?.text = VegieType.allCases[indexPath.row].rawValue
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.type = VegieType.allCases[indexPath.row].rawValue
+        print("DEBUG: \(type)")
+    }
+    
+    
+    
 }

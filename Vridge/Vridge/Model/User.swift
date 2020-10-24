@@ -40,12 +40,6 @@ struct User {
             profileImageURL = url
         }
         
-//        if let type = dictionary["type"] as? String {
-//            self.type = type
-//        }
-        
-    
-        
     }
 }
 

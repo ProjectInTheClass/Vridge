@@ -18,6 +18,13 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
+    var indicator: UIActivityIndicatorView = {
+        let idc = UIActivityIndicatorView(style: .large)
+        idc.color = .black
+        idc.hidesWhenStopped = true
+        return idc
+    }()
+    
     weak var delegate: LoginViewControllerDelegate?
     
     let appleLoginButton: ASAuthorizationAppleIDButton = {
@@ -52,6 +59,9 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(indicator)
+        indicator.center = view.center
         
         view.backgroundColor = .vridgeGreen
         configureUI()

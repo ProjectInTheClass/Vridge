@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D03BE9E2544238C0080C3A6 /* TypeTestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D03BE9D2544238C0080C3A6 /* TypeTestCell.swift */; };
 		3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D15CD4A252C7DF9005879CD /* AuthService.swift */; };
 		3D15EE3225381C6900402476 /* SelectTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D15EE3125381C6900402476 /* SelectTypeViewController.swift */; };
 		3D1D8807253ACAE6005A0FE9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D8804253ACAE6005A0FE9 /* User.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D03BE9D2544238C0080C3A6 /* TypeTestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTestCell.swift; sourceTree = "<group>"; };
 		3D15CD4A252C7DF9005879CD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		3D15EE3125381C6900402476 /* SelectTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeViewController.swift; sourceTree = "<group>"; };
 		3D1D8804253ACAE6005A0FE9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 			children = (
 				3DE62374252C180D005F16A9 /* LoginViewController.swift */,
 				3D15EE3125381C6900402476 /* SelectTypeViewController.swift */,
+				3D03BE9D2544238C0080C3A6 /* TypeTestCell.swift */,
 				3D1D880C253AD0B1005A0FE9 /* TestViewController.swift */,
 				3D1D880F253AD16D005A0FE9 /* TestCell.swift */,
 			);
@@ -434,6 +437,7 @@
 				3D8B135D2530BCEE0022AE88 /* RankingViewController.swift in Sources */,
 				3D1D8808253ACAE6005A0FE9 /* Post.swift in Sources */,
 				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
+				3D03BE9E2544238C0080C3A6 /* TypeTestCell.swift in Sources */,
 				3D8B13452530BC990022AE88 /* HomeHeaderView.swift in Sources */,
 				3D8B13542530BCCD0022AE88 /* RankingSecondViewCell.swift in Sources */,
 				3D1D882E253C9211005A0FE9 /* Type.swift in Sources */,
