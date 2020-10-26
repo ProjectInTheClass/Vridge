@@ -9,6 +9,7 @@ import UIKit
 
 import AuthenticationServices
 import Firebase
+import Lottie
 
 protocol LoginViewControllerDelegate: class {
     func userLogout()
@@ -17,6 +18,13 @@ protocol LoginViewControllerDelegate: class {
 class LoginViewController: UIViewController {
     
     // MARK: - Properties
+    
+    var indicator: UIActivityIndicatorView = {
+        let idc = UIActivityIndicatorView(style: .large)
+        idc.color = .black
+        idc.hidesWhenStopped = true
+        return idc
+    }()
     
     weak var delegate: LoginViewControllerDelegate?
     
@@ -53,6 +61,9 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.addSubview(indicator)
+        indicator.center = view.center
+        
         view.backgroundColor = .vridgeGreen
         configureUI()
     }
@@ -77,6 +88,11 @@ class LoginViewController: UIViewController {
     
     func configureUI() {
         
+        let animationView = Lottie.AnimationView(name: "loading")
+        view.addSubview(animationView)
+        
+        animationView.play()
+        
         view.addSubview(appleLoginButton)
         view.addSubview(label)
         view.addSubview(logOutButton)
@@ -89,6 +105,11 @@ class LoginViewController: UIViewController {
         logOutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor,
                             paddingTop: 40, paddingRight: 40)
         browseButton.center(inView: view)
+        
+        animationView.centerX(inView: view)
+        animationView.anchor(top: appleLoginButton.bottomAnchor, paddingTop: 40, width: 120, height: 120)
+        animationView.contentMode = .scaleAspectFill
+        animationView.loopMode = .loop
         
         
     }
@@ -194,13 +215,13 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             
             guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
                 // handle if user already once registered... or ex user rejoining...
-                AuthService.shared.loginExistUser(viewController: self, credential: credential) { (err, ref) in
-                    
+                AuthService.shared.loginExistUser(viewController: self, credential: credential) { user in
                     print("DEBUG: logged in and update home tab")
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
                     guard let tab = window.rootViewController as? MainTabBarController else { return }
                     
                     tab.fetchUser()
+//                    tab.user = user
                 }
                 
                 return

@@ -28,9 +28,6 @@ struct RankingViewModel {
         didSet { setImage() }
     }
     
-    let a = [User]()
-    
-    
     mutating func setImage() {
         profileImage1.kf.setImage(with: userRanking[0].profileImageURL)
         profileImage2.kf.setImage(with: userRanking[1].profileImageURL)

@@ -7,12 +7,20 @@
 
 import UIKit
 
+import Lottie
+
 private let cellID = "cellID"
 private let headerID = "headerID"
+
+protocol HomeViewControllerDelgate: class {
+    func updateUsers()
+}
 
 class HomeViewController: UIViewController {
     
     // MARK: - Properties
+    
+    weak var delegates: HomeViewControllerDelgate?
     
     private let vridgeLogo: UIImageView = {
         let imgView = UIImageView()
@@ -41,7 +49,7 @@ class HomeViewController: UIViewController {
     }
     
     var user: User? {
-        didSet { print("DEBUG: user did set as \(user?.username)") }
+        didSet { print("DEBUG: user did set as \(user?.username)"); tableView.reloadData() }
     }
     
     var point: Int? {
@@ -62,14 +70,37 @@ class HomeViewController: UIViewController {
         return ic
     }()
     
-    let refreshControl: UIRefreshControl = {
-        let rc = UIRefreshControl()
-        rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
-        return rc
+    let animationView: AnimationView = {
+        let av = Lottie.AnimationView(name: loadingAnimation)
+        av.loopMode = .loop
+        return av
     }()
     
     
     // MARK: - Lifecycle
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        animationView.play()
+        
+        let refreshControl: UIRefreshControl = {
+            let rc = UIRefreshControl()
+            let loadingView = Lottie.AnimationView(name: loadingAnimation)
+            loadingView.play()
+            loadingView.contentMode = .scaleAspectFit
+            loadingView.translatesAutoresizingMaskIntoConstraints = false
+            loadingView.loopMode = .loop
+            rc.addSubview(loadingView)
+            loadingView.anchor(top: rc.topAnchor, paddingTop: 20, width: 120, height: 60)
+            loadingView.centerX(inView: rc)
+            rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+            rc.tintColor = .clear
+            return rc
+        }()
+        
+        tableView.refreshControl = refreshControl
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,8 +112,13 @@ class HomeViewController: UIViewController {
         fetchPoint()
         fetchUserType()
         
-        view.addSubview(indicator)
-        indicator.startAnimating()
+        view.addSubview(animationView)
+        animationView.center(inView: view)
+        animationView.setDimensions(width: 100, height: 100)
+        animationView.contentMode = .scaleAspectFill
+        
+//        view.addSubview(indicator)
+//        indicator.startAnimating()
         NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
                                                name: Notification.Name("fetchAgain"), object: nil)
         
@@ -91,7 +127,47 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
-        tableView.reloadData()
+    }
+    
+    
+    // MARK: - API
+    
+    func fetchUserType() {
+        UserService.shared.fetchUserType { type in
+            self.type = type
+        }
+    }
+    
+    func fetchPoint() {
+        UserService.shared.fetchUserPoint { point in
+            self.point = point
+        }
+    }
+    
+    func numberOfPosts() {
+        PostService.shared.numberOfPosts { nums in
+            self.numberOfPost = nums
+        }
+    }
+    
+    func fetchPosts() {
+        PostService.shared.fetchPosts { posts in
+            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+            self.indicator.stopAnimating()
+//            self.animationView.stop()
+            self.animationView.isHidden = true
+            self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    func loadMore() {
+        let from = posts.count
+        let to = from + POST_LOAD_AT_ONCE >= numberOfPost ? numberOfPost : from + POST_LOAD_AT_ONCE
+        
+        PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
+            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+        }
+        tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
     }
     
     
@@ -112,40 +188,12 @@ class HomeViewController: UIViewController {
     @objc func handleShowRanking() {
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
         
-        let controller = RankingViewController()
+        let controller = RankingViewController(user: user)
         navigationController?.pushViewController(controller, animated: true)
     }
     
     
     // MARK: - Helpers
-    
-    func fetchUserType() {
-        UserService.shared.fetchUserType { type in
-            self.type = type
-        }
-    }
-    
-    func fetchPoint() {
-        UserService.shared.fetchUserPoint { point in
-            self.point = point
-        }
-    }
-    
-    func numberOfPosts() {
-        PostService.shared.numberOfPosts { nums in
-            self.numberOfPost = nums
-        }
-    }
-    
-    func loadMore() {
-        let from = posts.count
-        let to = from + POST_LOAD_AT_ONCE >= numberOfPost ? numberOfPost : from + POST_LOAD_AT_ONCE
-        
-        PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
-            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
-        }
-        tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
-    }
     
     func configureUI() {
         let logoImage = UIBarButtonItem(customView: vridgeLogo)
@@ -163,7 +211,6 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-        tableView.refreshControl = refreshControl
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
@@ -172,14 +219,6 @@ class HomeViewController: UIViewController {
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
         
-    }
-    
-    func fetchPosts() {
-        PostService.shared.fetchPosts { posts in
-            self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
-            self.indicator.stopAnimating()
-            self.tableView.refreshControl?.endRefreshing()
-        }
     }
     
     func showReportAlert() {
@@ -205,22 +244,26 @@ extension HomeViewController: UITableViewDataSource {
         cell.delegate = self
         cell.posts = posts[indexPath.row]
         cell.row = indexPath.row
-//        cell.type.text = "@\(type)"
-//        cell.type.textColor = posts[indexPath.row].user.vegieType?.typeColor
-//        cell.type.textColor = Type.shared.typeColor(typeName: type ?? "") // 별로 좋은 방법은 아닌데 일단 이 방법으로....
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let user = user else { return nil }
-        guard let point = point else { return nil }
-        print("DEBUG: point rn is \(point)")
-        let header = HomeHeaderView(frame: .zero, user: user, point: point)
+//        guard let user = user else { return nil }
         
-        header.backgroundColor = .white
+        if user == nil {
+            let header = HomeHeaderView(frame: .zero, user: nil, point: user?.point ?? 0)
+            header.backgroundColor = .white
+            return header
+        } else {
+            let header = HomeHeaderView(frame: .zero, user: user, point: user!.point)
+            header.backgroundColor = .white
+            return header
+        }
         
-        return header
+        
+        
+//        return header
     }
     
 }
@@ -273,7 +316,8 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: HomeFeedCellDelegate {
     
     func currentUserAmendTapped(sender: Post, row: Int) {
-        let viewModel = ActionSheetViewModel()
+        var viewModel = ActionSheetViewModel()
+        viewModel.delegate = self
         present(viewModel.amendActionSheet(self, row: row, post: sender), animated: true)
     }
     
@@ -282,5 +326,16 @@ extension HomeViewController: HomeFeedCellDelegate {
         present(viewModel.reportActionSheet(self, post: sender), animated: true, completion: nil)
         
     }
+    
+}
+
+extension HomeViewController: ActionSheetViewModelDelegate {
+    
+    func updateUser() {
+        delegates?.updateUsers()
+        print("DEBUG: delegate passed to HOmeVIewCOntroller")
+        self.tableView.reloadData()
+    }
+    
     
 }

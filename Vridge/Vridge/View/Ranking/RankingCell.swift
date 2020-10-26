@@ -40,7 +40,6 @@ class RankingCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 16)
         label.textColor = .vridgeBlack
-        label.text = "김루키루키"
         return label
     }()
     

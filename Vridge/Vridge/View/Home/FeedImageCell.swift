@@ -19,7 +19,6 @@ class FeedImageCell: UICollectionViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
-//        iv.image = UIImage(systemName: "person")
         return iv
     }()
     

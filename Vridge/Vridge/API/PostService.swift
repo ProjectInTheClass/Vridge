@@ -8,17 +8,18 @@
 import UIKit
 
 import Firebase
+import Lottie
 
 struct PostService {
     
     static let shared = PostService()
     
-    func uploadPost(caption: String?, photos: [UIImage?], indicator: UIActivityIndicatorView,
-                    view: UIViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
+    func uploadPost(caption: String?, photos: [UIImage?], indicator: AnimationView,
+                    view: PostingViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        indicator.startAnimating()
+        indicator.play()
         var urlString: [String] = []
         
         guard let imageData1 = photos[0]?.jpegData(compressionQuality: 0.3) else { return }
@@ -48,10 +49,14 @@ struct PostService {
                         }
                         
                         print("DEBUG: photo uploaded successfully to Storage/post_images.")
+                        
                         DispatchQueue.main.async {
-                            indicator.stopAnimating()
+                            indicator.stop()
+                            indicator.isHidden = true
                         }
-                        view.dismiss(animated: true, completion: nil)
+                        view.dismiss(animated: true) {
+                            view.delegate?.updateUser()
+                        }
                     }
                 }
             }
@@ -89,7 +94,8 @@ struct PostService {
                                 
                                 print("DEBUG: photo uploaded successfully to Storage/post_images.")
                                 DispatchQueue.main.async {
-                                    indicator.stopAnimating()
+                                    indicator.stop()
+                                    indicator.isHidden = true
                                 }
                                 view.dismiss(animated: true, completion: nil)
                             }
@@ -137,7 +143,8 @@ struct PostService {
                                         
                                         print("DEBUG: photo uploaded successfully to Storage/post_images.")
                                         DispatchQueue.main.async {
-                                            indicator.stopAnimating()
+                                            indicator.stop()
+                                            indicator.isHidden = true
                                         }
                                         view.dismiss(animated: true, completion: nil)
                                     }
@@ -244,25 +251,44 @@ struct PostService {
     func pointUp(completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
-            let currentPoint = snapshot.value as! Int
-            print("DEBUG: snapshot value is \(currentPoint), about to plus one")
+        UserService.shared.fetchUser(uid: uid) { user in
+            let user = user
             
-            REF_USER_POINT.updateChildValues([uid: currentPoint + 1]) { (err, ref) in
-                REF_USERS.child(uid).updateChildValues(["point": currentPoint + 1], withCompletionBlock: completion)
+            REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
+                guard let currentPoint = snapshot.value as? Int else { return }
+                print("DEBUG: snapshot value is \(currentPoint), about to plus one")
+                // 가장 먼저 user-point 에서 +1
+                REF_USER_POINT.updateChildValues([uid: currentPoint + 1]) { (err, ref) in
+                    // 그 다음 users 에서 +1
+                    REF_USERS.child(uid).updateChildValues(["point": currentPoint + 1]) { (err, ref) in
+                        // 마지막으로 type-point 에서 +1 해주기.
+                        DB_REF.child("\(user.vegieType!.rawValue)-point").updateChildValues([uid: currentPoint + 1], withCompletionBlock: completion)
+                    }
+                }
             }
         }
+        
+        
     }
     
     func pointDown(completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
-            let currentPoint = snapshot.value as! Int
-            print("DEBUG: snapshot value is \(currentPoint), about to minus one")
+        UserService.shared.fetchUser(uid: uid) { user in
+            let user = user
             
-            REF_USER_POINT.updateChildValues([uid: currentPoint - 1]) { (err, ref) in
-                REF_USERS.child(uid).updateChildValues(["point": currentPoint - 1], withCompletionBlock: completion)
+            REF_USER_POINT.child(uid).observeSingleEvent(of: .value) { snapshot in
+                guard let currentPoint = snapshot.value as? Int else { return }
+                print("DEBUG: snapshot value is \(currentPoint), about to minus one")
+                
+                // 가장 먼저 user-point 에서 -1
+                REF_USER_POINT.updateChildValues([uid: currentPoint - 1]) { (err, ref) in
+                    // 그 다음 users 에서 -1
+                    REF_USERS.child(uid).updateChildValues(["point": currentPoint - 1]) { (err, ref) in
+                        // 마지막으로 type-point 에서 -1 해주기.
+                        DB_REF.child("\(user.vegieType!.rawValue)-point").updateChildValues([uid: currentPoint - 1], withCompletionBlock: completion)
+                    }
+                }
             }
         }
     }
