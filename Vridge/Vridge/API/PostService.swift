@@ -8,17 +8,18 @@
 import UIKit
 
 import Firebase
+import Lottie
 
 struct PostService {
     
     static let shared = PostService()
     
-    func uploadPost(caption: String?, photos: [UIImage?], indicator: UIActivityIndicatorView,
+    func uploadPost(caption: String?, photos: [UIImage?], indicator: AnimationView,
                     view: PostingViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        indicator.startAnimating()
+        indicator.play()
         var urlString: [String] = []
         
         guard let imageData1 = photos[0]?.jpegData(compressionQuality: 0.3) else { return }
@@ -50,7 +51,8 @@ struct PostService {
                         print("DEBUG: photo uploaded successfully to Storage/post_images.")
                         
                         DispatchQueue.main.async {
-                            indicator.stopAnimating()
+                            indicator.stop()
+                            indicator.isHidden = true
                         }
                         view.dismiss(animated: true) {
                             view.delegate?.updateUser()
@@ -92,7 +94,8 @@ struct PostService {
                                 
                                 print("DEBUG: photo uploaded successfully to Storage/post_images.")
                                 DispatchQueue.main.async {
-                                    indicator.stopAnimating()
+                                    indicator.stop()
+                                    indicator.isHidden = true
                                 }
                                 view.dismiss(animated: true, completion: nil)
                             }
@@ -140,7 +143,8 @@ struct PostService {
                                         
                                         print("DEBUG: photo uploaded successfully to Storage/post_images.")
                                         DispatchQueue.main.async {
-                                            indicator.stopAnimating()
+                                            indicator.stop()
+                                            indicator.isHidden = true
                                         }
                                         view.dismiss(animated: true, completion: nil)
                                     }

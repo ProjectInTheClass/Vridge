@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Lottie
+
 private let cellID = "cellID"
 private let headerID = "headerID"
 
@@ -68,14 +70,37 @@ class HomeViewController: UIViewController {
         return ic
     }()
     
-    let refreshControl: UIRefreshControl = {
-        let rc = UIRefreshControl()
-        rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
-        return rc
+    let animationView: AnimationView = {
+        let av = Lottie.AnimationView(name: loadingAnimation)
+        av.loopMode = .loop
+        return av
     }()
     
     
     // MARK: - Lifecycle
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        animationView.play()
+        
+        let refreshControl: UIRefreshControl = {
+            let rc = UIRefreshControl()
+            let loadingView = Lottie.AnimationView(name: loadingAnimation)
+            loadingView.play()
+            loadingView.contentMode = .scaleAspectFit
+            loadingView.translatesAutoresizingMaskIntoConstraints = false
+            loadingView.loopMode = .loop
+            rc.addSubview(loadingView)
+            loadingView.anchor(top: rc.topAnchor, paddingTop: 20, width: 120, height: 60)
+            loadingView.centerX(inView: rc)
+            rc.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+            rc.tintColor = .clear
+            return rc
+        }()
+        
+        tableView.refreshControl = refreshControl
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,8 +112,13 @@ class HomeViewController: UIViewController {
         fetchPoint()
         fetchUserType()
         
-        view.addSubview(indicator)
-        indicator.startAnimating()
+        view.addSubview(animationView)
+        animationView.center(inView: view)
+        animationView.setDimensions(width: 100, height: 100)
+        animationView.contentMode = .scaleAspectFill
+        
+//        view.addSubview(indicator)
+//        indicator.startAnimating()
         NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
                                                name: Notification.Name("fetchAgain"), object: nil)
         
@@ -124,6 +154,8 @@ class HomeViewController: UIViewController {
         PostService.shared.fetchPosts { posts in
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
             self.indicator.stopAnimating()
+//            self.animationView.stop()
+            self.animationView.isHidden = true
             self.tableView.refreshControl?.endRefreshing()
         }
     }
@@ -179,7 +211,6 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-        tableView.refreshControl = refreshControl
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
@@ -303,6 +334,7 @@ extension HomeViewController: ActionSheetViewModelDelegate {
     func updateUser() {
         delegates?.updateUsers()
         print("DEBUG: delegate passed to HOmeVIewCOntroller")
+        self.tableView.reloadData()
     }
     
     

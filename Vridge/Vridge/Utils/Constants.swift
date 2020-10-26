@@ -66,3 +66,9 @@ let no = "아니오"
 let yes = "예"
 let cancel = "취소"
 let confirm = "확인"
+
+
+// Lottie
+
+let loadingAnimation = "poise_logo_colors"
+let uploadAnimation = "post_upload"

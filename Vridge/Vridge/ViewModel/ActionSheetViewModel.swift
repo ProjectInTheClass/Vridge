@@ -35,6 +35,7 @@ struct ActionSheetViewModel {
                 // delete service
                 PostService.shared.deletePost(row: row, viewController: viewController, postId: post.postID) { (err, ref) in
                     delegate?.updateUser()
+                    viewController.fetchPosts()
                 }
             }
             deleteAlert.addAction(noButton)

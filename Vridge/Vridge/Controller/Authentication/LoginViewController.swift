@@ -9,6 +9,7 @@ import UIKit
 
 import AuthenticationServices
 import Firebase
+import Lottie
 
 protocol LoginViewControllerDelegate: class {
     func userLogout()
@@ -87,6 +88,11 @@ class LoginViewController: UIViewController {
     
     func configureUI() {
         
+        let animationView = Lottie.AnimationView(name: "loading")
+        view.addSubview(animationView)
+        
+        animationView.play()
+        
         view.addSubview(appleLoginButton)
         view.addSubview(label)
         view.addSubview(logOutButton)
@@ -99,6 +105,11 @@ class LoginViewController: UIViewController {
         logOutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor,
                             paddingTop: 40, paddingRight: 40)
         browseButton.center(inView: view)
+        
+        animationView.centerX(inView: view)
+        animationView.anchor(top: appleLoginButton.bottomAnchor, paddingTop: 40, width: 120, height: 120)
+        animationView.contentMode = .scaleAspectFill
+        animationView.loopMode = .loop
         
         
     }
