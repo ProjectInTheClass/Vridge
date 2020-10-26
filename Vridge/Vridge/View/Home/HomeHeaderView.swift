@@ -11,12 +11,11 @@ class HomeHeaderView: UIView {
         
     // MARK: - Properties
     
-    var user: User
+    var user: User?
     var point: Int
     
     lazy var usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "\(user.username) 님,"
         label.font = UIFont.SFBold(size: 28)
         return label
     }()
@@ -52,6 +51,19 @@ class HomeHeaderView: UIView {
         return head
     }
     
+    var visitorAttributed: NSAttributedString {
+        let head = NSMutableAttributedString(string: "브릿지 챌린지에 참여하려면 ",
+                                             attributes: [.font: UIFont.SFLight(size: 28)!])
+        head.append(NSAttributedString(string: "\n로그인",
+                                              attributes: [.font: UIFont.SFBold(size: 28)!]))
+        head.append(NSAttributedString(string: " 해주세요!",
+                                       attributes: [.font: UIFont.SFLight(size: 28)!]))
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        head.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, head.length))
+        return head
+    }
+    
     let underLine: UIView = {
         let view = UIView()
         view.backgroundColor = .vridgePlaceholderColor
@@ -61,10 +73,16 @@ class HomeHeaderView: UIView {
     
     // MARK: - Lifecycle
     
-    init(frame: CGRect, user: User, point: Int) {
+    init(frame: CGRect, user: User?, point: Int) {
         self.user = user
         self.point = point
         super.init(frame: frame)
+        
+        if user == nil {
+            configureVisitor()
+        } else {
+            configureUser()
+        }
         
         addSubview(usernameLabel)
         addSubview(descriptionLabel)
@@ -73,7 +91,6 @@ class HomeHeaderView: UIView {
         usernameLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: 5, paddingLeft: 20)
         descriptionLabel.anchor(top: usernameLabel.bottomAnchor, left: leftAnchor, paddingTop: 5, paddingLeft: 20)
         underLine.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 0.5)
-        
         
     }
     
@@ -84,4 +101,15 @@ class HomeHeaderView: UIView {
     
     // MARK: - Helpers
     
+    func configureUser() {
+        print("DEBUG: user exists.")
+        usernameLabel.text = "\(user!.username) 님,"
+        descriptionLabel.attributedText = descriptionAttributed
+    }
+    
+    func configureVisitor() {
+        print("DEBUG: user does not exist.")
+        usernameLabel.text = "비회원 님,"
+        descriptionLabel.attributedText = visitorAttributed
+    }
 }

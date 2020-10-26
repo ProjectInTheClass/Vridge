@@ -10,12 +10,19 @@ import UIKit
 import YPImagePicker
 import Firebase
 import Kingfisher
+import Lottie
+
+protocol PostingViewControllerDelegate: class {
+    func updateUser()
+}
 
 private let reusableIdentifier = "PostPhotoCell"
 
 class PostingViewController: UIViewController {
     
     // MARK: - Properties
+    
+    weak var delegate: PostingViewControllerDelegate?
     
     private var configuration: PostingConfiguration
     private lazy var viewModel = PostingViewModel(config: configuration)
@@ -75,7 +82,7 @@ class PostingViewController: UIViewController {
     
     lazy var completeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.addTarget(self, action: #selector(handleUpload), for: .touchUpInside)
         button.setTitle("완료", for: .normal)
         button.tintColor = .vridgeGreen
         button.titleLabel?.font = UIFont.SFSemiBold(size: 16)
@@ -105,7 +112,14 @@ class PostingViewController: UIViewController {
     private var config = ImagePicker.shared.imagePickerView
     lazy var picker = YPImagePicker(configuration: config)
     
-    private let indicator = UIActivityIndicatorView()
+    private let indicator: AnimationView = {
+        let av = Lottie.AnimationView(name: uploadAnimation)
+        av.setDimensions(width: 160, height: 160)
+        av.contentMode = .scaleAspectFill
+        av.animationSpeed = 2.0
+        av.loopMode = .loop
+        return av
+    }()
     
     
     // MARK: - Lifecycle
@@ -153,13 +167,18 @@ class PostingViewController: UIViewController {
         }
     }
     
-    @objc func handleNext() {
+    @objc func handleUpload() {
         
         switch configuration {
         case .post:
             if images == nil {
                 present(actionSheetViewModel.photoUploadAlert(self), animated: true, completion: nil)
             } else {
+                
+                textView.addSubview(indicator)
+                indicator.centerX(inView: textView)
+                indicator.centerY(inView: textView)
+                
                 guard let caption = textView.text else { return }
                 guard let images = images else { return }
                 PostService.shared.uploadPost(caption: caption, photos: images,
@@ -169,8 +188,15 @@ class PostingViewController: UIViewController {
                     }
                     NotificationCenter.default.post(name: Notification.Name("cellToFirst"), object: nil)
                 }
+//                self.delegate?.updateUser()
+                print("DEBUG: upload from posting view")
             }
         case .amend(_):
+            
+            textView.addSubview(indicator)
+            indicator.centerX(inView: textView)
+            indicator.centerY(inView: textView)
+            
             guard let caption = textView.text else { return }
             guard let post = post else  { return }
             let controller = HomeViewController()
@@ -194,14 +220,6 @@ class PostingViewController: UIViewController {
         navigationItem.titleView = titleLabel
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         textView.delegate = self
-        
-        textView.addSubview(indicator)
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        indicator.style = .large
-        indicator.color = .vridgeGreen
-        indicator.hidesWhenStopped = true
-        indicator.centerX(inView: textView)
-        indicator.centerY(inView: textView)
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "btnClose"),
                                                            style: .plain,

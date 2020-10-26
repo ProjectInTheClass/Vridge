@@ -234,7 +234,6 @@ extension UIViewController {
         btn.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         btn.layer.borderWidth = 3.0
         btn.addTarget(self, action: selector, for: .touchUpInside)
-
         
     }
 

@@ -17,29 +17,29 @@ class MainTabBarController: UITabBarController {
         didSet {
             guard let nav = viewControllers?[0] as? UINavigationController else { return }
             guard let home = nav.viewControllers.first as? HomeViewController else { return }
+            home.delegates = self
             home.user = user
         }
     }
     
-    private lazy var postButton: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(named: "icPost")
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleButtonTapped))
-        iv.isUserInteractionEnabled = true
-        iv.addGestureRecognizer(recognizer)
-        return iv
+    private let postButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setBackgroundImage(UIImage(named: "icPost"), for: .normal)
+        btn.backgroundColor = .vridgeGreen
+        btn.addTarget(self, action: #selector(handleButtonTapped), for: .touchUpInside)
+        return btn
     }()
     
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         
         configure()
-        fetchUser()
-//        authenticateAndConfigureUI()
+        //        fetchUser()
+        authenticateAndConfigureUI()
     }
     
     
@@ -70,18 +70,19 @@ class MainTabBarController: UITabBarController {
     // MARK: - Selectors
     
     @objc func handleButtonTapped() {
-//        print("DEBUG: tapped!")
+        
         let controller = PostingViewController(config: .post)
+        controller.delegate = self
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         
-//        let controller = LoginViewController()
-//        controller.delegate = self
-//        let nav = UINavigationController(rootViewController: controller)
-//        nav.modalPresentationStyle = .fullScreen
+        //        let controller = LoginViewController()
+        //        controller.delegate = self
+        //        let nav = UINavigationController(rootViewController: controller)
+        //        nav.modalPresentationStyle = .fullScreen
         
-//        let controller = TestViewController()
-//        let nav = UINavigationController(rootViewController: controller)
+        //        let controller = TestViewController()
+        //        let nav = UINavigationController(rootViewController: controller)
         
         present(nav, animated: true, completion: nil)
     }
@@ -109,7 +110,7 @@ class MainTabBarController: UITabBarController {
         NotificationCenter.default.addObserver(self, selector: #selector(hidePostButton), name: Notification.Name("hidePostButton"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPostButton), name: Notification.Name("showPostButton"), object: nil)
     }
-
+    
 }
 
 extension MainTabBarController :LoginViewControllerDelegate {
@@ -118,14 +119,37 @@ extension MainTabBarController :LoginViewControllerDelegate {
         print("DEBUG: handle log out man")
         do {
             try Auth.auth().signOut()
-            print("DEBUG: logged out")
             dismiss(animated: true) {
                 self.user = nil
+                let nav = UINavigationController(rootViewController: LoginViewController())
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
             }
         } catch (let err) {
             print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
         }
     }
     
+}
+
+extension MainTabBarController: HomeViewControllerDelgate {
+    
+    func updateUsers() {
+        fetchUser()
+        print("DEBUG: delegates passed to main")
+    }
     
 }
+
+extension MainTabBarController: PostingViewControllerDelegate {
+    
+    func updateUser() {
+        fetchUser()
+        print("DEBUG: user update!")
+        print("DEBUG: current point -== \(user?.point)")
+    }
+    
+}
+
+
+

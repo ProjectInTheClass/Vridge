@@ -186,8 +186,14 @@ class HomeFeedCell: UITableViewCell {
         captionLabel.text = posts.caption
         captionLabel.isHidden = posts.caption == "" ? true : false
         username.text = posts.user.username
-        type.text = "@\(posts.user.type!)"
-        type.textColor = Type.shared.typeColor(typeName: posts.user.type!)
+//        type.text = "@\(posts.user.type!)"
+        // MARK: - enum 사용해서 수정하기
+//        type.textColor = posts.user.vegieType?.typeColor
+        
+        type.text = "@\(posts.user.vegieType!.rawValue)"
+        type.textColor = posts.user.vegieType?.typeColor
+//        type.textColor = Type.shared.typeColor(typeName: posts.user.type!)
+        //
         profileImageView.kf.setImage(with: posts.user.profileImageURL)
         var timestamp: String {
             let formatter = DateComponentsFormatter()

@@ -43,20 +43,20 @@ class TestViewController: UIViewController {
 extension TestViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return VegieTypes.allCases.count
+        return VegieType.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! TestCell
         
         cell.backgroundColor = .red
-        cell.typeLabel.text = VegieTypes.allCases[indexPath.item].typeName
-        cell.detailLabel.text = VegieTypes.allCases[indexPath.item].typeDetail
+        cell.typeLabel.text = VegieType.allCases[indexPath.item].rawValue
+        cell.detailLabel.text = VegieType.allCases[indexPath.item].typeDetail
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let type = VegieTypes.allCases[indexPath.item].rawValue
+        let type = VegieType.allCases[indexPath.item].rawValue
         print("DEBUG: tapped item is \(type)")
     }
     

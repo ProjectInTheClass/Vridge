@@ -7,8 +7,11 @@
 
 import UIKit
 
+import Firebase
+
 protocol RankingSecondViewDelegate: class {
     func selection(_ view: RankingSecondView, didselect index: Int)
+    func showLogin()
 }
 
 private let reusableCell = "reuseCell"
@@ -16,6 +19,8 @@ private let reusableCell = "reuseCell"
 class RankingSecondView: UIView {
     
     // MARK: - Properties
+    
+    private let actionSheetViewModel = ActionSheetViewModel()
     
     weak var delegate: RankingSecondViewDelegate?
     
@@ -99,12 +104,21 @@ extension RankingSecondView: UICollectionViewDelegate {
         let cell = collectionView.cellForItem(at: indexPath)
         let xPosition = cell?.frame.origin.x ?? 0
         
-        UIView.animate(withDuration: 0.3) {
-            self.underLine.frame.origin.x = xPosition
+        if Auth.auth().currentUser == nil {
+            if indexPath.item == 1 {
+                collectionView.deselectItem(at: indexPath, animated: true)
+                let selectedIndexPath = IndexPath(item: 0, section: 0)
+                collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .left)
+                
+                delegate?.showLogin()
+            }
+        } else {
+            UIView.animate(withDuration: 0.3) {
+                self.underLine.frame.origin.x = xPosition
+            }
+            
+            delegate?.selection(self, didselect: indexPath.row)
         }
-        
-        delegate?.selection(self, didselect: indexPath.row)
-        
     }
 }
 

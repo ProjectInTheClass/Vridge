@@ -25,11 +25,15 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>want your camera</string>
+	<string>&quot;Vridge&quot;에서 사용자의 카메라에 접근하려고 합니다.
+권한허용을 통해 간편하게 채식한 기록을 바로 남겨보세요.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>want your mic</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>want you photo library</string>
+	<string>&quot;Vridge&quot;에서 사용자의 사진에 접근하려고 합니다.
+앨범에서 나의 채식했던 기록을 업로드해보세요.</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
