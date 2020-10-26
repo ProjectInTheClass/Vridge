@@ -80,7 +80,7 @@ class PostingViewController: UIViewController {
         return cv
     }()
     
-    lazy var completeButton: UIButton = {
+    lazy var uploadButton: UIButton = {
         let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(handleUpload), for: .touchUpInside)
         button.setTitle("완료", for: .normal)
@@ -178,6 +178,7 @@ class PostingViewController: UIViewController {
                 textView.addSubview(indicator)
                 indicator.centerX(inView: textView)
                 indicator.centerY(inView: textView)
+                self.uploadButton.isEnabled = false
                 
                 guard let caption = textView.text else { return }
                 guard let images = images else { return }
@@ -196,6 +197,7 @@ class PostingViewController: UIViewController {
             textView.addSubview(indicator)
             indicator.centerX(inView: textView)
             indicator.centerY(inView: textView)
+            self.uploadButton.isEnabled = false
             
             guard let caption = textView.text else { return }
             guard let post = post else  { return }
@@ -228,7 +230,7 @@ class PostingViewController: UIViewController {
         
         navigationItem.leftBarButtonItem?.tintColor = .black
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: uploadButton)
         navigationItem.rightBarButtonItem?.tintColor = .vridgeGreen
         
         view.addSubview(addPhotoTitle)

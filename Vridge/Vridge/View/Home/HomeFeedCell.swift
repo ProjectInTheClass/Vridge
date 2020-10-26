@@ -93,7 +93,6 @@ class HomeFeedCell: UITableViewCell {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "btnReport"), for: .normal)
         button.addTarget(self, action: #selector(handleReportTapped), for: .touchUpInside)
-        button.tintColor = .black
         return button
     }()
     

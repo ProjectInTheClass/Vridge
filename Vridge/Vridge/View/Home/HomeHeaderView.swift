@@ -17,12 +17,14 @@ class HomeHeaderView: UIView {
     lazy var usernameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFBold(size: 28)
+//        label.textColor = .black
         return label
     }()
     
     lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.attributedText = descriptionAttributed
+//        label.textColor = .black
         label.numberOfLines = 2
         return label
     }()
@@ -30,12 +32,14 @@ class HomeHeaderView: UIView {
     lazy var kkiOrIl: UILabel = {
         let label = UILabel()
         label.text = point > 99 ? "일" : "끼"
+        label.textColor = .black
         return label
     }()
     
     lazy var pointOrDays: UILabel = {
         let label = UILabel()
         label.text = point > 99 ? "\(Int(point / 3))" : "\(point)"
+//        label.textColor = .black
         return label
     }()
     

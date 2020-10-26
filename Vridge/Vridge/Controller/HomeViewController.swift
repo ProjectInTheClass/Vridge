@@ -210,7 +210,7 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
+//        tableView.backgroundColor = .white
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
@@ -244,26 +244,23 @@ extension HomeViewController: UITableViewDataSource {
         cell.delegate = self
         cell.posts = posts[indexPath.row]
         cell.row = indexPath.row
+//        cell.backgroundColor = .white
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        guard let user = user else { return nil }
         
         if user == nil {
             let header = HomeHeaderView(frame: .zero, user: nil, point: user?.point ?? 0)
-            header.backgroundColor = .white
+//            header.backgroundColor = .white
             return header
         } else {
             let header = HomeHeaderView(frame: .zero, user: user, point: user!.point)
-            header.backgroundColor = .white
+//            header.backgroundColor = .white
             return header
         }
         
-        
-        
-//        return header
     }
     
 }

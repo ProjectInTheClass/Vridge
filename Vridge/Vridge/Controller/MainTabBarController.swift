@@ -19,8 +19,11 @@ class MainTabBarController: UITabBarController {
             guard let home = nav.viewControllers.first as? HomeViewController else { return }
             home.delegates = self
             home.user = user
+//            if user?.type == "" { isVerified = false }
         }
     }
+    
+//    var isVerified: Bool?
     
     private let postButton: UIButton = {
         let btn = UIButton(type: .system)
