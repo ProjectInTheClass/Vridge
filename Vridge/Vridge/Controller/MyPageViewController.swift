@@ -12,7 +12,14 @@ class MyPageViewController: UIViewController {
 
     // MARK: - Properties
 
-    @IBOutlet var tableView: UITableView!
+    
+    @IBOutlet weak var nickNameLabel: UILabel!
+    @IBOutlet weak var vegetarianTypeLabel: UILabel!
+    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var postBoxView: UIView!
+    @IBOutlet weak var dietCountLabel: UILabel!
+    @IBOutlet weak var seePostButton: UIButton!
+    
     
     // MARK: - Lifecycle
     
@@ -20,83 +27,88 @@ class MyPageViewController: UIViewController {
         super.viewWillAppear(true)
         
         navigationController?.navigationBar.isHidden = true
+        
     }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
         
-        // 테이블 헤더
-        let header = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 295))
-        header.backgroundColor = .systemRed
-        tableView.tableHeaderView = header
+        configureUI()
         
-        let headerLabel = UILabel(frame: CGRect(x: 20, y: 11, width: 60, height: 21))
-        headerLabel.text = "Vridge"
-        headerLabel.font = UIFont(name: "futura", size: 18)
-
-        header.addSubview(headerLabel)
     }
     
-   
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
         navigationController?.navigationBar.isHidden = false
     }
     
+    
+    @IBAction func seePostButton(_ sender: Any) {
+        NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
+    }
+    
+    
+    @IBAction func editProfileButton(_ sender: Any) {
+    }
+    
+    
+    @IBAction func versionCheckButton(_ sender: Any) {
+        let alert = UIAlertController(title: "최신 버전이에요", message: "", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
+    
+    
+    @IBAction func noticeButton(_ sender: Any) {
+    }
+    
+    @IBAction func aboutVridgeButton(_ sender: Any) {
+    }
+    
+    
+    @IBAction func logOutButton(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "로그아웃하시겠어요?", message: "", preferredStyle: .alert)
+    
+        alert.addAction(UIAlertAction(title: "로그아웃", style: .destructive, handler: { action in /*action 할 메서드나 코드 넣으면됨 여기에다가 */}))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            
+        self.present(alert, animated: true)
+    }
+    
+    
+    @IBAction func signOutButton(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "탈퇴하시겠어요?", message: "", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "회원탈퇴", style: .destructive, handler: { action in /* */}))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
+    
+
+    
+    
+    // MARK: - Helpers
+    
+    func configureUI() {
+        
+        postBoxView.layer.cornerRadius = 18
+        postBoxView.layer.shadowColor = UIColor.black.cgColor
+        postBoxView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        postBoxView.layer.shadowOpacity = 0.2
+        postBoxView.layer.shadowRadius = 25
+
+        seePostButton.layer.shadowColor = UIColor.black.cgColor
+        seePostButton.layer.shadowOffset = CGSize(width: 0, height: 4)
+        seePostButton.layer.shadowOpacity = 0.2
+        seePostButton.layer.shadowRadius = 10
+    }
 
 }
 
-
-// MARK: - UITableViewDelegate
-
-extension MyPageViewController: UITableViewDelegate {
-        
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 44
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 156
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let label  = UILabel()
-        label.text = "내 식단"
-        
-        let button: UIButton = {
-            let button = UIButton(type: .system)
-            button.setTitle("내 식단", for: .normal)
-            return button
-        }()
-        
-        return button
-    }
- 
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-}
-
-
-// MARK: - UITableViewDataSource
-
-extension MyPageViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "Test"
-        return cell
-    }
-    
-}
 
