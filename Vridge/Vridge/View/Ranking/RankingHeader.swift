@@ -48,17 +48,26 @@ class RankingHeader: UIView {
         return iv
     }()
     
-    lazy var profileImage1View: UIView = {
+    lazy var profileImage1ViewInView: UIView = {
         let view = UIView()
         view.addSubview(profileImage1)
-        view.addSubview(clover)
-        clover.anchor(bottom: view.bottomAnchor, right: view.rightAnchor,
-                      paddingBottom: -10, paddingRight: 10)
         profileImage1.center(inView: view)
         view.setDimensions(width: 105, height: 105)
         view.layer.cornerRadius = 105 / 2
         view.layer.borderWidth = 2
         view.layer.borderColor = UIColor.vridgeGreen.cgColor
+        return view
+    }()
+    
+    lazy var profileImage1View: UIView = {
+        let view = UIView()
+        view.addSubview(profileImage1ViewInView)
+        profileImage1ViewInView.center(inView: view)
+        view.setDimensions(width: 105, height: 105)
+        view.layer.cornerRadius = 105 / 2
+        view.addSubview(clover)
+        clover.anchor(bottom: view.bottomAnchor, right: view.rightAnchor,
+                      paddingBottom: -10, paddingRight: 10)
         
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
