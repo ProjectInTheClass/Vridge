@@ -1,5 +1,5 @@
 //
-//  SettingViewController.swift
+//  MyPostViewController.swift
 //  Vridge
 //
 //  Created by 김루희 on 2020/10/09.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingViewController: UIViewController {
+class MyPostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

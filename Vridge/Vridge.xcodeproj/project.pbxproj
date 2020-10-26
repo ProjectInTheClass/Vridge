@@ -53,7 +53,7 @@
 		3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62374252C180D005F16A9 /* LoginViewController.swift */; };
 		3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DE62379252C1FAB005F16A9 /* LoginStoryboard.storyboard */; };
 		3DE62385252C4B79005F16A9 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62384252C4B79005F16A9 /* UserService.swift */; };
-		BB4E0E9B252F768D00442B83 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E0E9A252F768C00442B83 /* SettingViewController.swift */; };
+		BB4E0E9B252F768D00442B83 /* MyPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E0E9A252F768C00442B83 /* MyPostViewController.swift */; };
 		C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33ACCF0421075477663B637 /* Pods_Vridge.framework */; };
 /* End PBXBuildFile section */
 
@@ -110,7 +110,7 @@
 		4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.debug.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.debug.xcconfig"; sourceTree = "<group>"; };
 		72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.release.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.release.xcconfig"; sourceTree = "<group>"; };
 		A33ACCF0421075477663B637 /* Pods_Vridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB4E0E9A252F768C00442B83 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		BB4E0E9A252F768C00442B83 /* MyPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,7 +254,7 @@
 				3D1FA4762526F30100C6388A /* HomeViewController.swift */,
 				3D7F9D2A2529BB09006E23F4 /* PostingViewController.swift */,
 				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
-				BB4E0E9A252F768C00442B83 /* SettingViewController.swift */,
+				BB4E0E9A252F768C00442B83 /* MyPostViewController.swift */,
 				3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */,
 			);
 			path = Controller;
@@ -440,7 +440,7 @@
 				3D7F9D2B2529BB09006E23F4 /* PostingViewController.swift in Sources */,
 				3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */,
 				3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */,
-				BB4E0E9B252F768D00442B83 /* SettingViewController.swift in Sources */,
+				BB4E0E9B252F768D00442B83 /* MyPostViewController.swift in Sources */,
 				3D15EE3225381C6900402476 /* SelectTypeViewController.swift in Sources */,
 				3D1D8807253ACAE6005A0FE9 /* User.swift in Sources */,
 				3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */,
