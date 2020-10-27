@@ -13,7 +13,7 @@ import Kingfisher
 import Lottie
 
 protocol PostingViewControllerDelegate: class {
-    func updateUser()
+    func fetchUserAgain()
 }
 
 private let reusableIdentifier = "PostPhotoCell"
@@ -181,13 +181,9 @@ class PostingViewController: UIViewController {
                 guard let images = images else { return }
                 PostService.shared.uploadPost(caption: caption, photos: images,
                                               indicator: indicator, view: self) { (err, ref) in
-                    if let err = err {
-                        print("DEBUG: failed posting with error \(err.localizedDescription)")
-                    }
+                    self.delegate?.fetchUserAgain()
                     NotificationCenter.default.post(name: Notification.Name("cellToFirst"), object: nil)
                 }
-//                self.delegate?.updateUser()
-                print("DEBUG: upload from posting view")
             }
         case .amend(_):
             

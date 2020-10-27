@@ -148,7 +148,7 @@ extension MainTabBarController: HomeViewControllerDelgate {
 
 extension MainTabBarController: PostingViewControllerDelegate {
     
-    func updateUser() {
+    func fetchUserAgain() {
         fetchUser()
     }
     
