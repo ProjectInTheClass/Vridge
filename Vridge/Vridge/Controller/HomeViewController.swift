@@ -105,7 +105,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
+//        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         numberOfPosts()
         configureUI()
         fetchPosts()

@@ -52,6 +52,8 @@ class MainTabBarController: UITabBarController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         UserService.shared.fetchUser(uid: uid) { user in
             self.user = user
+            print("DEBUG: user update!")
+            print("DEBUG: current point -== \(user.point)")
         }
     }
     
@@ -79,10 +81,10 @@ class MainTabBarController: UITabBarController {
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         
-        //        let controller = LoginViewController()
-        //        controller.delegate = self
-        //        let nav = UINavigationController(rootViewController: controller)
-        //        nav.modalPresentationStyle = .fullScreen
+//                let controller = LoginViewController()
+//                controller.delegate = self
+//                let nav = UINavigationController(rootViewController: controller)
+//                nav.modalPresentationStyle = .fullScreen
         
         //        let controller = TestViewController()
         //        let nav = UINavigationController(rootViewController: controller)
@@ -148,8 +150,6 @@ extension MainTabBarController: PostingViewControllerDelegate {
     
     func updateUser() {
         fetchUser()
-        print("DEBUG: user update!")
-        print("DEBUG: current point -== \(user?.point)")
     }
     
 }

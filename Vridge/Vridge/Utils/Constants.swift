@@ -71,4 +71,4 @@ let confirm = "확인"
 // Lottie
 
 let loadingAnimation = "poise_logo_colors"
-let uploadAnimation = "post_upload"
+let uploadAnimation = "post_upload2"

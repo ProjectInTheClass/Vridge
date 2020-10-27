@@ -114,10 +114,8 @@ class PostingViewController: UIViewController {
     
     private let indicator: AnimationView = {
         let av = Lottie.AnimationView(name: uploadAnimation)
-        av.setDimensions(width: 160, height: 160)
+        av.setDimensions(width: 80, height: 80)
         av.contentMode = .scaleAspectFill
-        av.animationSpeed = 2.0
-        av.loopMode = .loop
         return av
     }()
     
@@ -175,9 +173,8 @@ class PostingViewController: UIViewController {
                 present(actionSheetViewModel.photoUploadAlert(self), animated: true, completion: nil)
             } else {
                 
-                textView.addSubview(indicator)
-                indicator.centerX(inView: textView)
-                indicator.centerY(inView: textView)
+                view.addSubview(indicator)
+                indicator.center(inView: view)
                 self.uploadButton.isEnabled = false
                 
                 guard let caption = textView.text else { return }
@@ -194,9 +191,8 @@ class PostingViewController: UIViewController {
             }
         case .amend(_):
             
-            textView.addSubview(indicator)
-            indicator.centerX(inView: textView)
-            indicator.centerY(inView: textView)
+            view.addSubview(indicator)
+            indicator.center(inView: view)
             self.uploadButton.isEnabled = false
             
             guard let caption = textView.text else { return }

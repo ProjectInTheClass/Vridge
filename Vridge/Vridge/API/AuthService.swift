@@ -157,4 +157,12 @@ struct AuthService {
             DB_REF.child("\(type)-point").updateChildValues([uid: 13], withCompletionBlock: completion)
         }
     }
+    
+    
+    // 테스트 해야함
+    func deleteAccount(completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        
+    }
 }
