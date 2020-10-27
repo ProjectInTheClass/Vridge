@@ -207,6 +207,7 @@ class PostingViewController: UIViewController {
     func configureAmend() {
         textView.placeholderLabel.text = nil
         textView.text = viewModel.captionLabel
+        uploadButton.setTitle("수정", for: .normal)
     }
     
     func configureUI() {
