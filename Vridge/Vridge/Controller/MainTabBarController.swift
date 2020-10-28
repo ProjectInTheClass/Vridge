@@ -76,20 +76,27 @@ class MainTabBarController: UITabBarController {
     
     @objc func handleButtonTapped() {
         
-        let controller = PostingViewController(config: .post)
-        controller.delegate = self
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
+        let actionSheetViewModel = ActionSheetViewModel()
         
-//                let controller = LoginViewController()
-//                controller.delegate = self
-//                let nav = UINavigationController(rootViewController: controller)
-//                nav.modalPresentationStyle = .fullScreen
-        
-        //        let controller = TestViewController()
-        //        let nav = UINavigationController(rootViewController: controller)
-        
-        present(nav, animated: true, completion: nil)
+        if Auth.auth().currentUser == nil {
+            present(actionSheetViewModel.pleaseLogin(self), animated: true)
+        } else {
+            
+            let controller = PostingViewController(config: .post)
+            controller.delegate = self
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            
+            //                let controller = LoginViewController()
+            //                controller.delegate = self
+            //                let nav = UINavigationController(rootViewController: controller)
+            //                nav.modalPresentationStyle = .fullScreen
+            
+            //        let controller = TestViewController()
+            //        let nav = UINavigationController(rootViewController: controller)
+            
+            present(nav, animated: true, completion: nil)
+        }
     }
     
     @objc func hidePostButton() {
