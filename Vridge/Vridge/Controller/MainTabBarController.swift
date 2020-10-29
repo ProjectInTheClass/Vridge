@@ -19,8 +19,11 @@ class MainTabBarController: UITabBarController {
             guard let home = nav.viewControllers.first as? HomeViewController else { return }
             home.delegates = self
             home.user = user
+//            if user?.type == "" { isVerified = false }
         }
     }
+    
+//    var isVerified: Bool?
     
     private let postButton: UIButton = {
         let btn = UIButton(type: .system)
@@ -49,6 +52,8 @@ class MainTabBarController: UITabBarController {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         UserService.shared.fetchUser(uid: uid) { user in
             self.user = user
+            print("DEBUG: user update!")
+            print("DEBUG: current point -== \(user.point)")
         }
     }
     
@@ -71,20 +76,27 @@ class MainTabBarController: UITabBarController {
     
     @objc func handleButtonTapped() {
         
-        let controller = PostingViewController(config: .post)
-        controller.delegate = self
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
+        let actionSheetViewModel = ActionSheetViewModel()
         
-        //        let controller = LoginViewController()
-        //        controller.delegate = self
-        //        let nav = UINavigationController(rootViewController: controller)
-        //        nav.modalPresentationStyle = .fullScreen
-        
-        //        let controller = TestViewController()
-        //        let nav = UINavigationController(rootViewController: controller)
-        
-        present(nav, animated: true, completion: nil)
+        if Auth.auth().currentUser == nil {
+            present(actionSheetViewModel.pleaseLogin(self), animated: true)
+        } else {
+            
+            let controller = PostingViewController(config: .post)
+            controller.delegate = self
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
+            
+            //                let controller = LoginViewController()
+            //                controller.delegate = self
+            //                let nav = UINavigationController(rootViewController: controller)
+            //                nav.modalPresentationStyle = .fullScreen
+            
+            //        let controller = TestViewController()
+            //        let nav = UINavigationController(rootViewController: controller)
+            
+            present(nav, animated: true, completion: nil)
+        }
     }
     
     @objc func hidePostButton() {
@@ -143,10 +155,8 @@ extension MainTabBarController: HomeViewControllerDelgate {
 
 extension MainTabBarController: PostingViewControllerDelegate {
     
-    func updateUser() {
+    func fetchUserAgain() {
         fetchUser()
-        print("DEBUG: user update!")
-        print("DEBUG: current point -== \(user?.point)")
     }
     
 }
