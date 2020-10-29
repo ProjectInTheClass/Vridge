@@ -19,7 +19,7 @@ class CaptionTextView: UITextView {
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
         text.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, text.length))
-        
+         
         label.attributedText = text
         label.numberOfLines = 0
         label.textAlignment = .left
