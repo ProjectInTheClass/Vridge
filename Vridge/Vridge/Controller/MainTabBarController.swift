@@ -80,7 +80,7 @@ class MainTabBarController: UITabBarController {
         
         if Auth.auth().currentUser == nil {
             present(actionSheetViewModel.pleaseLogin(self), animated: true)
-        } else {
+        } else { 
             
             let controller = PostingViewController(config: .post)
             controller.delegate = self
