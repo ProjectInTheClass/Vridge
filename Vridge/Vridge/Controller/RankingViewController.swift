@@ -84,7 +84,7 @@ class RankingViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        
+                
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = false
     }
@@ -138,7 +138,10 @@ class RankingViewController: UIViewController {
     
     func configureUI() {
         
-        view.backgroundColor = .white
+        navigationController?.navigationBar.backIndicatorImage = UIImage()
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
+        
+        view.backgroundColor = UIColor(named: "color_all_headerBg")
         
         view.addSubview(topView)
         view.addSubview(secondView)
@@ -150,14 +153,14 @@ class RankingViewController: UIViewController {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.register(RankingCell.self, forCellReuseIdentifier: cellID)
-        tableView.backgroundColor = .vridgeWhite
+        tableView.backgroundColor = UIColor(named: "color_ranking_bottomBg")
         
         topView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                        right: view.rightAnchor, height: 56)
         secondView.anchor(top: topView.bottomAnchor, left: view.leftAnchor,
                           right: view.rightAnchor, height: 44)
         tableView.anchor(top: secondView.bottomAnchor, left: view.leftAnchor,
-                         bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
+                         bottom: view.bottomAnchor, right: view.rightAnchor)
         
     }
 }
@@ -173,7 +176,7 @@ extension RankingViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID,
                                                  for: indexPath) as! RankingCell
-        cell.backgroundColor = .vridgeWhite
+        cell.backgroundColor = UIColor(named: "color_ranking_bottomBg")
         cell.number.text = "\(indexPath.row + 4)"
         cell.username.text = currentDataSource[indexPath.row + 3].username
         cell.profileImage.kf.setImage(with: currentDataSource[indexPath.row + 3].profileImageURL)
@@ -188,11 +191,9 @@ extension RankingViewController: UITableViewDataSource {
         
         if selectedFilter == .all {
             let header = RankingHeader(user: allRank)
-            header.backgroundColor = .white
             return header
         } else {
             let header = RankingHeader(user: myTypeRank)
-            header.backgroundColor = .white
             return header
         }
         

@@ -78,9 +78,9 @@ class MainTabBarController: UITabBarController {
         
         let actionSheetViewModel = ActionSheetViewModel()
         
-        if Auth.auth().currentUser == nil {
-            present(actionSheetViewModel.pleaseLogin(self), animated: true)
-        } else {
+//        if Auth.auth().currentUser == nil {
+//            present(actionSheetViewModel.pleaseLogin(self), animated: true)
+//        } else {
             
             let controller = PostingViewController(config: .post)
             controller.delegate = self
@@ -96,7 +96,7 @@ class MainTabBarController: UITabBarController {
             //        let nav = UINavigationController(rootViewController: controller)
             
             present(nav, animated: true, completion: nil)
-        }
+//        }
     }
     
     @objc func hidePostButton() {
