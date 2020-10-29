@@ -55,7 +55,7 @@ struct PostService {
                             indicator.isHidden = true
                         }
                         view.dismiss(animated: true) {
-                            view.delegate?.updateUser()
+                            view.delegate?.fetchUserAgain()
                         }
                     }
                 }
