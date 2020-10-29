@@ -13,7 +13,7 @@ import Kingfisher
 import Lottie
 
 protocol PostingViewControllerDelegate: class {
-    func updateUser()
+    func fetchUserAgain()
 }
 
 private let reusableIdentifier = "PostPhotoCell"
@@ -80,7 +80,7 @@ class PostingViewController: UIViewController {
         return cv
     }()
     
-    lazy var completeButton: UIButton = {
+    lazy var uploadButton: UIButton = {
         let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(handleUpload), for: .touchUpInside)
         button.setTitle("완료", for: .normal)
@@ -114,10 +114,8 @@ class PostingViewController: UIViewController {
     
     private let indicator: AnimationView = {
         let av = Lottie.AnimationView(name: uploadAnimation)
-        av.setDimensions(width: 160, height: 160)
+        av.setDimensions(width: 80, height: 80)
         av.contentMode = .scaleAspectFill
-        av.animationSpeed = 2.0
-        av.loopMode = .loop
         return av
     }()
     
@@ -175,27 +173,23 @@ class PostingViewController: UIViewController {
                 present(actionSheetViewModel.photoUploadAlert(self), animated: true, completion: nil)
             } else {
                 
-                textView.addSubview(indicator)
-                indicator.centerX(inView: textView)
-                indicator.centerY(inView: textView)
+                view.addSubview(indicator)
+                indicator.center(inView: view)
+                self.uploadButton.isEnabled = false
                 
                 guard let caption = textView.text else { return }
                 guard let images = images else { return }
                 PostService.shared.uploadPost(caption: caption, photos: images,
                                               indicator: indicator, view: self) { (err, ref) in
-                    if let err = err {
-                        print("DEBUG: failed posting with error \(err.localizedDescription)")
-                    }
+                    self.delegate?.fetchUserAgain()
                     NotificationCenter.default.post(name: Notification.Name("cellToFirst"), object: nil)
                 }
-//                self.delegate?.updateUser()
-                print("DEBUG: upload from posting view")
             }
         case .amend(_):
             
-            textView.addSubview(indicator)
-            indicator.centerX(inView: textView)
-            indicator.centerY(inView: textView)
+            view.addSubview(indicator)
+            indicator.center(inView: view)
+            self.uploadButton.isEnabled = false
             
             guard let caption = textView.text else { return }
             guard let post = post else  { return }
@@ -213,6 +207,7 @@ class PostingViewController: UIViewController {
     func configureAmend() {
         textView.placeholderLabel.text = nil
         textView.text = viewModel.captionLabel
+        uploadButton.setTitle("수정", for: .normal)
     }
     
     func configureUI() {
@@ -228,7 +223,7 @@ class PostingViewController: UIViewController {
         
         navigationItem.leftBarButtonItem?.tintColor = .black
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: uploadButton)
         navigationItem.rightBarButtonItem?.tintColor = .vridgeGreen
         
         view.addSubview(addPhotoTitle)
