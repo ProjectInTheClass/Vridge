@@ -45,6 +45,7 @@
 		3D8B135A2530BCDD0022AE88 /* RankingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B13592530BCDD0022AE88 /* RankingCell.swift */; };
 		3D8B135D2530BCEE0022AE88 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */; };
 		3D8B13602530BCFD0022AE88 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */; };
+		3D9240E3254AA94300F92C9D /* upload_post.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D9240E2254AA94300F92C9D /* upload_post.json */; };
 		3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */; };
 		3D9914D12536C12200E17AF5 /* PostingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914D02536C12100E17AF5 /* PostingViewModel.swift */; };
 		3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */; };
@@ -100,6 +101,7 @@
 		3D8B13592530BCDD0022AE88 /* RankingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingCell.swift; sourceTree = "<group>"; };
 		3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
+		3D9240E2254AA94300F92C9D /* upload_post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = upload_post.json; sourceTree = "<group>"; };
 		3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
 		3D9914D02536C12100E17AF5 /* PostingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingViewModel.swift; sourceTree = "<group>"; };
 		3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -141,6 +143,7 @@
 		3D106EEF25469BB00074DB2F /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				3D9240E2254AA94300F92C9D /* upload_post.json */,
 				3D106EFB2546AC470074DB2F /* post_upload.json */,
 				3D106EF82546A6D00074DB2F /* poise_logo_colors.json */,
 				3D106EEB254698960074DB2F /* cat_animation.json */,
@@ -383,6 +386,7 @@
 				3D106EEC254698970074DB2F /* cat_animation.json in Resources */,
 				3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */,
 				3D106EFC2546AC470074DB2F /* post_upload.json in Resources */,
+				3D9240E3254AA94300F92C9D /* upload_post.json in Resources */,
 				3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */,
 				3D3E4B18252D866700E25323 /* SF-Pro.ttf in Resources */,
 				3D106EF92546A6D00074DB2F /* poise_logo_colors.json in Resources */,

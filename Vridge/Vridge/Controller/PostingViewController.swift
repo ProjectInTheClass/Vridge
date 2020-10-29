@@ -99,8 +99,9 @@ class PostingViewController: UIViewController {
     
     private lazy var photoAddView: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "btnAddImage")
+        img.image = UIImage(named: "icAddImageCamera")
         img.contentMode = .scaleAspectFit
+        img.backgroundColor = UIColor(named: "Color")
         img.isUserInteractionEnabled = true
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(addPhotoTapped))
         img.addGestureRecognizer(recognizer)
@@ -208,10 +209,11 @@ class PostingViewController: UIViewController {
         textView.placeholderLabel.text = nil
         textView.text = viewModel.captionLabel
         uploadButton.setTitle("수정", for: .normal)
+        titleLabel.text = "글 수정"
     }
     
     func configureUI() {
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         navigationItem.titleView = titleLabel
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         textView.delegate = self

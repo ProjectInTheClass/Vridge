@@ -13,7 +13,7 @@ class RankingCell: UITableViewCell {
     
     let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "color_ranking_rankedUserBox")
         view.layer.cornerRadius = 10
         return view
     }()
@@ -21,7 +21,7 @@ class RankingCell: UITableViewCell {
     let number: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFHeavy(size: 16)
-        label.textColor = .vridgeBlack
+        label.textColor = UIColor(named: allTextColor)
         label.adjustsFontSizeToFitWidth = true
         label.textAlignment = .center
         return label
@@ -39,14 +39,13 @@ class RankingCell: UITableViewCell {
     let username: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 16)
-        label.textColor = .vridgeBlack
+        label.textColor = UIColor(named: allTextColor)
         return label
     }()
     
     let type: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-//        label.textColor = .vridgeGray
         label.text = "@pollo"
         return label
     }()
@@ -62,7 +61,7 @@ class RankingCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.SFHeavy(size: 16)
         label.text = "121"
-        label.textColor = .vridgeBlack
+        label.textColor = UIColor(named: allTextColor)
         return label
     }()
     
@@ -95,7 +94,7 @@ class RankingCell: UITableViewCell {
     // MARK: - Helpers
     
     func configureUI() {
-        
+                
         let usernameAndType = UIStackView(arrangedSubviews: [username, type])
         usernameAndType.axis = .vertical
         usernameAndType.spacing = 1

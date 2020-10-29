@@ -1,19 +1,19 @@
 {
   "images" : [
     {
-      "scale" : "1x",
-      "filename" : "imgVridgeText.png",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "filename" : "vridgetext.png",
+      "scale" : "1x"
     },
     {
-      "filename" : "imgVridgeText@2x.png",
+      "filename" : "vridgetext@2x.png",
       "scale" : "2x",
       "idiom" : "universal"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "imgVridgeText@3x.png"
+      "filename" : "vridgetext@3x.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

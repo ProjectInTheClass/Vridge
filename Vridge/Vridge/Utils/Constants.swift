@@ -71,4 +71,11 @@ let confirm = "확인"
 // Lottie
 
 let loadingAnimation = "poise_logo_colors"
-let uploadAnimation = "post_upload"
+let uploadAnimation = "upload_post"
+
+
+
+// Colors
+
+let allTextColor = "color_all_text"
+let userRankBoxColor = "color_ranking_rankedUserBox"

@@ -21,7 +21,7 @@ class RankingCustomTopView: UIView {
     private lazy var findMeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "btnMyranking"), for: .normal)
-        button.tintColor = .black
+        button.tintColor = UIColor(named: "color_all_button_normal")
         button.addTarget(self, action: #selector(handleFindMe), for: .touchUpInside)
         return button
     }()
@@ -29,7 +29,7 @@ class RankingCustomTopView: UIView {
     private let backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "btnBack"), for: .normal)
-        button.tintColor = .black
+        button.tintColor = UIColor(named: "color_all_button_normal")
         button.addTarget(self, action: #selector(handleBackToMain), for: .touchUpInside)
         return button
     }()
@@ -62,6 +62,8 @@ class RankingCustomTopView: UIView {
     // MARK: - Helpers
     
     func configureUI() {
+        
+        backgroundColor = UIColor(named: "color_all_headerBg")
         
         addSubview(backButton)
         addSubview(findMeButton)

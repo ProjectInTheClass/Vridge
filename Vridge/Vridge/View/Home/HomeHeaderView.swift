@@ -66,7 +66,7 @@ class HomeHeaderView: UIView {
     
     let underLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .vridgePlaceholderColor
+        view.backgroundColor = UIColor(named: "color_all_line")
         return view
     }()
     

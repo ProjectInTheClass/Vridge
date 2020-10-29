@@ -17,7 +17,7 @@ class RankingSecondViewCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            titleLabel.textColor = isSelected ? .black : .vridgePlaceholderColor
+            titleLabel.textColor = isSelected ? .vridgeGreen : .vridgePlaceholderColor
             titleLabel.font = isSelected ? UIFont.SFSemiBold(size: 16) : UIFont.SFSemiBold(size: 16)
         }
     }

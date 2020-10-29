@@ -113,6 +113,7 @@ class RankingHeader: UIView {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 16)
         label.text = " "
+        label.textColor = UIColor(named: allTextColor)
         return label
     }()
     
@@ -120,6 +121,7 @@ class RankingHeader: UIView {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 16)
         label.text = " "
+        label.textColor = UIColor(named: allTextColor)
         return label
     }()
     
@@ -127,6 +129,7 @@ class RankingHeader: UIView {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 16)
         label.text = " "
+        label.textColor = UIColor(named: allTextColor)
         return label
     }()
     
@@ -152,7 +155,7 @@ class RankingHeader: UIView {
         let label = UILabel()
         label.font = UIFont.SFHeavy(size: 16)
         label.text = " "
-        label.textColor = .vridgeBlack
+        label.textColor = UIColor(named: allTextColor)
         return label
     }()
     
@@ -160,7 +163,7 @@ class RankingHeader: UIView {
         let label = UILabel()
         label.font = UIFont.SFHeavy(size: 16)
         label.text = " "
-        label.textColor = .vridgeBlack
+        label.textColor = UIColor(named: allTextColor)
         return label
     }()
     
@@ -168,7 +171,7 @@ class RankingHeader: UIView {
         let label = UILabel()
         label.font = UIFont.SFHeavy(size: 16)
         label.text = " "
-        label.textColor = .vridgeBlack
+        label.textColor = UIColor(named: allTextColor)
         return label
     }()
     
@@ -208,12 +211,13 @@ class RankingHeader: UIView {
     }
     
     
-    // MARK: - Selectors
-    
-    
     // MARK: - Helpers
     
     func configure() {
+        
+        backgroundColor = UIColor(named: "color_all_viewBackground")
+        
+        
         profileImage1.kf.setImage(with: userRanking[0].profileImageURL)
         profileImage2.kf.setImage(with: userRanking[1].profileImageURL)
         profileImage3.kf.setImage(with: userRanking[2].profileImageURL)

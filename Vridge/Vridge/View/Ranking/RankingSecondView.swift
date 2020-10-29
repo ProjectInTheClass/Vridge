@@ -27,7 +27,7 @@ class RankingSecondView: UIView {
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
+        cv.backgroundColor = UIColor(named: "color_all_headerBg")
         cv.delegate = self
         cv.dataSource = self
         return cv
@@ -35,7 +35,7 @@ class RankingSecondView: UIView {
     
     private let underLine: UIView = {
         let view = UIView()
-        view.backgroundColor = .vridgeBlack
+        view.backgroundColor = .vridgeGreen
         return view
     }()
     

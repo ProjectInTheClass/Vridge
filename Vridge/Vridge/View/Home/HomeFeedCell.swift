@@ -53,7 +53,7 @@ class HomeFeedCell: UITableViewCell {
     
     lazy var pageControl: UIPageControl = {
         let pc = UIPageControl()
-        pc.currentPageIndicatorTintColor = .black
+        pc.currentPageIndicatorTintColor = UIColor(named: "indicatorSelectedColor")
         pc.pageIndicatorTintColor = .vridgePlaceholderColor
         pc.isEnabled = false
         pc.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
@@ -64,7 +64,7 @@ class HomeFeedCell: UITableViewCell {
     lazy var username: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFSemiBold(size: 14)
-        label.textColor = .vridgeBlack
+        label.textColor = UIColor(named: allTextColor)
         return label
     }()
     
@@ -84,7 +84,7 @@ class HomeFeedCell: UITableViewCell {
     let captionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 14)
-        label.textColor = .vridgeBlack
+        label.textColor = UIColor(named: allTextColor)
         label.numberOfLines = 0
         return label
     }()
@@ -93,7 +93,7 @@ class HomeFeedCell: UITableViewCell {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "btnReport"), for: .normal)
         button.addTarget(self, action: #selector(handleReportTapped), for: .touchUpInside)
-        button.tintColor = .black
+        button.tintColor = UIColor(named: "color_all_button_normal")
         return button
     }()
     
@@ -102,6 +102,8 @@ class HomeFeedCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        backgroundColor = UIColor(named: "color_all_viewBackground")
         
         NotificationCenter.default.addObserver(self, selector: #selector(cellToFirst),
                                                name: Notification.Name("cellToFirst"), object: nil)

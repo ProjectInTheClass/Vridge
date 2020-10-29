@@ -28,17 +28,19 @@ class HomeViewController: UIViewController {
         return imgView
     }()
     
-    private let vridgeText: UIImageView = {
-        let imgView = UIImageView()
-        imgView.image = UIImage(named: "imgVridgeText")
+    private let vridgeText: UIButton = {
+        let imgView = UIButton(type: .system)
+        imgView.tintColor = UIColor(named: "home_vridgeTypo")
+        imgView.setImage(UIImage(named: "vridgetext"), for: .normal)
+//        imgView.isUserInteractionEnabled = false
         return imgView
     }()
-    
+        
     private lazy var rankButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "btnRank"), for: .normal)
         btn.addTarget(self, action: #selector(handleShowRanking), for: .touchUpInside)
-        btn.tintColor = .black
+        btn.tintColor = UIColor(named: "color_all_button_normal")
         return btn
     }()
     
@@ -105,7 +107,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         numberOfPosts()
         configureUI()
         fetchPosts()
@@ -188,6 +189,7 @@ class HomeViewController: UIViewController {
     @objc func handleShowRanking() {
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
         
+        navigationItem.title = ""
         let controller = RankingViewController(user: user)
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -202,7 +204,7 @@ class HomeViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rankButton)
         
-        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
+        navigationController?.navigationBar.barTintColor = UIColor(named: "color_all_headerBg")?.withAlphaComponent(1)
         
         //hide navigationBar borderLine
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -210,7 +212,7 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
+//        tableView.backgroundColor = .white
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
@@ -253,11 +255,11 @@ extension HomeViewController: UITableViewDataSource {
         
         if user == nil {
             let header = HomeHeaderView(frame: .zero, user: nil, point: user?.point ?? 0)
-            header.backgroundColor = .white
+            header.backgroundColor = UIColor(named: "color_all_viewBackground")
             return header
         } else {
             let header = HomeHeaderView(frame: .zero, user: user, point: user!.point)
-            header.backgroundColor = .white
+            header.backgroundColor = UIColor(named: "color_all_viewBackground")
             return header
         }
         
