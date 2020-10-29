@@ -26,6 +26,7 @@ class MyPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
+        NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
         navigationController?.navigationBar.isHidden = true
         
     }
@@ -49,46 +50,44 @@ class MyPageViewController: UIViewController {
     }
     
     
-    @IBAction func editProfileButton(_ sender: Any) {
-    }
-    
-    
-    @IBAction func versionCheckButton(_ sender: Any) {
-        let alert = UIAlertController(title: "최신 버전이에요", message: "", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        
-        self.present(alert, animated: true)
-    }
-    
-    
     @IBAction func noticeButton(_ sender: Any) {
+        NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
     }
     
     @IBAction func aboutVridgeButton(_ sender: Any) {
     }
     
+    @IBAction func versionCheckButton(_ sender: Any) {
+        let alert = UIAlertController(title: versionCheckTitle, message: "", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: confirm, style: .default, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
+    
+    @IBAction func editProfileButton(_ sender: Any) {
+    }
     
     @IBAction func logOutButton(_ sender: Any) {
         
-        let alert = UIAlertController(title: "로그아웃하시겠어요?", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: logOutTitle, message: "", preferredStyle: .alert)
     
-        alert.addAction(UIAlertAction(title: "로그아웃", style: .destructive, handler: { action in /*action 할 메서드나 코드 넣으면됨 여기에다가 */}))
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: logOutAnswer, style: .destructive, handler: { action in /*action 할 메서드나 코드 넣으면됨 여기에다가 */}))
+        alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
             
         self.present(alert, animated: true)
     }
     
     
-    @IBAction func signOutButton(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "탈퇴하시겠어요?", message: "", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "회원탈퇴", style: .destructive, handler: { action in /* */}))
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        
-        self.present(alert, animated: true)
-    }
+//    @IBAction func signOutButton(_ sender: Any) {
+//
+//        let alert = UIAlertController(title: signOutTitle, message: "", preferredStyle: .alert)
+//
+//        alert.addAction(UIAlertAction(title: signOutAnswer, style: .destructive, handler: { action in /* */}))
+//        alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
+//
+//        self.present(alert, animated: true)
+//    }
     
 
     
