@@ -24,7 +24,7 @@ class CaptionTextView: UITextView {
         label.numberOfLines = 0
         label.textAlignment = .left
         label.font = UIFont.SFRegular(size: 14)
-        label.textColor = .vridgePlaceholderColor
+        label.textColor = UIColor(named: "color_posting_placeHolder")
         return label
     }()
     
@@ -33,8 +33,11 @@ class CaptionTextView: UITextView {
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         
-        backgroundColor = .white
         font = UIFont.SFRegular(size: 14)
+        textContainerInset = UIEdgeInsets(top: 15, left: 12, bottom: 15, right: 15)
+        layer.cornerRadius = 8
+        backgroundColor = UIColor(named: borderColor)
+        isUserInteractionEnabled = true
         isScrollEnabled = true
         
         addSubview(placeholderLabel)

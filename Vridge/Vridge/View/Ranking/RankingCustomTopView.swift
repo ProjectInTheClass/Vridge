@@ -63,7 +63,7 @@ class RankingCustomTopView: UIView {
     
     func configureUI() {
         
-        backgroundColor = UIColor(named: "color_all_headerBg")
+        backgroundColor = UIColor(named: headerBgColor)
         
         addSubview(backButton)
         addSubview(findMeButton)

@@ -40,7 +40,7 @@ class HomeViewController: UIViewController {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "btnRank"), for: .normal)
         btn.addTarget(self, action: #selector(handleShowRanking), for: .touchUpInside)
-        btn.tintColor = UIColor(named: "color_all_button_normal")
+        btn.tintColor = UIColor(named: normalButtonColor)
         return btn
     }()
     
@@ -107,7 +107,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        numberOfPosts()
         configureUI()
         fetchPosts()
         fetchPoint()
@@ -118,14 +117,15 @@ class HomeViewController: UIViewController {
         animationView.setDimensions(width: 100, height: 100)
         animationView.contentMode = .scaleAspectFill
         
-//        view.addSubview(indicator)
-//        indicator.startAnimating()
         NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
                                                name: Notification.Name("fetchAgain"), object: nil)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        numberOfPosts()
+        
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
     }
@@ -148,6 +148,7 @@ class HomeViewController: UIViewController {
     func numberOfPosts() {
         PostService.shared.numberOfPosts { nums in
             self.numberOfPost = nums
+            print("DEBUG: \(self.numberOfPost)")
         }
     }
     
@@ -155,7 +156,7 @@ class HomeViewController: UIViewController {
         PostService.shared.fetchPosts { posts in
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
             self.indicator.stopAnimating()
-//            self.animationView.stop()
+
             self.animationView.isHidden = true
             self.tableView.refreshControl?.endRefreshing()
         }
@@ -204,7 +205,7 @@ class HomeViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rankButton)
         
-        navigationController?.navigationBar.barTintColor = UIColor(named: "color_all_headerBg")?.withAlphaComponent(1)
+        navigationController?.navigationBar.barTintColor = UIColor(named: headerBgColor)?.withAlphaComponent(1)
         
         //hide navigationBar borderLine
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -212,7 +213,6 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
-//        tableView.backgroundColor = .white
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         

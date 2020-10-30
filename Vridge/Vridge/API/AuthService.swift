@@ -149,12 +149,28 @@ struct AuthService {
         }
     }
     
-//     default로 채식타입 정하기 //
+//     채식타입 정하기 //
     func userDidSetType(type: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         REF_USERS.child(uid).updateChildValues(["type": type]) { (err, ref) in
             DB_REF.child("\(type)-point").updateChildValues([uid: 13], withCompletionBlock: completion)
         }
+    }
+    
+    func userDeleteAccount() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_POSTS.child(uid).observe(.value) { snapshot in
+            guard let dic = snapshot.value as? [String: Any] else { return }
+            
+            for key in dic.keys {
+                REF_POSTS.child(key).removeValue { (err, ref) in
+                    REF_USER_POSTS.child(uid).removeValue()
+                }
+            }
+            // log out method 넣어주기.
+        }
+//        REF_USER_POSTS.child(uid).removeValue()
     }
 }

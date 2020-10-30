@@ -79,3 +79,7 @@ let uploadAnimation = "upload_post"
 
 let allTextColor = "color_all_text"
 let userRankBoxColor = "color_ranking_rankedUserBox"
+let normalButtonColor = "color_all_button_normal"
+let headerBgColor = "color_all_headerBg"
+let viewBgColor = "color_all_viewBackground"
+let borderColor = "color_posting_boxBg"

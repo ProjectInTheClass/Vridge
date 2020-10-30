@@ -39,7 +39,7 @@ class PostingViewController: UIViewController {
     
     private var addphotoAttributedText: NSAttributedString {
         let text = NSMutableAttributedString(string: "채식 사진", attributes: [.font: UIFont.SFRegular(size: 14)!,.foregroundColor: UIColor.vridgeGreen])
-        text.append(NSAttributedString(string: "을 추가해주세요", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14), .foregroundColor: UIColor.black]))
+        text.append(NSAttributedString(string: "을 추가해주세요", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14), .foregroundColor: UIColor(named: allTextColor)!]))
         return text
     }
     
@@ -51,7 +51,7 @@ class PostingViewController: UIViewController {
     
     private var writeCaptionAttributedText: NSAttributedString {
         let text = NSMutableAttributedString(string: "채식 식단", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14),.foregroundColor: UIColor.vridgeGreen])
-        text.append(NSAttributedString(string: "을 기록해주세요", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14), .foregroundColor: UIColor.black]))
+        text.append(NSAttributedString(string: "을 기록해주세요", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14), .foregroundColor: UIColor(named: allTextColor)!]))
         return text
     }
     
@@ -61,15 +61,13 @@ class PostingViewController: UIViewController {
         return label
     }()
     
-    let textView: CaptionTextView = {
-        let tv = CaptionTextView()
-        tv.isUserInteractionEnabled = true
-        tv.font = UIFont.SFRegular(size: 14)
-        tv.textContainerInset = UIEdgeInsets(top: 15, left: 12, bottom: 15, right: 15)
-        tv.layer.cornerRadius = 8
-        tv.layer.borderWidth = 2
-        tv.layer.borderColor = UIColor.vridgePostingBorder.cgColor
-        return tv
+    let textView = CaptionTextView()
+    
+    private lazy var photoAddView: PhotoAddView = {
+        let iv = PhotoAddView()
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(addPhotoTapped))
+        iv.addGestureRecognizer(recognizer)
+        return iv
     }()
     
     private lazy var collectionView: UICollectionView = {
@@ -87,25 +85,6 @@ class PostingViewController: UIViewController {
         button.tintColor = .vridgeGreen
         button.titleLabel?.font = UIFont.SFSemiBold(size: 16)
         return button
-    }()
-    
-    let closeButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setImage(UIImage(named: "btnClose"), for: .normal)
-        btn.addTarget(self, action: #selector(handleCancel), for: .touchUpInside)
-        btn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -20, bottom: 0, right: 0)
-        return btn
-    }()
-    
-    private lazy var photoAddView: UIImageView = {
-        let img = UIImageView()
-        img.image = UIImage(named: "icAddImageCamera")
-        img.contentMode = .scaleAspectFit
-        img.backgroundColor = UIColor(named: "Color")
-        img.isUserInteractionEnabled = true
-        let recognizer = UITapGestureRecognizer(target: self, action: #selector(addPhotoTapped))
-        img.addGestureRecognizer(recognizer)
-        return img
     }()
     
     private var images: [UIImage]?
@@ -145,6 +124,13 @@ class PostingViewController: UIViewController {
             configureAmend()
         }
     }
+    
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        super.traitCollectionDidChange(previousTraitCollection)
+//
+//        // text view와 photo add view의 border color를 넣어주기 위한 method.
+//        updateColor()
+//    }
     
     
     // MARK: - Selectors
@@ -205,6 +191,11 @@ class PostingViewController: UIViewController {
     
     // MARK: - Helpers
     
+//    func updateColor() {
+//        textView.layer.borderColor = UIColor.borderColor.cgColor
+//        photoAddView.layer.borderColor = UIColor.borderColor.cgColor
+//    }
+    
     func configureAmend() {
         textView.placeholderLabel.text = nil
         textView.text = viewModel.captionLabel
@@ -213,9 +204,10 @@ class PostingViewController: UIViewController {
     }
     
     func configureUI() {
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(named: viewBgColor)
         navigationItem.titleView = titleLabel
-        navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
+        navigationController?.navigationBar.barTintColor = UIColor(named: headerBgColor)?.withAlphaComponent(1)
+        
         textView.delegate = self
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "btnClose"),
@@ -223,7 +215,7 @@ class PostingViewController: UIViewController {
                                                            target: self,
                                                            action: #selector(handleCancel))
         
-        navigationItem.leftBarButtonItem?.tintColor = .black
+        navigationItem.leftBarButtonItem?.tintColor = UIColor(named: normalButtonColor)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: uploadButton)
         navigationItem.rightBarButtonItem?.tintColor = .vridgeGreen
@@ -236,6 +228,7 @@ class PostingViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.addSubview(photoAddView)
+        collectionView.showsHorizontalScrollIndicator = false
         
         photoAddView.anchor(top: collectionView.topAnchor, left: collectionView.leftAnchor)
         
@@ -266,7 +259,7 @@ extension PostingViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch configuration {
-        case .post: return images == nil ? 3 : images!.count
+        case .post: return images == nil ? 0 : images!.count
         case .amend(_): return images?.count ?? 1
         }
     }
