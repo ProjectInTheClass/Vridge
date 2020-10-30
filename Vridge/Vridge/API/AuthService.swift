@@ -157,4 +157,15 @@ struct AuthService {
             DB_REF.child("\(type)-point").updateChildValues([uid: 13], withCompletionBlock: completion)
         }
     }
+    
+    func userDeleteAccount() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_POSTS.child(uid).observe(.value) { snapshot in
+            print("DEBUG: post IDs are == \(snapshot.value)")
+            
+//            snapshot.value  를 딕셔너리로 받아서 key가 필요함..!!
+            
+        }
+    }
 }

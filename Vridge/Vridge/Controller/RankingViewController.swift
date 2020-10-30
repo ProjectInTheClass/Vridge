@@ -141,7 +141,7 @@ class RankingViewController: UIViewController {
         navigationController?.navigationBar.backIndicatorImage = UIImage()
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
         
-        view.backgroundColor = UIColor(named: "color_all_headerBg")
+        view.backgroundColor = UIColor(named: headerBgColor)
         
         view.addSubview(topView)
         view.addSubview(secondView)

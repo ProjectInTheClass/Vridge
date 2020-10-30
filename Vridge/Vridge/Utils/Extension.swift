@@ -142,6 +142,35 @@ extension UIColor {
     static let vridge_typeFlexitarian = UIColor.rgb(red: 0, green: 238, blue: 126)
 }
 
+extension UIColor {
+     static func dynamic(light: UIColor, dark: UIColor) -> UIColor {
+
+         if #available(iOS 13.0, *) {
+             return UIColor(dynamicProvider: {
+                 switch $0.userInterfaceStyle {
+                 case .dark:
+                     return dark
+                 case .light, .unspecified:
+                     return light
+                 @unknown default:
+                     assertionFailure("Unknown userInterfaceStyle: \($0.userInterfaceStyle)")
+                     return light
+                 }
+             })
+         }
+
+         // iOS 12 and earlier
+         return light
+     }
+}
+
+extension UIColor {
+    private static let customColor = UIColor.rgb(red: 245, green: 245, blue: 245)
+    private static let customColorDarkMode = UIColor.rgb(red: 0, green: 0, blue: 0)
+    
+    static let borderColor = UIColor.dynamic(light: customColor, dark: customColorDarkMode)
+}
+
 extension UIFont {
     
     static func SFRegular(size: CGFloat) -> UIFont? {

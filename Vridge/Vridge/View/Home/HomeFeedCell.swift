@@ -114,6 +114,7 @@ class HomeFeedCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
         
         let userNameAndType = UIStackView(arrangedSubviews: [username, type])
         userNameAndType.spacing = 4

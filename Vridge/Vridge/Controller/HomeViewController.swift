@@ -40,7 +40,7 @@ class HomeViewController: UIViewController {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(named: "btnRank"), for: .normal)
         btn.addTarget(self, action: #selector(handleShowRanking), for: .touchUpInside)
-        btn.tintColor = UIColor(named: "color_all_button_normal")
+        btn.tintColor = UIColor(named: normalButtonColor)
         return btn
     }()
     
@@ -107,6 +107,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        AuthService.shared.userDeleteAccount()
+        
         numberOfPosts()
         configureUI()
         fetchPosts()
@@ -155,7 +157,7 @@ class HomeViewController: UIViewController {
         PostService.shared.fetchPosts { posts in
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
             self.indicator.stopAnimating()
-//            self.animationView.stop()
+
             self.animationView.isHidden = true
             self.tableView.refreshControl?.endRefreshing()
         }
@@ -167,6 +169,7 @@ class HomeViewController: UIViewController {
         
         PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+            print("DEBUG: updated posts number is \(self.posts.count)")
         }
         tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
     }
@@ -204,7 +207,7 @@ class HomeViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rankButton)
         
-        navigationController?.navigationBar.barTintColor = UIColor(named: "color_all_headerBg")?.withAlphaComponent(1)
+        navigationController?.navigationBar.barTintColor = UIColor(named: headerBgColor)?.withAlphaComponent(1)
         
         //hide navigationBar borderLine
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -212,7 +215,6 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
-//        tableView.backgroundColor = .white
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
