@@ -107,7 +107,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        numberOfPosts()
         configureUI()
         fetchPosts()
         fetchPoint()
@@ -118,14 +117,15 @@ class HomeViewController: UIViewController {
         animationView.setDimensions(width: 100, height: 100)
         animationView.contentMode = .scaleAspectFill
         
-//        view.addSubview(indicator)
-//        indicator.startAnimating()
         NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
                                                name: Notification.Name("fetchAgain"), object: nil)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        numberOfPosts()
+        
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
     }
@@ -148,6 +148,7 @@ class HomeViewController: UIViewController {
     func numberOfPosts() {
         PostService.shared.numberOfPosts { nums in
             self.numberOfPost = nums
+            print("DEBUG: \(self.numberOfPost)")
         }
     }
     
@@ -167,7 +168,6 @@ class HomeViewController: UIViewController {
         
         PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
-            print("DEBUG: updated posts number is \(self.posts.count)")
         }
         tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
     }
@@ -188,7 +188,6 @@ class HomeViewController: UIViewController {
     }
     
     @objc func handleShowRanking() {
-        AuthService.shared.userDeleteAccount()
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
         
         navigationItem.title = ""

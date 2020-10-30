@@ -200,10 +200,4 @@ struct RankingViewModel {
     
     // MARK: - Helpers
     
-//    mutating func fetchUserRanking() {
-//        
-//        UserService.shared.fetchRanking { users in
-//            userRanking.append(contentsOf: users)
-//        }
-//    }
 }

@@ -26,7 +26,6 @@ class RankingHeader: UIView {
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
         view.layer.shadowOpacity = 0.2
         view.layer.shadowRadius = 10
-        view.layer.masksToBounds = false
         return view
     }()
     
@@ -48,23 +47,31 @@ class RankingHeader: UIView {
         return iv
     }()
     
-    lazy var profileImage1View: UIView = {
+    lazy var profileImage1MidView: UIView = {
         let view = UIView()
         view.addSubview(profileImage1)
-        view.addSubview(clover)
-        clover.anchor(bottom: view.bottomAnchor, right: view.rightAnchor,
-                      paddingBottom: -10, paddingRight: 10)
         profileImage1.center(inView: view)
         view.setDimensions(width: 105, height: 105)
         view.layer.cornerRadius = 105 / 2
         view.layer.borderWidth = 2
         view.layer.borderColor = UIColor.vridgeGreen.cgColor
+        return view
+    }()
+    
+    lazy var profileImage1View: UIView = {
+        let view = UIView()
+        view.addSubview(profileImage1MidView)
+        view.addSubview(clover)
+        clover.anchor(bottom: view.bottomAnchor, right: view.rightAnchor,
+                      paddingBottom: -10, paddingRight: 10)
+        profileImage1MidView.center(inView: view)
+        view.setDimensions(width: 105, height: 105)
+        view.layer.cornerRadius = 105 / 2
         
         view.layer.shadowColor = UIColor.black.cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
         view.layer.shadowOpacity = 0.2
         view.layer.shadowRadius = 10
-        view.layer.masksToBounds = false
         return view
     }()
     
@@ -93,7 +100,6 @@ class RankingHeader: UIView {
         view.layer.shadowOffset = CGSize(width: 0, height: 0)
         view.layer.shadowOpacity = 0.2
         view.layer.shadowRadius = 10
-        view.layer.masksToBounds = false
         return view
     }()
     
@@ -233,10 +239,10 @@ class RankingHeader: UIView {
         type1.text = "@\(userRanking[0].type!)"
         type2.text = "@\(userRanking[1].type!)"
         type3.text = "@\(userRanking[2].type!)"
-
-        type1.textColor = Type.shared.typeColor(typeName: userRanking[0].type!)
-        type2.textColor = Type.shared.typeColor(typeName: userRanking[1].type!)
-        type3.textColor = Type.shared.typeColor(typeName: userRanking[2].type!)
+        
+        type1.textColor = userRanking[0].vegieType?.typeColor
+        type2.textColor = userRanking[1].vegieType?.typeColor
+        type3.textColor = userRanking[2].vegieType?.typeColor
         
         saladImage1.image = UIImage(named: "salad")
         saladImage2.image = UIImage(named: "salad")

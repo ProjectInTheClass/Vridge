@@ -240,7 +240,6 @@ struct PostService {
                 let posts = Post(user: user, postID: postID, dictionary: dictionary)
                 post.append(posts)
                 
-                print("DEBUG: number of post ==== \(post.count)")
                 if post.count == upto {
                     completion(post)
                 }
