@@ -149,7 +149,7 @@ struct AuthService {
         }
     }
     
-//     default로 채식타입 정하기 //
+//     채식타입 정하기 //
     func userDidSetType(type: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
@@ -162,10 +162,15 @@ struct AuthService {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         REF_USER_POSTS.child(uid).observe(.value) { snapshot in
-            print("DEBUG: post IDs are == \(snapshot.value)")
+            guard let dic = snapshot.value as? [String: Any] else { return }
             
-//            snapshot.value  를 딕셔너리로 받아서 key가 필요함..!!
-            
+            for key in dic.keys {
+                REF_POSTS.child(key).removeValue { (err, ref) in
+                    REF_USER_POSTS.child(uid).removeValue()
+                }
+            }
+            // log out method 넣어주기.
         }
+//        REF_USER_POSTS.child(uid).removeValue()
     }
 }

@@ -107,8 +107,6 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        AuthService.shared.userDeleteAccount()
-        
         numberOfPosts()
         configureUI()
         fetchPosts()
@@ -190,6 +188,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func handleShowRanking() {
+        AuthService.shared.userDeleteAccount()
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
         
         navigationItem.title = ""
