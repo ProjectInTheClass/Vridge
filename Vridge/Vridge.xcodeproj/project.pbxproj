@@ -49,7 +49,7 @@
 		3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */; };
 		3D9914D12536C12200E17AF5 /* PostingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914D02536C12100E17AF5 /* PostingViewModel.swift */; };
 		3DB09D7B254BD97D00062E49 /* PhotoAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB09D7A254BD97D00062E49 /* PhotoAddView.swift */; };
-		3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */; };
+		3DB09D81254C66AB00062E49 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DB09D80254C66AB00062E49 /* GoogleService-Info.plist */; };
 		3DE6236A252B2925005F16A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62369252B2925005F16A9 /* Constants.swift */; };
 		3DE6236E252B298F005F16A9 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6236D252B298F005F16A9 /* PostService.swift */; };
 		3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62374252C180D005F16A9 /* LoginViewController.swift */; };
@@ -106,7 +106,7 @@
 		3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
 		3D9914D02536C12100E17AF5 /* PostingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingViewModel.swift; sourceTree = "<group>"; };
 		3DB09D7A254BD97D00062E49 /* PhotoAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAddView.swift; sourceTree = "<group>"; };
-		3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		3DB09D80254C66AB00062E49 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3DE62369252B2925005F16A9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3DE6236D252B298F005F16A9 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		3DE62374252C180D005F16A9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -199,7 +199,7 @@
 				3D3E4B16252D864E00E25323 /* Fonts */,
 				3D106EEF25469BB00074DB2F /* Lottie */,
 				3D1FA47B2526F30400C6388A /* Assets.xcassets */,
-				3DE6232A252B244C005F16A9 /* GoogleService-Info.plist */,
+				3DB09D80254C66AB00062E49 /* GoogleService-Info.plist */,
 				3D1FA4802526F30400C6388A /* Info.plist */,
 				3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */,
 			);
@@ -388,13 +388,13 @@
 				3D1FA47C2526F30400C6388A /* Assets.xcassets in Resources */,
 				3D106EEC254698970074DB2F /* cat_animation.json in Resources */,
 				3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */,
+				3DB09D81254C66AB00062E49 /* GoogleService-Info.plist in Resources */,
 				3D106EFC2546AC470074DB2F /* post_upload.json in Resources */,
 				3D9240E3254AA94300F92C9D /* upload_post.json in Resources */,
 				3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */,
 				3D3E4B18252D866700E25323 /* SF-Pro.ttf in Resources */,
 				3D106EF92546A6D00074DB2F /* poise_logo_colors.json in Resources */,
 				3D1FA47A2526F30100C6388A /* Main.storyboard in Resources */,
-				3DE6232B252B244C005F16A9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
