@@ -23,7 +23,6 @@ struct User {
         return Auth.auth().currentUser?.uid == uid
     }
     
-    
     init(uid: String, dictionary: [String: AnyObject]) {
         self.uid = uid
         self.username = dictionary["username"] as? String ?? ""
