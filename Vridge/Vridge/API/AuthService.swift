@@ -99,7 +99,7 @@ struct AuthService {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         guard let imageData = photo.jpegData(compressionQuality: 0.3) else { return }
-        let storageRef = STORAGE_USER_PROFILE_IMAGES.child("profilePhoto of" + uid)
+        let storageRef = STORAGE_USER_PROFILE_IMAGES.child(uid)
         
         storageRef.putData(imageData, metadata: nil) { (meta, err) in
             storageRef.downloadURL { (url, err) in
