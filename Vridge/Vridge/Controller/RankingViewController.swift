@@ -15,9 +15,7 @@ class RankingViewController: UIViewController {
     
     // MARK: - Properties
     
-    var user: User? {
-        didSet {  }
-    }
+    var user: User?
     
 //    var totalUser: Int? {
 //        didSet { fetchUserRanking() }
