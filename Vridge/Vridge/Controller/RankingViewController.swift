@@ -16,16 +16,16 @@ class RankingViewController: UIViewController {
     // MARK: - Properties
     
     var user: User? {
-        didSet { fetchTotalMyTypeUser() }
+        didSet {  }
     }
     
-    var totalUser: Int? {
-        didSet { fetchUserRanking() }
-    }
+//    var totalUser: Int? {
+//        didSet { fetchUserRanking() }
+//    }
     
-    var totalMyTypeUser: Int? {
-        didSet { fetchMyTypeUserRanking(); print("DEBUG: total mytype user is \(totalMyTypeUser)") }
-    }
+//    var totalMyTypeUser: Int? {
+//        didSet { fetchMyTypeUserRanking(); print("DEBUG: total mytype user is \(totalMyTypeUser)") }
+//    }
     
     private let topView = RankingCustomTopView()
     private let secondView = RankingSecondView()
@@ -37,16 +37,15 @@ class RankingViewController: UIViewController {
     private var allRank = [User]() {
         didSet { tableView.reloadData() }
     }
+    
     private var myTypeRank = [User]() {
         didSet { tableView.reloadData() }
     }
-    //didSet 해야할지도...
     
     private var currentDataSource: [User] {
         switch selectedFilter {
         case .all: return allRank
-        case .myType: return myTypeRank // users.child(uid) 에서 typeName을 가져와서
-        // user_(typeName).value에서 type이 뭔지 가져와서 해당하는 소스 가져오기.
+        case .myType: return myTypeRank
         }
     }
     
@@ -70,8 +69,10 @@ class RankingViewController: UIViewController {
         super.viewDidLoad()
         
         configureUI()
-        fetchTotalUser()
-        fetchTotalMyTypeUser()
+//        fetchTotalUser()
+//        fetchTotalMyTypeUser()
+        fetchUserRanking()
+        fetchMyTypeUserRanking()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -91,27 +92,28 @@ class RankingViewController: UIViewController {
     
     // MARK: - API
     
-    func fetchTotalUser() {
-        UserService.shared.fetchTotalUser { numberOfUsers in
-            self.totalUser = numberOfUsers
-        }
-    }
+//    func fetchTotalUser() {
+//        UserService.shared.fetchTotalUser { numberOfUsers in
+//            self.totalUser = numberOfUsers
+//        }
+//    }
     
-    func fetchTotalMyTypeUser() {
-        if Auth.auth().currentUser == nil {
-            print("DEBUG: no user exist")
-        } else {
-            UserService.shared.fetchTotalMyTypeUser(myType: (user?.vegieType)!) { numberOfMyTypeUsers in
-                self.totalMyTypeUser = numberOfMyTypeUsers
-            }
-        }
-    }
+//    func fetchTotalMyTypeUser() {
+//        if Auth.auth().currentUser == nil {
+//            print("DEBUG: no user exist")
+//        } else {
+//            UserService.shared.fetchTotalMyTypeUser(myType: (user?.vegieType)!) { numberOfMyTypeUsers in
+//                self.totalMyTypeUser = numberOfMyTypeUsers
+//            }
+//        }
+//    }
     
     func fetchUserRanking() {
         UserService.shared.fetchRanking { users in
-            if users.count == self.totalUser {
-                self.allRank = users.sorted(by: { $0.point > $1.point })
-            }
+//            if users.count == self.totalUser {
+//                self.allRank = users.sorted(by: { $0.point > $1.point })
+                self.allRank = users
+//            }
         }
     }
     
@@ -120,10 +122,10 @@ class RankingViewController: UIViewController {
             print("DEBUG: no user exist2")
         } else {
             UserService.shared.fetchMyTypeRanking(myType: (user?.vegieType)!) { users in
-                if users.count == self.totalMyTypeUser {
+//                if users.count == self.totalMyTypeUser {
                     print("DEBUG: user type is ===== \(self.user?.vegieType?.rawValue)")
-                    self.myTypeRank = users.sorted(by: { $0.point > $1.point })
-                }
+                    self.myTypeRank = users
+//                }
             }
         }
     }

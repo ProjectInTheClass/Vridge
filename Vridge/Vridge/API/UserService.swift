@@ -31,10 +31,28 @@ struct UserService {
 
             self.fetchUser(uid: uid) { user in
                 users.append(user)
-                completion(users)
+                
+                if users.count >= 100 {
+                    completion(users[0...99].sorted(by: { $0.point > $1.point }))
+                } else {
+                    completion(users.sorted(by: { $0.point > $1.point }))
+                }
             }
         }
     }
+    
+//    func fetchRanking(completion: @escaping([User]) -> Void) {
+//        var users = [User]()
+//
+//        REF_USER_POINT.observe(.childAdded) { snapshot in
+//            let uid = snapshot.key
+//
+//            self.fetchUser(uid: uid) { user in
+//                users.append(user)
+//                completion(users)
+//            }
+//        }
+//    }
     
     func fetchMyTypeRanking(myType: VegieType, completion: @escaping([User]) -> Void) {
         var users = [User]()
@@ -44,7 +62,13 @@ struct UserService {
             
             self.fetchUser(uid: uid) { user in
                 users.append(user)
-                completion(users)
+                
+                if users.count >= 50 {
+                    completion(users[0...49].sorted(by: { $0.point > $1.point }))
+                } else {
+                    completion(users.sorted(by: { $0.point > $1.point }))
+                }
+                
             }
         }
     }
