@@ -224,10 +224,10 @@ class PostingViewController: UIViewController {
         view.addSubview(collectionView)
         view.addSubview(captionTitle)
         view.addSubview(textView)
+        collectionView.addSubview(photoAddView)
         
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.addSubview(photoAddView)
         collectionView.showsHorizontalScrollIndicator = false
         
         photoAddView.anchor(top: collectionView.topAnchor, left: collectionView.leftAnchor)
@@ -297,8 +297,8 @@ extension PostingViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: 123, height: 123)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 6
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
