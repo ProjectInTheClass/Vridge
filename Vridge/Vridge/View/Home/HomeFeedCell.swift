@@ -48,7 +48,7 @@ class HomeFeedCell: UITableViewCell {
         cv.heightAnchor.constraint(equalTo: cv.widthAnchor).isActive = true
         layout.scrollDirection = .horizontal
         cv.isPagingEnabled = true
-        cv.layer.cornerRadius = 10
+//        cv.layer.cornerRadius = 10
         return cv
     }()
     
@@ -222,6 +222,7 @@ extension HomeFeedCell: UICollectionViewDataSource {
                                                       for: indexPath) as! FeedImageCell
         cell.backgroundColor = .clear
         cell.imageURL = posts?.images[indexPath.row]
+//        cell.feedImages.kf.setImage(with: URL(string: (posts?.images[indexPath.row])!))
         
         return cell
     }

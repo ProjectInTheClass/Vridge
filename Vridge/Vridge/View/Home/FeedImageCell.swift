@@ -17,8 +17,9 @@ class FeedImageCell: UICollectionViewCell {
     
     let feedImages: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
+        iv.layer.cornerRadius = 10
         return iv
     }()
     
@@ -30,7 +31,7 @@ class FeedImageCell: UICollectionViewCell {
         
         addSubview(feedImages)
         feedImages.addConstraintsToFillView(self)
-        prepareForReuse()
+//        prepareForReuse()
     }
     
     required init?(coder: NSCoder) {
@@ -43,10 +44,10 @@ class FeedImageCell: UICollectionViewCell {
     
     // MARK: - Helpers
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        feedImages.image = nil
-    }
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        feedImages.image = nil
+//    }
     
     func configure() {
         
