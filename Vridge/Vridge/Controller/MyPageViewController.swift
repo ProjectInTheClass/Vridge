@@ -23,7 +23,7 @@ class MyPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
         configureUI()
     }
     

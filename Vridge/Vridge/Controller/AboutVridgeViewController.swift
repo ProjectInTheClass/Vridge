@@ -92,3 +92,8 @@ extension AboutVridgeViewController: CustomNavBarDelegate {
     
 }
 
+extension AboutVridgeViewController : UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}

@@ -33,11 +33,10 @@ class EditProfileHeaderView: UIView {
     lazy var profileImage : UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "imgDefaultProfile")
-        
-        iv.setDimensions(width: 93, height: 93)
-        iv.layer.cornerRadius = 93 / 2
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
+        iv.setDimensions(width: 93, height: 93)
+        iv.layer.cornerRadius = 93 / 2
         let tap = UITapGestureRecognizer(target: self, action: #selector(editProfileImgButtonDidTap))
         iv.isUserInteractionEnabled = true
         iv.addGestureRecognizer(tap)
@@ -144,7 +143,7 @@ extension EditProfileHeaderView: UITextFieldDelegate {
         }
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
-        return count < 7
+        return count <= 7
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

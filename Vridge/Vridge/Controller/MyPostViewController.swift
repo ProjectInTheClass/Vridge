@@ -7,11 +7,20 @@
 
 import UIKit
 
+private let cellID = "Cell"
+
 class MyPostViewController: UIViewController {
 
     // MARK: - Properties
     
     let customNavBar = CustomNavBar()
+    
+    let collectionView : UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        
+        return cv
+    }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -19,7 +28,6 @@ class MyPostViewController: UIViewController {
         customNavBar.titleLabel.text = "내 게시글"
         configureUI()
         view.backgroundColor = .yellow
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,14 +47,40 @@ class MyPostViewController: UIViewController {
         
         customNavBar.delegate = self
         
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
-        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "btnBack")
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "btnBack")
+        navigationController?.navigationBar.backIndicatorImage = UIImage()
+        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
+        
+        collectionView.register(MyPostCell.self, forCellWithReuseIdentifier: cellID)
         
         view.addSubview(customNavBar)
+        view.addSubview(collectionView)
+        
         customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 44)
+        collectionView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
     }
 
+}
+
+extension MyPostViewController : UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MyPostCell
+        cell.backgroundColor = .red
+        return cell
+    }
+    
+    
+}
+
+extension MyPostViewController : UICollectionViewDelegate {
+    
 }
 
 extension MyPostViewController : CustomNavBarDelegate {
@@ -56,3 +90,10 @@ extension MyPostViewController : CustomNavBarDelegate {
     
     
 }
+
+extension MyPostViewController : UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+

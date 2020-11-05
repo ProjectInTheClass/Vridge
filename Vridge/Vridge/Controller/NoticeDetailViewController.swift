@@ -34,7 +34,7 @@ class NoticeDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureUI()
     }
     
@@ -143,4 +143,10 @@ extension NoticeDetailViewController: CustomNavBarDelegate {
         navigationController?.popViewController(animated: true) //뒤로 간다는 것
     }
     
+}
+
+extension NoticeDetailViewController : UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
 }

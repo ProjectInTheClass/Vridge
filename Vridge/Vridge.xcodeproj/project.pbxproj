@@ -72,7 +72,7 @@
 		BBBED5F02551493200ED95B1 /* EditProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5ED2551493200ED95B1 /* EditProfileHeaderView.swift */; };
 		BBBED5F12551493200ED95B1 /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5EE2551493200ED95B1 /* EditProfileCell.swift */; };
 		BBBED5F22551493200ED95B1 /* EditProfileFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5EF2551493200ED95B1 /* EditProfileFooterView.swift */; };
-		BBBED5F62553E97A00ED95B1 /* MyPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5F52553E97A00ED95B1 /* MyPostCell.swift */; };
+		BBBED5FD25543E8700ED95B1 /* MyPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5FC25543E8700ED95B1 /* MyPostCell.swift */; };
 		BBC7CA002546EC040004513F /* Constants_ruhee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7C9FF2546EC040004513F /* Constants_ruhee.swift */; };
 		C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33ACCF0421075477663B637 /* Pods_Vridge.framework */; };
 /* End PBXBuildFile section */
@@ -149,7 +149,7 @@
 		BBBED5ED2551493200ED95B1 /* EditProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileHeaderView.swift; sourceTree = "<group>"; };
 		BBBED5EE2551493200ED95B1 /* EditProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
 		BBBED5EF2551493200ED95B1 /* EditProfileFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileFooterView.swift; sourceTree = "<group>"; };
-		BBBED5F52553E97A00ED95B1 /* MyPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostCell.swift; sourceTree = "<group>"; };
+		BBBED5FC25543E8700ED95B1 /* MyPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostCell.swift; sourceTree = "<group>"; };
 		BBC7C9FF2546EC040004513F /* Constants_ruhee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants_ruhee.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -360,7 +360,7 @@
 				BBBED5E52551490200ED95B1 /* FirstSectionHeader.swift */,
 				BBBED5E42551490200ED95B1 /* SecondSectionHeader.swift */,
 				BBBED5DD255148E200ED95B1 /* CustomNavBar.swift */,
-				BBBED5F52553E97A00ED95B1 /* MyPostCell.swift */,
+				BBBED5FC25543E8700ED95B1 /* MyPostCell.swift */,
 				BBBED5DC255148E200ED95B1 /* NoticeCell.swift */,
 				BBBED5DB255148E200ED95B1 /* NoticeDetailCell.swift */,
 				BBBED5EA2551491C00ED95B1 /* NoticeDetailHeader.swift */,
@@ -503,7 +503,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBBED5F62553E97A00ED95B1 /* MyPostCell.swift in Sources */,
+				BBBED5FD25543E8700ED95B1 /* MyPostCell.swift in Sources */,
 				BBBED5C82551485100ED95B1 /* MyPostViewController.swift in Sources */,
 				3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */,
 				3D8B13512530BCC70022AE88 /* RankingSecondView.swift in Sources */,
