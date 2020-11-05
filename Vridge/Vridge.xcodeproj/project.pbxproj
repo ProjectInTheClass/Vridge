@@ -48,6 +48,8 @@
 		3D9240E3254AA94300F92C9D /* upload_post.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D9240E2254AA94300F92C9D /* upload_post.json */; };
 		3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */; };
 		3D9914D12536C12200E17AF5 /* PostingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914D02536C12100E17AF5 /* PostingViewModel.swift */; };
+		3D9F554725544A29003C84AD /* FeedDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9F554625544A29003C84AD /* FeedDetailViewController.swift */; };
+		3D9F554A25545454003C84AD /* FeedDetailCustomTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9F554925545454003C84AD /* FeedDetailCustomTopView.swift */; };
 		3DB09D7B254BD97D00062E49 /* PhotoAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB09D7A254BD97D00062E49 /* PhotoAddView.swift */; };
 		3DB09D81254C66AB00062E49 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DB09D80254C66AB00062E49 /* GoogleService-Info.plist */; };
 		3DE6236A252B2925005F16A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62369252B2925005F16A9 /* Constants.swift */; };
@@ -121,6 +123,8 @@
 		3D9240E2254AA94300F92C9D /* upload_post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = upload_post.json; sourceTree = "<group>"; };
 		3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
 		3D9914D02536C12100E17AF5 /* PostingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingViewModel.swift; sourceTree = "<group>"; };
+		3D9F554625544A29003C84AD /* FeedDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
+		3D9F554925545454003C84AD /* FeedDetailCustomTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailCustomTopView.swift; sourceTree = "<group>"; };
 		3DB09D7A254BD97D00062E49 /* PhotoAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAddView.swift; sourceTree = "<group>"; };
 		3DB09D80254C66AB00062E49 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3DE62369252B2925005F16A9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -275,6 +279,7 @@
 				3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */,
 				3DB09D7A254BD97D00062E49 /* PhotoAddView.swift */,
 				3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */,
+				3D9F554925545454003C84AD /* FeedDetailCustomTopView.swift */,
 				BBBED5D6255148C300ED95B1 /* MyPage */,
 			);
 			path = View;
@@ -296,6 +301,7 @@
 				3DE62373252C17F1005F16A9 /* Authentication */,
 				3D1FA4882526F51900C6388A /* MainTabBarController.swift */,
 				3D1FA4762526F30100C6388A /* HomeViewController.swift */,
+				3D9F554625544A29003C84AD /* FeedDetailViewController.swift */,
 				3D7F9D2A2529BB09006E23F4 /* PostingViewController.swift */,
 				3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */,
 				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
@@ -550,7 +556,9 @@
 				3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */,
 				BBBED5D12551487500ED95B1 /* AboutVridgeViewController.swift in Sources */,
 				BBBED5F22551493200ED95B1 /* EditProfileFooterView.swift in Sources */,
+				3D9F554725544A29003C84AD /* FeedDetailViewController.swift in Sources */,
 				BBBED5DF255148E200ED95B1 /* NoticeDetailCell.swift in Sources */,
+				3D9F554A25545454003C84AD /* FeedDetailCustomTopView.swift in Sources */,
 				3D1D8809253ACAE6005A0FE9 /* VegieType.swift in Sources */,
 				BBC7CA002546EC040004513F /* Constants_ruhee.swift in Sources */,
 				3D8B134E2530BCC20022AE88 /* RankingCustomTopView.swift in Sources */,

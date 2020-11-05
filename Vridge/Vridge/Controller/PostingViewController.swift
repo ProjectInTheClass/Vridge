@@ -204,9 +204,9 @@ class PostingViewController: UIViewController {
     }
     
     func configureUI() {
-        view.backgroundColor = UIColor(named: viewBgColor)
+        view.backgroundColor = UIColor(named: viewBackgroundColor)
         navigationItem.titleView = titleLabel
-        navigationController?.navigationBar.barTintColor = UIColor(named: headerBgColor)?.withAlphaComponent(1)
+        navigationController?.navigationBar.barTintColor = UIColor(named: headerBackgroundColor)?.withAlphaComponent(1)
         
         textView.delegate = self
         

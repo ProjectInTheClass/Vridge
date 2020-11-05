@@ -12,6 +12,7 @@ import Kingfisher
 protocol HomeFeedCellDelegate: class {
     func currentUserAmendTapped(sender: Post, row: Int)
     func reportButtonTapped(sender: Post, row: Int)
+    func cellTapped()
 }
 
 private let feedCell = "FeedCell"
@@ -41,14 +42,17 @@ class HomeFeedCell: UITableViewCell {
         return iv
     }()
     
-    let collectionView: UICollectionView = {
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.heightAnchor.constraint(equalTo: cv.widthAnchor).isActive = true
         layout.scrollDirection = .horizontal
         cv.isPagingEnabled = true
-//        cv.layer.cornerRadius = 10
+        cv.isUserInteractionEnabled = true
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleCellTapped))
+        cv.isUserInteractionEnabled = true
+        cv.addGestureRecognizer(recognizer)
         return cv
     }()
     
@@ -104,7 +108,9 @@ class HomeFeedCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = UIColor(named: "color_all_viewBackground")
+        contentView.isUserInteractionEnabled = false
+        
+        backgroundColor = UIColor(named: viewBackgroundColor)
         
         NotificationCenter.default.addObserver(self, selector: #selector(cellToFirst),
                                                name: Notification.Name("cellToFirst"), object: nil)
@@ -154,6 +160,10 @@ class HomeFeedCell: UITableViewCell {
     
     // MARK: - Selectors
     
+    @objc func handleCellTapped() {
+        delegate?.cellTapped()
+    }
+    
     @objc func cellToFirst() {
         // e.g 맨 위에 있던 포스트의 '두 번째' 사진을 보고있다가 그 상태에서 새로운 포스트로 사진을 '두 장이상' 올리면
         // 새로운 포스트의 '두 번째'로 스크롤이 이미 이동해있는 것을 방지하기 위해 첫 번 째 셀로 이동시키는 코드.
@@ -182,6 +192,7 @@ class HomeFeedCell: UITableViewCell {
     // MARK: - Helpers
     
     func configure() {
+        
         guard let posts = posts else { return }
         
         let numberOfPages = posts.images.count
@@ -196,7 +207,7 @@ class HomeFeedCell: UITableViewCell {
         profileImageView.kf.setImage(with: posts.user.profileImageURL)
         var timestamp: String {
             let formatter = DateComponentsFormatter()
-            formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfMonth]
+            formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfYear]
             formatter.maximumUnitCount = 1
             formatter.unitsStyle = .abbreviated
             formatter.calendar?.locale = Locale(identifier: "ko_KR")
