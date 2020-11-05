@@ -20,6 +20,7 @@ class AboutVridgeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         customNavBar.titleLabel.text = "브릿지란?"
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         configureUI()
     }
     
@@ -93,7 +94,8 @@ extension AboutVridgeViewController: CustomNavBarDelegate {
 }
 
 extension AboutVridgeViewController : UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }
+
