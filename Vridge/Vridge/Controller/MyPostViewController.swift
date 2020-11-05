@@ -26,6 +26,7 @@ class MyPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         customNavBar.titleLabel.text = "내 게시글"
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         configureUI()
         view.backgroundColor = .yellow
     }
@@ -92,8 +93,7 @@ extension MyPostViewController : CustomNavBarDelegate {
 }
 
 extension MyPostViewController : UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }
-
