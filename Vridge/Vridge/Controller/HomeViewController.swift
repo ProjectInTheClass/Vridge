@@ -78,6 +78,8 @@ class HomeViewController: UIViewController {
         return av
     }()
     
+    var viewModel = ActionSheetViewModel()
+    
     
     // MARK: - Lifecycle
     
@@ -190,7 +192,6 @@ class HomeViewController: UIViewController {
     @objc func handleShowRanking() {
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
         
-        navigationItem.title = ""
         let controller = RankingViewController(user: user)
         navigationController?.pushViewController(controller, animated: true)
     }
@@ -199,13 +200,18 @@ class HomeViewController: UIViewController {
     // MARK: - Helpers
     
     func configureUI() {
+        
+        navigationItem.title = ""
+        
         let logoImage = UIBarButtonItem(customView: vridgeLogo)
         let logoText = UIBarButtonItem(customView: vridgeText)
         navigationItem.leftBarButtonItems = [logoImage, logoText]
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rankButton)
         
-        navigationController?.navigationBar.barTintColor = UIColor(named: headerBgColor)?.withAlphaComponent(1)
+        navigationController?.navigationBar.barTintColor = UIColor(named: headerBackgroundColor)?.withAlphaComponent(1)
+        
+        viewModel.delegate = self
         
         //hide navigationBar borderLine
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -229,7 +235,18 @@ class HomeViewController: UIViewController {
         alert.addAction(okButton)
         present(alert, animated: true, completion: nil)
     }
+    
 }
+
+// MARK: - UITableViewDataSourcePrefetching
+
+//extension HomeViewController: UITableViewDataSourcePrefetching {
+//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+//
+//    }
+//
+//
+//}
 
 
 // MARK: - UITableViewDataSource
@@ -246,12 +263,12 @@ extension HomeViewController: UITableViewDataSource {
         cell.delegate = self
         cell.posts = posts[indexPath.row]
         cell.row = indexPath.row
+        cell.selectionStyle = .none
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        guard let user = user else { return nil }
         
         if user == nil {
             let header = HomeHeaderView(frame: .zero, user: nil, point: user?.point ?? 0)
@@ -262,10 +279,6 @@ extension HomeViewController: UITableViewDataSource {
             header.backgroundColor = UIColor(named: "color_all_viewBackground")
             return header
         }
-        
-        
-        
-//        return header
     }
     
 }
@@ -297,10 +310,6 @@ extension HomeViewController: UITableViewDelegate {
         return tableView.estimatedRowHeight
     }
     
-    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
         if  indexPath.row == lastRowIndex {
@@ -313,20 +322,27 @@ extension HomeViewController: UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = FeedDetailViewController(post: posts[indexPath.row])
+        navigationController?.pushViewController(controller, animated: true)
+        print("DEBUG: cell tapped ! ")
+    }
+    
 }
 
 extension HomeViewController: HomeFeedCellDelegate {
     
     func currentUserAmendTapped(sender: Post, row: Int) {
-        var viewModel = ActionSheetViewModel()
-        viewModel.delegate = self
         present(viewModel.amendActionSheet(self, row: row, post: sender), animated: true)
     }
     
     func reportButtonTapped(sender: Post, row: Int) {
-        let viewModel = ActionSheetViewModel()
         present(viewModel.reportActionSheet(self, post: sender), animated: true, completion: nil)
         
+    }
+    
+    func cellTapped() {
+//        showFeedDetail()
     }
     
 }
