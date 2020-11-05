@@ -55,8 +55,24 @@
 		3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62374252C180D005F16A9 /* LoginViewController.swift */; };
 		3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DE62379252C1FAB005F16A9 /* LoginStoryboard.storyboard */; };
 		3DE62385252C4B79005F16A9 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62384252C4B79005F16A9 /* UserService.swift */; };
-		BB4E0E9B252F768D00442B83 /* MyPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4E0E9A252F768C00442B83 /* MyPostViewController.swift */; };
-		BBC7C9FD2546E53D0004513F /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7C9FC2546E53D0004513F /* NoticeViewController.swift */; };
+		BBBED5C82551485100ED95B1 /* MyPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5C72551485100ED95B1 /* MyPostViewController.swift */; };
+		BBBED5CB2551486000ED95B1 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5CA2551485F00ED95B1 /* NoticeViewController.swift */; };
+		BBBED5CE2551486B00ED95B1 /* NoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5CD2551486B00ED95B1 /* NoticeDetailViewController.swift */; };
+		BBBED5D12551487500ED95B1 /* AboutVridgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5D02551487500ED95B1 /* AboutVridgeViewController.swift */; };
+		BBBED5D42551487A00ED95B1 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5D32551487A00ED95B1 /* EditProfileViewController.swift */; };
+		BBBED5D8255148D900ED95B1 /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5D7255148D900ED95B1 /* MenuCell.swift */; };
+		BBBED5DE255148E200ED95B1 /* AboutVridgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5DA255148E100ED95B1 /* AboutVridgeCell.swift */; };
+		BBBED5DF255148E200ED95B1 /* NoticeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5DB255148E200ED95B1 /* NoticeDetailCell.swift */; };
+		BBBED5E0255148E200ED95B1 /* NoticeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5DC255148E200ED95B1 /* NoticeCell.swift */; };
+		BBBED5E1255148E200ED95B1 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5DD255148E200ED95B1 /* CustomNavBar.swift */; };
+		BBBED5E62551490200ED95B1 /* TopHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5E32551490200ED95B1 /* TopHeaderView.swift */; };
+		BBBED5E72551490200ED95B1 /* SecondSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5E42551490200ED95B1 /* SecondSectionHeader.swift */; };
+		BBBED5E82551490200ED95B1 /* FirstSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5E52551490200ED95B1 /* FirstSectionHeader.swift */; };
+		BBBED5EB2551491C00ED95B1 /* NoticeDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5EA2551491C00ED95B1 /* NoticeDetailHeader.swift */; };
+		BBBED5F02551493200ED95B1 /* EditProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5ED2551493200ED95B1 /* EditProfileHeaderView.swift */; };
+		BBBED5F12551493200ED95B1 /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5EE2551493200ED95B1 /* EditProfileCell.swift */; };
+		BBBED5F22551493200ED95B1 /* EditProfileFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5EF2551493200ED95B1 /* EditProfileFooterView.swift */; };
+		BBBED5F62553E97A00ED95B1 /* MyPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5F52553E97A00ED95B1 /* MyPostCell.swift */; };
 		BBC7CA002546EC040004513F /* Constants_ruhee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7C9FF2546EC040004513F /* Constants_ruhee.swift */; };
 		C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33ACCF0421075477663B637 /* Pods_Vridge.framework */; };
 /* End PBXBuildFile section */
@@ -116,8 +132,24 @@
 		4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.debug.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.debug.xcconfig"; sourceTree = "<group>"; };
 		72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.release.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.release.xcconfig"; sourceTree = "<group>"; };
 		A33ACCF0421075477663B637 /* Pods_Vridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB4E0E9A252F768C00442B83 /* MyPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostViewController.swift; sourceTree = "<group>"; };
-		BBC7C9FC2546E53D0004513F /* NoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
+		BBBED5C72551485100ED95B1 /* MyPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPostViewController.swift; sourceTree = "<group>"; };
+		BBBED5CA2551485F00ED95B1 /* NoticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeViewController.swift; sourceTree = "<group>"; };
+		BBBED5CD2551486B00ED95B1 /* NoticeDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDetailViewController.swift; sourceTree = "<group>"; };
+		BBBED5D02551487500ED95B1 /* AboutVridgeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVridgeViewController.swift; sourceTree = "<group>"; };
+		BBBED5D32551487A00ED95B1 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		BBBED5D7255148D900ED95B1 /* MenuCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
+		BBBED5DA255148E100ED95B1 /* AboutVridgeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutVridgeCell.swift; sourceTree = "<group>"; };
+		BBBED5DB255148E200ED95B1 /* NoticeDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDetailCell.swift; sourceTree = "<group>"; };
+		BBBED5DC255148E200ED95B1 /* NoticeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeCell.swift; sourceTree = "<group>"; };
+		BBBED5DD255148E200ED95B1 /* CustomNavBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
+		BBBED5E32551490200ED95B1 /* TopHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopHeaderView.swift; sourceTree = "<group>"; };
+		BBBED5E42551490200ED95B1 /* SecondSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondSectionHeader.swift; sourceTree = "<group>"; };
+		BBBED5E52551490200ED95B1 /* FirstSectionHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstSectionHeader.swift; sourceTree = "<group>"; };
+		BBBED5EA2551491C00ED95B1 /* NoticeDetailHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeDetailHeader.swift; sourceTree = "<group>"; };
+		BBBED5ED2551493200ED95B1 /* EditProfileHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileHeaderView.swift; sourceTree = "<group>"; };
+		BBBED5EE2551493200ED95B1 /* EditProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
+		BBBED5EF2551493200ED95B1 /* EditProfileFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileFooterView.swift; sourceTree = "<group>"; };
+		BBBED5F52553E97A00ED95B1 /* MyPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostCell.swift; sourceTree = "<group>"; };
 		BBC7C9FF2546EC040004513F /* Constants_ruhee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants_ruhee.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -243,6 +275,7 @@
 				3D7F9D3B2529E388006E23F4 /* CaptionTextView.swift */,
 				3DB09D7A254BD97D00062E49 /* PhotoAddView.swift */,
 				3D7F9D422529F114006E23F4 /* PostPhotoCell.swift */,
+				BBBED5D6255148C300ED95B1 /* MyPage */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -264,10 +297,13 @@
 				3D1FA4882526F51900C6388A /* MainTabBarController.swift */,
 				3D1FA4762526F30100C6388A /* HomeViewController.swift */,
 				3D7F9D2A2529BB09006E23F4 /* PostingViewController.swift */,
-				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
-				BB4E0E9A252F768C00442B83 /* MyPostViewController.swift */,
 				3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */,
-				BBC7C9FC2546E53D0004513F /* NoticeViewController.swift */,
+				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
+				BBBED5C72551485100ED95B1 /* MyPostViewController.swift */,
+				BBBED5CA2551485F00ED95B1 /* NoticeViewController.swift */,
+				BBBED5CD2551486B00ED95B1 /* NoticeDetailViewController.swift */,
+				BBBED5D02551487500ED95B1 /* AboutVridgeViewController.swift */,
+				BBBED5D32551487A00ED95B1 /* EditProfileViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -314,6 +350,26 @@
 				3D1D880F253AD16D005A0FE9 /* TestCell.swift */,
 			);
 			path = Authentication;
+			sourceTree = "<group>";
+		};
+		BBBED5D6255148C300ED95B1 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				BBBED5D7255148D900ED95B1 /* MenuCell.swift */,
+				BBBED5E32551490200ED95B1 /* TopHeaderView.swift */,
+				BBBED5E52551490200ED95B1 /* FirstSectionHeader.swift */,
+				BBBED5E42551490200ED95B1 /* SecondSectionHeader.swift */,
+				BBBED5DD255148E200ED95B1 /* CustomNavBar.swift */,
+				BBBED5F52553E97A00ED95B1 /* MyPostCell.swift */,
+				BBBED5DC255148E200ED95B1 /* NoticeCell.swift */,
+				BBBED5DB255148E200ED95B1 /* NoticeDetailCell.swift */,
+				BBBED5EA2551491C00ED95B1 /* NoticeDetailHeader.swift */,
+				BBBED5DA255148E100ED95B1 /* AboutVridgeCell.swift */,
+				BBBED5ED2551493200ED95B1 /* EditProfileHeaderView.swift */,
+				BBBED5EE2551493200ED95B1 /* EditProfileCell.swift */,
+				BBBED5EF2551493200ED95B1 /* EditProfileFooterView.swift */,
+			);
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 		EA8C7E823BE70EFB34DB1300 /* Frameworks */ = {
@@ -447,25 +503,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBBED5F62553E97A00ED95B1 /* MyPostCell.swift in Sources */,
+				BBBED5C82551485100ED95B1 /* MyPostViewController.swift in Sources */,
 				3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */,
 				3D8B13512530BCC70022AE88 /* RankingSecondView.swift in Sources */,
 				3DE6236A252B2925005F16A9 /* Constants.swift in Sources */,
 				3D7F9D2B2529BB09006E23F4 /* PostingViewController.swift in Sources */,
+				BBBED5E62551490200ED95B1 /* TopHeaderView.swift in Sources */,
 				3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */,
 				3D7F9D3F2529EA86006E23F4 /* ImagePicker.swift in Sources */,
-				BB4E0E9B252F768D00442B83 /* MyPostViewController.swift in Sources */,
+				BBBED5CB2551486000ED95B1 /* NoticeViewController.swift in Sources */,
 				3D15EE3225381C6900402476 /* SelectTypeViewController.swift in Sources */,
 				3D1D8807253ACAE6005A0FE9 /* User.swift in Sources */,
 				3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */,
+				BBBED5E1255148E200ED95B1 /* CustomNavBar.swift in Sources */,
 				3D8B135A2530BCDD0022AE88 /* RankingCell.swift in Sources */,
 				3DB09D7B254BD97D00062E49 /* PhotoAddView.swift in Sources */,
 				3D8B13482530BCA00022AE88 /* HomeFeedCell.swift in Sources */,
+				BBBED5EB2551491C00ED95B1 /* NoticeDetailHeader.swift in Sources */,
+				BBBED5CE2551486B00ED95B1 /* NoticeDetailViewController.swift in Sources */,
+				BBBED5F12551493200ED95B1 /* EditProfileCell.swift in Sources */,
 				3D1FA4892526F51900C6388A /* MainTabBarController.swift in Sources */,
 				3D1D880D253AD0B1005A0FE9 /* TestViewController.swift in Sources */,
 				3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */,
+				BBBED5F02551493200ED95B1 /* EditProfileHeaderView.swift in Sources */,
 				3D9914D12536C12200E17AF5 /* PostingViewModel.swift in Sources */,
+				BBBED5E72551490200ED95B1 /* SecondSectionHeader.swift in Sources */,
 				3D8B134B2530BCB80022AE88 /* FeedImageCell.swift in Sources */,
+				BBBED5D42551487A00ED95B1 /* EditProfileViewController.swift in Sources */,
 				3DE6236E252B298F005F16A9 /* PostService.swift in Sources */,
+				BBBED5E82551490200ED95B1 /* FirstSectionHeader.swift in Sources */,
+				BBBED5D8255148D900ED95B1 /* MenuCell.swift in Sources */,
 				3D8B13602530BCFD0022AE88 /* RankingViewModel.swift in Sources */,
 				3D7F9D432529F114006E23F4 /* PostPhotoCell.swift in Sources */,
 				3D8B135D2530BCEE0022AE88 /* RankingViewController.swift in Sources */,
@@ -473,17 +541,21 @@
 				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
 				3D03BE9E2544238C0080C3A6 /* TypeTestCell.swift in Sources */,
 				3D8B13452530BC990022AE88 /* HomeHeaderView.swift in Sources */,
-				BBC7C9FD2546E53D0004513F /* NoticeViewController.swift in Sources */,
 				3D8B13542530BCCD0022AE88 /* RankingSecondViewCell.swift in Sources */,
 				3D1D882E253C9211005A0FE9 /* Type.swift in Sources */,
+				BBBED5DE255148E200ED95B1 /* AboutVridgeCell.swift in Sources */,
 				3D8B13572530BCD60022AE88 /* RankingHeader.swift in Sources */,
 				3DE62385252C4B79005F16A9 /* UserService.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,
 				3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */,
+				BBBED5D12551487500ED95B1 /* AboutVridgeViewController.swift in Sources */,
+				BBBED5F22551493200ED95B1 /* EditProfileFooterView.swift in Sources */,
+				BBBED5DF255148E200ED95B1 /* NoticeDetailCell.swift in Sources */,
 				3D1D8809253ACAE6005A0FE9 /* VegieType.swift in Sources */,
 				BBC7CA002546EC040004513F /* Constants_ruhee.swift in Sources */,
 				3D8B134E2530BCC20022AE88 /* RankingCustomTopView.swift in Sources */,
 				3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */,
+				BBBED5E0255148E200ED95B1 /* NoticeCell.swift in Sources */,
 				3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */,
 				3D1D8810253AD16D005A0FE9 /* TestCell.swift in Sources */,
 			);
