@@ -75,6 +75,8 @@
 		BBBED5F12551493200ED95B1 /* EditProfileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5EE2551493200ED95B1 /* EditProfileCell.swift */; };
 		BBBED5F22551493200ED95B1 /* EditProfileFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5EF2551493200ED95B1 /* EditProfileFooterView.swift */; };
 		BBBED5FD25543E8700ED95B1 /* MyPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5FC25543E8700ED95B1 /* MyPostCell.swift */; };
+		BBBED6092554746A00ED95B1 /* MyPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED6082554746A00ED95B1 /* MyPostDetailViewController.swift */; };
+		BBBED60C2554761A00ED95B1 /* MyPostDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED60B2554761A00ED95B1 /* MyPostDetailCell.swift */; };
 		BBC7CA002546EC040004513F /* Constants_ruhee.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBC7C9FF2546EC040004513F /* Constants_ruhee.swift */; };
 		C840F2487B2C26784737D5A1 /* Pods_Vridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33ACCF0421075477663B637 /* Pods_Vridge.framework */; };
 /* End PBXBuildFile section */
@@ -154,6 +156,8 @@
 		BBBED5EE2551493200ED95B1 /* EditProfileCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileCell.swift; sourceTree = "<group>"; };
 		BBBED5EF2551493200ED95B1 /* EditProfileFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileFooterView.swift; sourceTree = "<group>"; };
 		BBBED5FC25543E8700ED95B1 /* MyPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostCell.swift; sourceTree = "<group>"; };
+		BBBED6082554746A00ED95B1 /* MyPostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostDetailViewController.swift; sourceTree = "<group>"; };
+		BBBED60B2554761A00ED95B1 /* MyPostDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostDetailCell.swift; sourceTree = "<group>"; };
 		BBC7C9FF2546EC040004513F /* Constants_ruhee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants_ruhee.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -306,6 +310,7 @@
 				3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */,
 				3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */,
 				BBBED5C72551485100ED95B1 /* MyPostViewController.swift */,
+				BBBED6082554746A00ED95B1 /* MyPostDetailViewController.swift */,
 				BBBED5CA2551485F00ED95B1 /* NoticeViewController.swift */,
 				BBBED5CD2551486B00ED95B1 /* NoticeDetailViewController.swift */,
 				BBBED5D02551487500ED95B1 /* AboutVridgeViewController.swift */,
@@ -367,6 +372,7 @@
 				BBBED5E42551490200ED95B1 /* SecondSectionHeader.swift */,
 				BBBED5DD255148E200ED95B1 /* CustomNavBar.swift */,
 				BBBED5FC25543E8700ED95B1 /* MyPostCell.swift */,
+				BBBED60B2554761A00ED95B1 /* MyPostDetailCell.swift */,
 				BBBED5DC255148E200ED95B1 /* NoticeCell.swift */,
 				BBBED5DB255148E200ED95B1 /* NoticeDetailCell.swift */,
 				BBBED5EA2551491C00ED95B1 /* NoticeDetailHeader.swift */,
@@ -530,11 +536,13 @@
 				BBBED5CE2551486B00ED95B1 /* NoticeDetailViewController.swift in Sources */,
 				BBBED5F12551493200ED95B1 /* EditProfileCell.swift in Sources */,
 				3D1FA4892526F51900C6388A /* MainTabBarController.swift in Sources */,
+				BBBED60C2554761A00ED95B1 /* MyPostDetailCell.swift in Sources */,
 				3D1D880D253AD0B1005A0FE9 /* TestViewController.swift in Sources */,
 				3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */,
 				BBBED5F02551493200ED95B1 /* EditProfileHeaderView.swift in Sources */,
 				3D9914D12536C12200E17AF5 /* PostingViewModel.swift in Sources */,
 				BBBED5E72551490200ED95B1 /* SecondSectionHeader.swift in Sources */,
+				BBBED6092554746A00ED95B1 /* MyPostDetailViewController.swift in Sources */,
 				3D8B134B2530BCB80022AE88 /* FeedImageCell.swift in Sources */,
 				BBBED5D42551487A00ED95B1 /* EditProfileViewController.swift in Sources */,
 				3DE6236E252B298F005F16A9 /* PostService.swift in Sources */,

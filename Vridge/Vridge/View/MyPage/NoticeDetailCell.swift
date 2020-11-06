@@ -52,7 +52,7 @@ class NoticeDetailCell: UITableViewCell {
         noticeDetailTitle.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)
         noticeDetailDate.anchor(top: noticeDetailTitle.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, paddingTop: 10, paddingLeft: 20, paddingBottom: 20)
 //        lineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
-        noticeDetailContent.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingRight: 20)
+        noticeDetailContent.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 20, paddingRight: 20)
 
     }
     
