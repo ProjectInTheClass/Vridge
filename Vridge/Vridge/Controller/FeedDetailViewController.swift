@@ -11,14 +11,6 @@ private let feedCell = "FeedCell"
 
 class FeedDetailViewController: UIViewController {
     
-    
-    
-    // 테이블뷰 안에 넣어서 cell의 height를 dynamic으로 만들기. //
-    
-    
-    
-    
-    
     // MARK: - Properties
     
     var post: Post {

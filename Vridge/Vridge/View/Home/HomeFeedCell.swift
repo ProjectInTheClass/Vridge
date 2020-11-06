@@ -8,6 +8,7 @@
 import UIKit
 
 import Kingfisher
+import Firebase
 
 protocol HomeFeedCellDelegate: class {
     func currentUserAmendTapped(sender: Post, row: Int)
@@ -177,11 +178,17 @@ class HomeFeedCell: UITableViewCell {
         guard let posts = posts else { return }
         guard let row = row else { return }
         
-        if posts.user.isCurrentUser {
-            delegate?.currentUserAmendTapped(sender: posts, row: row)
+        if Auth.auth().currentUser == nil {
+            print("DEBUG: no user")
         } else {
-            delegate?.reportButtonTapped(sender: posts, row: row)
+            if posts.user.isCurrentUser {
+                delegate?.currentUserAmendTapped(sender: posts, row: row)
+            } else {
+                delegate?.reportButtonTapped(sender: posts, row: row)
+            }
         }
+        
+        
     }
     
     @objc func handleImageTapped() {
