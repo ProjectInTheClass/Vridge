@@ -46,7 +46,7 @@ class NoticeCell: UITableViewCell {
         
         noticeListTitle.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
                                paddingTop: 20, paddingLeft: 20, paddingRight: 63)
-        noticeListDate.anchor(top: noticeListTitle.bottomAnchor, left: leftAnchor, paddingTop: 5, paddingLeft: 20)
+        noticeListDate.anchor(top: noticeListTitle.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, paddingTop: 5, paddingLeft: 20, paddingBottom: 20)
         lineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
     }

@@ -28,7 +28,7 @@ class NoticeDetailViewController: UIViewController {
     let customNavBar = CustomNavBar()
     
     var notice: [noticeContent] = [
-        noticeContent(title: "채식 인증 챌린지 서비스 Vridge 런칭! 제목이 두~~줄이면 이렇게 레이아웃이 잡힙니다.", date: "2020.11.30", content: "안녕하세요. Team Vridge입니다. \n채식 입문자들을 위한 채식 인증 챌린지 서비스Vridge가 드디어 세상에 나오게 되었습니다! \n \n어떻게 하면 채식 입문자들이 쉽게 채식을 지속할 수 있을까? 라는 생각을 바탕으로 많은 고민과 노력 끝에 나온 저희의 자식같은 서비스입니다. \n많은 사용과 관심 부탁드립니다 :) \n감사합니다💚" )]
+        noticeContent(title: "[공지] 채식 인증 챌린지 서비스 Vridge 런칭!", date: "2020.11.30", content: "안녕하세요. Team Vridge입니다. \n채식 입문자들을 위한 채식 인증 챌린지 서비스Vridge가 드디어 세상에 나오게 되었습니다! \n \n어떻게 하면 채식 입문자들이 쉽게 채식을 지속할 수 있을까? 라는 생각을 바탕으로 많은 고민과 노력 끝에 나온 저희의 자식같은 서비스입니다. \n많은 사용과 관심 부탁드립니다 :) \n감사합니다💚" )]
     
     // MARK: - Lifecycle
     
@@ -50,7 +50,6 @@ class NoticeDetailViewController: UIViewController {
     func configureUI() {
         
         view.backgroundColor = UIColor(named: "color_all_viewBackground")
-        customNavBar.delegate = self
         
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "back5")
@@ -59,14 +58,20 @@ class NoticeDetailViewController: UIViewController {
         
         view.addSubview(tableView)
         view.addSubview(customNavBar)
+        
         tableView.delegate = self
         tableView.dataSource = self
+        customNavBar.delegate = self
         
         tableView.register(NoticeDetailCell.self, forCellReuseIdentifier: cellID)
         
         tableView.allowsSelection = false
         tableView.separatorStyle = .none
-        tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
+        
+        tableView.estimatedRowHeight = 80
+        tableView.rowHeight = UITableView.automaticDimension
+        
+        tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 44)
         
     }
@@ -92,6 +97,7 @@ extension NoticeDetailViewController: UITableViewDataSource {
             
         } else {
             cell.noticeDetailContent.text = contents.content
+            
         }
         return cell
     }
@@ -112,22 +118,21 @@ extension NoticeDetailViewController: UITableViewDataSource {
 
 extension NoticeDetailViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0{
-            let contents = notice[indexPath.row]
-            if contents.title.count >= 30 {
-                return 107
-            } else {
-                return 85
-            }
-        } else if indexPath.section == 1 {
-            return 689
-        } else {
-            return 0
-        }
-        
-        
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if indexPath.section == 0{
+//            let contents = notice[indexPath.row]
+//            if contents.title.count >= 30 {
+//                return 107
+//            } else {
+//                return 85
+//            }
+//        } else if indexPath.section == 1 {
+//            return 689
+//        } else {
+//            return 0
+//        }
+//
+//    }  동적 셀 높이 줘서 여기도 주석 처리함
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         switch section {

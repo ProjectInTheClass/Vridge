@@ -18,9 +18,11 @@ class MyPostViewController: UIViewController {
     let collectionView : UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        
         return cv
     }()
+    
+    let images = [UIImage(named: "imgLacto")]
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -28,7 +30,6 @@ class MyPostViewController: UIViewController {
         customNavBar.titleLabel.text = "내 게시글"
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         configureUI()
-        view.backgroundColor = .yellow
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,20 +69,49 @@ class MyPostViewController: UIViewController {
 
 extension MyPostViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 20
+        // images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MyPostCell
         cell.backgroundColor = .red
+//        cell.myPostImage.image = images[indexPath.row]
         return cell
+        
     }
     
     
 }
 
 extension MyPostViewController : UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        let controller = MyPostDetailViewController()
+        navigationController?.pushViewController(controller, animated: true)
+    }
     
+
+}
+
+extension MyPostViewController : UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        // 셀 사이즈
+        let width = ((collectionView.frame.width / 3) - 2)
+        let height = ((collectionView.frame.width / 3) - 2)
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        // 셀들의 위아래 간격
+        return 3
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        // 셀들의 양 옆 간격
+        return 3
+    }
 }
 
 extension MyPostViewController : CustomNavBarDelegate {
@@ -94,6 +124,6 @@ extension MyPostViewController : CustomNavBarDelegate {
 
 extension MyPostViewController : UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
+        return true // 스와이핑으로 뒤로 가기
     }
 }

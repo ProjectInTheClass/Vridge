@@ -27,9 +27,8 @@ class NoticeViewController: UIViewController {
     let customNavBar = CustomNavBar()
     
     var list: [noticeList] = [
-        noticeList(title: "[공지] 채식 인증 서비스 Vridge 런칭!", date: "2020.11.30"),
-        noticeList(title: "채식 인증 챌린지 서비스 Vridge 런칭! 제목이 두~~줄이면 이렇게 레이아웃이 잡힙니다.", date: "2020.11.30")
-    ].reduce([],{ [$1] + $0 })
+        noticeList(title: "[공지] 채식 인증 챌린지 서비스 Vridge 런칭!",
+                   date: "2020.11.30")].reduce([],{ [$1] + $0 })
   
     
     //MARK: - Lifecycle
@@ -77,6 +76,9 @@ class NoticeViewController: UIViewController {
         
         tableView.register(NoticeCell.self, forCellReuseIdentifier: cellID)
         
+        tableView.estimatedRowHeight = 80 // 어림잡은 셀의 높이 설정
+        tableView.rowHeight = UITableView.automaticDimension // 동적 셀 높이 설정
+        
         tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
                          right: view.rightAnchor)
         
@@ -101,43 +103,43 @@ extension NoticeViewController: UITableViewDataSource {
         return cell
     }
     
-    
 }
 
 extension NoticeViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let lists = list[indexPath.row]
-        if lists.title.count >= 30 {
-            return 102
-        } else {
-            return 80
-        }
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let lists = list[indexPath.row]
+//        if lists.title.count >= 30 {
+//            return 102
+//        } else {
+//            return 80
+//        }
+//    }
+//    동적 셀 높이 설정해줘서 이 부분은 주석처리 했음
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        switch indexPath.row {
-        case 0:
-            let controller = NoticeDetailViewController()
-            navigationController?.pushViewController(controller, animated: true)
-            
-        case 1:
-            let controller = NoticeDetailViewController()
-            navigationController?.pushViewController(controller, animated: true)
-            
-        default: print("DEBUG: error")
-        }
-        
+//        switch indexPath.row {
+//        case 0:
+//            let controller = NoticeDetailViewController()
+//            navigationController?.pushViewController(controller, animated: true)
+//
+//        case 1:
+//            let controller = NoticeDetailViewController()
+//            navigationController?.pushViewController(controller, animated: true)
+//
+//        default: print("DEBUG: error")
+//        }
+        let controller = NoticeDetailViewController()
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
 extension NoticeViewController: CustomNavBarDelegate {
     func backButtonDidTap() {
-        navigationController?.popViewController(animated: true) //뒤로 간다는 것
+        navigationController?.popViewController(animated: true) // 뒤로 간다는 것
     }
-    
 }
 
 extension NoticeViewController : UIGestureRecognizerDelegate {
