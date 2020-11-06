@@ -7,6 +7,8 @@
 
 import UIKit
 
+private let feedCell = "FeedCell"
+
 class FeedDetailViewController: UIViewController {
     
     // MARK: - Properties
@@ -30,21 +32,13 @@ class FeedDetailViewController: UIViewController {
         return iv
     }()
     
-    private let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.heightAnchor.constraint(equalTo: cv.widthAnchor).isActive = true
-        layout.scrollDirection = .horizontal
-        cv.isPagingEnabled = true
-        return cv
-    }()
-    
     lazy var pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.currentPageIndicatorTintColor = UIColor(named: "indicatorSelectedColor")
         pc.pageIndicatorTintColor = .vridgePlaceholderColor
         pc.isEnabled = false
+        pc.numberOfPages = post.images.count
+        pc.isHidden = pc.numberOfPages == 1 ? true : false
         pc.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
 //        pc.preferredIndicatorImage = UIImage(named: "indicatorUnselect") //ios 14 and above
         return pc
@@ -84,6 +78,16 @@ class FeedDetailViewController: UIViewController {
         button.addTarget(self, action: #selector(handleReportTapped), for: .touchUpInside)
         button.tintColor = UIColor(named: "color_all_button_normal")
         return button
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.heightAnchor.constraint(equalTo: cv.widthAnchor).isActive = true
+        layout.scrollDirection = .horizontal
+        cv.isPagingEnabled = true
+        return cv
     }()
     
     
@@ -141,11 +145,49 @@ class FeedDetailViewController: UIViewController {
         navigationController?.navigationBar.backIndicatorImage = UIImage()
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
         
+        let userNameAndType = UIStackView(arrangedSubviews: [username, type])
+        userNameAndType.spacing = 4
+        userNameAndType.alignment = .leading
+        userNameAndType.distribution = .fillProportionally
+        
+        let stack = UIStackView(arrangedSubviews: [userNameAndType, time, captionLabel])
+        stack.axis = .vertical
+        stack.setCustomSpacing(3, after: userNameAndType)
+        stack.setCustomSpacing(10, after: time)
+        stack.alignment = .leading
+        
+        view.addSubview(profileImageView)
+        view.addSubview(stack)
         view.addSubview(customNavigationBar)
+        view.addSubview(collectionView)
+        view.addSubview(pageControl)
+        
         customNavigationBar.delegate = self
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(FeedImageCell.self, forCellWithReuseIdentifier: feedCell)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
         
         customNavigationBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                                    right: view.rightAnchor, height: 44)
+        profileImageView.anchor(top: customNavigationBar.bottomAnchor, left: view.leftAnchor,
+                                paddingTop: 15, paddingLeft: 16)
+        stack.anchor(top: customNavigationBar.bottomAnchor, left: profileImageView.rightAnchor,
+                     right: view.rightAnchor, paddingTop: 20, paddingLeft: 14, paddingRight: 16)
+        collectionView.anchor(top: stack.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                              paddingTop: 10, paddingLeft: 16, paddingRight: 16)
+        pageControl.anchor(top: collectionView.bottomAnchor, paddingTop: 4)
+        pageControl.centerX(inView: collectionView)
+        
+        let viewModel = FeedDetailViewModel(post: post)
+        
+        username.text = viewModel.username
+        type.text = viewModel.type
+        type.textColor = viewModel.typeColor
+        time.text = viewModel.timestamp
+        captionLabel.text = viewModel.caption
+        
     }
     
     func currentUserAmendTapped(sender: Post, row: Int) {
@@ -166,4 +208,44 @@ extension FeedDetailViewController: FeedDetailCustomTopViewDelegate {
     }
     
     
+}
+
+
+extension FeedDetailViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return post.images.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: feedCell,
+                                                      for: indexPath) as! FeedImageCell
+        cell.backgroundColor = .clear
+        cell.imageURL = post.images[indexPath.row]
+        
+        return cell
+    }
+    
+    
+}
+
+extension FeedDetailViewController: UICollectionViewDelegate {
+    
+}
+
+extension FeedDetailViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: collectionView.frame.width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        let page = Int(targetContentOffset.pointee.x / collectionView.frame.width)
+        self.pageControl.currentPage = page
+    }
 }
