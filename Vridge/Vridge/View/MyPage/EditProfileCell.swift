@@ -65,7 +65,7 @@ class EditProfileCell: UITableViewCell {
         addSubview(vegieTypeDescription)
         addSubview(vegieTypeImage)
         
-        typeButtonView.anchor(top: topAnchor, bottom: bottomAnchor, paddingTop: 10, paddingBottom: 10, width: 296, height: 64)
+        typeButtonView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 40, paddingBottom: 10, paddingRight: 39, width: 296, height: 64)
         typeButtonView.centerX(inView: self)
         vegieTypeName.anchor(top: typeButtonView.topAnchor, left: typeButtonView.leftAnchor, paddingTop: 14, paddingLeft: 76)
         vegieTypeDescription.anchor(top: vegieTypeName.bottomAnchor, left: typeButtonView.leftAnchor,

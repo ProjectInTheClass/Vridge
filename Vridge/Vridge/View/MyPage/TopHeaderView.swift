@@ -151,14 +151,14 @@ class TopHeaderView: UIView {
         profileBg.anchor(top: topAnchor, right: rightAnchor, paddingTop: 11, paddingRight: 16)
         profileImage.anchor(top: topAnchor, right: rightAnchor, paddingTop: 13, paddingRight: 18, width: 44, height: 44)
         
-        whiteRect.anchor(top: typeLabel.bottomAnchor, left: leftAnchor, paddingTop: 27, paddingLeft: 16)
+        whiteRect.anchor(top: typeLabel.bottomAnchor, left: leftAnchor, right: rightAnchor,  paddingTop: 27, paddingLeft: 16, paddingRight: 16)
         
         myPostTitleLabel.anchor(top: whiteRect.topAnchor, left: whiteRect.leftAnchor, paddingTop: 18, paddingLeft: 20)
         myPostCountLabel.anchor(top: myPostTitleLabel.bottomAnchor, left: whiteRect.leftAnchor, paddingTop: 4, paddingLeft: 20)
         myPostCountUnitLabel.anchor(top: myPostTitleLabel.bottomAnchor, left: myPostCountLabel.rightAnchor,
                                     paddingTop: 23, paddingLeft: 5)
-        seeMyPostButton.anchor(top: whiteRect.topAnchor, left: myPostTitleLabel.rightAnchor,
-                               paddingTop: 32, paddingLeft: 107, width: 64, height: 64)
+        seeMyPostButton.anchor(top: whiteRect.topAnchor, right: whiteRect.rightAnchor,
+                               paddingTop: 32, paddingRight: 28, width: 64, height: 64)
         
     }
 
