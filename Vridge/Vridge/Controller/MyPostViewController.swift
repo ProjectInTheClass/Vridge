@@ -20,8 +20,7 @@ class MyPostViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         return cv
     }()
-    
-    let images = [UIImage(named: "imgLacto")]
+
     
     
     // MARK: - Lifecycle

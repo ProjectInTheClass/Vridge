@@ -17,9 +17,9 @@ class AboutVridgeCell: UITableViewCell {
         iv.image = UIImage(named: "imgAboutVridge")
         iv.clipsToBounds = true
         return iv
-        
     }()
     
+
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

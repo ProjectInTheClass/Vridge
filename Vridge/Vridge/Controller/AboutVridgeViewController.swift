@@ -16,6 +16,7 @@ class AboutVridgeViewController: UIViewController {
     let tableView = UITableView()
     let customNavBar = CustomNavBar()
     
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,8 @@ class AboutVridgeViewController: UIViewController {
     
     func configureUI() {
         
+//        view.backgroundColor = UIColor(named: "color_all_viewBackground")
+//        tableView.backgroundColor = UIColor(named: "color_all_viewBackground")
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "btnBack")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "btnBack")
@@ -50,16 +53,19 @@ class AboutVridgeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
+        
         tableView.allowsSelection = false
         
         tableView.register(AboutVridgeCell.self, forCellReuseIdentifier: cellID)
         
+        
         view.addSubview(tableView)
         view.addSubview(customNavBar)
         
+        
         tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 44)
+
         
     }
 

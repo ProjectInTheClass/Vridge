@@ -78,6 +78,8 @@ class HomeHeaderView: UIView {
         self.point = point
         super.init(frame: frame)
         
+        
+        
         if user == nil {
             configureVisitor()
         } else {
