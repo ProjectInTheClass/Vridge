@@ -12,7 +12,7 @@ enum VegieType: String, CaseIterable {
     case vegan = "vegan"
     case lacto = "lacto"
     case ovo = "ovo"
-    case lacto_ovo = "lacto_ovo"
+    case lacto_ovo = "lacto ovo"
     case pesco = "pesco"
     case pollo = "pollo"
     case flexitarian = "flexitarian"
