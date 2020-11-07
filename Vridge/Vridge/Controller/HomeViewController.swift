@@ -80,6 +80,8 @@ class HomeViewController: UIViewController {
     
     var viewModel = ActionSheetViewModel()
     
+    var page = 1
+    
     
     // MARK: - Lifecycle
     
@@ -170,8 +172,12 @@ class HomeViewController: UIViewController {
         
         PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+            
+            if (self.page * 10) - (from - 1) == 1 {
+                self.tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
+            }
         }
-        tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
+        
     }
     
     
@@ -209,11 +215,14 @@ class HomeViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rankButton)
         
-        navigationController?.navigationBar.barTintColor = UIColor(named: headerBackgroundColor)?.withAlphaComponent(1)
+        
+        // navigation bar tint color set..
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = UIColor(named: viewBackgroundColor)?.withAlphaComponent(1.0)
         
         viewModel.delegate = self
         
-        //hide navigationBar borderLine
+        // hide navigationBar borderLine..
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
         tableView.dataSource = self
@@ -237,16 +246,6 @@ class HomeViewController: UIViewController {
     }
     
 }
-
-// MARK: - UITableViewDataSourcePrefetching
-
-//extension HomeViewController: UITableViewDataSourcePrefetching {
-//    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-//
-//    }
-//
-//
-//}
 
 
 // MARK: - UITableViewDataSource
@@ -283,20 +282,9 @@ extension HomeViewController: UITableViewDataSource {
     
 }
 
-
 // MARK: - UITableViewDelegate
 
 extension HomeViewController: UITableViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offsetY = scrollView.contentOffset.y
-        let contentHeight = scrollView.contentSize.height
-        let scrollHeight = scrollView.frame.size.height
-        if offsetY == contentHeight - scrollHeight
-        {
-            loadMore()
-        }
-    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 137
@@ -311,14 +299,22 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
-        if  indexPath.row == lastRowIndex {
-            let spinner = UIActivityIndicatorView(style: .large)
-            spinner.startAnimating()
-            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
-
-            tableView.tableFooterView = spinner
-            tableView.tableFooterView?.isHidden = false
+        
+//        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
+//        if  indexPath.row == lastRowIndex && (page * 10) - lastRowIndex == 1 {
+//            print("DEBUG: last index row === \(lastRowIndex)")
+//            let spinner = UIActivityIndicatorView(style: .large)
+//            spinner.startAnimating()
+//            spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+//
+//            tableView.tableFooterView = spinner
+//            tableView.tableFooterView?.isHidden = false
+//        }
+        
+        let lastElement = posts.count - 1
+        if indexPath.row == lastElement {
+            page += 1
+            loadMore()
         }
     }
     

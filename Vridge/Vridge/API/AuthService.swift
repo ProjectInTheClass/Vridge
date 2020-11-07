@@ -54,14 +54,19 @@ struct AuthService {
                     return
                 }
                 print("DEBUG: Existed user logged in.")
-                    
-//                viewController.dismiss(animated: true, completion: nil)
                 
-                let selectTypeController = SelectTypeViewController()
-                viewController.navigationController?.pushViewController(selectTypeController, animated: true)
-                print("DEBUG: Existed user logged in.")
+//                let selectTypeController = SelectTypeViewController()
+//                viewController.navigationController?.pushViewController(selectTypeController, animated: true)
+//                print("DEBUG: Existed user logged in.")
+                
+                guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+                guard let tab = window.rootViewController as? MainTabBarController else { return }
+                
+                tab.fetchUser()
                 
                 viewController.indicator.stopAnimating()
+                
+                viewController.dismiss(animated: true, completion: nil)
             }
         }
     }

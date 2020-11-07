@@ -78,25 +78,25 @@ class MainTabBarController: UITabBarController {
         
         let actionSheetViewModel = ActionSheetViewModel()
         
-//        if Auth.auth().currentUser == nil {
-//            present(actionSheetViewModel.pleaseLogin(self), animated: true)
-//        } else {
-            
-            let controller = PostingViewController(config: .post)
-            controller.delegate = self
-            let nav = UINavigationController(rootViewController: controller)
-            nav.modalPresentationStyle = .fullScreen
-            
-            //                let controller = LoginViewController()
-            //                controller.delegate = self
-            //                let nav = UINavigationController(rootViewController: controller)
-            //                nav.modalPresentationStyle = .fullScreen
-            
-            //        let controller = TestViewController()
-            //        let nav = UINavigationController(rootViewController: controller)
-            
-            present(nav, animated: true, completion: nil)
-//        }
+        //        if Auth.auth().currentUser == nil {
+        //            present(actionSheetViewModel.pleaseLogin(self), animated: true)
+        //        } else {
+        
+        //            let controller = PostingViewController(config: .post)
+        //            controller.delegate = self
+        //            let nav = UINavigationController(rootViewController: controller)
+        //            nav.modalPresentationStyle = .fullScreen
+        
+        let controller = LoginViewController()
+        controller.delegate = self
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        
+        //        let controller = TestViewController()
+        //        let nav = UINavigationController(rootViewController: controller)
+        
+        present(nav, animated: true, completion: nil)
+        //        }
     }
     
     @objc func hidePostButton() {
@@ -111,6 +111,7 @@ class MainTabBarController: UITabBarController {
     // MARK: - Helpers
     
     func configure() {
+        
         view.addSubview(postButton)
         
         postButton.centerX(inView: view)
