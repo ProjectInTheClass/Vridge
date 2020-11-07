@@ -14,6 +14,7 @@ protocol HomeFeedCellDelegate: class {
     func currentUserAmendTapped(sender: Post, row: Int)
     func reportButtonTapped(sender: Post, row: Int)
     func cellTapped()
+    func pleaseLogin()
 }
 
 private let feedCell = "FeedCell"
@@ -180,6 +181,7 @@ class HomeFeedCell: UITableViewCell {
         
         if Auth.auth().currentUser == nil {
             print("DEBUG: no user")
+            delegate?.pleaseLogin()
         } else {
             if posts.user.isCurrentUser {
                 delegate?.currentUserAmendTapped(sender: posts, row: row)

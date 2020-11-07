@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Kingfisher
+
 struct FeedDetailViewModel {
     
     var post: Post
@@ -35,5 +37,19 @@ struct FeedDetailViewModel {
     
     var caption: String {
         return post.caption
+    }
+    
+    var profileImage: URL {
+        return post.user.profileImageURL!
+    }
+    
+    func size(forWidth width: CGFloat) -> CGSize {
+        let measurementLabel = UILabel()
+        measurementLabel.text = post.caption
+        measurementLabel.numberOfLines = 0
+        measurementLabel.lineBreakMode = .byWordWrapping
+        measurementLabel.translatesAutoresizingMaskIntoConstraints = false
+        measurementLabel.widthAnchor.constraint(equalToConstant: width).isActive = true
+        return measurementLabel.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
     }
 }

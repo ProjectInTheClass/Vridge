@@ -332,6 +332,11 @@ extension HomeViewController: UITableViewDelegate {
 
 extension HomeViewController: HomeFeedCellDelegate {
     
+    func pleaseLogin() {
+        let viewModel = ActionSheetViewModel()
+        present(viewModel.pleaseLogin(self), animated: true, completion: nil)
+    }
+    
     func currentUserAmendTapped(sender: Post, row: Int) {
         present(viewModel.amendActionSheet(self, row: row, post: sender), animated: true)
     }
