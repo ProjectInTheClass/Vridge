@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Kingfisher
+
 struct FeedDetailViewModel {
     
     var post: Post
@@ -35,5 +37,9 @@ struct FeedDetailViewModel {
     
     var caption: String {
         return post.caption
+    }
+    
+    var profileImage: URL {
+        return post.user.profileImageURL!
     }
 }

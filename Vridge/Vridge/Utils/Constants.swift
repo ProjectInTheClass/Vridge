@@ -9,7 +9,9 @@ import Foundation
 
 import Firebase
 
-let POST_LOAD_AT_ONCE = 10
+// MARK: - Load amount
+
+let POST_LOAD_AT_ONCE: Int = 10
 
 // MARK: - DB/Storage
 

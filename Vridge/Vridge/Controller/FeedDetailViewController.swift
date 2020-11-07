@@ -106,7 +106,6 @@ class FeedDetailViewController: UIViewController {
         super.viewDidLoad()
 
         configureUI()
-        print("DEBUG: viewLoaded == \(post.caption)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -187,6 +186,7 @@ class FeedDetailViewController: UIViewController {
         type.textColor = viewModel.typeColor
         time.text = viewModel.timestamp
         captionLabel.text = viewModel.caption
+        profileImageView.kf.setImage(with: viewModel.profileImage)
         
     }
     
