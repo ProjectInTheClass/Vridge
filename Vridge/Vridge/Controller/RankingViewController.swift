@@ -134,8 +134,6 @@ class RankingViewController: UIViewController {
     
     // MARK: - Helpers
     
-    
-    
     func configureUI() {
         
         navigationController?.navigationBar.backIndicatorImage = UIImage()
