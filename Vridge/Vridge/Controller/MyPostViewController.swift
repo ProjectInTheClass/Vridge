@@ -58,6 +58,7 @@ class MyPostViewController: UIViewController {
         
         collectionView.register(MyPostCell.self, forCellWithReuseIdentifier: cellID)
         
+        collectionView.backgroundColor = UIColor(named: "color_all_viewBackground")
         view.addSubview(customNavBar)
         view.addSubview(collectionView)
         

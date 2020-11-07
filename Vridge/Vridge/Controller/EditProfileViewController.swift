@@ -43,11 +43,14 @@ class EditProfileViewController: UIViewController {
         return button
     }()
     
+    lazy var gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         customNavBar.titleLabel.text = "프로필 수정"
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+//        self.hideKeyboard()
         configureUI()
     }
     
@@ -64,7 +67,14 @@ class EditProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
 
+
+
     // MARK: - Selectors
+    
+    @objc func viewDidTap() {
+        view.endEditing(true)
+        print("DEBUG: tapped !!")
+    }
     
     @objc func handleUpload() {
         print("업로드 코드 작성")
@@ -92,6 +102,8 @@ class EditProfileViewController: UIViewController {
         
 //        tableView.allowsSelection = false
         
+        view.addGestureRecognizer(gestureRecognizer)
+        gestureRecognizer.cancelsTouchesInView = false
         view.addSubview(tableView)
         view.addSubview(customNavBar)
         view.addSubview(uploadButton)
@@ -130,7 +142,7 @@ extension EditProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = EditProfileHeaderView()
-        header.profileImage.image = profileImage
+//        header.profileImage.image = profileImage
         header.delegate = self
         return header
     }
@@ -236,3 +248,16 @@ extension EditProfileViewController : UIGestureRecognizerDelegate {
         return false
     }
 }
+
+//extension UIViewController {
+//    func hideKeyboard() {
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+//            target: self,
+//            action: #selector(UIViewController.dismissKeyboard))
+//        view.addGestureRecognizer(tap)
+//    }
+//
+//    @objc func dismissKeyboard()  {
+//        view.endEditing(true)
+//    }
+//}

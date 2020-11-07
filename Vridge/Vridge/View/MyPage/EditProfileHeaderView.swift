@@ -113,25 +113,26 @@ class EditProfileHeaderView: UIView {
         addSubview(nickNameTextField)
         addSubview(nickNameLineView)
         addSubview(aboutNickNameLabel)
+        
     
         profileBg.anchor(top: topAnchor, paddingTop: 50)
         profileBg.centerX(inView: self)
-        
+
         profileImage.anchor(top: profileBg.topAnchor, paddingTop: 4)
         profileImage.centerX(inView: self)
             
         editProfileImgButton.anchor(top: profileBg.topAnchor, left: profileBg.leftAnchor, paddingTop: 69, paddingLeft: 69)
-        
+
         nickNameTextField.anchor(top: profileBg.bottomAnchor, left: leftAnchor, right: rightAnchor,
                                  paddingTop: 30, paddingLeft: 100, paddingRight: 100)
         nickNameTextField.centerX(inView: self)
-        
+
         nickNameLineView.anchor(top: nickNameTextField.bottomAnchor, left: leftAnchor, right: rightAnchor,
                                 paddingTop: 9, paddingLeft: 90, paddingRight: 90, width: 195, height: 1)
-        
+
         aboutNickNameLabel.anchor(top: nickNameLineView.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 89, paddingRight: 88)
         aboutNickNameLabel.centerX(inView: self)
-        
+
 
     }
 }

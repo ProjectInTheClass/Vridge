@@ -19,6 +19,11 @@ class MyPageViewController: UIViewController {
     
     let customNavBar = CustomNavBar()
     
+    let backView : UIView = {
+        let view = UIView()
+        view.backgroundColor = .vridgeGreen
+        return view
+    }()
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -43,6 +48,7 @@ class MyPageViewController: UIViewController {
     
     func configureUI() {
         
+        view.addSubview(backView)
         view.addSubview(tableView)
         view.backgroundColor = UIColor(named: "color_all_viewBackground")
         tableView.backgroundColor = UIColor(named: "color_all_viewBackground") // 이걸 해줘야 폰 화면 최상단 상태표시줄까지 색이 바뀜.
@@ -59,8 +65,9 @@ class MyPageViewController: UIViewController {
         topHeader.backgroundColor = UIColor(named: "color_all_viewBackground")
 //        tableView.tableFooterView = UIView()
         
-        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
+        tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
                          right: view.rightAnchor)
+        backView.anchor(left: view.leftAnchor, bottom: view.topAnchor, right: view.rightAnchor, paddingBottom: -44, height: 44)
     }
 
 
