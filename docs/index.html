@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"   
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="   
+	crossorigin="anonymous">
+    </script>
+    <script src="js/index.js"></script>
+    <script src="js/jquery.vide.js"></script>
+</head>
+
+<body data-vide-bg = "vide/background"> 
+  <audio src= "billboard uwu.mp3" controls="controls" allow="autoplay"></audio>
+  <div class = introduction>
+    <div class = "halo">
+      <p>Halo</p>
+    </div>
+    <div class = "effect">
+      <p>Effect</p>
+    </div>
+    <div class = "keyword_box">
+      <div class = "box1" >
+        <p>Product Manager</p>
+      </div>
+      <div class = "box2">
+        <p>UX Researcher</p>
+      </div>
+      <div class = "box3">
+        <p>Business Developer</p>
+      </div>
+      <div class = "box4">
+        <p>Designer</p>
+      </div>
+      <div class = "box5">
+        <img id="image3" src="image/image3.png">
+      </div>
+      <div class = "line1"></div>
+      <div class = "line2"></div>
+      <div class = "box8"></div>
+      <div class = "imageContainer">
+        <img id="image1" src="image/image1.png"></div>
+      </div>
+      <div class = "imageContainer2">
+        <img id="image2" src="image/image2.png"></div>
+      </div>
+      <div class = "weblink">
+        <p>https://haloeffect.xyz/</p>
+      </div>
+  
+      
+  <div class = "box_carousel">
+      <div class = carousel1></div>
+  </div>
+  <svg xmlns = "http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <filter id = "goo">
+      <feGaussianBlur in ="SourceGraphic" stdDeviation="13" result=
+      "goo-blur"></feGaussianBlur>
+      <feColorMatrix in = "goo-blur" mode="matrix" values="
+                  1 0 0 0 0 
+                  0 1 0 0 0 
+                  0 0 1 0 0  
+                  0 0 0 20  -11"></feColorMatrix>
+    </filter>
+  </defs>
+</svg>
+
+<div class ="cursor true-cursor" style="opacity: 0; left: 1259px; top:346px;"></div>
+</div>
+    <script>
+      $(document).ready(function (){
+        $(document.body).vide('video/background');
+      });
+    </script> 
+  </body>
+</html>
