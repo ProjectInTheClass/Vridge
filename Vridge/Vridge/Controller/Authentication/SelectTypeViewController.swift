@@ -91,7 +91,6 @@ class SelectTypeViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        
         imagePicker.delegate = self
         imagePicker.allowsEditing = true
         
@@ -101,13 +100,12 @@ class SelectTypeViewController: UIViewController {
         tableView.anchor(top: profileImageButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 40, paddingLeft: 8, paddingRight: 8)
     }
     
-
-
 }
 
 extension SelectTypeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[.editedImage] as? UIImage else { return }
         self.profileImage = image
