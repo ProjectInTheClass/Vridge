@@ -142,7 +142,7 @@ extension EditProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = EditProfileHeaderView()
-//        header.profileImage.image = profileImage
+        header.profileImage.image = profileImage ?? UIImage(named: "imgDefaultProfile")
         header.delegate = self
         return header
     }
