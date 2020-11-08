@@ -51,7 +51,8 @@ class MyPageViewController: UIViewController {
         view.addSubview(backView)
         view.addSubview(tableView)
         view.backgroundColor = UIColor(named: "color_all_viewBackground")
-        tableView.backgroundColor = UIColor(named: "color_all_viewBackground") // 이걸 해줘야 폰 화면 최상단 상태표시줄까지 색이 바뀜.
+        
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         
         tableView.dataSource = self
@@ -67,7 +68,8 @@ class MyPageViewController: UIViewController {
         
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
                          right: view.rightAnchor)
-        backView.anchor(left: view.leftAnchor, bottom: view.topAnchor, right: view.rightAnchor, paddingBottom: -44, height: 44)
+        backView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                        height: view.frame.height / 2)
     }
 
 
