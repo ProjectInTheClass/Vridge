@@ -189,8 +189,6 @@ class HomeFeedCell: UITableViewCell {
                 delegate?.reportButtonTapped(sender: posts, row: row)
             }
         }
-        
-        
     }
     
     @objc func handleImageTapped() {

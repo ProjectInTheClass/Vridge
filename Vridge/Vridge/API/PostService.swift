@@ -185,10 +185,16 @@ struct PostService {
                         
                         REF_POSTS.child(postID).updateChildValues(values) { (err, ref) in
                             pointUp { (err, ref) in
-                                REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                                UserService.shared.fetchUser(uid: uid) { user in
+                                    DB_REF.child("\(user.vegieType!.rawValue)-posts").child(postID).updateChildValues(values) { (err, ref) in
+                                        REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                                        
+                                        indicator.stop()
+                                        view.dismiss(animated: true, completion: nil)
+                                    }
+                                }
                                 
-                                indicator.stop()
-                                view.dismiss(animated: true, completion: nil)
+                                
                             }
                         }
                     }
@@ -301,19 +307,21 @@ struct PostService {
         
         REF_POSTS.child(postId).removeValue { (err, ref) in
             REF_USER_POSTS.child(uid).child(postId).removeValue { (err, ref) in
-                // 여기에서 Storage에 저장되어있는 이미지도 삭제해주어야 함.
-                // STORAGE_POST_IMAGES
-                // 근데 파일 네임 어떻게 찾음?
                 
                 for i in 0...2 {
                     STORAGE_POST_IMAGES.child("\(i)" + postId).delete { err in
                     }
                 }
-                    pointDown(completion: completion)
-                    print("DEBUG: SUCCESSFULLY DELETE POST")
-                    viewController.posts.remove(at: row)
+                
+                UserService.shared.fetchUser(uid: uid) { user in
+                    DB_REF.child("\(user.vegieType!.rawValue)-posts").child(postId).removeValue { (err, ref) in
+                        pointDown(completion: completion)
+                        print("DEBUG: SUCCESSFULLY DELETE POST")
+                        viewController.posts.remove(at: row)
+                    }
                 }
-                    
+            }
+            
         }
     }
     
