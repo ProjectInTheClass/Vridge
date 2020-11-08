@@ -108,9 +108,15 @@ class HomeFeedCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 32)
         label.text = "이 게시글은 신고되었습니다."
-        label.textColor = UIColor(named: allTextColor)
-//        label.isHidden = true
+        label.textColor = .yellow
         return label
+    }()
+    
+    let reportedView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        return view
     }()
     
     
@@ -151,7 +157,8 @@ class HomeFeedCell: UITableViewCell {
         addSubview(stack)
         addSubview(reportButton)
         
-        addSubview(reportedLabel)
+        addSubview(reportedView)
+        reportedView.addSubview(reportedLabel)
         
         profileImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 15, paddingLeft: 16)
         stack.anchor(top: topAnchor, left: profileImageView.rightAnchor,
@@ -164,7 +171,8 @@ class HomeFeedCell: UITableViewCell {
         pageControl.centerX(inView: collectionView)
         reportButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 11)
         
-        reportedLabel.center(inView: self)
+        reportedView.addConstraintsToFillView(self)
+        reportedLabel.center(inView: reportedView)
         
     }
     

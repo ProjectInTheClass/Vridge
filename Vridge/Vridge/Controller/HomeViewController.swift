@@ -160,7 +160,6 @@ class HomeViewController: UIViewController {
         PostService.shared.fetchPosts { posts in
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
             self.indicator.stopAnimating()
-
             self.animationView.isHidden = true
             
             self.checkIfUserReportPost()
@@ -180,14 +179,16 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func loadMore() {
+    func loadMore(row: Int? = -1) {
         let from = posts.count
         let to = from + POST_LOAD_AT_ONCE >= numberOfPost ? numberOfPost : from + POST_LOAD_AT_ONCE
         
         PostService.shared.refetchPost(post: posts, from: from, upto: to) { posts in
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
             
-            if (self.page * 10) - (from - 1) == 1 {
+            self.checkIfUserReportPost()
+            print("DEBUG: loaded more")
+            if (self.page * 10) - (from - 1) == 1 && row == -1 {
                 self.tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
             }
         }
@@ -278,7 +279,9 @@ extension HomeViewController: UITableViewDataSource {
         cell.row = indexPath.row
         cell.selectionStyle = .none
         
-        cell.reportedLabel.isHidden = posts[indexPath.row].isReported == false
+        cell.reportedLabel.isHidden = !posts[indexPath.row].isReported
+        cell.reportedView.alpha = posts[indexPath.row].isReported ? 0.9 : 0
+        cell.captionLabel.isHidden = posts[indexPath.row].isReported
         
         return cell
     }
@@ -355,7 +358,6 @@ extension HomeViewController: HomeFeedCellDelegate {
     
     func reportButtonTapped(sender: Post, row: Int) {
         present(viewModel.reportActionSheet(self, post: sender, row: row), animated: true, completion: nil)
-        tableView.reloadData()
     }
     
     func cellTapped() {
