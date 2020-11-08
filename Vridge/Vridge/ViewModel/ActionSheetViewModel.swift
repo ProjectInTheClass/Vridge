@@ -50,12 +50,24 @@ struct ActionSheetViewModel {
         return alert
     }
     
-    func reportActionSheet(_ viewController: HomeViewController, post: Post) -> UIAlertController {
+    func reportActionSheet(_ viewController: HomeViewController, post: Post, row: Int) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let reportButton = UIAlertAction(title: reportButtonTitle, style: .default) { _ in
             let alert = UIAlertController(title: reasonToReportTitle, message: nil, preferredStyle: .actionSheet)
             let sexualHarass = UIAlertAction(title: sexualHarassTitle, style: .default) { _ in
-                viewController.showReportAlert()
+                PostService.shared.reportPost(post: post) { (err, ref) in
+                    // 테이블 뷰를 리로드한 후 셀에서 move row at을 정해서 원래 위치로 돌아오게 하기
+//                    delegate?.updateUser()
+//                    viewController.numberOfPosts()
+                    
+                    // 모르겠음
+                    
+                    
+                    viewController.showReportAlert()
+                    viewController.fetchPosts()
+                    viewController.tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: .bottom, animated: true)
+                }
+                
             }
             let swear = UIAlertAction(title: swearTitle, style: .default) { _ in
                 viewController.showReportAlert()

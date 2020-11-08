@@ -25,6 +25,8 @@ let REF_USER_POSTS = DB_REF.child("user-posts")
 let REF_USERS = DB_REF.child("users")
 let REF_USER_POINT = DB_REF.child("user-point")
 let REF_USERNAMES = DB_REF.child("usernames")
+let REF_POST_REPORT = DB_REF.child("post-report")
+let REF_USER_REPORT = DB_REF.child("user-report")
 
 // type
 let REF_VEGAN = DB_REF.child("vegan")

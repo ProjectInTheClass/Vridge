@@ -358,4 +358,20 @@ struct PostService {
         }
     }
     
+    func reportPost(post: Post, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_REPORT.child(uid).updateChildValues([post.postID: 1]) { (err, ref) in
+            REF_POST_REPORT.child(post.postID).updateChildValues([uid: 1], withCompletionBlock: completion)
+        }
+    }
+    
+    func checkIfUserReportedPost(_ post: Post, completion: @escaping(Bool) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_REPORT.child(uid).child(post.postID).observeSingleEvent(of: .value) { snapshot in
+            completion(snapshot.exists())
+        }
+    }
+    
 }

@@ -152,7 +152,7 @@ class HomeViewController: UIViewController {
     func numberOfPosts() {
         PostService.shared.numberOfPosts { nums in
             self.numberOfPost = nums
-            print("DEBUG: \(self.numberOfPost)")
+            print("DEBUG: number of posts ==== \(self.numberOfPost)")
         }
     }
     
@@ -162,7 +162,21 @@ class HomeViewController: UIViewController {
             self.indicator.stopAnimating()
 
             self.animationView.isHidden = true
+            
+            self.checkIfUserReportPost()
             self.tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    func checkIfUserReportPost() {
+        posts.forEach { post in
+            PostService.shared.checkIfUserReportedPost(post) { didReport in
+                guard didReport == true else { return }
+                
+                if let index = self.posts.firstIndex(where: { $0.postID == post.postID }) {
+                    self.posts[index].isReported = true
+                }
+            }
         }
     }
     
@@ -264,6 +278,8 @@ extension HomeViewController: UITableViewDataSource {
         cell.row = indexPath.row
         cell.selectionStyle = .none
         
+        cell.reportedLabel.isHidden = posts[indexPath.row].isReported == false
+        
         return cell
     }
     
@@ -338,8 +354,8 @@ extension HomeViewController: HomeFeedCellDelegate {
     }
     
     func reportButtonTapped(sender: Post, row: Int) {
-        present(viewModel.reportActionSheet(self, post: sender), animated: true, completion: nil)
-        
+        present(viewModel.reportActionSheet(self, post: sender, row: row), animated: true, completion: nil)
+        tableView.reloadData()
     }
     
     func cellTapped() {
