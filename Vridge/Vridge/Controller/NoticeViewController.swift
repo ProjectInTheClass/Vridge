@@ -62,7 +62,7 @@ class NoticeViewController: UIViewController {
     
     func fetchNotices() {
         NoticeService.shared.fetchNotices { notices in
-            self.notices = notices
+            self.notices = notices.sorted(by: { $0.timestamp > $1.timestamp })
         }
     }
     

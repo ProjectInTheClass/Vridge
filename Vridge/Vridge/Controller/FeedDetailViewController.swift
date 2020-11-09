@@ -33,8 +33,6 @@ class FeedDetailViewController: UIViewController {
         self.post = post
         self.index = index
         super.init(nibName: nil, bundle: nil)
-        
-        print("DEBUG: caption == \(post.caption), index == \(index)")
     }
     
     required init?(coder: NSCoder) {

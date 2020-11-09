@@ -17,11 +17,9 @@ class MainTabBarController: UITabBarController {
         didSet {
             guard let nav = viewControllers?[0] as? UINavigationController else { return }
             guard let home = nav.viewControllers.first as? HomeViewController else { return }
-//            guard let myPage = nav.viewControllers.last as? MyPageViewController else { return }
-//            myPage.user = user!
+            
             guard let nav2 = viewControllers?[2] as? UINavigationController else { return }
             guard let myPage = nav2.viewControllers.first as? MyPageViewController else { return }
-            print("DEBUG: last one is \(myPage.firstSectionMenu)")
             
             home.delegates = self
             home.user = user

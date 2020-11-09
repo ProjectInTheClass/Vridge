@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SF-Pro.ttf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -22,18 +18,22 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>&quot;Vridge&quot;에서 사용자의 카메라에 접근하려고 합니다.
+	<string>"Vridge"에서 사용자의 카메라에 접근하려고 합니다.
 권한허용을 통해 간편하게 채식한 기록을 바로 남겨보세요.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>want your mic</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>&quot;Vridge&quot;에서 사용자의 사진에 접근하려고 합니다.
+	<string>"Vridge"에서 사용자의 사진에 접근하려고 합니다.
 앨범에서 나의 채식했던 기록을 업로드해보세요.</string>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SF-Pro.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

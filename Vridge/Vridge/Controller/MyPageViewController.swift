@@ -44,6 +44,7 @@ class MyPageViewController: UIViewController {
         
         navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
+        fetchUser()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,8 +67,6 @@ class MyPageViewController: UIViewController {
     // MARK: - Helpers
     
     func configureUI() {
-        
-        fetchUser()
         
         view.addSubview(backView)
         view.addSubview(tableView)

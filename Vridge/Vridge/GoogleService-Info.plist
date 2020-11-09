@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>943315264975-s74hp37mac6civm6giuhluslngpfb3ca.apps.googleusercontent.com</string>
+	<string>943315264975-qiqt0hh630dg3m1t2f8np6qdft1omvda.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.943315264975-s74hp37mac6civm6giuhluslngpfb3ca</string>
+	<string>com.googleusercontent.apps.943315264975-qiqt0hh630dg3m1t2f8np6qdft1omvda</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBXCUBqro-7bTGdA7V25kkNMs7ssvy5spk</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mingu-king.Vridge</string>
+	<string>com.dreamin.Vridge</string>
 	<key>PROJECT_ID</key>
 	<string>vridge-b1087</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:943315264975:ios:a33754f4147b5fb4eadeba</string>
+	<string>1:943315264975:ios:04084f8a597d2c3eeadeba</string>
 	<key>DATABASE_URL</key>
 	<string>https://vridge-b1087.firebaseio.com</string>
 </dict>

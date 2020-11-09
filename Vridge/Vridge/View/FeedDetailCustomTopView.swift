@@ -25,6 +25,14 @@ class FeedDetailCustomTopView: UIView {
         return button
     }()
     
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "내 게시글"
+        label.font = UIFont.SFSemiBold(size: 18)
+        label.textColor = UIColor(named: allTextColor)
+        return label
+    }()
+    
     private let underLine: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "color_all_line")
@@ -40,9 +48,11 @@ class FeedDetailCustomTopView: UIView {
         backgroundColor = UIColor(named: viewBackgroundColor)
         
         addSubview(backButton)
+        addSubview(titleLabel)
         addSubview(underLine)
         
         backButton.anchor(top: topAnchor, left: leftAnchor)
+        titleLabel.center(inView: self)
         underLine.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 0.5)
     }
     

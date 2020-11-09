@@ -51,10 +51,10 @@
 		3D9F554A25545454003C84AD /* FeedDetailCustomTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9F554925545454003C84AD /* FeedDetailCustomTopView.swift */; };
 		3D9F555025545C12003C84AD /* FeedDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9F554F25545C12003C84AD /* FeedDetailViewModel.swift */; };
 		3DB09D7B254BD97D00062E49 /* PhotoAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB09D7A254BD97D00062E49 /* PhotoAddView.swift */; };
-		3DB09D81254C66AB00062E49 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DB09D80254C66AB00062E49 /* GoogleService-Info.plist */; };
 		3DB73AF125566C8C00EAA49A /* FeedDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB73AF025566C8C00EAA49A /* FeedDetailHeader.swift */; };
 		3DBA137F25599BB100A04002 /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBA137E25599BB100A04002 /* Notice.swift */; };
 		3DBA138425599F5A00A04002 /* NoticeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBA138325599F5A00A04002 /* NoticeService.swift */; };
+		3DBA138B2559AB7600A04002 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DBA138A2559AB7600A04002 /* GoogleService-Info.plist */; };
 		3DE6236A252B2925005F16A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62369252B2925005F16A9 /* Constants.swift */; };
 		3DE6236E252B298F005F16A9 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6236D252B298F005F16A9 /* PostService.swift */; };
 		3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62374252C180D005F16A9 /* LoginViewController.swift */; };
@@ -131,10 +131,10 @@
 		3D9F554925545454003C84AD /* FeedDetailCustomTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailCustomTopView.swift; sourceTree = "<group>"; };
 		3D9F554F25545C12003C84AD /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
 		3DB09D7A254BD97D00062E49 /* PhotoAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAddView.swift; sourceTree = "<group>"; };
-		3DB09D80254C66AB00062E49 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3DB73AF025566C8C00EAA49A /* FeedDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailHeader.swift; sourceTree = "<group>"; };
 		3DBA137E25599BB100A04002 /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
 		3DBA138325599F5A00A04002 /* NoticeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeService.swift; sourceTree = "<group>"; };
+		3DBA138A2559AB7600A04002 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3DE62369252B2925005F16A9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3DE6236D252B298F005F16A9 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		3DE62374252C180D005F16A9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -245,7 +245,7 @@
 				3D3E4B16252D864E00E25323 /* Fonts */,
 				3D106EEF25469BB00074DB2F /* Lottie */,
 				3D1FA47B2526F30400C6388A /* Assets.xcassets */,
-				3DB09D80254C66AB00062E49 /* GoogleService-Info.plist */,
+				3DBA138A2559AB7600A04002 /* GoogleService-Info.plist */,
 				3D1FA4802526F30400C6388A /* Info.plist */,
 				3D1FA47D2526F30400C6388A /* LaunchScreen.storyboard */,
 			);
@@ -465,7 +465,7 @@
 				3D1FA47C2526F30400C6388A /* Assets.xcassets in Resources */,
 				3D106EEC254698970074DB2F /* cat_animation.json in Resources */,
 				3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */,
-				3DB09D81254C66AB00062E49 /* GoogleService-Info.plist in Resources */,
+				3DBA138B2559AB7600A04002 /* GoogleService-Info.plist in Resources */,
 				3D106EFC2546AC470074DB2F /* post_upload.json in Resources */,
 				3D9240E3254AA94300F92C9D /* upload_post.json in Resources */,
 				3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */,
@@ -741,7 +741,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mingu-king.Vridge";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dreamin.Vridge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -762,7 +762,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mingu-king.Vridge";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dreamin.Vridge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
