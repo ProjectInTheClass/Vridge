@@ -20,14 +20,21 @@ class FeedDetailViewController: UIViewController {
         didSet { print("DEBUG: post == \(post.caption)") }
     }
     
+    var index: Int {
+        didSet { print("DEBUG: index === \(index)") }
+    }
+    
     private let customNavigationBar = FeedDetailCustomTopView()
     
     
     // MARK: - Lifecycle
     
-    init(post: Post) {
+    init(post: Post, index: Int) {
         self.post = post
+        self.index = index
         super.init(nibName: nil, bundle: nil)
+        
+        print("DEBUG: caption == \(post.caption), index == \(index)")
     }
     
     required init?(coder: NSCoder) {
@@ -55,10 +62,33 @@ class FeedDetailViewController: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
+    
+    // MARK: - API
+    
+    func refetchData() {
+        PostService.shared.fetchMyPosts { posts in
+            let newPost = posts.sorted(by: { $0.timestamp > $1.timestamp } )
+            if newPost.count - 1 >= self.index {
+                self.post = newPost[self.index]
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    
+    // MARK: - Selectors
+    
+    @objc func fetchAgain() {
+        refetchData()
+    }
+    
 
     // MARK: - Helpers
     
     func configureUI() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
+                                               name: Notification.Name("fetchAgain"), object: nil)
         
         view.backgroundColor = UIColor(named: viewBackgroundColor)
         
@@ -117,7 +147,7 @@ extension FeedDetailViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = FeedDetailHeader(post: post)
-        
+        header.delegate = self
         return header
     }
     
@@ -132,6 +162,33 @@ extension FeedDetailViewController: UITableViewDelegate {
         let captionHeight = viewModel.size(forWidth: view.frame.width).height
         
         return CGFloat(captionHeight + view.frame.width + 100)
+    }
+    
+}
+
+extension FeedDetailViewController: FeedDetailHeaderDelegate {
+    
+    func reportButtonDidTap() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let amendButton = UIAlertAction(title: amendTitle, style: .default) { _ in
+            PostService.shared.amendPost(post: self.post) { posts in
+                let controller = PostingViewController(config: .amend(self.post), post: self.post)
+                let nav = UINavigationController(rootViewController: controller)
+                nav.modalPresentationStyle = .fullScreen
+                self.present(nav, animated: true, completion: nil)
+            }
+            
+        }
+        let deleteButton = UIAlertAction(title: deleteButtonTitle, style: .destructive) { _ in
+            
+        }
+        let cancelButton = UIAlertAction(title: cancel, style: .cancel, handler: nil)
+        
+        alert.addAction(amendButton)
+        alert.addAction(deleteButton)
+        alert.addAction(cancelButton)
+        
+        present(alert, animated: true, completion: nil)
     }
     
 }

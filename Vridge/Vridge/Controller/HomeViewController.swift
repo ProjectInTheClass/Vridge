@@ -338,7 +338,7 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = FeedDetailViewController(post: posts[indexPath.row])
+        let controller = FeedDetailViewController(post: posts[indexPath.row], index: indexPath.row)
         navigationController?.pushViewController(controller, animated: true)
         print("DEBUG: cell tapped ! ")
     }

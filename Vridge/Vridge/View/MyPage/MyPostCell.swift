@@ -22,7 +22,6 @@ class MyPostCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(myPostImage)
-        
         myPostImage.addConstraintsToFillView(self)
         
     }

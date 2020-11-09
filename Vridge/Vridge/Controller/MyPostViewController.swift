@@ -46,13 +46,30 @@ class MyPostViewController: UIViewController {
         super.viewWillDisappear(true)
         tabBarController?.tabBar.isHidden = false
     }
+    
+    
+    // MARK: - API
+    
+    func fetchMyPost() {
+        PostService.shared.fetchMyPosts { posts in
+            self.myPosts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+        }
+    }
+    
+    
+    // MARK: - Selectors
+    
+    @objc func fetchAgain() {
+        fetchMyPost()
+    }
+    
     // MARK: - Helpers
         
     func configureUI() {
         
-        PostService.shared.fetchMyPosts { posts in
-            self.myPosts = posts
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
+                                               name: Notification.Name("fetchAgain"), object: nil)
+        fetchMyPost()
         
         customNavBar.delegate = self
         
@@ -97,7 +114,7 @@ extension MyPostViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
-        let controller = MyPostDetailViewController()
+        let controller = FeedDetailViewController(post: myPosts[indexPath.item], index: indexPath.item)
         navigationController?.pushViewController(controller, animated: true)
     }
     

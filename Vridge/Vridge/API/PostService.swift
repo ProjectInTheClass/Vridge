@@ -354,7 +354,7 @@ struct PostService {
         }
     }
     
-    func amendPost(row: Int, viewController: HomeViewController, post: Post, completion: @escaping([String: Any]) -> Void) {
+    func amendPost(post: Post, completion: @escaping([String: Any]) -> Void) {
         var component = [String: Any]()
         
         REF_POSTS.child(post.postID).observe(.value) { snapshot in

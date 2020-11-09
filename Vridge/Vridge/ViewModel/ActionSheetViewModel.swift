@@ -19,7 +19,7 @@ struct ActionSheetViewModel {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let amendButton = UIAlertAction(title: amendTitle, style: .default) { _ in
             // amend service
-            PostService.shared.amendPost(row: row, viewController: viewController, post: post) { posts in
+            PostService.shared.amendPost(post: post) { posts in
                 let controller = PostingViewController(config: .amend(post), post: post)
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
