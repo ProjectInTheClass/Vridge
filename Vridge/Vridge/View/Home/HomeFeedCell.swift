@@ -31,7 +31,7 @@ class HomeFeedCell: UITableViewCell {
     
     var row: Int?
     
-    private lazy var profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.setDimensions(width: 45, height: 45)
         iv.layer.cornerRadius = 45 / 2
@@ -228,6 +228,7 @@ class HomeFeedCell: UITableViewCell {
         pageControl.isHidden = numberOfPages == 1 ? true : false
         captionLabel.text = posts.caption
         captionLabel.isHidden = posts.caption == "" ? true : false
+//        collectionView.isHidden =
         username.text = posts.user.username
         
         type.text = "@\(posts.user.vegieType!.rawValue)"

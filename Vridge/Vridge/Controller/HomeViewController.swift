@@ -282,6 +282,12 @@ extension HomeViewController: UITableViewDataSource {
         cell.reportedLabel.isHidden = !posts[indexPath.row].isReported
         cell.reportedView.alpha = posts[indexPath.row].isReported ? 0.9 : 0
         cell.captionLabel.isHidden = posts[indexPath.row].isReported
+        cell.collectionView.isHidden = posts[indexPath.row].isReported
+        cell.profileImageView.isHidden = posts[indexPath.row].isReported
+        cell.reportButton.isHidden = posts[indexPath.row].isReported
+        
+        
+        // 컬렉션뷰를 stack view에 추가한 후, 스택뷰에 있는 모든 요소들을 hidden 시키면 어떻게 될까.
         
         return cell
     }

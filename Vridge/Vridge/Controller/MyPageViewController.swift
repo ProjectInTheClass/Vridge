@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Firebase
+
 private let cellID = "CellID"
 
 class MyPageViewController: UIViewController {
@@ -17,13 +19,19 @@ class MyPageViewController: UIViewController {
     let firstSectionMenu = ["공지사항", "브릿지란?", "앱 버전 1.0.0"]
     let secondSectionMenu = ["프로필 수정", "로그아웃"]
     
+    var user: User? {
+        didSet { tableView.reloadData(); print("DEBUG: user name is == \(user?.username)") }
+    }
+    
     let customNavBar = CustomNavBar()
     
     let backView : UIView = {
         let view = UIView()
-        view.backgroundColor = .vridgeGreen
+//        view.backgroundColor = .vridgeGreen
         return view
     }()
+    
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -43,14 +51,27 @@ class MyPageViewController: UIViewController {
         
         navigationController?.navigationBar.isHidden = false
     }
+    
+    
+    // MARK: - API
+    
+    func fetchUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        UserService.shared.fetchUser(uid: uid) { user in
+            self.user = user
+        }
+    }
+    
 
     // MARK: - Helpers
     
     func configureUI() {
         
+        fetchUser()
+        
         view.addSubview(backView)
         view.addSubview(tableView)
-        view.backgroundColor = UIColor(named: "color_all_viewBackground")
+        view.backgroundColor = UIColor(named: viewBackgroundColor)
         
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
@@ -58,18 +79,25 @@ class MyPageViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(MenuCell.self, forCellReuseIdentifier: cellID)
-        
-        let topHeader = TopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265))
-                
-        tableView.tableHeaderView = topHeader
-        topHeader.delegate = self
-        topHeader.backgroundColor = UIColor(named: "color_all_viewBackground")
 //        tableView.tableFooterView = UIView()
         
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
                          right: view.rightAnchor)
         backView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
                         height: view.frame.height / 2)
+        backView.backgroundColor = user?.vegieType?.typeColor ?? .vridgeGreen
+        
+        guard let user = user else {
+            let topHeader = TopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: nil)
+            tableView.tableHeaderView = topHeader
+            topHeader.delegate = self
+            topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
+            return
+        }
+        let topHeader = TopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: user)
+        tableView.tableHeaderView = topHeader
+        topHeader.delegate = self
+        topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
     }
 
 
