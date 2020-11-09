@@ -161,9 +161,8 @@ class HomeFeedCell: UITableViewCell {
         reportedView.addSubview(reportedLabel)
         
         profileImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 15, paddingLeft: 16)
-        stack.anchor(top: topAnchor, left: profileImageView.rightAnchor,
-                                   right: rightAnchor, paddingTop: 20, paddingLeft: 14,
-                                   paddingRight: 16)
+        stack.anchor(top: topAnchor, left: profileImageView.rightAnchor,right: rightAnchor,
+                     paddingTop: 20, paddingLeft: 14, paddingRight: 16)
         collectionView.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor,
                               paddingTop: 10, paddingLeft: 75, paddingRight: 16)
         pageControl.anchor(top: collectionView.bottomAnchor, bottom: bottomAnchor,

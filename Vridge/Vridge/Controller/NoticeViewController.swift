@@ -22,6 +22,10 @@ class NoticeViewController: UIViewController {
     
     //MARK: - Properties
     
+    var notices = [Notice]() {
+        didSet { tableView.reloadData() }
+    }
+    
     let tableView = UITableView()
 
     let customNavBar = CustomNavBar()
@@ -53,9 +57,21 @@ class NoticeViewController: UIViewController {
         
     }
     
-    //MARK: - Helpers
+    
+    // MARK: - API
+    
+    func fetchNotices() {
+        NoticeService.shared.fetchNotices { notices in
+            self.notices = notices
+        }
+    }
+    
+    
+    // MARK: - Helpers
     
     func configureUI() {
+        
+        fetchNotices()
         
         customNavBar.delegate = self
         
@@ -89,15 +105,19 @@ class NoticeViewController: UIViewController {
 
 extension NoticeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list.count
+        return notices.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! NoticeCell
         
-        let lists = list[indexPath.row]
-        cell.noticeListTitle.text = lists.title
-        cell.noticeListDate.text = lists.date
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월 dd일"
+        
+        let notice = notices[indexPath.row]
+        cell.noticeListTitle.text = notice.title
+        cell.noticeListDate.text = formatter.string(from: notice.timestamp)
+        
         cell.accessoryType = .disclosureIndicator
         cell.backgroundColor = UIColor(named: "color_all_viewBackground")
         return cell
@@ -131,7 +151,7 @@ extension NoticeViewController: UITableViewDelegate {
 //
 //        default: print("DEBUG: error")
 //        }
-        let controller = NoticeDetailViewController()
+        let controller = NoticeDetailViewController(notice: notices[indexPath.row])
         navigationController?.pushViewController(controller, animated: true)
     }
 }

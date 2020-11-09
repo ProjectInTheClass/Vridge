@@ -285,6 +285,9 @@ extension HomeViewController: UITableViewDataSource {
         cell.collectionView.isHidden = posts[indexPath.row].isReported
         cell.profileImageView.isHidden = posts[indexPath.row].isReported
         cell.reportButton.isHidden = posts[indexPath.row].isReported
+        cell.username.isHidden = posts[indexPath.row].isReported
+        cell.type.isHidden = posts[indexPath.row].isReported
+        cell.time.isHidden = posts[indexPath.row].isReported
         
         
         // 컬렉션뷰를 stack view에 추가한 후, 스택뷰에 있는 모든 요소들을 hidden 시키면 어떻게 될까.
@@ -316,12 +319,16 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 600
+        return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.estimatedRowHeight
-    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 600
+//    }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return tableView.estimatedRowHeight
+//    }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         

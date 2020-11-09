@@ -12,7 +12,6 @@ class NoticeCell: UITableViewCell {
     
     // MARK: - Properties
     
-    
     let noticeListTitle: UILabel = {
         let label = UILabel()
         label.font = UIFont.SFRegular(size: 16)

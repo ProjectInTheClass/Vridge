@@ -181,7 +181,8 @@ extension RankingViewController: UITableViewDataSource {
         cell.profileImage.kf.setImage(with: currentDataSource[indexPath.row + 3].profileImageURL)
         cell.pointLabel.text = "\(currentDataSource[indexPath.row + 3].point)"
         cell.type.text = "@\(currentDataSource[indexPath.row + 3].type ?? "")"
-        cell.type.textColor = Type.shared.typeColor(typeName: currentDataSource[indexPath.row + 3].type ?? "")
+        cell.type.textColor = currentDataSource[indexPath.row + 3].vegieType?.typeColor
+//        cell.type.textColor = Type.shared.typeColor(typeName: currentDataSource[indexPath.row + 3].type ?? "")
         
         return cell
     }
