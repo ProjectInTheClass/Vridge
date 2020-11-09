@@ -13,6 +13,10 @@ class MyPostViewController: UIViewController {
 
     // MARK: - Properties
     
+    var myPosts = [Post]() {
+        didSet { collectionView.reloadData() }
+    }
+    
     let customNavBar = CustomNavBar()
     
     let collectionView : UICollectionView = {
@@ -20,10 +24,10 @@ class MyPostViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         return cv
     }()
-
     
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customNavBar.titleLabel.text = "내 게시글"
@@ -45,6 +49,10 @@ class MyPostViewController: UIViewController {
     // MARK: - Helpers
         
     func configureUI() {
+        
+        PostService.shared.fetchMyPosts { posts in
+            self.myPosts = posts
+        }
         
         customNavBar.delegate = self
         
@@ -69,14 +77,15 @@ class MyPostViewController: UIViewController {
 
 extension MyPostViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return myPosts.count
         // images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MyPostCell
-        cell.backgroundColor = .red
+//        cell.backgroundColor = .red
 //        cell.myPostImage.image = images[indexPath.row]
+        cell.myPostImage.kf.setImage(with: URL(string: myPosts[indexPath.item].images[0]))
         return cell
         
     }

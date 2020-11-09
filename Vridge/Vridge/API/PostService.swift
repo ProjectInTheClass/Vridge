@@ -214,7 +214,7 @@ struct PostService {
     
     // 모든 게시글 다 보기
     func fetchPosts(completion: @escaping([Post]) -> Void) {
-        var post = [Post]()
+        var posts = [Post]()
         
         REF_POSTS.queryLimited(toLast: UInt(POST_LOAD_AT_ONCE)).observe(.childAdded) { snapshot in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
@@ -223,9 +223,9 @@ struct PostService {
             
             UserService.shared.fetchUser(uid: uid) { user in
                 
-                let posts = Post(user: user, postID: postID, dictionary: dictionary)
-                post.append(posts)
-                completion(post)
+                let post = Post(user: user, postID: postID, dictionary: dictionary)
+                posts.append(post)
+                completion(posts)
             }
         }
     }
@@ -246,6 +246,35 @@ struct PostService {
                 if post.count == upto {
                     completion(post)
                 }
+            }
+        }
+    }
+    
+    func fetchMyPosts(completion: @escaping([Post]) -> Void) {
+        var posts = [Post]()
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_POSTS.child(uid).observe(.childAdded) { snapshot in
+            let postID = snapshot.key
+            
+            REF_POSTS.child(postID).observeSingleEvent(of: .value) { snapshot in
+                self.fetchPosts(withPostID: postID) { post in
+                    posts.append(post)
+                    completion(posts)
+                }
+            }
+        }
+    }
+    
+    func fetchPosts(withPostID postID: String, completion: @escaping(Post) -> Void) {
+        REF_POSTS.child(postID).observeSingleEvent(of: .value) { snapshot in
+            
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            guard let uid = dictionary["uid"] as? String else { return }
+            
+            UserService.shared.fetchUser(uid: uid) { user in
+                let post = Post(user: user, postID: postID, dictionary: dictionary)
+                completion(post)
             }
         }
     }
