@@ -192,7 +192,6 @@ class HomeViewController: UIViewController {
                 self.tableView.scrollToRow(at: IndexPath(item: from - 1, section: 0), at: .bottom, animated: true)
             }
         }
-        
     }
     
     
@@ -386,6 +385,5 @@ extension HomeViewController: ActionSheetViewModelDelegate {
         print("DEBUG: delegate passed to HOmeVIewCOntroller")
         self.tableView.reloadData()
     }
-    
     
 }

@@ -17,7 +17,7 @@ class MyPageViewController: UIViewController {
 
     let tableView = UITableView(frame: .zero, style: .grouped)
     let firstSectionMenu = ["공지사항", "브릿지란?", "앱 버전 1.0.0"]
-    let secondSectionMenu = ["프로필 수정", "로그아웃"]
+    var secondSectionMenu = ["프로필 수정", "로그아웃"]
     
     var user: User? {
         didSet { tableView.reloadData(); print("DEBUG: user name is == \(user?.username)") }
@@ -57,13 +57,16 @@ class MyPageViewController: UIViewController {
     // MARK: - API
     
     func fetchUser() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.uid else {
+            secondSectionMenu = ["로그인"]
+            return
+        }
         UserService.shared.fetchUser(uid: uid) { user in
             self.user = user
         }
     }
     
-
+    
     // MARK: - Helpers
     
     func configureUI() {
@@ -87,13 +90,13 @@ class MyPageViewController: UIViewController {
         backView.backgroundColor = user?.vegieType?.typeColor ?? .vridgeGreen
         
         guard let user = user else {
-            let topHeader = TopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: nil)
+            let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: nil)
             tableView.tableHeaderView = topHeader
             topHeader.delegate = self
             topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
             return
         }
-        let topHeader = TopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: user)
+        let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: user)
         tableView.tableHeaderView = topHeader
         topHeader.delegate = self
         topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
@@ -167,18 +170,41 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
         } else {
-            switch indexPath.row {
-            case 0:
-                let controller = EditProfileViewController()
-                navigationController?.pushViewController(controller, animated: true)
+            
+            if Auth.auth().currentUser == nil {
+                let loginController = LoginViewController()
+                loginController.modalPresentationStyle = .fullScreen
+                present(loginController, animated: true, completion: nil)
                 
-            case 1:
-                let alert = UIAlertController(title: logOutTitle, message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: logOutAnswer, style: .destructive, handler: { action in /*action 할 메서드나 코드 넣으면됨 여기에다가 */}))
-                alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
-                self.present(alert, animated: true)
-
-            default: print("DEBUG: error")
+            } else {
+                
+                switch indexPath.row {
+                case 0:
+                    let controller = EditProfileViewController()
+                    navigationController?.pushViewController(controller, animated: true)
+                    fetchUser()
+                case 1:
+                    let alert = UIAlertController(title: logOutTitle, message: "", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: logOutAnswer, style: .destructive, handler: { action in
+                        do {
+                            try Auth.auth().signOut()
+                            self.dismiss(animated: true) {
+                                self.user = nil
+                                let nav = UINavigationController(rootViewController: LoginViewController())
+                                nav.modalPresentationStyle = .fullScreen
+                                self.fetchUser()
+                                self.tableView.reloadData()
+                                self.present(nav, animated: true, completion: nil)
+                            }
+                        } catch (let err) {
+                            print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
+                        }
+                    }))
+                    alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
+                    self.present(alert, animated: true)
+                    
+                default: print("DEBUG: error")
+                }
             }
         }
     }
@@ -200,11 +226,18 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-extension MyPageViewController: TopHeaderViewDelegate {
+extension MyPageViewController: MyPageTopHeaderViewDelegate {
     
     func seeMyPostButtonTapped() {
-        let controller = MyPostViewController()
-        navigationController?.pushViewController(controller, animated: true)
+        
+        if Auth.auth().currentUser == nil {
+            print("DEBUG: no user exist")
+            let viewModel = ActionSheetViewModel()
+            present(viewModel.pleaseLogin(self), animated: true, completion: nil)
+        } else {
+            let controller = MyPostViewController()
+            navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     

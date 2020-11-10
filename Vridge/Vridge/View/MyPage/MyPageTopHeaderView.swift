@@ -7,15 +7,15 @@
 
 import UIKit
 
-protocol TopHeaderViewDelegate: class {
+protocol MyPageTopHeaderViewDelegate: class {
     func seeMyPostButtonTapped()
 }
 
-class TopHeaderView: UIView {
+class MyPageTopHeaderView: UIView {
     
     // MARK: - Properties
     
-    weak var delegate: TopHeaderViewDelegate?
+    weak var delegate: MyPageTopHeaderViewDelegate?
     
     var user: User? {
         didSet { print("DEBUG: user set === name is \(user?.username)") }
@@ -29,7 +29,7 @@ class TopHeaderView: UIView {
     
     let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "배주현" // 유저 네임 받아와야 함
+//        label.text = "배주현" // 유저 네임 받아와야 함
         label.font = UIFont.SFBold(size: 25)
         label.textColor = .white
         return label
@@ -37,7 +37,7 @@ class TopHeaderView: UIView {
     
     let typeLabel: UILabel = {
         let label = UILabel()
-        label.text = "@vegan | 채소, 과일" // 유저 채식 타입 받아와야 함
+//        label.text = "@vegan | 채소, 과일" // 유저 채식 타입 받아와야 함
         label.font = UIFont.SFSemiBold(size: 16)
         label.textColor = .white
         return label
