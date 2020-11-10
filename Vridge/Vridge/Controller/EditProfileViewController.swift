@@ -89,7 +89,7 @@ class EditProfileViewController: UIViewController {
     func configureUI() {
         
         tableView.backgroundColor = UIColor(named: "color_all_viewBackground")
-        view.backgroundColor = UIColor(named: "color_all_viewBackground")
+        view.backgroundColor = UIColor(named: headerBackgroundColor)
         
         customNavBar.delegate = self
         imagePicker.delegate = self

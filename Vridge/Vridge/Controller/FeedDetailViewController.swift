@@ -7,12 +7,18 @@
 
 import UIKit
 
+protocol FeedDetailViewDelegate: class {
+    func reloadMyFeeds()
+}
+
 private let tableViewCellID = "CellID"
 private let tableHeaderID = "HeaderID"
 
 class FeedDetailViewController: UIViewController {
     
     // MARK: - Properties
+    
+    weak var delegate: FeedDetailViewDelegate?
     
     private let tableView = UITableView()
     
@@ -41,7 +47,7 @@ class FeedDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         configureUI()
     }
     
@@ -55,7 +61,7 @@ class FeedDetailViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-                
+        
         navigationController?.navigationBar.isHidden = false
         tabBarController?.tabBar.isHidden = false
     }
@@ -80,7 +86,7 @@ class FeedDetailViewController: UIViewController {
         refetchData()
     }
     
-
+    
     // MARK: - Helpers
     
     func configureUI() {
@@ -177,9 +183,27 @@ extension FeedDetailViewController: FeedDetailHeaderDelegate {
             }
             
         }
+        // 1. DB에서 삭제
+        // 2. 내 게시글 다시 불러오기, 새로고침 -> 뒤로가기
         let deleteButton = UIAlertAction(title: deleteButtonTitle, style: .destructive) { _ in
-            
+            let deleteAlert = UIAlertController(title: deleteAlertTitle,
+                                                message: deleteAlertMessage,
+                                                preferredStyle: .alert)
+            let noButton = UIAlertAction(title: no, style: .default, handler: nil)
+            let okButton = UIAlertAction(title: yes, style: .destructive) { _ in
+                // delete service
+                PostService.shared.deletePostFromMyPost(post: self.post) { (err, ref) in
+                    self.delegate?.reloadMyFeeds()
+                    NotificationCenter.default.post(name: Notification.Name("refetchPosts"), object: nil)
+                    self.navigationController?.popViewController(animated: true)
+                    print("DEBUG: 삭제 완료 !!")
+                }
+            }
+            deleteAlert.addAction(noButton)
+            deleteAlert.addAction(okButton)
+            self.present(deleteAlert, animated: true, completion: nil)
         }
+        
         let cancelButton = UIAlertAction(title: cancel, style: .cancel, handler: nil)
         
         alert.addAction(amendButton)

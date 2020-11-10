@@ -1,17 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "icMypostEmptystates-1.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "light"
-        }
-      ],
       "filename" : "icMypostEmptystates.png",
       "idiom" : "universal",
       "scale" : "1x"
@@ -20,15 +9,26 @@
       "appearances" : [
         {
           "appearance" : "luminosity",
-          "value" : "dark"
+          "value" : "light"
         }
       ],
-      "filename" : "imgMypostEmptystate.png",
+      "filename" : "icMypostEmptystates-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icMypostEmptystates@2x-1.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "imgMypostEmptystate-1.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "icMypostEmptystates@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -39,7 +39,7 @@
           "value" : "light"
         }
       ],
-      "filename" : "icMypostEmptystates@2x.png",
+      "filename" : "icMypostEmptystates@2x-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -50,7 +50,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "imgMypostEmptystate@2x.png",
+      "filename" : "imgMypostEmptystate@2x-2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
@@ -77,7 +77,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "imgMypostEmptystate@3x.png",
+      "filename" : "imgMypostEmptystate@3x-1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

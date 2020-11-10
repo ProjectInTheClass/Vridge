@@ -180,4 +180,22 @@ struct AuthService {
         }
 //        REF_USER_POSTS.child(uid).removeValue()
     }
+    
+    func logOut(viewController: UIViewController) {
+        do {
+            try Auth.auth().signOut()
+            viewController.dismiss(animated: true) {
+                let nav = UINavigationController(rootViewController: LoginViewController())
+                nav.modalPresentationStyle = .fullScreen
+                viewController.present(nav, animated: true) {
+                    guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+                    guard let tab = window.rootViewController as? MainTabBarController else { return }
+                    tab.user = nil
+//                    tab.fetchUser()
+                }
+            }
+        } catch (let err) {
+            print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
+        }
+    }
 }

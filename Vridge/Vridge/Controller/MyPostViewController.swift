@@ -25,6 +25,30 @@ class MyPostViewController: UIViewController {
         return cv
     }()
     
+    let emptyStateImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "imgMypostEmptystate")
+        return iv
+    }()
+    
+    let emptyStateLabel1: UILabel = {
+        let label = UILabel()
+        label.text = "아직 작성한 게시글이 없네요."
+        label.textAlignment = .center
+        label.font = UIFont.SFSemiBold(size: 15)
+        label.textColor = .vridgeGray
+        return label
+    }()
+    
+    let emptyStateLabel2: UILabel = {
+        let label = UILabel()
+        label.text = "오늘 하루 채식 식단을 인증해주세요!"
+        label.textAlignment = .center
+        label.font = UIFont.SFSemiBold(size: 13)
+        label.textColor = .vridgeGray
+        return label
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -71,10 +95,19 @@ class MyPostViewController: UIViewController {
                                                name: Notification.Name("fetchAgain"), object: nil)
         fetchMyPost()
         
+        view.backgroundColor = UIColor(named: headerBackgroundColor)
+        
         customNavBar.delegate = self
+        
+        let labelStack = UIStackView(arrangedSubviews: [emptyStateLabel1, emptyStateLabel2])
+        labelStack.spacing = 12
+        labelStack.alignment = .center
+        labelStack.axis = .vertical
         
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.addSubview(emptyStateImageView)
+        collectionView.addSubview(labelStack)
         
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         navigationController?.navigationBar.backIndicatorImage = UIImage()
@@ -86,8 +119,13 @@ class MyPostViewController: UIViewController {
         view.addSubview(customNavBar)
         view.addSubview(collectionView)
         
-        customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 44)
-        collectionView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            right: view.rightAnchor, height: 44)
+        collectionView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor,
+                              bottom: view.bottomAnchor, right: view.rightAnchor)
+        emptyStateImageView.centerX(inView: collectionView, topAnchor: collectionView.topAnchor, paddingTop: 186)
+        labelStack.centerX(inView: collectionView, topAnchor: emptyStateImageView.bottomAnchor, paddingTop: 23)
+        
     }
 
 }
@@ -103,6 +141,17 @@ extension MyPostViewController : UICollectionViewDataSource {
 //        cell.backgroundColor = .red
 //        cell.myPostImage.image = images[indexPath.row]
         cell.myPostImage.kf.setImage(with: URL(string: myPosts[indexPath.item].images[0]))
+        
+        if myPosts.count == 0 {
+            emptyStateImageView.isHidden = false
+            emptyStateLabel1.isHidden = false
+            emptyStateLabel2.isHidden = false
+        } else {
+            emptyStateImageView.isHidden = true
+            emptyStateLabel1.isHidden = true
+            emptyStateLabel2.isHidden = true
+        }
+        
         return cell
         
     }
@@ -115,6 +164,7 @@ extension MyPostViewController : UICollectionViewDelegate {
         collectionView.deselectItem(at: indexPath, animated: true)
         
         let controller = FeedDetailViewController(post: myPosts[indexPath.item], index: indexPath.item)
+        controller.delegate = self
         navigationController?.pushViewController(controller, animated: true)
     }
     
@@ -152,4 +202,13 @@ extension MyPostViewController : UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true // 스와이핑으로 뒤로 가기
     }
+}
+
+extension MyPostViewController: FeedDetailViewDelegate {
+    
+    func reloadMyFeeds() {
+        fetchMyPost()
+    }
+    
+    
 }

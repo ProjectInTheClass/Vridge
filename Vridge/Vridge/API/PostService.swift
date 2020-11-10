@@ -333,38 +333,57 @@ struct PostService {
     
     func deletePost(row: Int, viewController: HomeViewController, postId: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-        REF_POSTS.child(postId).removeValue { (err, ref) in
-            REF_USER_POSTS.child(uid).child(postId).removeValue { (err, ref) in
-                
-                for i in 0...2 {
-                    STORAGE_POST_IMAGES.child("\(i)" + postId).delete { err in
+        UserService.shared.fetchUser(uid: uid) { user in
+            
+            REF_POSTS.child(postId).removeValue { (err, ref) in
+                REF_USER_POSTS.child(uid).child(postId).removeValue { (err, ref) in
+                    
+                    for i in 0...2 {
+                        STORAGE_POST_IMAGES.child("\(i)" + postId).delete { err in
+                        }
                     }
-                }
-                
-                UserService.shared.fetchUser(uid: uid) { user in
-                    DB_REF.child("\(user.vegieType!.rawValue)-posts").child(postId).removeValue { (err, ref) in
-                        pointDown(completion: completion)
-                        print("DEBUG: SUCCESSFULLY DELETE POST")
-                        viewController.posts.remove(at: row)
+                    
+                    UserService.shared.fetchUser(uid: uid) { user in
+                        DB_REF.child("\(user.vegieType!.rawValue)-posts").child(postId).removeValue { (err, ref) in
+                            pointDown(completion: completion)
+                            print("DEBUG: SUCCESSFULLY DELETE POST")
+                            viewController.posts.remove(at: row)
+                        }
                     }
                 }
             }
-            
+        }
+        
+    }
+    
+    func deletePostFromMyPost(post: Post, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        REF_POSTS.child(post.postID).removeValue { (err, ref) in
+            REF_USER_POSTS.child(post.user.uid).child(post.postID).removeValue { (err, ref) in
+                
+                for i in 0...2 {
+                    STORAGE_POST_IMAGES.child("\(i)" + post.postID).delete { err in
+                    }
+                }
+                
+                DB_REF.child("\(post.user.vegieType!.rawValue)-posts").child(post.postID)
+                    .removeValue(completionBlock: completion)
+            }
         }
     }
     
     func amendPost(post: Post, completion: @escaping([String: Any]) -> Void) {
         var component = [String: Any]()
         
-        REF_POSTS.child(post.postID).observe(.value) { snapshot in
-            guard let dictionary = snapshot.value as? [String: Any] else { return }
-            component["caption"] = dictionary["caption"]
-            component["timestamp"] = dictionary["timestamp"]
-            component["uid"] = dictionary["uid"]
-            component["images"] = dictionary["images"]
-            
-            completion(component)
+        UserService.shared.fetchUser(uid: post.user.uid) { user in
+            REF_POSTS.child(post.postID).observe(.value) { snapshot in
+                guard let dictionary = snapshot.value as? [String: Any] else { return }
+                component["caption"] = dictionary["caption"]
+                component["timestamp"] = dictionary["timestamp"]
+                component["uid"] = dictionary["uid"]
+                component["images"] = dictionary["images"]
+                
+                completion(component)
+            }
         }
     }
     
@@ -373,8 +392,13 @@ struct PostService {
                       "images": post.images,
                       "uid": post.user.uid,
                       "timestamp": post.timestamp.timeIntervalSince1970] as [String: Any]
+        UserService.shared.fetchUser(uid: post.user.uid) { user in
+            REF_POSTS.child(post.postID).updateChildValues(values) { (err, ref) in
+                DB_REF.child("\(user.vegieType!.rawValue)-posts").child(post.postID).updateChildValues(values, withCompletionBlock: completion)
+            }
+        }
         
-        REF_POSTS.child(post.postID).updateChildValues(values, withCompletionBlock: completion)
+        
     }
     
     // 수정할 특정 포스트 가져오기

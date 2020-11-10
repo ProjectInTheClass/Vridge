@@ -20,7 +20,7 @@ class MyPageViewController: UIViewController {
     var secondSectionMenu = ["프로필 수정", "로그아웃"]
     
     var user: User? {
-        didSet { tableView.reloadData(); print("DEBUG: user name is ==== \(user?.username)") }
+        didSet { tableView.reloadData() }
     }
     
     let customNavBar = CustomNavBar()
@@ -66,7 +66,7 @@ class MyPageViewController: UIViewController {
     
     func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else {
-//            secondSectionMenu = ["로그인"]
+            secondSectionMenu = ["로그인"]
             user = nil
             return
         }
@@ -103,18 +103,27 @@ class MyPageViewController: UIViewController {
                         height: view.frame.height / 2)
         backView.backgroundColor = user?.vegieType?.typeColor ?? .vridgeGreen
         
-        guard let user = user else {
-            let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: nil)
-            tableView.tableHeaderView = topHeader
-            topHeader.usernameLabel.text = self.user?.username ?? "로그인이 필요해요"
-            topHeader.delegate = self
-            topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
-            return
-        }
-        let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: user)
+//        guard let user = user else {
+//            let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: nil)
+//            tableView.tableHeaderView = topHeader
+//            topHeader.usernameLabel.text = self.user?.username ?? "로그인이 필요해요"
+//            topHeader.delegate = self
+//            topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
+//            return
+//        }
+//        let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: user)
+//        tableView.tableHeaderView = topHeader
+//        topHeader.delegate = self
+//        topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
+        
+        let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265),
+                                            user: user)
         tableView.tableHeaderView = topHeader
+        topHeader.usernameLabel.text = user?.username ?? "로그인이 필요해요"
         topHeader.delegate = self
         topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
+        
+        
     }
 
 
@@ -186,12 +195,12 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             
         } else {
             
-//            if Auth.auth().currentUser == nil {
-//                let loginController = LoginViewController()
-//                loginController.modalPresentationStyle = .fullScreen
-//                present(loginController, animated: true, completion: nil)
-//                
-//            } else {
+            if Auth.auth().currentUser == nil {
+                let loginController = LoginViewController()
+                loginController.modalPresentationStyle = .fullScreen
+                present(loginController, animated: true, completion: nil)
+                
+            } else {
                 
                 switch indexPath.row {
                 case 0:
@@ -201,26 +210,14 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 case 1:
                     let alert = UIAlertController(title: logOutTitle, message: "", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: logOutAnswer, style: .destructive, handler: { action in
-                        do {
-                            try Auth.auth().signOut()
-                            self.dismiss(animated: true) {
-//                                self.fetchUser()
-                                let nav = UINavigationController(rootViewController: LoginViewController())
-                                nav.modalPresentationStyle = .fullScreen
-                                self.present(nav, animated: true) {
-                                    self.fetchUser()
-                                }
-                            }
-                        } catch (let err) {
-                            print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
-                        }
+                        AuthService.shared.logOut(viewController: self)
                     }))
                     alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
                     self.present(alert, animated: true)
                     
                 default: print("DEBUG: error")
                 }
-//            }
+            }
         }
     }
     

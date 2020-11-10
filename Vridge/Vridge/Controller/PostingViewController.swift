@@ -99,6 +99,13 @@ class PostingViewController: UIViewController {
         return av
     }()
     
+    private let blackView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0.5
+        return view
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -162,12 +169,17 @@ class PostingViewController: UIViewController {
                 
                 view.addSubview(indicator)
                 indicator.center(inView: view)
-                self.uploadButton.isEnabled = false
+                uploadButton.isEnabled = false
+                textView.isUserInteractionEnabled = false
+                showBlackView()
                 
                 guard let caption = textView.text else { return }
                 guard let images = images else { return }
                 PostService.shared.uploadPost(caption: caption, photos: images,
                                               indicator: indicator, view: self) { (err, ref) in
+                    
+                    self.showBlackView()
+                    
                     self.delegate?.fetchUserAgain()
                     NotificationCenter.default.post(name: Notification.Name("cellToFirst"), object: nil)
                 }
@@ -177,11 +189,16 @@ class PostingViewController: UIViewController {
             view.addSubview(indicator)
             indicator.center(inView: view)
             self.uploadButton.isEnabled = false
+            textView.isUserInteractionEnabled = false
+            showBlackView()
             
             guard let caption = textView.text else { return }
             guard let post = post else  { return }
             let controller = HomeViewController()
             PostService.shared.amendUploadPost(viewController: controller, caption: caption, post: post) { (err, ref) in
+            
+                self.showBlackView()
+                
                 NotificationCenter.default.post(name: Notification.Name("fetchAgain"), object: nil)
                 self.dismiss(animated: true, completion: nil)
             }
@@ -250,6 +267,12 @@ class PostingViewController: UIViewController {
             self.collectionView.reloadData()
             self.picker.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    func showBlackView() {
+        print("DEBUG: black view should show up")
+        view.addSubview(blackView)
+        blackView.addConstraintsToFillView(view)
     }
 }
 

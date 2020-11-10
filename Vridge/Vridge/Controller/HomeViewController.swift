@@ -174,6 +174,9 @@ class HomeViewController: UIViewController {
                 
                 if let index = self.posts.firstIndex(where: { $0.postID == post.postID }) {
                     self.posts[index].isReported = true
+//                    if self.posts[index].isReported {
+//                        self.posts.remove(at: index)
+//                    }
                 }
             }
         }
@@ -216,6 +219,11 @@ class HomeViewController: UIViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    @objc func refetchPosts() {
+        fetchPosts()
+        print("DEBUG: refetch posts form Home View Controller")
+    }
+    
     
     // MARK: - Helpers
     
@@ -249,6 +257,10 @@ class HomeViewController: UIViewController {
         
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refetchPosts),
+                                               name: Notification.Name("refetchPosts"),
+                                               object: nil)
         
     }
     
@@ -287,9 +299,12 @@ extension HomeViewController: UITableViewDataSource {
         cell.username.isHidden = posts[indexPath.row].isReported
         cell.type.isHidden = posts[indexPath.row].isReported
         cell.time.isHidden = posts[indexPath.row].isReported
+//        cell.pageControl.isHidden = posts[indexPath.row].isReported
         
-        
-        // 컬렉션뷰를 stack view에 추가한 후, 스택뷰에 있는 모든 요소들을 hidden 시키면 어떻게 될까.
+        if posts[indexPath.row].isReported {
+            // array에서 없애버리기
+//            posts.remove(at: indexPath.row)
+        }
         
         return cell
     }
