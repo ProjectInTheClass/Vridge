@@ -23,14 +23,27 @@ private let cellID = "Cell"
 class NoticeDetailViewController: UIViewController {
 
     // MARK: - Properties
+    
+    var notice: Notice
+    
     let tableView = UITableView()
     
     let customNavBar = CustomNavBar()
     
-    var notice: [noticeContent] = [
-        noticeContent(title: "[공지] 채식 인증 챌린지 서비스 Vridge 런칭!", date: "2020.11.30", content: "안녕하세요. Team Vridge입니다. \n채식 입문자들을 위한 채식 인증 챌린지 서비스Vridge가 드디어 세상에 나오게 되었습니다! \n \n어떻게 하면 채식 입문자들이 쉽게 채식을 지속할 수 있을까? 라는 생각을 바탕으로 많은 고민과 노력 끝에 나온 저희의 자식같은 서비스입니다. \n많은 사용과 관심 부탁드립니다 :) \n감사합니다💚" )]
+//    var notice: [noticeContent] = [
+//        noticeContent(title: "[공지] 채식 인증 챌린지 서비스 Vridge 런칭!", date: "2020.11.30", content: "안녕하세요. Team Vridge입니다. \n채식 입문자들을 위한 채식 인증 챌린지 서비스Vridge가 드디어 세상에 나오게 되었습니다! \n \n어떻게 하면 채식 입문자들이 쉽게 채식을 지속할 수 있을까? 라는 생각을 바탕으로 많은 고민과 노력 끝에 나온 저희의 자식같은 서비스입니다. \n많은 사용과 관심 부탁드립니다 :) \n감사합니다💚" )]
+    
     
     // MARK: - Lifecycle
+    
+    init(notice: Notice) {
+        self.notice = notice
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,13 +103,15 @@ extension NoticeDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! NoticeDetailCell
         
-        let contents = notice[indexPath.row]
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월 dd일"
+        
         if indexPath.section == 0 {
-            cell.noticeDetailTitle.text = contents.title
-            cell.noticeDetailDate.text = contents.date
+            cell.noticeDetailTitle.text = notice.title
+            cell.noticeDetailDate.text = formatter.string(from: notice.timestamp)
             
         } else {
-            cell.noticeDetailContent.text = contents.content
+            cell.noticeDetailContent.text = notice.content
             
         }
         return cell
@@ -111,7 +126,6 @@ extension NoticeDetailViewController: UITableViewDataSource {
             let header = NoticeDetailHeader()
             return header
         }
-       
     }
     
 }

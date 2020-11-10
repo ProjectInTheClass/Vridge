@@ -16,6 +16,7 @@ struct Post {
     var likes: Int
     var timestamp: Date!
     var didLike = false
+    var isReported = false
     
     init(user: User, postID: String, dictionary: [String: Any]) {
         

@@ -19,7 +19,7 @@ struct ActionSheetViewModel {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let amendButton = UIAlertAction(title: amendTitle, style: .default) { _ in
             // amend service
-            PostService.shared.amendPost(row: row, viewController: viewController, post: post) { posts in
+            PostService.shared.amendPost(post: post) { posts in
                 let controller = PostingViewController(config: .amend(post), post: post)
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
@@ -50,24 +50,24 @@ struct ActionSheetViewModel {
         return alert
     }
     
-    func reportActionSheet(_ viewController: HomeViewController, post: Post) -> UIAlertController {
+    func reportActionSheet(_ viewController: HomeViewController, post: Post, row: Int) -> UIAlertController {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let reportButton = UIAlertAction(title: reportButtonTitle, style: .default) { _ in
             let alert = UIAlertController(title: reasonToReportTitle, message: nil, preferredStyle: .actionSheet)
             let sexualHarass = UIAlertAction(title: sexualHarassTitle, style: .default) { _ in
-                viewController.showReportAlert()
+                reportPost(post: post, viewController: viewController, row: row)
             }
             let swear = UIAlertAction(title: swearTitle, style: .default) { _ in
-                viewController.showReportAlert()
+                reportPost(post: post, viewController: viewController, row: row)
             }
             let fraud = UIAlertAction(title: fraudTitle, style: .default) { _ in
-                viewController.showReportAlert()
+                reportPost(post: post, viewController: viewController, row: row)
             }
             let advertise = UIAlertAction(title: advertiseTitle, style: .default) { _ in
-                viewController.showReportAlert()
+                reportPost(post: post, viewController: viewController, row: row)
             }
             let nonsense = UIAlertAction(title: nonsenseTitle, style: .default) { _ in
-                viewController.showReportAlert()
+                reportPost(post: post, viewController: viewController, row: row)
             }
             let cancelButton = UIAlertAction(title: cancel, style: .cancel, handler: nil)
             alert.addAction(sexualHarass)
@@ -82,6 +82,15 @@ struct ActionSheetViewModel {
         alert.addAction(reportButton)
         alert.addAction(cancelButton)
         return alert
+    }
+    
+    func reportPost(post: Post, viewController: HomeViewController, row: Int) {
+        PostService.shared.reportPost(post: post) { (err, ref) in
+            viewController.showReportAlert()
+            viewController.loadMore(row: row)
+            viewController.tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: .bottom, animated: true)
+            print("DEBUG: row === \(row)")
+        }
     }
     
     func photoUploadAlert(_ viewController: UIViewController) -> UIAlertController {

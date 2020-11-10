@@ -13,6 +13,7 @@ class MyPostCell: UICollectionViewCell {
     
     let myPostImage : UIImageView = {
         let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
         return iv
     }()
     
@@ -21,7 +22,7 @@ class MyPostCell: UICollectionViewCell {
         super.init(frame: frame)
         
         addSubview(myPostImage)
-        
+        myPostImage.addConstraintsToFillView(self)
         
     }
     

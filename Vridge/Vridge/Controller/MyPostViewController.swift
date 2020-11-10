@@ -13,6 +13,10 @@ class MyPostViewController: UIViewController {
 
     // MARK: - Properties
     
+    var myPosts = [Post]() {
+        didSet { collectionView.reloadData() }
+    }
+    
     let customNavBar = CustomNavBar()
     
     let collectionView : UICollectionView = {
@@ -20,10 +24,10 @@ class MyPostViewController: UIViewController {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         return cv
     }()
-
     
     
     // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customNavBar.titleLabel.text = "내 게시글"
@@ -42,9 +46,30 @@ class MyPostViewController: UIViewController {
         super.viewWillDisappear(true)
         tabBarController?.tabBar.isHidden = false
     }
+    
+    
+    // MARK: - API
+    
+    func fetchMyPost() {
+        PostService.shared.fetchMyPosts { posts in
+            self.myPosts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+        }
+    }
+    
+    
+    // MARK: - Selectors
+    
+    @objc func fetchAgain() {
+        fetchMyPost()
+    }
+    
     // MARK: - Helpers
         
     func configureUI() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
+                                               name: Notification.Name("fetchAgain"), object: nil)
+        fetchMyPost()
         
         customNavBar.delegate = self
         
@@ -69,14 +94,15 @@ class MyPostViewController: UIViewController {
 
 extension MyPostViewController : UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return myPosts.count
         // images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MyPostCell
-        cell.backgroundColor = .red
+//        cell.backgroundColor = .red
 //        cell.myPostImage.image = images[indexPath.row]
+        cell.myPostImage.kf.setImage(with: URL(string: myPosts[indexPath.item].images[0]))
         return cell
         
     }
@@ -88,7 +114,7 @@ extension MyPostViewController : UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         
-        let controller = MyPostDetailViewController()
+        let controller = FeedDetailViewController(post: myPosts[indexPath.item], index: indexPath.item)
         navigationController?.pushViewController(controller, animated: true)
     }
     

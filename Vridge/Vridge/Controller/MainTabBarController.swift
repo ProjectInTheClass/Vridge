@@ -17,8 +17,13 @@ class MainTabBarController: UITabBarController {
         didSet {
             guard let nav = viewControllers?[0] as? UINavigationController else { return }
             guard let home = nav.viewControllers.first as? HomeViewController else { return }
+            
+            guard let nav2 = viewControllers?[2] as? UINavigationController else { return }
+            guard let myPage = nav2.viewControllers.first as? MyPageViewController else { return }
+            
             home.delegates = self
             home.user = user
+            myPage.user = user
 //            if user?.type == "" { isVerified = false }
         }
     }
@@ -78,25 +83,25 @@ class MainTabBarController: UITabBarController {
         
         let actionSheetViewModel = ActionSheetViewModel()
         
-        //        if Auth.auth().currentUser == nil {
-        //            present(actionSheetViewModel.pleaseLogin(self), animated: true)
-        //        } else {
+        if Auth.auth().currentUser == nil {
+            present(actionSheetViewModel.pleaseLogin(self), animated: true)
+        } else {
         
-        //            let controller = PostingViewController(config: .post)
-        //            controller.delegate = self
-        //            let nav = UINavigationController(rootViewController: controller)
-        //            nav.modalPresentationStyle = .fullScreen
+            let controller = PostingViewController(config: .post)
+            controller.delegate = self
+            let nav = UINavigationController(rootViewController: controller)
+            nav.modalPresentationStyle = .fullScreen
         
-        let controller = LoginViewController()
-        controller.delegate = self
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
+//        let controller = LoginViewController()
+//        controller.delegate = self
+//        let nav = UINavigationController(rootViewController: controller)
+//        nav.modalPresentationStyle = .fullScreen
         
-        //        let controller = TestViewController()
-        //        let nav = UINavigationController(rootViewController: controller)
+//        let controller = TestViewController()
+//        let nav = UINavigationController(rootViewController: controller)
         
         present(nav, animated: true, completion: nil)
-        //        }
+                }
     }
     
     @objc func hidePostButton() {

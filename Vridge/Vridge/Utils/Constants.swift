@@ -25,16 +25,10 @@ let REF_USER_POSTS = DB_REF.child("user-posts")
 let REF_USERS = DB_REF.child("users")
 let REF_USER_POINT = DB_REF.child("user-point")
 let REF_USERNAMES = DB_REF.child("usernames")
+let REF_POST_REPORT = DB_REF.child("post-report")
+let REF_USER_REPORT = DB_REF.child("user-report")
 
-// type
-let REF_VEGAN = DB_REF.child("vegan")
-let REF_LACTO = DB_REF.child("lacto")
-let REF_OVO = DB_REF.child("ovo")
-let REF_LACTO_OVO = DB_REF.child("lacto-ovo")
-let REF_PESCO = DB_REF.child("pesco")
-let REF_POLLO = DB_REF.child("pollo")
-let REF_FRUITARIAN = DB_REF.child("fruitarian")
-let REF_FLEXITARIAN = DB_REF.child("flexitarian")
+let REF_NOTICE = DB_REF.child("notice")
 
 
 // MARK: -  Strings

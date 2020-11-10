@@ -185,10 +185,16 @@ struct PostService {
                         
                         REF_POSTS.child(postID).updateChildValues(values) { (err, ref) in
                             pointUp { (err, ref) in
-                                REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                                UserService.shared.fetchUser(uid: uid) { user in
+                                    DB_REF.child("\(user.vegieType!.rawValue)-posts").child(postID).updateChildValues(values) { (err, ref) in
+                                        REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
+                                        
+                                        indicator.stop()
+                                        view.dismiss(animated: true, completion: nil)
+                                    }
+                                }
                                 
-                                indicator.stop()
-                                view.dismiss(animated: true, completion: nil)
+                                
                             }
                         }
                     }
@@ -208,7 +214,7 @@ struct PostService {
     
     // 모든 게시글 다 보기
     func fetchPosts(completion: @escaping([Post]) -> Void) {
-        var post = [Post]()
+        var posts = [Post]()
         
         REF_POSTS.queryLimited(toLast: UInt(POST_LOAD_AT_ONCE)).observe(.childAdded) { snapshot in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
@@ -217,9 +223,9 @@ struct PostService {
             
             UserService.shared.fetchUser(uid: uid) { user in
                 
-                let posts = Post(user: user, postID: postID, dictionary: dictionary)
-                post.append(posts)
-                completion(post)
+                let post = Post(user: user, postID: postID, dictionary: dictionary)
+                posts.append(post)
+                completion(posts)
             }
         }
     }
@@ -240,6 +246,35 @@ struct PostService {
                 if post.count == upto {
                     completion(post)
                 }
+            }
+        }
+    }
+    
+    func fetchMyPosts(completion: @escaping([Post]) -> Void) {
+        var posts = [Post]()
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_POSTS.child(uid).observe(.childAdded) { snapshot in
+            let postID = snapshot.key
+            
+            REF_POSTS.child(postID).observeSingleEvent(of: .value) { snapshot in
+                self.fetchPosts(withPostID: postID) { post in
+                    posts.append(post)
+                    completion(posts)
+                }
+            }
+        }
+    }
+    
+    func fetchPosts(withPostID postID: String, completion: @escaping(Post) -> Void) {
+        REF_POSTS.child(postID).observeSingleEvent(of: .value) { snapshot in
+            
+            guard let dictionary = snapshot.value as? [String: Any] else { return }
+            guard let uid = dictionary["uid"] as? String else { return }
+            
+            UserService.shared.fetchUser(uid: uid) { user in
+                let post = Post(user: user, postID: postID, dictionary: dictionary)
+                completion(post)
             }
         }
     }
@@ -301,23 +336,25 @@ struct PostService {
         
         REF_POSTS.child(postId).removeValue { (err, ref) in
             REF_USER_POSTS.child(uid).child(postId).removeValue { (err, ref) in
-                // 여기에서 Storage에 저장되어있는 이미지도 삭제해주어야 함.
-                // STORAGE_POST_IMAGES
-                // 근데 파일 네임 어떻게 찾음?
                 
                 for i in 0...2 {
                     STORAGE_POST_IMAGES.child("\(i)" + postId).delete { err in
                     }
                 }
-                    pointDown(completion: completion)
-                    print("DEBUG: SUCCESSFULLY DELETE POST")
-                    viewController.posts.remove(at: row)
+                
+                UserService.shared.fetchUser(uid: uid) { user in
+                    DB_REF.child("\(user.vegieType!.rawValue)-posts").child(postId).removeValue { (err, ref) in
+                        pointDown(completion: completion)
+                        print("DEBUG: SUCCESSFULLY DELETE POST")
+                        viewController.posts.remove(at: row)
+                    }
                 }
-                    
+            }
+            
         }
     }
     
-    func amendPost(row: Int, viewController: HomeViewController, post: Post, completion: @escaping([String: Any]) -> Void) {
+    func amendPost(post: Post, completion: @escaping([String: Any]) -> Void) {
         var component = [String: Any]()
         
         REF_POSTS.child(post.postID).observe(.value) { snapshot in
@@ -347,6 +384,22 @@ struct PostService {
         REF_POSTS.child(postID).observe(.value) { snapshot in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             completion(dictionary)
+        }
+    }
+    
+    func reportPost(post: Post, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_REPORT.child(uid).updateChildValues([post.postID: 1]) { (err, ref) in
+            REF_POST_REPORT.child(post.postID).updateChildValues([uid: 1], withCompletionBlock: completion)
+        }
+    }
+    
+    func checkIfUserReportedPost(_ post: Post, completion: @escaping(Bool) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USER_REPORT.child(uid).child(post.postID).observeSingleEvent(of: .value) { snapshot in
+            completion(snapshot.exists())
         }
     }
     

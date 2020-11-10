@@ -7,15 +7,19 @@
 
 import UIKit
 
-protocol TopHeaderViewDelegate: class {
+protocol MyPageTopHeaderViewDelegate: class {
     func seeMyPostButtonTapped()
 }
 
-class TopHeaderView: UIView {
+class MyPageTopHeaderView: UIView {
     
     // MARK: - Properties
     
-    weak var delegate: TopHeaderViewDelegate?
+    weak var delegate: MyPageTopHeaderViewDelegate?
+    
+    var user: User? {
+        didSet { print("DEBUG: user set === name is \(user?.username)") }
+    }
     
     let typeColorView: UIView = {
         let view = UIView()
@@ -25,7 +29,7 @@ class TopHeaderView: UIView {
     
     let usernameLabel: UILabel = {
         let label = UILabel()
-        label.text = "배주현" // 유저 네임 받아와야 함
+//        label.text = "배주현" // 유저 네임 받아와야 함
         label.font = UIFont.SFBold(size: 25)
         label.textColor = .white
         return label
@@ -33,13 +37,13 @@ class TopHeaderView: UIView {
     
     let typeLabel: UILabel = {
         let label = UILabel()
-        label.text = "@vegan | 채소, 과일" // 유저 채식 타입 받아와야 함
+//        label.text = "@vegan | 채소, 과일" // 유저 채식 타입 받아와야 함
         label.font = UIFont.SFSemiBold(size: 16)
         label.textColor = .white
         return label
     }()
     
-    let profileBg : UIView = {
+    let profileBg: UIView = {
         let view = UIView()
         view.setDimensions(width: 48, height: 48)
         view.layer.cornerRadius = 48 / 2
@@ -107,7 +111,8 @@ class TopHeaderView: UIView {
     
     // MARK: - Lifecycle
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, user: User?) {
+        self.user = user
         super.init(frame: frame)
         
         configureUI()
@@ -128,7 +133,6 @@ class TopHeaderView: UIView {
     // MARK: - Helpers
     
     func configureUI() {
-        
         
         backgroundColor = UIColor(named: "color_all_viewBackground")
         
@@ -159,6 +163,14 @@ class TopHeaderView: UIView {
                                     paddingTop: 23, paddingLeft: 5)
         seeMyPostButton.anchor(top: whiteRect.topAnchor, right: whiteRect.rightAnchor,
                                paddingTop: 32, paddingRight: 28, width: 64, height: 64)
+        
+        usernameLabel.text = user?.username ?? "로그인을 해주세요"
+        typeColorView.backgroundColor = user?.vegieType?.typeColor ?? .vridgeGreen
+        typeLabel.text = user?.vegieType?.typeDescription ?? "@채식타입 | 채식 타입 설명"
+        if let profileImageURL = user?.profileImageURL {
+            profileImage.kf.setImage(with: profileImageURL)
+        }
+        myPostCountLabel.text = String(user?.point ?? 0)
         
     }
 

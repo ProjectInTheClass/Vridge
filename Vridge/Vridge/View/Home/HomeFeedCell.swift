@@ -31,7 +31,7 @@ class HomeFeedCell: UITableViewCell {
     
     var row: Int?
     
-    private lazy var profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.setDimensions(width: 45, height: 45)
         iv.layer.cornerRadius = 45 / 2
@@ -104,6 +104,21 @@ class HomeFeedCell: UITableViewCell {
         return button
     }()
     
+    let reportedLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.SFRegular(size: 32)
+        label.text = "이 게시글은 신고되었습니다."
+        label.textColor = .yellow
+        return label
+    }()
+    
+    let reportedView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        return view
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -142,16 +157,21 @@ class HomeFeedCell: UITableViewCell {
         addSubview(stack)
         addSubview(reportButton)
         
+        addSubview(reportedView)
+        reportedView.addSubview(reportedLabel)
+        
         profileImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 15, paddingLeft: 16)
-        stack.anchor(top: topAnchor, left: profileImageView.rightAnchor,
-                                   right: rightAnchor, paddingTop: 20, paddingLeft: 14,
-                                   paddingRight: 16)
+        stack.anchor(top: topAnchor, left: profileImageView.rightAnchor,right: rightAnchor,
+                     paddingTop: 20, paddingLeft: 14, paddingRight: 16)
         collectionView.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor,
                               paddingTop: 10, paddingLeft: 75, paddingRight: 16)
         pageControl.anchor(top: collectionView.bottomAnchor, bottom: bottomAnchor,
                            paddingTop: 4, paddingBottom: 4)
         pageControl.centerX(inView: collectionView)
         reportButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 11)
+        
+        reportedView.addConstraintsToFillView(self)
+        reportedLabel.center(inView: reportedView)
         
     }
     
@@ -189,8 +209,6 @@ class HomeFeedCell: UITableViewCell {
                 delegate?.reportButtonTapped(sender: posts, row: row)
             }
         }
-        
-        
     }
     
     @objc func handleImageTapped() {
@@ -209,6 +227,7 @@ class HomeFeedCell: UITableViewCell {
         pageControl.isHidden = numberOfPages == 1 ? true : false
         captionLabel.text = posts.caption
         captionLabel.isHidden = posts.caption == "" ? true : false
+//        collectionView.isHidden =
         username.text = posts.user.username
         
         type.text = "@\(posts.user.vegieType!.rawValue)"

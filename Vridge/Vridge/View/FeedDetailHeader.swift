@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol FeedDetailHeaderDelegate: class {
+    func reportButtonDidTap()
+}
+
 private let feedCell = "FeedCell"
 
 class FeedDetailHeader: UIView {
     
     // MARK: - Properties
+    
+    weak var delegate: FeedDetailHeaderDelegate?
     
     var post: Post
     
@@ -108,7 +114,7 @@ class FeedDetailHeader: UIView {
     }
     
     @objc func handleReportTapped() {
-        
+        delegate?.reportButtonDidTap()
     }
     
     
@@ -121,16 +127,18 @@ class FeedDetailHeader: UIView {
         userNameAndType.alignment = .leading
         userNameAndType.distribution = .fillProportionally
         
-        let stack = UIStackView(arrangedSubviews: [userNameAndType, time, captionLabel])
+        let stack = UIStackView(arrangedSubviews: [userNameAndType, time])
         stack.axis = .vertical
-        stack.setCustomSpacing(3, after: userNameAndType)
-        stack.setCustomSpacing(10, after: time)
+        stack.setCustomSpacing(4, after: userNameAndType)
+//        stack.setCustomSpacing(16, after: time)
         stack.alignment = .leading
         
         addSubview(profileImageView)
         addSubview(stack)
+        addSubview(captionLabel)
         addSubview(collectionView)
         addSubview(pageControl)
+        addSubview(reportButton)
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -138,13 +146,16 @@ class FeedDetailHeader: UIView {
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
         
-        profileImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 15, paddingLeft: 16)
+        profileImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 16, paddingLeft: 16)
         stack.anchor(top: topAnchor, left: profileImageView.rightAnchor, right: rightAnchor,
-                     paddingTop: 20, paddingLeft: 14, paddingRight: 16)
-        collectionView.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor,
-                              paddingTop: 10, paddingLeft: 16, paddingRight: 16)
-        pageControl.anchor(top: collectionView.bottomAnchor, paddingTop: 4)
+                     paddingTop: 21, paddingLeft: 14, paddingRight: 16)
+        captionLabel.anchor(top: stack.bottomAnchor, left: leftAnchor, right: rightAnchor,
+                            paddingTop: 12, paddingLeft: 16, paddingRight: 22)
+        collectionView.anchor(top: captionLabel.bottomAnchor, left: leftAnchor, right: rightAnchor,
+                              paddingTop: 12, paddingLeft: 16, paddingRight: 16)
+        pageControl.anchor(top: collectionView.bottomAnchor, paddingTop: 10)
         pageControl.centerX(inView: collectionView)
+        reportButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 11)
         
         let viewModel = FeedDetailViewModel(post: post)
         
