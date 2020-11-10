@@ -50,7 +50,6 @@ class EditProfileViewController: UIViewController {
         super.viewDidLoad()
         customNavBar.titleLabel.text = "프로필 수정"
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
-//        self.hideKeyboard()
         configureUI()
     }
     
@@ -77,7 +76,12 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func handleUpload() {
-        print("업로드 코드 작성")
+        let alert = UIAlertController(title: "프로필이 수정되었어요", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: confirm, style: .default, handler: { _ in
+            self.navigationController?.popViewController(animated: true)
+        }))
+        present(alert, animated: true, completion: nil)
+        print("완료 후 프로필 사진, 닉네임, 채식 타입 정보 업로드 코드 작성")
     }
     
     // MARK: - Helpers
@@ -104,6 +108,7 @@ class EditProfileViewController: UIViewController {
         
         view.addGestureRecognizer(gestureRecognizer)
         gestureRecognizer.cancelsTouchesInView = false
+        
         view.addSubview(tableView)
         view.addSubview(customNavBar)
         view.addSubview(uploadButton)
@@ -118,6 +123,7 @@ class EditProfileViewController: UIViewController {
 
 
 extension EditProfileViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 8
     }
@@ -128,10 +134,6 @@ extension EditProfileViewController: UITableViewDataSource {
         cell.vegieTypeName.text = VegieType.allCases[indexPath.item].rawValue
         cell.vegieTypeDescription.text = VegieType.allCases[indexPath.item].typeDetail
         cell.vegieTypeImage.image = VegieType.allCases[indexPath.item].typeImage
-        
-//        if cell.isSelected {
-//            cell.backgroundColor = .green
-//        }
         
         let bgColorView = UIView()
         bgColorView.backgroundColor = .none
@@ -161,15 +163,15 @@ extension EditProfileViewController: UITableViewDataSource {
 extension EditProfileViewController: UITableViewDelegate  {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 285
+        return 325 - 6
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 84
+        return 96
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 119
+        return 70
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -208,7 +210,7 @@ extension EditProfileViewController: EditProfileHeaderViewDelegate {
     }
     
     func selectDefaultImage(_ action: UIAlertAction) {
-        print("여기에 디폴트 이미지 선택한 거 코드 작성해야 함")
+        print("기본 이미지로 설정되는 코드 작성")
     }
     
     func editProfileImgButtonDidTap() {
@@ -232,13 +234,10 @@ extension EditProfileViewController: EditProfileFooterViewDelegate {
 
 extension EditProfileViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] {
-            profileImage = image as? UIImage
-            let alert = UIAlertController(title: "프로필 사진이 수정되었어요", message: "", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: confirm, style: .default, handler: nil))
-            
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            profileImage = image
             dismiss(animated: true, completion: nil)
-            present(alert, animated: true, completion: nil)
+
         }
     }
 }
@@ -249,15 +248,3 @@ extension EditProfileViewController : UIGestureRecognizerDelegate {
     }
 }
 
-//extension UIViewController {
-//    func hideKeyboard() {
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
-//            target: self,
-//            action: #selector(UIViewController.dismissKeyboard))
-//        view.addGestureRecognizer(tap)
-//    }
-//
-//    @objc func dismissKeyboard()  {
-//        view.endEditing(true)
-//    }
-//}

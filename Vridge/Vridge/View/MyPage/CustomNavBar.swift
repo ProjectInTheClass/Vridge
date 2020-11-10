@@ -39,8 +39,11 @@ class CustomNavBar: UIView {
     let navBarView : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "color_all_headerBg")
+//        view.backgroundColor = .blue
         return view
     }()
+    
+    let statusBarHeight : CGFloat = UIApplication.shared.statusBarFrame.height
     
     //MARK: - Lifecycle
     
@@ -51,7 +54,7 @@ class CustomNavBar: UIView {
         addSubview(titleLabel)
         addSubview(backButton)
         addSubview(lineView)
-        
+    
         
         titleLabel.centerX(inView: self)
         titleLabel.centerY(inView: self)
@@ -59,7 +62,8 @@ class CustomNavBar: UIView {
         backButton.anchor(top: topAnchor, left: leftAnchor)
         
         lineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 0.5)
-        navBarView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: -44 ,height: 88)
+        navBarView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
+                          paddingTop: -(statusBarHeight), height: (statusBarHeight + 44))
     }
     
     
