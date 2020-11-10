@@ -20,15 +20,15 @@ class EditProfileCell: UITableViewCell {
     
     let vegieTypeDescription : UILabel = {
         let label = UILabel()
-        label.font = UIFont.SFMedium(size: 12)
+        label.font = UIFont.SFSemiBold(size: 12)
         label.textColor = UIColor(named: "color_editprofile_vegietype_text")
         return label
     }()
     
     let vegieTypeImage : UIImageView = {
         let iv = UIImageView()
-        iv.setDimensions(width: 36, height: 36)
-        iv.layer.cornerRadius = 36 / 2
+        iv.setDimensions(width: 48, height: 48)
+        iv.layer.cornerRadius = 48 / 2
         iv.backgroundColor = .white
 //        iv.image = UIImage(named: "typeImage")
         iv.contentMode = .scaleAspectFill
@@ -38,17 +38,8 @@ class EditProfileCell: UITableViewCell {
     
     let typeButtonView : UIView = {
         let view = UIView()
-//        view.backgroundColor = UIColor(named: "color_editprofile_vegietype_button")
-        view.layer.cornerRadius = 8
-//        view.layer.borderColor = UIColor(named: "color_editprofile_vegietype_buttonborder")?.cgColor
-//        view.layer.borderWidth = 2
-        
-        view.layer.shadowColor = UIColor.lightGray.cgColor
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.layer.shadowOpacity = 0.5
-        view.layer.shadowRadius = 5 // 그림자 크기
+        view.layer.cornerRadius = 10
 //        button.addTarget(self, action: #selector(), for: .touchUpInside)
-        
         return view
     }()
     
@@ -65,12 +56,13 @@ class EditProfileCell: UITableViewCell {
         addSubview(vegieTypeDescription)
         addSubview(vegieTypeImage)
         
-        typeButtonView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 40, paddingBottom: 10, paddingRight: 39, width: 296, height: 64)
+        typeButtonView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 6, paddingLeft: 16, paddingBottom: 6, paddingRight: 16, width: 343, height: 84)
         typeButtonView.centerX(inView: self)
-        vegieTypeName.anchor(top: typeButtonView.topAnchor, left: typeButtonView.leftAnchor, paddingTop: 14, paddingLeft: 76)
+        
+        vegieTypeName.anchor(top: typeButtonView.topAnchor, left: typeButtonView.leftAnchor, paddingTop: 23, paddingLeft: 84)
         vegieTypeDescription.anchor(top: vegieTypeName.bottomAnchor, left: typeButtonView.leftAnchor,
-                                    paddingTop: 1, paddingLeft: 76)
-        vegieTypeImage.anchor(top: typeButtonView.topAnchor, left: typeButtonView.leftAnchor, paddingTop: 14, paddingLeft: 22)
+                                    paddingTop: 4, paddingLeft: 84)
+        vegieTypeImage.anchor(top: typeButtonView.topAnchor, left: typeButtonView.leftAnchor, paddingTop: 18, paddingLeft: 18)
         
         
     }
@@ -87,21 +79,16 @@ class EditProfileCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: true)
         if selected {
-            typeButtonView.backgroundColor = .vridgeGreen // 채식 타입 별로 색상 지정해줘야 함
-//            typeButtonView.layer.borderColor = UIColor.vridgeGreen.cgColor // 채식 타입 별로 색상 지정해줘야 함
+            typeButtonView.backgroundColor = .vridgeGreen // 채식 타입 별로 색상 지정해줘야 함 ->> 근데 그냥 vridgeGreen으로 갈 것 같다..
             vegieTypeName.textColor = .white
             vegieTypeDescription.textColor = .white
         } else {
             typeButtonView.backgroundColor = UIColor(named: "color_editprofile_vegietype_button")
-//            typeButtonView.layer.borderColor = UIColor(named: "color_editprofile_vegietype_buttonborder")?.cgColor
             vegieTypeName.textColor = UIColor(named: "color_editprofile_vegietype_text")
             vegieTypeDescription.textColor = UIColor(named: "color_editprofile_vegietype_text")
         }
         
-        // 버튼 누르고 나서 border 부분 오류가 있는데 어떻게 해결해야 하는지 모르겠음
-        // 다크모드로 색상 변경하면 왜 갑자기 라이트모드일 때 색상이 border에 들어가는 건지 모르겠음..
-
-        // Configure the view for the selected state
+        
     }
 
 }

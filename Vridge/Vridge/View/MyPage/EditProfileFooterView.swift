@@ -18,15 +18,16 @@ class EditProfileFooterView: UIView {
     
     weak var delegate: EditProfileFooterViewDelegate?
     
-    let deleteAccountButton : UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("회원 탈퇴", for: .normal)
-//        button.setTitleColor(.gray, for: .normal)
-        button.tintColor = UIColor(named: "color_editprofile_deleteaccount_text")
-        button.titleLabel?.font = UIFont.SFMedium(size: 13)
-        button.addTarget(self, action: #selector(deleteAccountDidTap), for: .touchUpInside)
-        return button
-    }()
+    // 원래 footer에 회원탈퇴가 있는데 빼면서 주석처리함. 언젠가 필요할 수 있으니 이렇게 남겨둠.
+    
+//    let deleteAccountButton : UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setTitle("회원 탈퇴", for: .normal)
+//        button.tintColor = UIColor(named: "color_editprofile_deleteaccount_text")
+//        button.titleLabel?.font = UIFont.SFMedium(size: 13)
+//        button.addTarget(self, action: #selector(deleteAccountDidTap), for: .touchUpInside)
+//        return button
+//    }()
     
     // MARK: - Lifecycle
     
@@ -51,10 +52,10 @@ class EditProfileFooterView: UIView {
         
         backgroundColor = UIColor(named: "color_all_viewBackground")
         
-        addSubview(deleteAccountButton)
+//        addSubview(deleteAccountButton)
         
-        deleteAccountButton.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 64)
-        deleteAccountButton.centerX(inView: self)
+//        deleteAccountButton.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 64)
+//        deleteAccountButton.centerX(inView: self)
         
     }
 }
