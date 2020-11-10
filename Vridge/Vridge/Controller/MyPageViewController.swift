@@ -20,7 +20,7 @@ class MyPageViewController: UIViewController {
     var secondSectionMenu = ["프로필 수정", "로그아웃"]
     
     var user: User? {
-        didSet { tableView.reloadData(); print("DEBUG: user name is == \(user?.username)") }
+        didSet { tableView.reloadData(); print("DEBUG: user name is ==== \(user?.username)") }
     }
     
     let customNavBar = CustomNavBar()
@@ -54,14 +54,24 @@ class MyPageViewController: UIViewController {
     }
     
     
+    // MARK: - Selectors
+    
+    @objc func refetchUser() {
+        print("DEBUG: try to refetch user")
+        fetchUser()
+    }
+    
+    
     // MARK: - API
     
     func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else {
-            secondSectionMenu = ["로그인"]
+//            secondSectionMenu = ["로그인"]
+            user = nil
             return
         }
         UserService.shared.fetchUser(uid: uid) { user in
+            print("DEBUG: set user again")
             self.user = user
         }
     }
@@ -70,6 +80,10 @@ class MyPageViewController: UIViewController {
     // MARK: - Helpers
     
     func configureUI() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(refetchUser),
+                                               name: Notification.Name("refetchUser"),
+                                               object: nil)
         
         view.addSubview(backView)
         view.addSubview(tableView)
@@ -92,6 +106,7 @@ class MyPageViewController: UIViewController {
         guard let user = user else {
             let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: nil)
             tableView.tableHeaderView = topHeader
+            topHeader.usernameLabel.text = self.user?.username ?? "로그인이 필요해요"
             topHeader.delegate = self
             topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
             return
@@ -171,12 +186,12 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             
         } else {
             
-            if Auth.auth().currentUser == nil {
-                let loginController = LoginViewController()
-                loginController.modalPresentationStyle = .fullScreen
-                present(loginController, animated: true, completion: nil)
-                
-            } else {
+//            if Auth.auth().currentUser == nil {
+//                let loginController = LoginViewController()
+//                loginController.modalPresentationStyle = .fullScreen
+//                present(loginController, animated: true, completion: nil)
+//                
+//            } else {
                 
                 switch indexPath.row {
                 case 0:
@@ -189,12 +204,12 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                         do {
                             try Auth.auth().signOut()
                             self.dismiss(animated: true) {
-                                self.user = nil
+//                                self.fetchUser()
                                 let nav = UINavigationController(rootViewController: LoginViewController())
                                 nav.modalPresentationStyle = .fullScreen
-                                self.fetchUser()
-                                self.tableView.reloadData()
-                                self.present(nav, animated: true, completion: nil)
+                                self.present(nav, animated: true) {
+                                    self.fetchUser()
+                                }
                             }
                         } catch (let err) {
                             print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
@@ -205,7 +220,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                     
                 default: print("DEBUG: error")
                 }
-            }
+//            }
         }
     }
     

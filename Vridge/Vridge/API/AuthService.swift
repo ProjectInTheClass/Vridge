@@ -55,6 +55,7 @@ struct AuthService {
                 }
                 print("DEBUG: Existed user logged in.")
                 
+                
 //                let selectTypeController = SelectTypeViewController()
 //                viewController.navigationController?.pushViewController(selectTypeController, animated: true)
 //                print("DEBUG: Existed user logged in.")
@@ -63,6 +64,7 @@ struct AuthService {
                 guard let tab = window.rootViewController as? MainTabBarController else { return }
                 
                 tab.fetchUser()
+                NotificationCenter.default.post(name: Notification.Name("refetchUser"), object: nil)
                 
                 viewController.indicator.stopAnimating()
                 
