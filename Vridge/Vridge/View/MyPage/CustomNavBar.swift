@@ -14,7 +14,9 @@ protocol CustomNavBarDelegate: class {
 class CustomNavBar: UIView {
 
     //MARK: - Properties
+    
     weak var delegate: CustomNavBarDelegate?
+    
     var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "공지사항"
@@ -50,11 +52,12 @@ class CustomNavBar: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        backgroundColor = UIColor(named: headerBackgroundColor)
+        
         addSubview(navBarView)
         addSubview(titleLabel)
         addSubview(backButton)
         addSubview(lineView)
-    
         
         titleLabel.centerX(inView: self)
         titleLabel.centerY(inView: self)
@@ -62,8 +65,8 @@ class CustomNavBar: UIView {
         backButton.anchor(top: topAnchor, left: leftAnchor)
         
         lineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 0.5)
-        navBarView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
-                          paddingTop: -(statusBarHeight), height: (statusBarHeight + 44))
+//        navBarView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
+//                          paddingTop: -(statusBarHeight), height: (statusBarHeight + 44))
     }
     
     

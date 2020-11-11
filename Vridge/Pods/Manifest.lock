@@ -1,4 +1,5 @@
 PODS:
+  - BulletinBoard (5.0.0)
   - Firebase/Analytics (7.0.0):
     - Firebase/Core
   - Firebase/Auth (7.0.0):
@@ -93,6 +94,7 @@ PODS:
     - SteviaLayout (~> 4.7.3)
 
 DEPENDENCIES:
+  - BulletinBoard
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
@@ -104,6 +106,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - BulletinBoard
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -126,6 +129,7 @@ SPEC REPOS:
     - YPImagePicker
 
 SPEC CHECKSUMS:
+  BulletinBoard: dba77053c2a7b64953f63073f7534165af2edd21
   Firebase: 50be68416f50eb4eb2ecb0e78acab9a051ef95df
   FirebaseAnalytics: c1166b7990bae464c6436132510bb718c6680f80
   FirebaseAuth: 228dd0faa5b5263eaa8c63518b16faef438289a3
@@ -147,6 +151,6 @@ SPEC CHECKSUMS:
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   YPImagePicker: 15aed8bcaa4dad976e11b6114126d731a2f9f3c9
 
-PODFILE CHECKSUM: 8c5f2007b8b9fdb891b6ecd40f9c4edbab9c7914
+PODFILE CHECKSUM: 648bc3a8484c7bbc89a14869f9df40fa3a36fb48
 
 COCOAPODS: 1.9.1

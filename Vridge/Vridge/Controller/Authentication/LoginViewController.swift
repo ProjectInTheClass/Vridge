@@ -28,9 +28,27 @@ class LoginViewController: UIViewController {
     
     weak var delegate: LoginViewControllerDelegate?
     
-    let appleLoginButton: ASAuthorizationAppleIDButton = {
-        let button = ASAuthorizationAppleIDButton()
+//    let appleLoginButton: ASAuthorizationAppleIDButton = {
+//        let button = ASAuthorizationAppleIDButton()
+//        button.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
+//        button.backgroundColor = .yellow
+//        return button
+//    }()
+    
+    let appleLoginButton: UIButton = {
+        let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
+        button.backgroundColor = .black
+        button.layer.cornerRadius = 8
+        button.setTitle("Apple ID로 시작하기", for: .normal)
+        button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
+        button.setTitleColor(.white, for: .normal)
+        
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "person.fill")
+        imageView.tintColor = .white
+        button.addSubview(imageView)
+        imageView.centerY(inView: button, leftAnchor: button.leftAnchor, paddingLeft: 23.5)
         return button
     }()
     
@@ -50,9 +68,20 @@ class LoginViewController: UIViewController {
     
     private let browseButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("둘러보기", for: .normal)
+        button.setTitle("그냥 둘러볼래요", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
         button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
+        button.backgroundColor = .vridgeGreen
+        button.layer.cornerRadius = 8
         return button
+    }()
+    
+    let animationView: AnimationView = {
+        let av = Lottie.AnimationView(name: loadingAnimation)
+        av.isHidden = true
+        av.loopMode = .loop
+        return av
     }()
     
     
@@ -64,8 +93,14 @@ class LoginViewController: UIViewController {
         view.addSubview(indicator)
         indicator.center = view.center
         
-        view.backgroundColor = .vridgeGreen
+        view.backgroundColor = .vridgeGray
         configureUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        navigationController?.navigationBar.isHidden = true
     }
     
     
@@ -94,20 +129,27 @@ class LoginViewController: UIViewController {
         animationView.play()
         
         view.addSubview(appleLoginButton)
+        view.addSubview(browseButton)
         view.addSubview(label)
         view.addSubview(logOutButton)
-        view.addSubview(browseButton)
         
-        appleLoginButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
-                                paddingTop: 100, paddingLeft: 10, width: 240, height: 50)
+        view.addSubview(animationView)
+        animationView.center(inView: view)
+        animationView.setDimensions(width: 100, height: 100)
+        animationView.contentMode = .scaleAspectFill
+        
+        browseButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
+                            right: view.rightAnchor, paddingLeft: 36, paddingBottom: 47, paddingRight: 36,
+                            height: 48)
+        appleLoginButton.anchor(left: view.leftAnchor, bottom: browseButton.topAnchor, right: view.rightAnchor,
+                                paddingLeft: 36, paddingBottom: 12, paddingRight: 36, height: 48)
+        
         label.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 10)
         label.centerX(inView: view)
         logOutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor,
                             paddingTop: 40, paddingRight: 40)
-        browseButton.center(inView: view)
         
-        animationView.centerX(inView: view)
-        animationView.anchor(top: appleLoginButton.bottomAnchor, paddingTop: 40, width: 120, height: 120)
+        animationView.center(inView: view)
         animationView.contentMode = .scaleAspectFill
         animationView.loopMode = .loop
         
@@ -214,14 +256,17 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
             
             guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
+                
                 // handle if user already once registered... or ex user rejoining...
-                AuthService.shared.loginExistUser(viewController: self, credential: credential) { user in
+                
+                AuthService.shared.loginExistUser(viewController: self, animationView: animationView, credential: credential) { user in
+//                    self.indicator.startAnimating()
                     print("DEBUG: logged in and update home tab")
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
                     guard let tab = window.rootViewController as? MainTabBarController else { return }
+//                    self.indicator.stopAnimating()
                     
                     tab.fetchUser()
-//                    tab.user = user
                 }
                 
                 return

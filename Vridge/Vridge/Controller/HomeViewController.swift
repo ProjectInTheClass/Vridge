@@ -8,6 +8,7 @@
 import UIKit
 
 import Lottie
+import BLTNBoard
 
 private let cellID = "cellID"
 private let headerID = "headerID"
@@ -76,6 +77,38 @@ class HomeViewController: UIViewController {
         let av = Lottie.AnimationView(name: loadingAnimation)
         av.loopMode = .loop
         return av
+    }()
+    
+    lazy var bulletinManager: BLTNItemManager = {
+        let rootItem = BLTNPageItem(title: "브릿지 가입하기")
+
+        rootItem.appearance.titleTextColor = UIColor(named: allTextColor) ?? .black
+        rootItem.appearance.titleFontDescriptor = UIFont.SFBold(size: 24)?.fontDescriptor
+        rootItem.appearance.titleFontSize = 24
+
+        rootItem.descriptionText = "다양한 사람들과 함께 나의 첫 채식을\n즐겁게 챌린지 형식으로 시작해보세요!"
+        rootItem.appearance.descriptionFontSize = 14
+        rootItem.appearance.descriptionFontDescriptor = UIFont.SFRegular(size: 14)?.fontDescriptor
+        rootItem.appearance.descriptionTextColor = UIColor(named: allTextColor) ?? .black
+    
+        rootItem.actionButtonTitle = "Apple ID로 시작하기"
+        rootItem.appearance.actionButtonTitleColor = .white
+        rootItem.appearance.actionButtonColor = .black
+        rootItem.appearance.actionButtonCornerRadius = 8
+        
+        rootItem.requiresCloseButton = false
+        
+        rootItem.alternativeButtonTitle = "그냥 둘러볼래요"
+        rootItem.appearance.alternativeButtonTitleColor = .vridgeGreen
+        
+        rootItem.actionHandler = { _ in
+            self.showLoginView()
+        }
+        
+        rootItem.alternativeHandler = { _ in
+            self.dismissBulletin()
+        }
+        return BLTNItemManager(rootItem: rootItem)
     }()
     
     var viewModel = ActionSheetViewModel()
@@ -174,6 +207,9 @@ class HomeViewController: UIViewController {
                 
                 if let index = self.posts.firstIndex(where: { $0.postID == post.postID }) {
                     self.posts[index].isReported = true
+//                    if self.posts[index].isReported {
+//                        self.posts.remove(at: index)
+//                    }
                 }
             }
         }
@@ -216,6 +252,11 @@ class HomeViewController: UIViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    @objc func refetchPosts() {
+        fetchPosts()
+        print("DEBUG: refetch posts form Home View Controller")
+    }
+    
     
     // MARK: - Helpers
     
@@ -250,6 +291,10 @@ class HomeViewController: UIViewController {
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(refetchPosts),
+                                               name: Notification.Name("refetchPosts"),
+                                               object: nil)
+        
     }
     
     func showReportAlert() {
@@ -257,6 +302,21 @@ class HomeViewController: UIViewController {
         let okButton = UIAlertAction(title: "확인", style: .default, handler: nil)
         alert.addAction(okButton)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func showLoginView() {
+        
+        bulletinManager.dismissBulletin(animated: true)
+        
+        print("DEBUG: show login view")
+        let controller = LoginViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+    }
+    
+    func dismissBulletin() {
+        bulletinManager.dismissBulletin(animated: true)
     }
     
 }
@@ -287,9 +347,12 @@ extension HomeViewController: UITableViewDataSource {
         cell.username.isHidden = posts[indexPath.row].isReported
         cell.type.isHidden = posts[indexPath.row].isReported
         cell.time.isHidden = posts[indexPath.row].isReported
+//        cell.pageControl.isHidden = posts[indexPath.row].isReported
         
-        
-        // 컬렉션뷰를 stack view에 추가한 후, 스택뷰에 있는 모든 요소들을 hidden 시키면 어떻게 될까.
+        if posts[indexPath.row].isReported {
+            // array에서 없애버리기
+//            posts.remove(at: indexPath.row)
+        }
         
         return cell
     }
@@ -360,8 +423,10 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: HomeFeedCellDelegate {
     
     func pleaseLogin() {
-        let viewModel = ActionSheetViewModel()
-        present(viewModel.pleaseLogin(self), animated: true, completion: nil)
+//        let viewModel = ActionSheetViewModel()
+//        present(viewModel.pleaseLogin(self), animated: true, completion: nil)
+        
+        bulletinManager.showBulletin(above: self)
     }
     
     func currentUserAmendTapped(sender: Post, row: Int) {

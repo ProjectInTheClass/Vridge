@@ -24,6 +24,8 @@ class EditProfileViewController: UIViewController {
 
     // MARK: - Properties
     
+    var user: User
+    
     let tableView = UITableView(frame: .zero, style: .grouped)
     
     let customNavBar = CustomNavBar()
@@ -43,9 +45,24 @@ class EditProfileViewController: UIViewController {
         return button
     }()
     
+    var currentType = ""
+    var selectedIndex = [IndexPath.init(row: 0, section: 0)]
+    
     lazy var gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
     
     // MARK: - Lifecycle
+    
+    init(user: User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+        
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customNavBar.titleLabel.text = "프로필 수정"
@@ -76,6 +93,10 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func handleUpload() {
+        
+//        UserService.shared.editProfile(user: user, vegieType: currentType, profileImage: profileImage,
+//                                       username: <#T##String#>, completion: <#T##(Error?, DatabaseReference) -> Void#>)
+        
         let alert = UIAlertController(title: "프로필이 수정되었어요", message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: confirm, style: .default, handler: { _ in
             self.navigationController?.popViewController(animated: true)
@@ -89,10 +110,11 @@ class EditProfileViewController: UIViewController {
     func configureUI() {
         
         tableView.backgroundColor = UIColor(named: "color_all_viewBackground")
-        view.backgroundColor = UIColor(named: "color_all_viewBackground")
+        view.backgroundColor = UIColor(named: headerBackgroundColor)
         
         customNavBar.delegate = self
         imagePicker.delegate = self
+        imagePicker.allowsEditing = true
         
         navigationController?.navigationBar.barTintColor?.withAlphaComponent(1)
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "back5")
@@ -104,7 +126,7 @@ class EditProfileViewController: UIViewController {
         tableView.register(EditProfileCell.self, forCellReuseIdentifier: cellID)
         tableView.separatorStyle = .none
         
-//        tableView.allowsSelection = false
+        tableView.allowsSelection = true
         
         view.addGestureRecognizer(gestureRecognizer)
         gestureRecognizer.cancelsTouchesInView = false
@@ -113,31 +135,59 @@ class EditProfileViewController: UIViewController {
         view.addSubview(customNavBar)
         view.addSubview(uploadButton)
         
-        tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-        customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,  right: view.rightAnchor, height: 44)
+        tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
+                         right: view.rightAnchor)
+        customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            right: view.rightAnchor, height: 44)
         uploadButton.anchor(right: customNavBar.rightAnchor, paddingRight: 13)
         uploadButton.centerY(inView: customNavBar)
         
     }
 }
 
+// MARK: - UITableViewDataSource
 
 extension EditProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return VegieType.allCases.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as!  EditProfileCell
         
-        cell.vegieTypeName.text = VegieType.allCases[indexPath.item].rawValue
-        cell.vegieTypeDescription.text = VegieType.allCases[indexPath.item].typeDetail
-        cell.vegieTypeImage.image = VegieType.allCases[indexPath.item].typeImage
+        if cell.tag == indexPath.row {
+            switch user.vegieType?.rawValue {
+            case "fruitarian":
+                tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .none)
+            case "vegan":
+                tableView.selectRow(at: IndexPath(row: 1, section: 0), animated: true, scrollPosition: .none)
+            case "lacto":
+                tableView.selectRow(at: IndexPath(row: 2, section: 0), animated: true, scrollPosition: .none)
+            case "ovo":
+                tableView.selectRow(at: IndexPath(row: 3, section: 0), animated: true, scrollPosition: .none)
+            case "lacto_ovo":
+                tableView.selectRow(at: IndexPath(row: 4, section: 0), animated: true, scrollPosition: .none)
+            case "pesco":
+                tableView.selectRow(at: IndexPath(row: 5, section: 0), animated: true, scrollPosition: .none)
+            case "pollo":
+                tableView.selectRow(at: IndexPath(row: 6, section: 0), animated: true, scrollPosition: .none)
+            case "flexitarian":
+                tableView.selectRow(at: IndexPath(row: 7, section: 0), animated: true, scrollPosition: .none)
+            default: print("DEBUG: error")
+            }
+        }
         
-        let bgColorView = UIView()
-        bgColorView.backgroundColor = .none
-        cell.selectedBackgroundView = bgColorView
+        print("DEBUG: current pre-selected type == \(currentType)")
+        
+        cell.vegieTypeName.text = VegieType.allCases[indexPath.row].rawValue
+        cell.vegieTypeDescription.text = VegieType.allCases[indexPath.row].typeDetail
+        cell.vegieTypeImage.image = VegieType.allCases[indexPath.row].typeImage
+        
+        let backgroundColorView = UIView()
+        backgroundColorView.backgroundColor = .none
+        cell.selectedBackgroundView = backgroundColorView
+        cell.delegate = self
         return cell
     }
     
@@ -180,6 +230,8 @@ extension EditProfileViewController: UITableViewDelegate  {
     
 }
 
+// MARK: - CustomNavBarDelegate
+
 extension EditProfileViewController: CustomNavBarDelegate {
     func backButtonDidTap() {
         
@@ -193,8 +245,10 @@ extension EditProfileViewController: CustomNavBarDelegate {
     }
 }
 
+// MARK: - EditProfileHeaderViewDelegate
 
 extension EditProfileViewController: EditProfileHeaderViewDelegate {
+    
     func openLibrary(_ action: UIAlertAction) {
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
@@ -210,7 +264,8 @@ extension EditProfileViewController: EditProfileHeaderViewDelegate {
     }
     
     func selectDefaultImage(_ action: UIAlertAction) {
-        print("기본 이미지로 설정되는 코드 작성")
+        profileImage = UIImage(named: "imgDefaultProfile")
+        tableView.reloadData()
     }
     
     func editProfileImgButtonDidTap() {
@@ -223,7 +278,10 @@ extension EditProfileViewController: EditProfileHeaderViewDelegate {
     }
 }
 
+// MARK: - EditProfileFooterViewDelegate
+
 extension EditProfileViewController: EditProfileFooterViewDelegate {
+    
     func deleteAccountDidTap() {
         let alert = UIAlertController(title: deleteAccountTitle, message: deleteAccountMsg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: deleteAccountAnswer, style: .destructive, handler: { action in /*action 할 메서드나 코드 넣으면됨 여기에다가 */}))
@@ -232,22 +290,40 @@ extension EditProfileViewController: EditProfileFooterViewDelegate {
     }
 }
 
-extension EditProfileViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            profileImage = image
-            dismiss(animated: true, completion: nil)
+// MARK: - UIImagePickerControllerDelegate/UINavigationControllerDelegate
 
-        }
+extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        guard let image = info[.editedImage] as? UIImage else { return }
+        profileImage = image
+        dismiss(animated: true, completion: nil)
+        
+        
     }
 }
 
-extension EditProfileViewController : UIGestureRecognizerDelegate {
+// MARK: - UIGestureRecognizerDelegate
+
+extension EditProfileViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
     }
 }
 
+
+// MARK: - EditProfileDelegate
+
+extension EditProfileViewController: EditProfileDelegate {
+    
+    func typeDidTap(type: String) {
+        self.currentType = type
+    }
+    
+}
+                        
 extension UIViewController {
      func hideKeyboard() {
          let tap: UITapGestureRecognizer = UITapGestureRecognizer(

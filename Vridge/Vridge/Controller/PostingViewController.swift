@@ -99,6 +99,13 @@ class PostingViewController: UIViewController {
         return av
     }()
     
+    private let blackView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0.5
+        return view
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -159,29 +166,26 @@ class PostingViewController: UIViewController {
             if images == nil {
                 present(actionSheetViewModel.photoUploadAlert(self), animated: true, completion: nil)
             } else {
-                
-                view.addSubview(indicator)
-                indicator.center(inView: view)
-                self.uploadButton.isEnabled = false
+                showBlackView()
                 
                 guard let caption = textView.text else { return }
                 guard let images = images else { return }
                 PostService.shared.uploadPost(caption: caption, photos: images,
                                               indicator: indicator, view: self) { (err, ref) in
+                    
                     self.delegate?.fetchUserAgain()
                     NotificationCenter.default.post(name: Notification.Name("cellToFirst"), object: nil)
                 }
             }
         case .amend(_):
             
-            view.addSubview(indicator)
-            indicator.center(inView: view)
-            self.uploadButton.isEnabled = false
+            showBlackView()
             
             guard let caption = textView.text else { return }
             guard let post = post else  { return }
             let controller = HomeViewController()
             PostService.shared.amendUploadPost(viewController: controller, caption: caption, post: post) { (err, ref) in
+                
                 NotificationCenter.default.post(name: Notification.Name("fetchAgain"), object: nil)
                 self.dismiss(animated: true, completion: nil)
             }
@@ -250,6 +254,16 @@ class PostingViewController: UIViewController {
             self.collectionView.reloadData()
             self.picker.dismiss(animated: true, completion: nil)
         }
+    }
+    
+    func showBlackView() {
+        uploadButton.isEnabled = false
+        textView.isUserInteractionEnabled = false
+        print("DEBUG: black view should show up")
+        view.addSubview(blackView)
+        blackView.addConstraintsToFillView(view)
+        view.addSubview(indicator)
+        indicator.center(inView: view)
     }
 }
 

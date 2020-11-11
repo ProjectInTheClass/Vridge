@@ -42,7 +42,7 @@ class AboutVridgeViewController: UIViewController {
     
     func configureUI() {
         
-//        view.backgroundColor = UIColor(named: "color_all_viewBackground")
+        view.backgroundColor = UIColor(named: headerBackgroundColor)
 //        tableView.backgroundColor = UIColor(named: "color_all_viewBackground")
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "btnBack")
@@ -63,8 +63,10 @@ class AboutVridgeViewController: UIViewController {
         view.addSubview(customNavBar)
         
         
-        tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-        customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 44)
+        tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
+                         right: view.rightAnchor)
+        customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            right: view.rightAnchor, height: 44)
 
         
     }

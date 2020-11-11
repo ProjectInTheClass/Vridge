@@ -75,9 +75,8 @@ class NoticeViewController: UIViewController {
         
         customNavBar.delegate = self
         
-        view.backgroundColor = UIColor(named: "color_all_viewBackground")
+        view.backgroundColor = UIColor(named: headerBackgroundColor)
         
-//        navigationItem.hidesBackButton = true
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "back5")
@@ -95,10 +94,11 @@ class NoticeViewController: UIViewController {
         tableView.estimatedRowHeight = 80 // 어림잡은 셀의 높이 설정
         tableView.rowHeight = UITableView.automaticDimension // 동적 셀 높이 설정
         
-        tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
+        tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
                          right: view.rightAnchor)
         
-        customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, height: 44)
+        customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            right: view.rightAnchor, height: 44)
     }
 
 }
