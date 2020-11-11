@@ -47,7 +47,7 @@ class EditProfileViewController: UIViewController {
     }()
     
     var currentType = ""
-    var currentUsername = ""
+    lazy var newUsername = user.username
     
     lazy var gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
     
@@ -96,15 +96,20 @@ class EditProfileViewController: UIViewController {
     
     @objc func handleUpload() {
         
-//        UserService.shared.editProfile(user: user, vegieType: currentType, profileImage: profileImage,
-//                                       username: <#T##String#>, completion: <#T##(Error?, DatabaseReference) -> Void#>)
         
-        let alert = UIAlertController(title: "프로필이 수정되었어요", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: confirm, style: .default, handler: { _ in
-            self.navigationController?.popViewController(animated: true)
-        }))
-        present(alert, animated: true, completion: nil)
-        print("완료 후 프로필 사진, 닉네임, 채식 타입 정보 업로드 코드 작성")
+        // issue : profile 사진을 선택하지 않았을 시에는 밑으로 내려가지지 않는다.
+        // solution : profile 사진을 바꾸고 싶지 않을 수도 있으니 profile 사진 parameter를 optional로?
+        
+        UserService.shared.editProfile(user: user, vegieType: currentType, profileImage: profileImage,
+                                       username: newUsername) { (err, ref) in
+            let alert = UIAlertController(title: "프로필이 수정되었어요", message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: confirm, style: .default, handler: { _ in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+            print("완료 후 프로필 사진, 닉네임, 채식 타입 정보 업로드 코드 작성")
+        }
+        
     }
     
     // MARK: - Helpers
@@ -127,11 +132,8 @@ class EditProfileViewController: UIViewController {
         
         tableView.register(EditProfileCell.self, forCellReuseIdentifier: cellID)
         tableView.separatorStyle = .none
-//        let header = EditProfileHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 319),
-//                                           user: user)
         tableView.tableHeaderView = header
         header.delegate = self
-//        header.profileImage.kf.setImage(with: user.profileImageURL)
         
         tableView.allowsSelection = true
         
@@ -162,6 +164,10 @@ extension EditProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as!  EditProfileCell
+        
+        
+        // issue : 스크롤이 내려갈 때마다 원래 나의 타입으로 돌아가게 됨.
+        
         
         if cell.tag == indexPath.row {
             switch user.vegieType?.rawValue {
@@ -244,9 +250,9 @@ extension EditProfileViewController: EditProfileHeaderViewDelegate {
     
     func usernameDidSet(usernameText: String, canUse: Bool) {
         uploadButton.isEnabled = canUse
-        self.currentUsername = usernameText
-        print("DEBUG: username want to change is === \(self.currentUsername)")
-        if currentUsername == "" {
+        self.newUsername = usernameText
+        print("DEBUG: username want to change is === \(self.newUsername)")
+        if newUsername == "" {
             uploadButton.isEnabled = false
         }
     }
@@ -302,9 +308,9 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[.editedImage] as? UIImage else { return }
+        self.profileImage = image
         header.profileImage.image = image
         dismiss(animated: true, completion: nil)
-        
         
     }
 }
