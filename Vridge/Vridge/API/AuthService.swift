@@ -96,8 +96,8 @@ struct AuthService {
     func submitUsername(username: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        REF_USERNAMES.updateChildValues([username: 1]) { (err, ref) in
-            REF_USERS.child(uid).updateChildValues(["username": ":" + username], withCompletionBlock: completion)
+        REF_USERNAMES.updateChildValues([":" + username: 1]) { (err, ref) in
+            REF_USERS.child(uid).updateChildValues(["username": username], withCompletionBlock: completion)
         }
     }
     

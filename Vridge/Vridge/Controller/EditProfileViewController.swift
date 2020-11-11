@@ -95,19 +95,15 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func handleUpload() {
-        
-        
-        // issue : profile 사진을 선택하지 않았을 시에는 밑으로 내려가지지 않는다.
-        // solution : profile 사진을 바꾸고 싶지 않을 수도 있으니 profile 사진 parameter를 optional로?
-        
+        // 이 곳에 lottie 필요
         UserService.shared.editProfile(user: user, vegieType: currentType, profileImage: profileImage,
                                        username: newUsername) { (err, ref) in
             let alert = UIAlertController(title: "프로필이 수정되었어요", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: confirm, style: .default, handler: { _ in
+                // 이 곳에 Lottie 필요
                 self.navigationController?.popViewController(animated: true)
             }))
             self.present(alert, animated: true, completion: nil)
-            print("완료 후 프로필 사진, 닉네임, 채식 타입 정보 업로드 코드 작성")
         }
         
     }
@@ -167,6 +163,7 @@ extension EditProfileViewController: UITableViewDataSource {
         
         
         // issue : 스크롤이 내려갈 때마다 원래 나의 타입으로 돌아가게 됨.
+        // solution : selectRow를 이용할 게 아닌가..?
         
         
         if cell.tag == indexPath.row {
@@ -194,6 +191,9 @@ extension EditProfileViewController: UITableViewDataSource {
         cell.vegieTypeName.text = VegieType.allCases[indexPath.row].rawValue
         cell.vegieTypeDescription.text = VegieType.allCases[indexPath.row].typeDetail
         cell.vegieTypeImage.image = VegieType.allCases[indexPath.row].typeImage
+        cell.typeColor = VegieType.allCases[indexPath.row].typeColor
+//        cell.isSelected = user.vegieType?.rawValue == VegieType.allCases[indexPath.row].rawValue
+        
         
         let backgroundColorView = UIView()
         backgroundColorView.backgroundColor = .none
@@ -224,7 +224,7 @@ extension EditProfileViewController: UITableViewDelegate  {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("이거 누르면 어떤 걸 선택했는지 알 수 있대.")
+        print("DEBUG: 이거 누르면 어떤 걸 선택했는지 알 수 있대.")
     }
     
 }

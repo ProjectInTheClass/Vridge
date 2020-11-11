@@ -49,6 +49,8 @@ class EditProfileCell: UITableViewCell {
         return view
     }()
     
+    var typeColor: UIColor?
+    
     
     // MARK: - Lifecycle
     
@@ -87,8 +89,11 @@ class EditProfileCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: true)
         
+        
+        
         if selected {
-            typeButtonView.backgroundColor = .vridgeGreen // 채식 타입 별로 색상 지정해줘야 함 ->> 근데 그냥 vridgeGreen으로 갈 것 같다..
+//            typeButtonView.backgroundColor = .vridgeGreen // 채식 타입 별로 색상 지정해줘야 함 ->> 근데 그냥 vridgeGreen으로 갈 것 같다..
+            typeButtonView.backgroundColor = typeColor
             vegieTypeName.textColor = .white
             vegieTypeDescription.textColor = .white
             delegate?.typeDidTap(type: vegieTypeName.text!)

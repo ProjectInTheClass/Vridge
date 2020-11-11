@@ -120,35 +120,36 @@ struct UserService {
         
         // 현재의 유저네임은 db에서 지워주고 새 유저네임만 등록시켜줘야 함...
         
-        DB_REF.child("\(user.vegieType!.rawValue)-point").child(user.uid).removeValue { (err, ref) in
-            DB_REF.child("\(vegieType)-point").updateChildValues([user.uid: user.point]) { (err, ref) in
-                
-                if let profileImage = profileImage {
-                    guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
-                    let storageRef = STORAGE_USER_PROFILE_IMAGES.child(user.uid)
-                    
-                    storageRef.putData(imageData, metadata: nil) { (meta, err) in
-                        storageRef.downloadURL { (url, err) in
-                            guard let imageURL = url?.absoluteString else { return }
+        REF_USERNAMES.child(":" + user.username).removeValue { (err, ref) in
+            REF_USERNAMES.updateChildValues([":" + username: 1]) { (err, ref) in
+                DB_REF.child("\(user.vegieType!.rawValue)-point").child(user.uid).removeValue { (err, ref) in
+                    DB_REF.child("\(vegieType)-point").updateChildValues([user.uid: user.point]) { (err, ref) in
+                        
+                        if let profileImage = profileImage {
+                            guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }
+                            let storageRef = STORAGE_USER_PROFILE_IMAGES.child(user.uid)
                             
-                            let values = ["profileImageURL": imageURL,
-                                          "username": username,
+                            storageRef.putData(imageData, metadata: nil) { (meta, err) in
+                                storageRef.downloadURL { (url, err) in
+                                    guard let imageURL = url?.absoluteString else { return }
+                                    
+                                    let values = ["profileImageURL": imageURL,
+                                                  "username": username,
+                                                  "type": vegieType]
+                                    
+                                    REF_USERS.child(user.uid).updateChildValues(values, withCompletionBlock: completion)
+                                }
+                            }
+                        } else {
+                            let values = ["username": username,
                                           "type": vegieType]
                             
                             REF_USERS.child(user.uid).updateChildValues(values, withCompletionBlock: completion)
                         }
                     }
-                } else {
-                    let values = ["username": username,
-                                  "type": vegieType]
-                    
-                    REF_USERS.child(user.uid).updateChildValues(values, withCompletionBlock: completion)
                 }
-                
             }
-            
         }
-        
     }
     
 }
