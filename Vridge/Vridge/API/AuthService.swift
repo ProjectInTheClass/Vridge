@@ -38,9 +38,9 @@ struct AuthService {
         }
     }
     
-    func loginExistUser(viewController: LoginViewController, credential: AuthCredential,
+    func loginExistUser(viewController: UIViewController, indicator: UIActivityIndicatorView, credential: AuthCredential,
                         completion: @escaping(User) -> Void) {
-        viewController.indicator.startAnimating()
+        indicator.startAnimating()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             guard let email = result?.user.email else { return }
@@ -66,7 +66,7 @@ struct AuthService {
                 tab.fetchUser()
                 NotificationCenter.default.post(name: Notification.Name("refetchUser"), object: nil)
                 
-                viewController.indicator.stopAnimating()
+                indicator.stopAnimating()
                 
                 viewController.dismiss(animated: true, completion: nil)
             }
@@ -190,9 +190,8 @@ struct AuthService {
                 viewController.present(nav, animated: true) {
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
                     guard let tab = window.rootViewController as? MainTabBarController else { return }
-                    tab.user = nil
                     
-//                    tab.fetchUser()
+                    tab.user = nil
                 }
             }
         } catch (let err) {
