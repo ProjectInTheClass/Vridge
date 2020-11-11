@@ -117,6 +117,9 @@ struct UserService {
     
     func editProfile(user: User, vegieType: String, profileImage: UIImage, username: String,
                      completion: @escaping(Error?, DatabaseReference) -> Void) {
+        
+        // 현재의 유저네임은 db에서 지워주고 새 유저네임만 등록시켜줘야 함...
+        
         DB_REF.child("\(user.vegieType!.rawValue)-point").child(user.uid).removeValue { (err, ref) in
             DB_REF.child("\(vegieType)-point").updateChildValues([user.uid: user.point]) { (err, ref) in
                 guard let imageData = profileImage.jpegData(compressionQuality: 0.3) else { return }

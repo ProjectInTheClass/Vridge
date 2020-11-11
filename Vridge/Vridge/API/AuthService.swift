@@ -97,7 +97,7 @@ struct AuthService {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         REF_USERNAMES.updateChildValues([username: 1]) { (err, ref) in
-            REF_USERS.child(uid).updateChildValues(["username": username], withCompletionBlock: completion)
+            REF_USERS.child(uid).updateChildValues(["username": ":" + username], withCompletionBlock: completion)
         }
     }
     
@@ -129,14 +129,38 @@ struct AuthService {
     }
     
     // 유저네임 중복확인. 테스트 필요 API
-    func checkUserNameExistency(username: String, completion: @escaping(Bool) -> Void) {
-        REF_USERNAMES.child(username).observeSingleEvent(of: .value) { snapshot in
-            if snapshot.exists() {
-                print("DEBUG: user exist, you can't use this id")
-                completion(false)
-            } else {
-                print("DEBUG: user not exist, you can use this id")
-                completion(true)
+    func checkUserNameExistency(user: User, username: String, completion: @escaping(Bool) -> Void) {
+        
+        let currentUsername = user.username
+        var safeUsername = username
+        
+        if username.contains(".") {
+            safeUsername = username.replacingOccurrences(of: ".", with: "")
+        } else if username.contains("#") {
+            safeUsername = username.replacingOccurrences(of: "#", with: "")
+        } else if username.contains("$") {
+            safeUsername = username.replacingOccurrences(of: "$", with: "")
+        } else if username.contains("[") {
+            safeUsername = username.replacingOccurrences(of: "[", with: "")
+        } else if username.contains("]") {
+            safeUsername = username.replacingOccurrences(of: "]", with: "")
+        } else if username.contains(" ") {
+            safeUsername = username.replacingOccurrences(of: " ", with: "")
+        } else if username == "" {
+            completion(false)
+        } else {
+            
+            REF_USERNAMES.child(":" + safeUsername).observeSingleEvent(of: .value) { snapshot in
+                
+                if snapshot.exists() {
+                    if safeUsername == currentUsername {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                } else {
+                    completion(true)
+                }
             }
         }
     }

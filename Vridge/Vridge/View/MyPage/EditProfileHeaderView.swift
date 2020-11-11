@@ -9,6 +9,7 @@ import UIKit
 
 protocol EditProfileHeaderViewDelegate: class {
     func editProfileImgButtonDidTap()
+    func usernameDidSet(usernameText: String, canUse: Bool)
 }
 
 class EditProfileHeaderView: UIView {
@@ -16,6 +17,8 @@ class EditProfileHeaderView: UIView {
     // MARK: - Properties
     
     weak var delegate: EditProfileHeaderViewDelegate?
+    
+    var user: User
     
     let profileBackground : UIView = {
         let view = UIView()
@@ -90,14 +93,15 @@ class EditProfileHeaderView: UIView {
         return label
     }()
     
-//    let checkLabel2 : UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.SFMedium(size: 11)
-//        label.textColor = .vridgeGreen
-//        label.text = "사용 가능한 닉네임이에요"
-//        label.alpha = 1
-//        return label
-//    }()
+    let checkLabel2 : UILabel = {
+        let label = UILabel()
+        label.font = UIFont.SFMedium(size: 11)
+        label.textColor = .vridgeGreen
+        label.text = "사용 가능한 닉네임이에요"
+        label.textAlignment = .center
+        label.alpha = 0
+        return label
+    }()
 // 사용 가능한 닉네임일 때 생김..
     
     let lineView: UIView = {
@@ -114,12 +118,18 @@ class EditProfileHeaderView: UIView {
         return label
     }()
     
+    lazy var newUserName = user.username
+    
 
     // MARK: - Lifecycle
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, user: User) {
+        self.user = user
         super.init(frame: frame)
         configureUI()
+        
+        nickNameTextField.text = user.username
+        profileImage.kf.setImage(with: user.profileImageURL)
     }
     
     required init?(coder: NSCoder) {
@@ -148,6 +158,7 @@ class EditProfileHeaderView: UIView {
         addSubview(nickNameLineView)
         addSubview(aboutNickNameLabel)
         addSubview(checkLabel)
+        addSubview(checkLabel2)
         addSubview(lineView)
         addSubview(categoryLabel)
 
@@ -175,6 +186,9 @@ class EditProfileHeaderView: UIView {
         checkLabel.anchor(top: aboutNickNameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor,
                           paddingTop: 6, paddingLeft: 80, paddingRight: 79)
         checkLabel.centerX(inView: self)
+        checkLabel2.anchor(top: aboutNickNameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor,
+                          paddingTop: 6, paddingLeft: 80, paddingRight: 79)
+        checkLabel2.centerX(inView: self)
         
         lineView.anchor(top: aboutNickNameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 49, height: 0.5)
         categoryLabel.anchor(top: lineView.bottomAnchor, left: leftAnchor, right: rightAnchor,
@@ -187,19 +201,38 @@ class EditProfileHeaderView: UIView {
 // MARK: - UITextFieldDelegate
 
 extension EditProfileHeaderView: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let textFieldText = textField.text, let rangeOfTextToReplace = Range(range, in: textFieldText)
-        else { return false }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let text = textField.text else { return }
         
-        let substringToReplace = textFieldText[rangeOfTextToReplace]
-        let count = textFieldText.count - substringToReplace.count + string.count
-        
-        if textField.text?.count == 7 {
-            
+        if text.contains(".") {
+            nickNameTextField.text = text.replacingOccurrences(of: ".", with: "")
+        } else if text.contains("#") {
+            nickNameTextField.text = text.replacingOccurrences(of: "#", with: "")
+        } else if text.contains("$") {
+            nickNameTextField.text = text.replacingOccurrences(of: "$", with: "")
+        } else if text.contains("[") {
+            nickNameTextField.text = text.replacingOccurrences(of: "[", with: "")
+        } else if text.contains("]") {
+            nickNameTextField.text = text.replacingOccurrences(of: "]", with: "")
+        } else if text.contains(" ") {
+            nickNameTextField.text = text.replacingOccurrences(of: " ", with: "")
         }
-        return count <= 7
+        
+        if text.count >= 7 {
+            let name = text
+            nickNameTextField.text = String(name.dropLast())
+        } else {
+            
+            AuthService.shared.checkUserNameExistency(user: user, username: text.lowercased()) { canUse in
+                self.checkLabel.alpha = canUse ? 0 : 1
+                self.checkLabel2.alpha = canUse ? 1 : 0
+                self.delegate?.usernameDidSet(usernameText: text.lowercased(), canUse: canUse)
+                print("DEBUG: can use? \(canUse)")
+            }
+        }
     }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print(nickNameTextField.text!)
         nickNameTextField.endEditing(true)

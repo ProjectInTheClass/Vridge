@@ -40,22 +40,24 @@ class EditProfileViewController: UIViewController {
         let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(handleUpload), for: .touchUpInside)
         button.setTitle("완료", for: .normal)
+//        button.isEnabled = false
         button.tintColor = .vridgeGreen
         button.titleLabel?.font = UIFont.SFSemiBold(size: 16)
         return button
     }()
     
     var currentType = ""
-    var selectedIndex = [IndexPath.init(row: 0, section: 0)]
+    var currentUsername = ""
     
     lazy var gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
+    
+    lazy var header = EditProfileHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 319), user: user)
     
     // MARK: - Lifecycle
     
     init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
-        
         
     }
     
@@ -125,6 +127,11 @@ class EditProfileViewController: UIViewController {
         
         tableView.register(EditProfileCell.self, forCellReuseIdentifier: cellID)
         tableView.separatorStyle = .none
+//        let header = EditProfileHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 319),
+//                                           user: user)
+        tableView.tableHeaderView = header
+        header.delegate = self
+//        header.profileImage.kf.setImage(with: user.profileImageURL)
         
         tableView.allowsSelection = true
         
@@ -189,15 +196,6 @@ extension EditProfileViewController: UITableViewDataSource {
         return cell
     }
     
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = EditProfileHeaderView()
-//        header.profileImage.image = profileImage ?? UIImage(named: "imgDefaultProfile")
-        header.profileImage.kf.setImage(with: user.profileImageURL)
-        header.delegate = self
-        return header
-    }
-    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footer = EditProfileFooterView()
         footer.delegate = self
@@ -210,10 +208,6 @@ extension EditProfileViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension EditProfileViewController: UITableViewDelegate  {
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 325 - 6
-    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 96
@@ -248,6 +242,16 @@ extension EditProfileViewController: CustomNavBarDelegate {
 
 extension EditProfileViewController: EditProfileHeaderViewDelegate {
     
+    func usernameDidSet(usernameText: String, canUse: Bool) {
+        uploadButton.isEnabled = canUse
+        self.currentUsername = usernameText
+        print("DEBUG: username want to change is === \(self.currentUsername)")
+        if currentUsername == "" {
+            uploadButton.isEnabled = false
+        }
+    }
+    
+    
     func openLibrary(_ action: UIAlertAction) {
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
@@ -263,8 +267,9 @@ extension EditProfileViewController: EditProfileHeaderViewDelegate {
     }
     
     func selectDefaultImage(_ action: UIAlertAction) {
-        profileImage = UIImage(named: "imgDefaultProfile")
-        tableView.reloadData()
+        print("DEBUG: set default image here")
+        header.profileImage.image = UIImage(named: "imgDefaultProfile")
+//        tableView.reloadData()
     }
     
     func editProfileImgButtonDidTap() {
@@ -297,7 +302,7 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[.editedImage] as? UIImage else { return }
-        profileImage = image
+        header.profileImage.image = image
         dismiss(animated: true, completion: nil)
         
         
