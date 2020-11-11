@@ -89,7 +89,7 @@ class EditProfileViewController: UIViewController {
     
     @objc func viewDidTap() {
         view.endEditing(true)
-        print("DEBUG: tapped !!")
+        print("DEBUG: tapped !!!!")
     }
     
     @objc func handleUpload() {
@@ -178,8 +178,6 @@ extension EditProfileViewController: UITableViewDataSource {
             }
         }
         
-        print("DEBUG: current pre-selected type == \(currentType)")
-        
         cell.vegieTypeName.text = VegieType.allCases[indexPath.row].rawValue
         cell.vegieTypeDescription.text = VegieType.allCases[indexPath.row].typeDetail
         cell.vegieTypeImage.image = VegieType.allCases[indexPath.row].typeImage
@@ -194,7 +192,8 @@ extension EditProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = EditProfileHeaderView()
-        header.profileImage.image = profileImage ?? UIImage(named: "imgDefaultProfile")
+//        header.profileImage.image = profileImage ?? UIImage(named: "imgDefaultProfile")
+        header.profileImage.kf.setImage(with: user.profileImageURL)
         header.delegate = self
         return header
     }
@@ -323,12 +322,13 @@ extension EditProfileViewController: EditProfileDelegate {
     }
     
 }
+
+// MARK: - UIViewController Extension
                         
 extension UIViewController {
      func hideKeyboard() {
-         let tap: UITapGestureRecognizer = UITapGestureRecognizer(
-             target: self,
-             action: #selector(UIViewController.dismissKeyboard))
+         let tap: UITapGestureRecognizer = UITapGestureRecognizer( target: self,
+                                                                   action: #selector(UIViewController.dismissKeyboard))
          view.addGestureRecognizer(tap)
      }
  

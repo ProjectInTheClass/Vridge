@@ -14,8 +14,8 @@ protocol EditProfileHeaderViewDelegate: class {
 class EditProfileHeaderView: UIView {
 
     // MARK: - Properties
-    weak var delegate: EditProfileHeaderViewDelegate?
     
+    weak var delegate: EditProfileHeaderViewDelegate?
     
     let profileBackground : UIView = {
         let view = UIView()
@@ -184,6 +184,8 @@ class EditProfileHeaderView: UIView {
     }
 }
 
+// MARK: - UITextFieldDelegate
+
 extension EditProfileHeaderView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let textFieldText = textField.text, let rangeOfTextToReplace = Range(range, in: textFieldText)
@@ -191,6 +193,10 @@ extension EditProfileHeaderView: UITextFieldDelegate {
         
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
+        
+        if textField.text?.count == 7 {
+            
+        }
         return count <= 7
     }
 

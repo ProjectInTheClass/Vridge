@@ -136,12 +136,9 @@ class MyPageViewController: UIViewController {
     
     func configureUI() {
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(refetchUser),
-//                                               name: Notification.Name("refetchUser"),
-//                                               object: nil)
+        bulletinManager.backgroundColor = UIColor(named: "color_mypage_myPostCountBoxBg") ?? .white
         view.addSubview(backView)
         view.addSubview(tableView)
-//        view.addSubview(indicator)
         
         view.addSubview(animationView)
         animationView.center(inView: view)

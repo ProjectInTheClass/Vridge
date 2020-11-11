@@ -144,6 +144,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bulletinManager.backgroundColor = UIColor(named: "color_mypage_myPostCountBoxBg") ?? .white
+        
         configureUI()
         fetchPosts()
         fetchPoint()
@@ -305,7 +307,6 @@ class HomeViewController: UIViewController {
     }
     
     func showLoginView() {
-        
         bulletinManager.dismissBulletin(animated: true)
         
         print("DEBUG: show login view")
