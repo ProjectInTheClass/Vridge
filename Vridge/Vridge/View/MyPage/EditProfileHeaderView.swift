@@ -57,7 +57,15 @@ class EditProfileHeaderView: UIView {
         return button
     }()
     
-    let nickNameTextView = NicknameTextView()
+    let nickNameTextField : UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "닉네임 입력"
+        textField.textAlignment = .center
+        textField.textColor = UIColor(named: "color_all_text")
+        textField.font = UIFont.SFSemiBold(size: 18)
+        textField.tintColor = UIColor(named: "color_cursor") // cursor 색상
+        return textField
+    }()
     
     let nickNameLineView : UIView = {
        let view = UIView()
@@ -131,18 +139,18 @@ class EditProfileHeaderView: UIView {
         
         backgroundColor = UIColor(named: "color_all_viewBackground")
         
-        nickNameTextView.delegate = self
+        nickNameTextField.delegate = self
         
         addSubview(profileBackground)
         addSubview(profileImage)
         addSubview(editProfileImageButton)
-        addSubview(nickNameTextView)
+        addSubview(nickNameTextField)
         addSubview(nickNameLineView)
         addSubview(aboutNickNameLabel)
         addSubview(checkLabel)
         addSubview(lineView)
         addSubview(categoryLabel)
-        addSubview(nickNameTextView)
+
     
         profileBackground.anchor(top: topAnchor, paddingTop: 30)
         profileBackground.centerX(inView: self)
@@ -153,11 +161,11 @@ class EditProfileHeaderView: UIView {
         editProfileImageButton.anchor(top: profileBackground.topAnchor, left: profileBackground.leftAnchor,
                                       paddingTop: 69, paddingLeft: 69)
 
-        nickNameTextView.anchor(top: profileBackground.bottomAnchor, left: leftAnchor, right: rightAnchor,
+        nickNameTextField.anchor(top: profileBackground.bottomAnchor, left: leftAnchor, right: rightAnchor,
                                  paddingTop: 28, paddingLeft: 100, paddingRight: 100)
-        nickNameTextView.centerX(inView: self)
+        nickNameTextField.centerX(inView: self)
 
-        nickNameLineView.anchor(top: nickNameTextView.bottomAnchor, left: leftAnchor, right: rightAnchor,
+        nickNameLineView.anchor(top: nickNameTextField.bottomAnchor, left: leftAnchor, right: rightAnchor,
                                 paddingTop: 9, paddingLeft: 90, paddingRight: 90, width: 195, height: 1)
 
         aboutNickNameLabel.anchor(top: nickNameLineView.bottomAnchor, left: leftAnchor, right: rightAnchor,
@@ -176,20 +184,20 @@ class EditProfileHeaderView: UIView {
     }
 }
 
-extension EditProfileHeaderView: UITextViewDelegate {
-
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+extension EditProfileHeaderView: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text, let rangeOfTextToReplace = Range(range, in: textFieldText)
+        else { return false }
         
-        // 키보드의 return 버튼이 눌리면 키보드가 내려감
-        if (text == "\n") {
-            textView.resignFirstResponder()
-            return false
-        }
-        
-        // 글자 수 제한..웨않되!!
-        guard let words = textView.text else { return true }
-        let newLength = words.count + (text.count - range.length)
-        return newLength <= 6
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 7
     }
-    
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print(nickNameTextField.text!)
+        nickNameTextField.endEditing(true)
+        return true
+    }
+
 }

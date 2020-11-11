@@ -106,19 +106,38 @@ class HomeFeedCell: UITableViewCell {
     
     let reportedLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.SFRegular(size: 32)
-        label.text = "이 게시글은 신고되었습니다."
-        label.textColor = .yellow
+        label.font = UIFont.SFSemiBold(size: 16)
+        label.text = "신고 처리된 게시물입니다."
+        label.textColor = .vridgeGreen
+        return label
+    }()
+    
+    let reportedCaptionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.SFRegular(size: 12)
+        label.text = "회원님의 의견은 더 좋은 서비스를 제공하는 데 큰 도움이 됩니다."
+        label.textColor = UIColor.rgb(red: 153, green: 153, blue: 153)
         return label
     }()
     
     let reportedView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
-        view.alpha = 0
+        view.backgroundColor = UIColor(named: "color_reported_background")
+        view.alpha = 1
         return view
     }()
     
+    let reportedTopLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "color_editprofile_line")
+        return view
+    }()
+    
+    let reportedBottomLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(named: "color_editprofile_line")
+        return view
+    }()
     
     // MARK: - Lifecycle
     
@@ -159,6 +178,9 @@ class HomeFeedCell: UITableViewCell {
         
         addSubview(reportedView)
         reportedView.addSubview(reportedLabel)
+        reportedView.addSubview(reportedCaptionLabel)
+        reportedView.addSubview(reportedTopLine)
+        reportedView.addSubview(reportedBottomLine)
         
         profileImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 15, paddingLeft: 16)
         stack.anchor(top: topAnchor, left: profileImageView.rightAnchor,right: rightAnchor,
@@ -170,8 +192,14 @@ class HomeFeedCell: UITableViewCell {
         pageControl.centerX(inView: collectionView)
         reportButton.anchor(top: topAnchor, right: rightAnchor, paddingTop: 11)
         
+        
         reportedView.addConstraintsToFillView(self)
-        reportedLabel.center(inView: reportedView)
+        reportedLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 176, paddingLeft: 105, paddingRight: 104)
+        reportedLabel.centerX(inView: self)
+        reportedCaptionLabel.anchor(top: reportedLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 35, paddingRight: 34)
+        reportedCaptionLabel.centerX(inView: self)
+        reportedTopLine.anchor(top: reportedView.topAnchor, height: 0.5)
+        reportedBottomLine.anchor(top: reportedView.bottomAnchor, height: 0.5)
         
     }
     
