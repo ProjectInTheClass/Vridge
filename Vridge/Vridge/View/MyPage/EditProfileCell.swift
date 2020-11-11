@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol EditProfileDelegate: class {
+    func typeDidTap(type: String)
+}
+
 class EditProfileCell: UITableViewCell {
 
     // MARK: - Properties
+    
+    weak var delegate: EditProfileDelegate?
     
     let vegieTypeName : UILabel = {
         let label = UILabel()
@@ -56,7 +62,9 @@ class EditProfileCell: UITableViewCell {
         addSubview(vegieTypeDescription)
         addSubview(vegieTypeImage)
         
-        typeButtonView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 6, paddingLeft: 16, paddingBottom: 6, paddingRight: 16, width: 343, height: 84)
+        typeButtonView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor,
+                              paddingTop: 6, paddingLeft: 16, paddingBottom: 6, paddingRight: 16,
+                              width: 343, height: 84)
         typeButtonView.centerX(inView: self)
         
         vegieTypeName.anchor(top: typeButtonView.topAnchor, left: typeButtonView.leftAnchor, paddingTop: 23, paddingLeft: 84)
@@ -78,10 +86,12 @@ class EditProfileCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: true)
+        
         if selected {
             typeButtonView.backgroundColor = .vridgeGreen // 채식 타입 별로 색상 지정해줘야 함 ->> 근데 그냥 vridgeGreen으로 갈 것 같다..
             vegieTypeName.textColor = .white
             vegieTypeDescription.textColor = .white
+            delegate?.typeDidTap(type: vegieTypeName.text!)
         } else {
             typeButtonView.backgroundColor = UIColor(named: "color_editprofile_vegietype_button")
             vegieTypeName.textColor = UIColor(named: "color_editprofile_vegietype_text")

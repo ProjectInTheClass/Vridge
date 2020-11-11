@@ -77,6 +77,13 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    let animationView: AnimationView = {
+        let av = Lottie.AnimationView(name: loadingAnimation)
+        av.isHidden = true
+        av.loopMode = .loop
+        return av
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -125,6 +132,11 @@ class LoginViewController: UIViewController {
         view.addSubview(browseButton)
         view.addSubview(label)
         view.addSubview(logOutButton)
+        
+        view.addSubview(animationView)
+        animationView.center(inView: view)
+        animationView.setDimensions(width: 100, height: 100)
+        animationView.contentMode = .scaleAspectFill
         
         browseButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
                             right: view.rightAnchor, paddingLeft: 36, paddingBottom: 47, paddingRight: 36,
@@ -247,7 +259,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
                 
                 // handle if user already once registered... or ex user rejoining...
                 
-                AuthService.shared.loginExistUser(viewController: self, indicator: indicator, credential: credential) { user in
+                AuthService.shared.loginExistUser(viewController: self, animationView: animationView, credential: credential) { user in
 //                    self.indicator.startAnimating()
                     print("DEBUG: logged in and update home tab")
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }

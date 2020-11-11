@@ -9,6 +9,7 @@ import Foundation
 
 import Firebase
 import AuthenticationServices
+import Lottie
 
 struct AuthService {
     
@@ -38,9 +39,9 @@ struct AuthService {
         }
     }
     
-    func loginExistUser(viewController: UIViewController, indicator: UIActivityIndicatorView, credential: AuthCredential,
+    func loginExistUser(viewController: UIViewController, animationView: AnimationView, credential: AuthCredential,
                         completion: @escaping(User) -> Void) {
-        indicator.startAnimating()
+        animationView.play()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             guard let email = result?.user.email else { return }
@@ -66,7 +67,8 @@ struct AuthService {
                 tab.fetchUser()
                 NotificationCenter.default.post(name: Notification.Name("refetchUser"), object: nil)
                 
-                indicator.stopAnimating()
+                animationView.stop()
+                animationView.isHidden = true
                 
                 viewController.dismiss(animated: true, completion: nil)
             }

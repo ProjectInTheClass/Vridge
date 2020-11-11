@@ -323,7 +323,8 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 switch indexPath.row {
                 case 0:
-                    let controller = EditProfileViewController()
+                    guard let user = user else { return }
+                    let controller = EditProfileViewController(user: user)
                     navigationController?.pushViewController(controller, animated: true)
                     fetchUser()
                 case 1:
@@ -422,7 +423,7 @@ extension MyPageViewController: ASAuthorizationControllerDelegate, ASAuthorizati
                 
                 // handle if user already once registered... or ex user rejoining...
                 
-                AuthService.shared.loginExistUser(viewController: self, indicator: indicator, credential: credential) { user in
+                AuthService.shared.loginExistUser(viewController: self, animationView: animationView, credential: credential) { user in
                     print("DEBUG: logged in and update home tab")
                     
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
