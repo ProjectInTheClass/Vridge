@@ -166,11 +166,6 @@ class PostingViewController: UIViewController {
             if images == nil {
                 present(actionSheetViewModel.photoUploadAlert(self), animated: true, completion: nil)
             } else {
-                
-                view.addSubview(indicator)
-                indicator.center(inView: view)
-                uploadButton.isEnabled = false
-                textView.isUserInteractionEnabled = false
                 showBlackView()
                 
                 guard let caption = textView.text else { return }
@@ -178,26 +173,18 @@ class PostingViewController: UIViewController {
                 PostService.shared.uploadPost(caption: caption, photos: images,
                                               indicator: indicator, view: self) { (err, ref) in
                     
-                    self.showBlackView()
-                    
                     self.delegate?.fetchUserAgain()
                     NotificationCenter.default.post(name: Notification.Name("cellToFirst"), object: nil)
                 }
             }
         case .amend(_):
             
-            view.addSubview(indicator)
-            indicator.center(inView: view)
-            self.uploadButton.isEnabled = false
-            textView.isUserInteractionEnabled = false
             showBlackView()
             
             guard let caption = textView.text else { return }
             guard let post = post else  { return }
             let controller = HomeViewController()
             PostService.shared.amendUploadPost(viewController: controller, caption: caption, post: post) { (err, ref) in
-            
-                self.showBlackView()
                 
                 NotificationCenter.default.post(name: Notification.Name("fetchAgain"), object: nil)
                 self.dismiss(animated: true, completion: nil)
@@ -270,9 +257,13 @@ class PostingViewController: UIViewController {
     }
     
     func showBlackView() {
+        uploadButton.isEnabled = false
+        textView.isUserInteractionEnabled = false
         print("DEBUG: black view should show up")
         view.addSubview(blackView)
         blackView.addConstraintsToFillView(view)
+        view.addSubview(indicator)
+        indicator.center(inView: view)
     }
 }
 

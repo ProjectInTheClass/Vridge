@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
         button.backgroundColor = .black
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = 8
         button.setTitle("Apple ID로 시작하기", for: .normal)
         button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
         button.setTitleColor(.white, for: .normal)
@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
         button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
         button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
         button.backgroundColor = .vridgeGreen
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = 8
         return button
     }()
     

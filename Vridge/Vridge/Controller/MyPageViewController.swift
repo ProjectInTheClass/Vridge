@@ -20,14 +20,14 @@ class MyPageViewController: UIViewController {
     var secondSectionMenu = ["프로필 수정", "로그아웃"]
     
     var user: User? {
-        didSet { tableView.reloadData() }
+        didSet { tableView.reloadData(); configureUI() }
     }
     
     let customNavBar = CustomNavBar()
     
-    let backView : UIView = {
+    lazy var backView : UIView = {
         let view = UIView()
-//        view.backgroundColor = .vridgeGreen
+        view.backgroundColor = user?.vegieType?.typeColor ?? .vridgeGreen
         return view
     }()
     
@@ -37,6 +37,7 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,6 +66,7 @@ class MyPageViewController: UIViewController {
     // MARK: - API
     
     func fetchUser() {
+        print("DEBUG: fetchiing user from myPage Veiw")
         guard let uid = Auth.auth().currentUser?.uid else {
             secondSectionMenu = ["로그인"]
             user = nil
@@ -72,6 +74,7 @@ class MyPageViewController: UIViewController {
         }
         UserService.shared.fetchUser(uid: uid) { user in
             print("DEBUG: set user again")
+            self.secondSectionMenu = ["프로필 수정", "로그아웃"]
             self.user = user
         }
     }
@@ -81,10 +84,9 @@ class MyPageViewController: UIViewController {
     
     func configureUI() {
         
-        NotificationCenter.default.addObserver(self, selector: #selector(refetchUser),
-                                               name: Notification.Name("refetchUser"),
-                                               object: nil)
-        
+//        NotificationCenter.default.addObserver(self, selector: #selector(refetchUser),
+//                                               name: Notification.Name("refetchUser"),
+//                                               object: nil)
         view.addSubview(backView)
         view.addSubview(tableView)
         view.backgroundColor = UIColor(named: viewBackgroundColor)
@@ -103,26 +105,12 @@ class MyPageViewController: UIViewController {
                         height: view.frame.height / 2)
         backView.backgroundColor = user?.vegieType?.typeColor ?? .vridgeGreen
         
-//        guard let user = user else {
-//            let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: nil)
-//            tableView.tableHeaderView = topHeader
-//            topHeader.usernameLabel.text = self.user?.username ?? "로그인이 필요해요"
-//            topHeader.delegate = self
-//            topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
-//            return
-//        }
-//        let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265), user: user)
-//        tableView.tableHeaderView = topHeader
-//        topHeader.delegate = self
-//        topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
-        
         let topHeader = MyPageTopHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 265),
                                             user: user)
         tableView.tableHeaderView = topHeader
         topHeader.usernameLabel.text = user?.username ?? "로그인이 필요해요"
         topHeader.delegate = self
         topHeader.backgroundColor = UIColor(named: viewBackgroundColor)
-        
         
     }
 
@@ -211,6 +199,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                     let alert = UIAlertController(title: logOutTitle, message: "", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: logOutAnswer, style: .destructive, handler: { action in
                         AuthService.shared.logOut(viewController: self)
+                        self.tableView.reloadData()
                     }))
                     alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
                     self.present(alert, animated: true)

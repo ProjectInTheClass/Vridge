@@ -191,6 +191,7 @@ struct AuthService {
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
                     guard let tab = window.rootViewController as? MainTabBarController else { return }
                     tab.user = nil
+                    
 //                    tab.fetchUser()
                 }
             }

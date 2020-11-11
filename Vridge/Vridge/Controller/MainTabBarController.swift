@@ -8,6 +8,7 @@
 import UIKit
 
 import Firebase
+import BLTNBoard
 
 class MainTabBarController: UITabBarController {
     
@@ -24,11 +25,9 @@ class MainTabBarController: UITabBarController {
             home.delegates = self
             home.user = user
             myPage.user = user
-//            if user?.type == "" { isVerified = false }
         }
     }
     
-//    var isVerified: Bool?
     
     private let postButton: UIButton = {
         let btn = UIButton(type: .system)
@@ -36,6 +35,47 @@ class MainTabBarController: UITabBarController {
         btn.backgroundColor = .vridgeGreen
         btn.addTarget(self, action: #selector(handleButtonTapped), for: .touchUpInside)
         return btn
+    }()
+    
+    var descriptionAttributedString: NSAttributedString {
+        let head = NSMutableAttributedString(string: "다양한 사람들과 함께 나의 첫 채식을\n즐겁게 챌린지 형식으로 시작해보세요!",
+                                             attributes: [.font: UIFont.SFRegular(size: 14)!])
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        head.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, head.length))
+        return head
+    }
+    
+    lazy var bulletinManager: BLTNItemManager = {
+        let rootItem = BLTNPageItem(title: "브릿지 가입하기")
+
+        rootItem.appearance.titleTextColor = UIColor(named: allTextColor) ?? .black
+        rootItem.appearance.titleFontDescriptor = UIFont.SFBold(size: 24)?.fontDescriptor
+        rootItem.appearance.titleFontSize = 24
+
+        rootItem.descriptionText = "다양한 사람들과 함께 나의 첫 채식을\n즐겁게 챌린지 형식으로 시작해보세요!"
+        rootItem.appearance.descriptionFontSize = 14
+        rootItem.appearance.descriptionFontDescriptor = UIFont.SFRegular(size: 14)?.fontDescriptor
+        rootItem.appearance.descriptionTextColor = UIColor(named: allTextColor) ?? .black
+    
+        rootItem.actionButtonTitle = "Apple ID로 시작하기"
+        rootItem.appearance.actionButtonTitleColor = .white
+        rootItem.appearance.actionButtonColor = .black
+        rootItem.appearance.actionButtonCornerRadius = 8
+        
+        rootItem.requiresCloseButton = false
+        
+        rootItem.alternativeButtonTitle = "그냥 둘러볼래요"
+        rootItem.appearance.alternativeButtonTitleColor = .vridgeGreen
+        
+        rootItem.actionHandler = { _ in
+            self.showLoginView()
+        }
+        
+        rootItem.alternativeHandler = { _ in
+            self.dismissBulletin()
+        }
+        return BLTNItemManager(rootItem: rootItem)
     }()
     
     
@@ -84,7 +124,11 @@ class MainTabBarController: UITabBarController {
         let actionSheetViewModel = ActionSheetViewModel()
         
         if Auth.auth().currentUser == nil {
-            present(actionSheetViewModel.pleaseLogin(self), animated: true)
+//            present(actionSheetViewModel.pleaseLogin(self), animated: true)
+            bulletinManager.backgroundColor = UIColor(named: "color_mypage_myPostCountBoxBg") ?? .white
+            bulletinManager.showBulletin(above: self)
+            
+            
         } else {
         
             let controller = PostingViewController(config: .post)
@@ -115,6 +159,15 @@ class MainTabBarController: UITabBarController {
     
     // MARK: - Helpers
     
+    func templateNavController(_ rootViewController: UIViewController, image: UIImage?) -> UINavigationController {
+        
+        let nav = UINavigationController(rootViewController: rootViewController)
+        nav.tabBarItem.image = image
+        nav.navigationBar.barTintColor = .white
+        
+        return nav
+    }
+    
     func configure() {
         
         view.addSubview(postButton)
@@ -127,6 +180,21 @@ class MainTabBarController: UITabBarController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(hidePostButton), name: Notification.Name("hidePostButton"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showPostButton), name: Notification.Name("showPostButton"), object: nil)
+    }
+    
+    func showLoginView() {
+        
+        bulletinManager.dismissBulletin(animated: true)
+        
+        print("DEBUG: show login view")
+        let controller = LoginViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+    }
+    
+    func dismissBulletin() {
+        bulletinManager.dismissBulletin(animated: true)
     }
     
 }
