@@ -51,6 +51,16 @@ class EditProfileCell: UITableViewCell {
     
     var typeColor: UIColor?
     
+//    override var isSelected: Bool {
+//        didSet{ setSelected(isSelected, animated: true) }
+//    }
+    
+    let clearBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .none
+        return view
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -58,6 +68,8 @@ class EditProfileCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         backgroundColor = UIColor(named: "color_all_viewBackground")
+        
+        selectedBackgroundView = clearBackgroundView
         
         addSubview(typeButtonView)
         addSubview(vegieTypeName)
@@ -88,8 +100,6 @@ class EditProfileCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: true)
-        
-        
         
         if selected {
 //            typeButtonView.backgroundColor = .vridgeGreen // 채식 타입 별로 색상 지정해줘야 함 ->> 근데 그냥 vridgeGreen으로 갈 것 같다..

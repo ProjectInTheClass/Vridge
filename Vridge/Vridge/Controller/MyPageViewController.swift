@@ -145,7 +145,6 @@ class MyPageViewController: UIViewController {
         animationView.setDimensions(width: 100, height: 100)
         animationView.contentMode = .scaleAspectFill
         
-        
         view.backgroundColor = UIColor(named: viewBackgroundColor)
         
         tableView.backgroundColor = .clear
@@ -415,12 +414,12 @@ extension MyPageViewController: ASAuthorizationControllerDelegate, ASAuthorizati
             }
             
             let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
-            
+
             guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
                 
                 // handle if user already once registered... or ex user rejoining...
                 
-                AuthService.shared.loginExistUser(viewController: self, animationView: animationView, credential: credential) { user in
+                AuthService.shared.loginExistUser(viewController: self, animationView: animationView, credential: credential, bulletin: true) { user in
                     print("DEBUG: logged in and update home tab")
                     
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
@@ -445,8 +444,8 @@ extension MyPageViewController: ASAuthorizationControllerDelegate, ASAuthorizati
             let firstName = name.givenName ?? ""
             let familyName = name.familyName ?? ""
             let username = familyName + firstName
-//            AuthService.shared.signInNewUser(viewController: self, credential: credential,
-//                                             email: email, username: username)
+            AuthService.shared.signInNewUser(viewController: self, indicator: indicator, credential: credential,
+                                             email: email, bulletin: true)
             
             print("DEBUG: logged in and update home tab")
             guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }

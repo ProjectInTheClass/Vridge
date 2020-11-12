@@ -68,9 +68,16 @@ class SelectTypeViewController: UIViewController {
         
         
         // existed user change vegie type으로 실행 시켜보기
+        
+        indicator.startAnimating()
+        
+        // lottie로 바꿔주도록 하자.
+        
         AuthService.shared.submitNewUserProfile(viewController: self, type: type,
                                              photo: profileImage) { (err, ref) in
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true) {
+                self.indicator.stopAnimating()
+            }
         }
     }
     

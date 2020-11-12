@@ -15,32 +15,43 @@ struct AuthService {
     
     static let shared = AuthService()
     
-    func signInNewUser(viewController: LoginViewController, credential: AuthCredential,
-                       email: String, username: String) {
-        viewController.indicator.startAnimating()
+    func signInNewUser(viewController: UIViewController, indicator: UIActivityIndicatorView,
+                       credential: AuthCredential, email: String, bulletin: Bool? = false) {
+        indicator.startAnimating()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             
             let values = ["uid": uid,
                           "email": email,
-                          "point": 0,
-                          "username": username] as [String: Any]
+                          "point": 0] as [String: Any]
             
             REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                 REF_USER_POINT.updateChildValues([uid: 0]) { (err, ref) in
                     print("DEBUG: New user's email is \(email)")
                     
                     let selectTypeController = SelectTypeViewController()
-                    viewController.navigationController?.pushViewController(selectTypeController, animated: true)
-                    print("DEBUG: New user logged in.")
-                    viewController.indicator.stopAnimating()
+                    
+                    if bulletin == false {
+                        
+                        viewController.navigationController?.pushViewController(selectTypeController, animated: true)
+                        print("DEBUG: New user logged in.")
+                        indicator.stopAnimating()
+                        
+                    } else {
+                        
+                        let navigation = UINavigationController(rootViewController: selectTypeController)
+                        navigation.modalPresentationStyle = .fullScreen
+                        viewController.present(navigation, animated: true, completion: nil)
+                        indicator.stopAnimating()
+                    }
+                    
                 }
             }
         }
     }
     
     func loginExistUser(viewController: UIViewController, animationView: AnimationView, credential: AuthCredential,
-                        completion: @escaping(User) -> Void) {
+                        bulletin: Bool? = false, completion: @escaping(User) -> Void) {
         animationView.play()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
@@ -49,7 +60,24 @@ struct AuthService {
             REF_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
                 
                 guard (snapshot.value as? [String: AnyObject]) != nil else {
-                    rejoinLeftUser(credential: credential, uid: uid, email: email) { (err, ref) in
+                    
+                    rejoinLeftUser(credential: credential, uid: uid, email: email, bulletin: bulletin) { (err, ref) in
+                        
+                        let selectTypeController = SelectTypeViewController()
+                        
+                        if bulletin == false {
+                            
+                            viewController.navigationController?.pushViewController(selectTypeController, animated: true)
+                            print("DEBUG: New user logged in.")
+//                            indicator.stopAnimating()
+                            
+                        } else {
+                            
+                            let navigation = UINavigationController(rootViewController: selectTypeController)
+                            navigation.modalPresentationStyle = .fullScreen
+                            viewController.present(navigation, animated: true, completion: nil)
+//                            indicator.stopAnimating()
+                        }
                         print("DEBUG: left user rejoined...")
                     }
                     return
@@ -75,7 +103,7 @@ struct AuthService {
         }
     }
     
-    func rejoinLeftUser(credential: AuthCredential, uid: String, email: String,
+    func rejoinLeftUser(credential: AuthCredential, uid: String, email: String, bulletin: Bool? = false,
                         completion: @escaping(Error?, DatabaseReference) -> Void) {
         // Deleted account and rejoining
         
@@ -116,7 +144,7 @@ struct AuthService {
                 
                 REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL,
                                                         "type": type]) { (err, ref) in
-                    DB_REF.child("\(type)-point").updateChildValues([uid: 13], withCompletionBlock: completion)
+                    DB_REF.child("\(type)-point").updateChildValues([uid: 0], withCompletionBlock: completion)
                     viewController.indicator.stopAnimating()
                     
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
@@ -187,7 +215,7 @@ struct AuthService {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         REF_USERS.child(uid).updateChildValues(["type": type]) { (err, ref) in
-            DB_REF.child("\(type)-point").updateChildValues([uid: 13], withCompletionBlock: completion)
+            DB_REF.child("\(type)-point").updateChildValues([uid: 0], withCompletionBlock: completion)
         }
     }
     

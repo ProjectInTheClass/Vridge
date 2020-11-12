@@ -68,7 +68,6 @@ struct UserService {
                 } else {
                     completion(users.sorted(by: { $0.point > $1.point }))
                 }
-                
             }
         }
     }
@@ -110,7 +109,8 @@ struct UserService {
     func changeType(user: User, to type: VegieType, completion: @escaping(Error?, DatabaseReference) -> Void) {
         DB_REF.child("\(user.vegieType!.rawValue)-point").child(user.uid).removeValue { (err, ref) in
             REF_USERS.child(user.uid).updateChildValues(["type": type]) { (err, ref) in
-                DB_REF.child("\(type.rawValue)-point").updateChildValues([user.uid: user.point], withCompletionBlock: completion)
+                DB_REF.child("\(type.rawValue)-point").updateChildValues([user.uid: user.point],
+                                                                         withCompletionBlock: completion)
             }
         }
     }

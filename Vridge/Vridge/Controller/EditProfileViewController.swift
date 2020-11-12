@@ -46,7 +46,8 @@ class EditProfileViewController: UIViewController {
         return button
     }()
     
-    var currentType = ""
+    lazy var currentType = user.vegieType!.rawValue
+    
     lazy var newUsername = user.username
     
     lazy var gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
@@ -77,6 +78,7 @@ class EditProfileViewController: UIViewController {
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
+        print("DEBUG: \(currentType)")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -96,6 +98,7 @@ class EditProfileViewController: UIViewController {
     
     @objc func handleUpload() {
         // 이 곳에 lottie 필요
+//        guard let currentType = currentType else { return }
         UserService.shared.editProfile(user: user, vegieType: currentType, profileImage: profileImage,
                                        username: newUsername) { (err, ref) in
             let alert = UIAlertController(title: "프로필이 수정되었어요", message: "", preferredStyle: .alert)
@@ -161,44 +164,61 @@ extension EditProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as!  EditProfileCell
         
+//        cell.typeColor = UIColor(named: "color_editprofile_vegietype_button")
+        
         
         // issue : 스크롤이 내려갈 때마다 원래 나의 타입으로 돌아가게 됨.
         // solution : selectRow를 이용할 게 아닌가..?
+        // asdfasdfsadfsadf
         
         
-        if cell.tag == indexPath.row {
-            switch user.vegieType?.rawValue {
-            case "fruitarian":
-                tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .none)
-            case "vegan":
-                tableView.selectRow(at: IndexPath(row: 1, section: 0), animated: true, scrollPosition: .none)
-            case "lacto":
-                tableView.selectRow(at: IndexPath(row: 2, section: 0), animated: true, scrollPosition: .none)
-            case "ovo":
-                tableView.selectRow(at: IndexPath(row: 3, section: 0), animated: true, scrollPosition: .none)
-            case "lacto_ovo":
-                tableView.selectRow(at: IndexPath(row: 4, section: 0), animated: true, scrollPosition: .none)
-            case "pesco":
-                tableView.selectRow(at: IndexPath(row: 5, section: 0), animated: true, scrollPosition: .none)
-            case "pollo":
-                tableView.selectRow(at: IndexPath(row: 6, section: 0), animated: true, scrollPosition: .none)
-            case "flexitarian":
-                tableView.selectRow(at: IndexPath(row: 7, section: 0), animated: true, scrollPosition: .none)
-            default: print("DEBUG: error")
-            }
-        }
+//        if cell.tag == indexPath.row {
+//            switch currentType {
+//            case "fruitarian":
+//                tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .none)
+//            case "vegan":
+//                tableView.selectRow(at: IndexPath(row: 1, section: 0), animated: true, scrollPosition: .none)
+//            case "lacto":
+//                tableView.selectRow(at: IndexPath(row: 2, section: 0), animated: true, scrollPosition: .none)
+//            case "ovo":
+//                tableView.selectRow(at: IndexPath(row: 3, section: 0), animated: true, scrollPosition: .none)
+//            case "lacto_ovo":
+//                tableView.selectRow(at: IndexPath(row: 4, section: 0), animated: true, scrollPosition: .none)
+//            case "pesco":
+//                tableView.selectRow(at: IndexPath(row: 5, section: 0), animated: true, scrollPosition: .none)
+//            case "pollo":
+//                tableView.selectRow(at: IndexPath(row: 6, section: 0), animated: true, scrollPosition: .none)
+//            case "flexitarian":
+//                tableView.selectRow(at: IndexPath(row: 7, section: 0), animated: true, scrollPosition: .none)
+//            default: print("DEBUG: error")
+//            }
+//        }
+        
+       
         
         cell.vegieTypeName.text = VegieType.allCases[indexPath.row].rawValue
         cell.vegieTypeDescription.text = VegieType.allCases[indexPath.row].typeDetail
         cell.vegieTypeImage.image = VegieType.allCases[indexPath.row].typeImage
         cell.typeColor = VegieType.allCases[indexPath.row].typeColor
+        
 //        cell.isSelected = user.vegieType?.rawValue == VegieType.allCases[indexPath.row].rawValue
         
         
-        let backgroundColorView = UIView()
-        backgroundColorView.backgroundColor = .none
-        cell.selectedBackgroundView = backgroundColorView
+//        let backgroundColorView = UIView()
+//        backgroundColorView.backgroundColor = .none
+//        cell.selectedBackgroundView = backgroundColorView
         cell.delegate = self
+        
+        if currentType == VegieType.allCases[indexPath.row].rawValue {
+            cell.isSelected = true
+            print("DEBUG: indexpath === \(indexPath.row)")
+            tableView.selectRow(at: IndexPath(row: indexPath.row, section: 0), animated: true, scrollPosition: .none)
+        } else {
+            cell.isSelected = false
+//            tableView.deselectRow(at: IndexPath(row: indexPath.row, section: 0), animated: true)
+        }
+        
+        
         return cell
     }
     
@@ -224,7 +244,9 @@ extension EditProfileViewController: UITableViewDelegate  {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("DEBUG: 이거 누르면 어떤 걸 선택했는지 알 수 있대.")
+        
+        self.currentType = VegieType.allCases[indexPath.row].rawValue
+//        tableView.reloadData()
     }
     
 }
@@ -234,7 +256,9 @@ extension EditProfileViewController: UITableViewDelegate  {
 extension EditProfileViewController: CustomNavBarDelegate {
     func backButtonDidTap() {
         
-        let alert = UIAlertController(title: "수정 내용을 삭제하시겠어요?", message: "지금 돌아가면 수정 내용이 삭제돼요", preferredStyle: .alert)
+        let alert = UIAlertController(title: "수정 내용을 삭제하시겠어요?",
+                                      message: "지금 돌아가면 수정 내용이 삭제돼요",
+                                      preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
         alert.addAction(UIAlertAction(title: confirm, style: .destructive, handler: { _ in
             self.navigationController?.popViewController(animated: true)
