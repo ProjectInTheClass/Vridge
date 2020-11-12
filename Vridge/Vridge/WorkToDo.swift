@@ -10,8 +10,9 @@ import Foundation
 
 /*
  
+ ###### EditProfile cell pre-selected 완료!!
+ ###### 현재 rejoining user 적용 완료 -> test needed.
  
- // 현재 rejoining user 적용 완료 -> test needed.
  
  
  상황별 로그인 정리.

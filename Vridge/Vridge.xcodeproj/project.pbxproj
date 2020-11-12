@@ -238,10 +238,10 @@
 		3D1FA4712526F30100C6388A /* Vridge */ = {
 			isa = PBXGroup;
 			children = (
+				3D8BD985255D2D370021BD4D /* WorkToDo.swift */,
 				3DE62388252C533C005F16A9 /* Vridge.entitlements */,
 				3D1FA4722526F30100C6388A /* AppDelegate.swift */,
 				3D1FA4742526F30100C6388A /* SceneDelegate.swift */,
-				3D8BD985255D2D370021BD4D /* WorkToDo.swift */,
 				3D1D8803253ACABA005A0FE9 /* Model */,
 				3D7F9D232529B875006E23F4 /* View */,
 				3D7F9D242529B878006E23F4 /* ViewModel */,

@@ -164,60 +164,16 @@ extension EditProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as!  EditProfileCell
         
-//        cell.typeColor = UIColor(named: "color_editprofile_vegietype_button")
-        
-        
-        // issue : 스크롤이 내려갈 때마다 원래 나의 타입으로 돌아가게 됨.
-        // solution : selectRow를 이용할 게 아닌가..?
-        // asdfasdfsadfsadf
-        
-        
-//        if cell.tag == indexPath.row {
-//            switch currentType {
-//            case "fruitarian":
-//                tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .none)
-//            case "vegan":
-//                tableView.selectRow(at: IndexPath(row: 1, section: 0), animated: true, scrollPosition: .none)
-//            case "lacto":
-//                tableView.selectRow(at: IndexPath(row: 2, section: 0), animated: true, scrollPosition: .none)
-//            case "ovo":
-//                tableView.selectRow(at: IndexPath(row: 3, section: 0), animated: true, scrollPosition: .none)
-//            case "lacto_ovo":
-//                tableView.selectRow(at: IndexPath(row: 4, section: 0), animated: true, scrollPosition: .none)
-//            case "pesco":
-//                tableView.selectRow(at: IndexPath(row: 5, section: 0), animated: true, scrollPosition: .none)
-//            case "pollo":
-//                tableView.selectRow(at: IndexPath(row: 6, section: 0), animated: true, scrollPosition: .none)
-//            case "flexitarian":
-//                tableView.selectRow(at: IndexPath(row: 7, section: 0), animated: true, scrollPosition: .none)
-//            default: print("DEBUG: error")
-//            }
-//        }
-        
-       
-        
         cell.vegieTypeName.text = VegieType.allCases[indexPath.row].rawValue
         cell.vegieTypeDescription.text = VegieType.allCases[indexPath.row].typeDetail
         cell.vegieTypeImage.image = VegieType.allCases[indexPath.row].typeImage
         cell.typeColor = VegieType.allCases[indexPath.row].typeColor
-        
-//        cell.isSelected = user.vegieType?.rawValue == VegieType.allCases[indexPath.row].rawValue
-        
-        
-//        let backgroundColorView = UIView()
-//        backgroundColorView.backgroundColor = .none
-//        cell.selectedBackgroundView = backgroundColorView
         cell.delegate = self
         
         if currentType == VegieType.allCases[indexPath.row].rawValue {
-            cell.isSelected = true
             print("DEBUG: indexpath === \(indexPath.row)")
             tableView.selectRow(at: IndexPath(row: indexPath.row, section: 0), animated: true, scrollPosition: .none)
-        } else {
-            cell.isSelected = false
-//            tableView.deselectRow(at: IndexPath(row: indexPath.row, section: 0), animated: true)
         }
-        
         
         return cell
     }
