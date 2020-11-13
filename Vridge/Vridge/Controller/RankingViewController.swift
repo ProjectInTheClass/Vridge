@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 import Firebase
+import BLTNBoard
+import Lottie
 
 private let cellID = "rankingCell"
 
@@ -47,9 +50,49 @@ class RankingViewController: UIViewController {
         }
     }
     
+    let animationView: AnimationView = {
+        let av = Lottie.AnimationView(name: loadingAnimation)
+        av.loopMode = .loop
+        av.isHidden = true
+        return av
+    }()
+    
     private let actionSheetViewModel = ActionSheetViewModel()
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
+    
+    lazy var bulletinManager: BLTNItemManager = {
+        let rootItem = BLTNPageItem(title: "브릿지 가입하기")
+
+        rootItem.appearance.titleTextColor = UIColor(named: allTextColor) ?? .black
+        rootItem.appearance.titleFontDescriptor = UIFont.SFBold(size: 24)?.fontDescriptor
+        rootItem.appearance.titleFontSize = 24
+
+        rootItem.descriptionText = "다양한 사람들과 함께 나의 첫 채식을\n즐겁게 챌린지 형식으로 시작해보세요!"
+        rootItem.appearance.descriptionFontSize = 14
+        rootItem.appearance.descriptionFontDescriptor = UIFont.SFRegular(size: 14)?.fontDescriptor
+        rootItem.appearance.descriptionTextColor = UIColor(named: allTextColor) ?? .black
+    
+        rootItem.actionButtonTitle = "Apple ID로 시작하기"
+        rootItem.appearance.actionButtonTitleColor = .white
+        rootItem.appearance.actionButtonColor = .black
+        rootItem.appearance.actionButtonCornerRadius = 8
+        
+        rootItem.requiresCloseButton = false
+        
+        rootItem.alternativeButtonTitle = "그냥 둘러볼래요"
+        rootItem.appearance.alternativeButtonTitleColor = .vridgeGreen
+        
+        rootItem.actionHandler = { _ in
+//            self.showLoginView()
+            self.performSignin()
+        }
+        
+        rootItem.alternativeHandler = { _ in
+            self.dismissBulletin()
+        }
+        return BLTNItemManager(rootItem: rootItem)
+    }()
     
     
     // MARK: - Lifecycle
@@ -71,6 +114,11 @@ class RankingViewController: UIViewController {
 //        fetchTotalMyTypeUser()
         fetchUserRanking()
         fetchMyTypeUserRanking()
+        
+        view.addSubview(animationView)
+        animationView.center(inView: view)
+        animationView.setDimensions(width: 100, height: 100)
+        animationView.contentMode = .scaleAspectFill
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -129,9 +177,6 @@ class RankingViewController: UIViewController {
     }
     
     
-    // MARK: - Selectors
-    
-    
     // MARK: - Helpers
     
     func configureUI() {
@@ -160,6 +205,66 @@ class RankingViewController: UIViewController {
         tableView.anchor(top: secondView.bottomAnchor, left: view.leftAnchor,
                          bottom: view.bottomAnchor, right: view.rightAnchor)
         
+    }
+    
+    func dismissBulletin() {
+        bulletinManager.dismissBulletin(animated: true)
+    }
+    
+    func performSignin() {
+        bulletinManager.dismissBulletin(animated: true)
+        
+        let request = createAppleIdRequest()
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        
+        authorizationController.performRequests()
+    }
+    
+    func createAppleIdRequest() -> ASAuthorizationAppleIDRequest {
+        let appleIdProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIdProvider.createRequest()
+        
+        request.requestedScopes = [.fullName, .email]
+        
+        let nonce = randomNonceString()
+        request.nonce = sha256(nonce)
+        currentNonce = nonce
+        
+        return request
+    }
+    
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: Array<Character> =
+            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
+        
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+                }
+                return random
+            }
+            
+            randoms.forEach { random in
+                if remainingLength == 0 {
+                    return
+                }
+                
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
+                }
+            }
+        }
+        return result
     }
 }
 
@@ -234,11 +339,9 @@ extension RankingViewController: RankingCustomTopViewDelegate {
 
 extension RankingViewController: RankingSecondViewDelegate {
     
-    func showLogin() {
-        present(actionSheetViewModel.pleaseLogin(self), animated: true) {
-            self.navigationController?.popViewController(animated: true)
-            //로그인 뷰가 dismiss 된 후 기존의 ranking 뷰에서 내 타입 순위를 바로 볼 수 있게끔 바꿔보기.
-        }
+    func showBulletin() {
+        bulletinManager.backgroundColor = UIColor(named: "color_mypage_myPostCountBoxBg") ?? .white
+        bulletinManager.showBulletin(above: self)
     }
     
     
@@ -248,5 +351,93 @@ extension RankingViewController: RankingSecondViewDelegate {
         print("DEBUG: filter is \(selectedFilter)")
     }
 }
+
+// MARK: - Apple Login Method
+
+import CryptoKit
+
+// Unhashed nonce.
+fileprivate var currentNonce: String?
+
+@available(iOS 13, *)
+private func sha256(_ input: String) -> String {
+    let inputData = Data(input.utf8)
+    let hashedData = SHA256.hash(data: inputData)
+    let hashString = hashedData.compactMap {
+        return String(format: "%02x", $0)
+    }.joined()
+    
+    return hashString
+}
+
+
+extension RankingViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let nonce = currentNonce else {
+                fatalError("INVALID STATE : a login callback was received, but no request sent.")
+            }
+            guard let appleIDToken = appleIDCredential.identityToken else {
+                print("unable to fetch identity token")
+                return
+            }
+            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                print("Unable to serialize token string")
+                return
+            }
+            
+            let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
+            
+            guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
+                
+                // handle if user already once registered... or ex user rejoining...
+                
+                AuthService.shared.loginExistUser(viewController: self, animationView: animationView, credential: credential, bulletin: true) { user in
+                    print("DEBUG: logged in and update home tab")
+                    
+                    self.fetchMyTypeUserRanking()
+                    
+                    
+                    guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+                    guard let tab = window.rootViewController as? MainTabBarController else { return }
+                    
+                    tab.fetchUser()
+                }
+                
+                
+                
+                // 이 곳을 바꿔보자 Auth Service 안에서 lottie 넣기.
+                
+                return
+            }
+//             handle if user hasn't registered...
+            
+            let firstName = name.givenName ?? ""
+            let familyName = name.familyName ?? ""
+            let username = familyName + firstName
+            AuthService.shared.signInNewUser(viewController: self, indicator: animationView, credential: credential,
+                                             email: email, bulletin: true)
+            
+            fetchMyTypeUserRanking()
+            
+            print("DEBUG: logged in and update home tab")
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? MainTabBarController else { return }
+            
+            tab.fetchUser()
+            print("DEBUG: New user is '\(username)'")
+            
+            return
+        }
+    }
+}
+
 
 

@@ -224,13 +224,15 @@ class HomeFeedCell: UITableViewCell {
     }
     
     @objc func handleReportTapped() {
-        guard let posts = posts else { return }
-        guard let row = row else { return }
         
         if Auth.auth().currentUser == nil {
             print("DEBUG: no user")
             delegate?.pleaseLogin()
+            
         } else {
+            guard let posts = posts else { return }
+            guard let row = row else { return }
+            
             if posts.user.isCurrentUser {
                 delegate?.currentUserAmendTapped(sender: posts, row: row)
             } else {

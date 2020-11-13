@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Lottie
+
 //struct vegieType {
 //    var name : String
 //    var description : String
@@ -46,6 +48,13 @@ class EditProfileViewController: UIViewController {
         return button
     }()
     
+    let animationView: AnimationView = {
+        let av = Lottie.AnimationView(name: loadingAnimation)
+        av.loopMode = .loop
+        av.isHidden = true
+        return av
+    }()
+    
     lazy var currentType = user.vegieType!.rawValue
     
     lazy var newUsername = user.username
@@ -71,6 +80,11 @@ class EditProfileViewController: UIViewController {
         customNavBar.titleLabel.text = "프로필 수정"
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         configureUI()
+        
+        view.addSubview(animationView)
+        animationView.center(inView: view)
+        animationView.setDimensions(width: 100, height: 100)
+        animationView.contentMode = .scaleAspectFill
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -98,11 +112,17 @@ class EditProfileViewController: UIViewController {
     
     @objc func handleUpload() {
         // 이 곳에 lottie 필요
+        animationView.isHidden = false
+        animationView.play()
+        
         UserService.shared.editProfile(user: user, vegieType: currentType, profileImage: profileImage,
                                        username: newUsername) { (err, ref) in
+            self.animationView.stop()
+            self.animationView.isHidden = true
             let alert = UIAlertController(title: "프로필이 수정되었어요", message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: confirm, style: .default, handler: { _ in
                 // 이 곳에 Lottie 필요
+                
                 self.navigationController?.popViewController(animated: true)
             }))
             self.present(alert, animated: true, completion: nil)

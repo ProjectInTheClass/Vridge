@@ -301,7 +301,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             let firstName = name.givenName ?? ""
             let familyName = name.familyName ?? ""
             let username = familyName + firstName
-            AuthService.shared.signInNewUser(viewController: self, indicator: indicator, credential: credential,
+            AuthService.shared.signInNewUser(viewController: self, indicator: animationView, credential: credential,
                                              email: email)
             
             print("DEBUG: logged in and update home tab")

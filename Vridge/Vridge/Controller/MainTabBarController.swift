@@ -134,7 +134,17 @@ class MainTabBarController: UITabBarController {
                 self.present(nav, animated: true, completion: nil)
             }
         } else {
-            fetchUser()
+            
+            AuthService.shared.checkIfUserHasUsername { hasUsername in
+                if hasUsername {
+                    self.fetchUser()
+                } else {
+                    let selectTypeController = SelectTypeViewController()
+                    let nav = UINavigationController(rootViewController: selectTypeController)
+                    nav.modalPresentationStyle = .fullScreen
+                    self.present(nav, animated: true, completion: nil)
+                }
+            }
         }
     }
     
@@ -393,6 +403,7 @@ extension MainTabBarController: ASAuthorizationControllerDelegate, ASAuthorizati
                 }
                 
                 
+                
                 // 이 곳을 바꿔보자 Auth Service 안에서 lottie 넣기.
                 
                 return
@@ -402,7 +413,7 @@ extension MainTabBarController: ASAuthorizationControllerDelegate, ASAuthorizati
             let firstName = name.givenName ?? ""
             let familyName = name.familyName ?? ""
             let username = familyName + firstName
-            AuthService.shared.signInNewUser(viewController: self, indicator: indicator, credential: credential,
+            AuthService.shared.signInNewUser(viewController: self, indicator: animationView, credential: credential,
                                              email: email, bulletin: true)
             
             print("DEBUG: logged in and update home tab")
