@@ -14,154 +14,13 @@ struct PostService {
     
     static let shared = PostService()
     
-    //    func uploadPost(caption: String?, photos: [UIImage?], indicator: AnimationView,
-    //                    view: PostingViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
-    //
-    //        guard let uid = Auth.auth().currentUser?.uid else { return }
-    //
-    //        indicator.play()
-    //        var urlString: [String] = []
-    //
-    //        guard let imageData1 = photos[0]?.jpegData(compressionQuality: 0.3) else { return }
-    //        switch photos.count {
-    //        case 1:
-    //
-    //            let filename = NSUUID().uuidString
-    //            let storageRef = STORAGE_POST_IMAGES.child(filename)
-    //
-    //            storageRef.putData(imageData1, metadata: nil) { (meta, err) in
-    //                storageRef.downloadURL { (url, err) in
-    //                    guard let imageURL = url?.absoluteString else { return }
-    //                    urlString.append(imageURL)
-    //
-    //                    guard let caption = caption else { return }
-    //
-    //                    let values = ["caption": caption,
-    //                                  "images": urlString,
-    //                                  "uid": uid,
-    //                                  "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
-    //
-    //                    REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
-    //                        guard let postID = ref.key else { return }
-    //
-    //                        pointUp { (error, ref) in
-    //                            REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
-    //                        }
-    //
-    //                        print("DEBUG: photo uploaded successfully to Storage/post_images.")
-    //
-    //                        DispatchQueue.main.async {
-    //                            indicator.stop()
-    //                            indicator.isHidden = true
-    //                        }
-    //                        view.dismiss(animated: true) {
-    //                            view.delegate?.fetchUserAgain()
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //
-    //        case 2:
-    //            guard let imageData2 = photos[1]?.jpegData(compressionQuality: 0.25) else { return }
-    //
-    //            let filename = NSUUID().uuidString
-    //            let storageRef = STORAGE_POST_IMAGES.child(filename)
-    //            let filename2 = NSUUID().uuidString
-    //            let storageRef2 = STORAGE_POST_IMAGES.child(filename2)
-    //
-    //            storageRef.putData(imageData1, metadata: nil) { (meta, err) in
-    //                storageRef.downloadURL { (url, err) in
-    //                    guard let imageURL1 = url?.absoluteString else { return }
-    //                    urlString.append(imageURL1)
-    //                    storageRef2.putData(imageData2, metadata: nil) { (meta, err) in
-    //                        storageRef2.downloadURL { (url, err) in
-    //                            guard let imageURL2 = url?.absoluteString else { return }
-    //                            urlString.append(imageURL2)
-    //
-    //                            guard let caption = caption else { return }
-    //
-    //                            let values = ["caption": caption,
-    //                                          "images": urlString,
-    //                                          "uid": uid,
-    //                                          "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
-    //
-    //                            REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
-    //                                guard let postID = ref.key else { return }
-    //
-    //                                pointUp { (error, ref) in
-    //                                    REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
-    //                                }
-    //
-    //                                print("DEBUG: photo uploaded successfully to Storage/post_images.")
-    //                                DispatchQueue.main.async {
-    //                                    indicator.stop()
-    //                                    indicator.isHidden = true
-    //                                }
-    //                                view.dismiss(animated: true, completion: nil)
-    //                            }
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        default:
-    //            guard let imageData2 = photos[1]?.jpegData(compressionQuality: 0.25) else { return }
-    //            guard let imageData3 = photos[2]?.jpegData(compressionQuality: 0.25) else { return }
-    //
-    //            let filename = NSUUID().uuidString
-    //            let storageRef = STORAGE_POST_IMAGES.child(filename)
-    //            let filename2 = NSUUID().uuidString
-    //            let storageRef2 = STORAGE_POST_IMAGES.child(filename2)
-    //            let filename3 = NSUUID().uuidString
-    //            let storageRef3 = STORAGE_POST_IMAGES.child(filename3)
-    //
-    //            storageRef.putData(imageData1, metadata: nil) { (meta, err) in
-    //                storageRef.downloadURL { (url, err) in
-    //                    guard let imageURL1 = url?.absoluteString else { return }
-    //                    urlString.append(imageURL1)
-    //                    storageRef2.putData(imageData2, metadata: nil) { (meta, err) in
-    //                        storageRef2.downloadURL { (url, err) in
-    //                            guard let imageURL2 = url?.absoluteString else { return }
-    //                            urlString.append(imageURL2)
-    //                            storageRef3.putData(imageData3, metadata: nil) { (meta, err) in
-    //                                storageRef3.downloadURL { (url, err) in
-    //                                    guard let imageURL3 = url?.absoluteString else { return }
-    //                                    urlString.append(imageURL3)
-    //
-    //                                    guard let caption = caption else { return }
-    //
-    //                                    let values = ["caption": caption,
-    //                                                  "images": urlString,
-    //                                                  "uid": uid,
-    //                                                  "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
-    //
-    //                                    REF_POSTS.childByAutoId().updateChildValues(values) { (err, ref) in
-    //                                        guard let postID = ref.key else { return }
-    //
-    //                                        pointUp { (error, ref) in
-    //                                            REF_USER_POSTS.child(uid).updateChildValues([postID: 1], withCompletionBlock: completion)
-    //                                        }
-    //
-    //                                        print("DEBUG: photo uploaded successfully to Storage/post_images.")
-    //                                        DispatchQueue.main.async {
-    //                                            indicator.stop()
-    //                                            indicator.isHidden = true
-    //                                        }
-    //                                        view.dismiss(animated: true, completion: nil)
-    //                                    }
-    //                                }
-    //                            }
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    
     func uploadPost(caption: String?, photos: [UIImage?], indicator: AnimationView,
                     view: PostingViewController, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        indicator.play()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            indicator.play()
+        }
         var urlString = [String]()
         let postID = NSUUID().uuidString
         
@@ -179,7 +38,7 @@ struct PostService {
                         guard let caption = caption else { return }
                         
                         let values = ["caption": caption,
-                                      "images": urlString.sorted(by: { $0 < $1 }),
+                                      "images": urlString.sorted(by: { $0 < $1 } ),
                                       "uid": uid,
                                       "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
                         
@@ -194,8 +53,6 @@ struct PostService {
                                         view.dismiss(animated: true, completion: nil)
                                     }
                                 }
-                                
-                                
                             }
                         }
                     }
@@ -368,7 +225,8 @@ struct PostService {
                 
                 DB_REF.child("\(post.user.vegieType!.rawValue)-posts").child(post.postID).removeValue { (err, ref) in
                     pointDown(completion: completion)
-                    NotificationCenter.default.post(name: Notification.Name("dataReloadFromHome"), object: nil)
+
+                    NotificationCenter.default.post(name: Notification.Name("refetchPosts"), object: nil)
                 }
             }
         }

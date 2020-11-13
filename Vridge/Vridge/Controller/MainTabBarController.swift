@@ -179,8 +179,9 @@ class MainTabBarController: UITabBarController {
         postButton.isHidden = false
     }
     
-    @objc func reloadData() {
+    @objc func refetchPosts() {
         fetchUser()
+        
         print("DEBUG: fetch user again and pass data to home vc")
     }
     
@@ -214,8 +215,8 @@ class MainTabBarController: UITabBarController {
         NotificationCenter.default.addObserver(self, selector: #selector(showPostButton),
                                                name: Notification.Name("showPostButton"),
                                                object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadData),
-                                               name: Notification.Name("dataReloadFromHome"),
+        NotificationCenter.default.addObserver(self, selector: #selector(refetchPosts),
+                                               name: Notification.Name("refetchPosts"),
                                                object: nil)
     }
     

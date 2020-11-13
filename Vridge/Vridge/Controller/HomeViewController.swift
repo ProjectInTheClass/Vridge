@@ -54,14 +54,15 @@ class HomeViewController: UIViewController {
     }
     
     var user: User? {
-        didSet { print("DEBUG: user did set as \(user?.username)"); tableView.reloadData() }
+        didSet { print("DEBUG: user did set as \(user?.username)");
+            print("DEBUG: user point now == \(user?.point)"); tableView.reloadData() }
     }
     
 //    var point: Int? {
 //        didSet { tableView.reloadData() }
 //    }
     
-    lazy var point = user?.point
+//    lazy var point = user?.point
     
     var type: String? {
         didSet { tableView.reloadData() }
@@ -161,13 +162,17 @@ class HomeViewController: UIViewController {
         animationView.contentMode = .scaleAspectFill
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
-                                               name: Notification.Name("fetchAgain"), object: nil)
+                                               name: Notification.Name("fetchAgain"),
+                                               object: nil)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         numberOfPosts()
+        fetchUser()
+        
+        print("DEBUG: user point now ================= \(user?.point)")
         
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
@@ -175,6 +180,13 @@ class HomeViewController: UIViewController {
     
     
     // MARK: - API
+    
+    func fetchUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        UserService.shared.fetchUser(uid: uid) { user in
+            self.user = user
+        }
+    }
     
     func fetchUserType() {
         UserService.shared.fetchUserType { type in
@@ -299,10 +311,6 @@ class HomeViewController: UIViewController {
         
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(refetchPosts),
-                                               name: Notification.Name("refetchPosts"),
-                                               object: nil)
         
     }
     
