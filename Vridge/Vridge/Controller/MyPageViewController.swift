@@ -44,7 +44,7 @@ class MyPageViewController: UIViewController {
     
     let animationView: AnimationView = {
         let av = Lottie.AnimationView(name: loadingAnimation)
-        av.isHidden = true
+//        av.isHidden = true
         av.loopMode = .loop
         return av
     }()

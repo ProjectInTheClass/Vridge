@@ -397,12 +397,12 @@ extension RankingViewController: ASAuthorizationControllerDelegate, ASAuthorizat
             
             guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
                 
+                self.navigationController?.popViewController(animated: true)
                 // handle if user already once registered... or ex user rejoining...
                 
                 AuthService.shared.loginExistUser(viewController: self, animationView: animationView, credential: credential, bulletin: true) { user in
                     print("DEBUG: logged in and update home tab")
                     
-                    self.fetchMyTypeUserRanking()
                     
                     
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
