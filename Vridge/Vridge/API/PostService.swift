@@ -184,6 +184,7 @@ struct PostService {
                                       "timestamp": Int(NSDate().timeIntervalSince1970)] as [String: Any]
                         
                         REF_POSTS.child(postID).updateChildValues(values) { (err, ref) in
+                            
                             pointUp { (err, ref) in
                                 UserService.shared.fetchUser(uid: uid) { user in
                                     DB_REF.child("\(user.vegieType!.rawValue)-posts").child(postID).updateChildValues(values) { (err, ref) in
@@ -365,8 +366,10 @@ struct PostService {
                     }
                 }
                 
-                DB_REF.child("\(post.user.vegieType!.rawValue)-posts").child(post.postID)
-                    .removeValue(completionBlock: completion)
+                DB_REF.child("\(post.user.vegieType!.rawValue)-posts").child(post.postID).removeValue { (err, ref) in
+                    pointDown(completion: completion)
+                    NotificationCenter.default.post(name: Notification.Name("dataReloadFromHome"), object: nil)
+                }
             }
         }
     }

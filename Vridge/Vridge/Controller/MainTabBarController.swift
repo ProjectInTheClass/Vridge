@@ -179,6 +179,11 @@ class MainTabBarController: UITabBarController {
         postButton.isHidden = false
     }
     
+    @objc func reloadData() {
+        fetchUser()
+        print("DEBUG: fetch user again and pass data to home vc")
+    }
+    
     
     // MARK: - Helpers
     
@@ -203,8 +208,15 @@ class MainTabBarController: UITabBarController {
         postButton.heightAnchor.constraint(equalToConstant: 64).isActive = true
         postButton.layer.cornerRadius = 64 / 2
         
-        NotificationCenter.default.addObserver(self, selector: #selector(hidePostButton), name: Notification.Name("hidePostButton"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(showPostButton), name: Notification.Name("showPostButton"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(hidePostButton),
+                                               name: Notification.Name("hidePostButton"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showPostButton),
+                                               name: Notification.Name("showPostButton"),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadData),
+                                               name: Notification.Name("dataReloadFromHome"),
+                                               object: nil)
     }
     
     func showLoginView() {

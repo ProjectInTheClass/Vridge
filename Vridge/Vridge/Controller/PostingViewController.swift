@@ -96,6 +96,7 @@ class PostingViewController: UIViewController {
         let av = Lottie.AnimationView(name: uploadAnimation)
         av.setDimensions(width: 80, height: 80)
         av.contentMode = .scaleAspectFill
+//        av.loopMode = .repeat(2)
         return av
     }()
     

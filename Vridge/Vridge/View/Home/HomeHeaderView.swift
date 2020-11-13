@@ -12,7 +12,7 @@ class HomeHeaderView: UIView {
     // MARK: - Properties
     
     var user: User?
-    var point: Int
+    lazy var point = user?.point
     
     lazy var usernameLabel: UILabel = {
         let label = UILabel()
@@ -29,13 +29,13 @@ class HomeHeaderView: UIView {
     
     lazy var kkiOrIl: UILabel = {
         let label = UILabel()
-        label.text = point > 99 ? "일" : "끼"
+        label.text = point ?? 0 > 99 ? "일" : "끼"
         return label
     }()
     
     lazy var pointOrDays: UILabel = {
         let label = UILabel()
-        label.text = point > 99 ? "\(Int(point / 3))" : "\(point)"
+        label.text = point ?? 0 > 99 ? "\(Int(point ?? 0 / 3))" : "\(point ?? 0)"
         return label
     }()
     
@@ -73,9 +73,9 @@ class HomeHeaderView: UIView {
     
     // MARK: - Lifecycle
     
-    init(frame: CGRect, user: User?, point: Int) {
+    init(frame: CGRect, user: User?) {
         self.user = user
-        self.point = point
+//        self.point = point
         super.init(frame: frame)
         
         

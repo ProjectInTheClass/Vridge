@@ -57,9 +57,11 @@ class HomeViewController: UIViewController {
         didSet { print("DEBUG: user did set as \(user?.username)"); tableView.reloadData() }
     }
     
-    var point: Int? {
-        didSet { tableView.reloadData() }
-    }
+//    var point: Int? {
+//        didSet { tableView.reloadData() }
+//    }
+    
+    lazy var point = user?.point
     
     var type: String? {
         didSet { tableView.reloadData() }
@@ -150,7 +152,7 @@ class HomeViewController: UIViewController {
         
         configureUI()
         fetchPosts()
-        fetchPoint()
+//        fetchPoint()
         fetchUserType()
         
         view.addSubview(animationView)
@@ -180,11 +182,11 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func fetchPoint() {
-        UserService.shared.fetchUserPoint { point in
-            self.point = point
-        }
-    }
+//    func fetchPoint() {
+//        UserService.shared.fetchUserPoint { point in
+//            self.point = point
+//        }
+//    }
     
     func numberOfPosts() {
         PostService.shared.numberOfPosts { nums in
@@ -239,14 +241,14 @@ class HomeViewController: UIViewController {
     
     @objc func fetchAgain() {
         fetchPosts()
-        fetchPoint()
+//        fetchPoint()
         print("DEBUG: it worked!!")
     }
     
     @objc func handleRefresh() {
         print("DEBUG: Refresh feed")
         fetchPosts()
-        fetchPoint()
+//        fetchPoint()
     }
     
     @objc func handleShowRanking() {
@@ -287,6 +289,7 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor(named: viewBackgroundColor)
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
@@ -422,11 +425,11 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if user == nil {
-            let header = HomeHeaderView(frame: .zero, user: nil, point: user?.point ?? 0)
+            let header = HomeHeaderView(frame: .zero, user: nil)
             header.backgroundColor = UIColor(named: "color_all_viewBackground")
             return header
         } else {
-            let header = HomeHeaderView(frame: .zero, user: user, point: user!.point)
+            let header = HomeHeaderView(frame: .zero, user: user)
             header.backgroundColor = UIColor(named: "color_all_viewBackground")
             return header
         }
