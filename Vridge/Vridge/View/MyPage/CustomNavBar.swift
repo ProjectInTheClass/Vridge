@@ -32,7 +32,7 @@ class CustomNavBar: UIView {
         return button
     }()
     
-    let lineView: UIView = {
+    let underLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "color_all_line")
         return view
@@ -57,14 +57,14 @@ class CustomNavBar: UIView {
         addSubview(navBarView)
         addSubview(titleLabel)
         addSubview(backButton)
-        addSubview(lineView)
+        addSubview(underLineView)
         
         titleLabel.centerX(inView: self)
         titleLabel.centerY(inView: self)
         
         backButton.anchor(top: topAnchor, left: leftAnchor)
         
-        lineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 0.5)
+        underLineView.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, height: 0.5)
 //        navBarView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor,
 //                          paddingTop: -(statusBarHeight), height: (statusBarHeight + 44))
     }

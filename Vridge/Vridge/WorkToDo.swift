@@ -32,4 +32,8 @@ import Foundation
  
  
  
+ // 앱을 열었을 시 == > HomeView Will appear 시에 유저네임이 없거나 타입이 없다? -> Edit profile에서 설정을 안하고 끈 것이기 때문에
+    EditProfileViewController를 .full 화면으로 모달을 띄워서 모든 정보를 기입하도록 유도해야만 한다!!
+ 
+ 
  */

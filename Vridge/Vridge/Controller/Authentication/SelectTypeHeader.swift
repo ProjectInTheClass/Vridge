@@ -1,24 +1,22 @@
 //
-//  EditProfileHeaderView.swift
-//  MyPageView
+//  SelectTypeHeader.swift
+//  Vridge
 //
-//  Created by 김루희 on 2020/11/01.
+//  Created by Kang Mingu on 2020/11/13.
 //
 
 import UIKit
 
-protocol EditProfileHeaderViewDelegate: class {
-    func editProfileImgButtonDidTap()
+protocol SelectTypeHeaderDelegate: class {
+    func setProfilePhotoDidTap()
     func usernameDidSet(usernameText: String, canUse: Bool)
 }
 
-class EditProfileHeaderView: UIView {
+class SelectTypeHeader: UIView {
 
     // MARK: - Properties
     
-    weak var delegate: EditProfileHeaderViewDelegate?
-    
-    var user: User
+    weak var delegate: SelectTypeHeaderDelegate?
     
     let profileBackground : UIView = {
         let view = UIView()
@@ -118,30 +116,27 @@ class EditProfileHeaderView: UIView {
         return label
     }()
     
-    lazy var newUserName = user.username
     
-
     // MARK: - Lifecycle
     
-    init(frame: CGRect, user: User) {
-        self.user = user
+    override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUI()
         
-        nickNameTextField.text = user.username
-        profileImage.kf.setImage(with: user.profileImageURL)
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     // MARK: - Selectors
     
     @objc func editProfileImgButtonDidTap() {
-        delegate?.editProfileImgButtonDidTap()
-        print("안녕")
+        delegate?.setProfilePhotoDidTap()
+        print("DEBUG: button tapped from the header")
     }
+    
     
     // MARK: - Helpers
 
@@ -196,11 +191,12 @@ class EditProfileHeaderView: UIView {
         categoryLabel.centerX(inView: self)
 
     }
+    
 }
 
 // MARK: - UITextFieldDelegate
 
-extension EditProfileHeaderView: UITextFieldDelegate {
+extension SelectTypeHeader: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         guard let text = textField.text else { return }
@@ -224,7 +220,7 @@ extension EditProfileHeaderView: UITextFieldDelegate {
             nickNameTextField.text = String(name.dropLast())
         } else {
             
-            AuthService.shared.checkUserNameExistency(user: user, username: text.lowercased()) { canUse in
+            AuthService.shared.checkUserNameExistency(username: text.lowercased()) { canUse in
                 self.checkLabel.alpha = canUse ? 0 : 1
                 self.checkLabel2.alpha = canUse ? 1 : 0
                 self.delegate?.usernameDidSet(usernameText: text.lowercased(), canUse: canUse)

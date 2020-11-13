@@ -13,32 +13,59 @@ class SelectTypeViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let imagePicker = UIImagePickerController()
-    private var profileImage: UIImage?
-    
-    private let profileImageButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setImage(UIImage(systemName: "plus.circle"), for: .normal)
-        btn.addTarget(self, action: #selector(handleAddPhoto), for: .touchUpInside)
-        btn.setDimensions(width: 120, height: 120)
-        return btn
-    }()
-    
-    var type: String?
-    
-    private let tableView = UITableView()
-    
-    private lazy var okButton: UIBarButtonItem = {
-        let btn = UIBarButtonItem(title: "ok", style: .plain, target: self, action: #selector(handleRegistration))
-        return btn
-    }()
+    private let tableView = UITableView(frame: .zero, style: .grouped)
     
     var indicator: UIActivityIndicatorView = {
         let idc = UIActivityIndicatorView(style: .large)
-        idc.color = .black
+        idc.color = UIColor(named: allTextColor)
         idc.hidesWhenStopped = true
         return idc
     }()
+    
+    var profileImage: UIImage? {
+        didSet { tableView.reloadData() }
+    }
+    
+    let imagePicker = UIImagePickerController()
+    
+    var userSelectedType: String? {
+        didSet { if newUsername?.isEmpty == false {
+            okButton.isEnabled = true
+        }; print("DEBUG: selected user type ==== \(userSelectedType)") }
+    }
+    
+    var newUsername: String?
+    
+    lazy var okButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(handleRegistration), for: .touchUpInside)
+        button.setTitle("완료", for: .normal)
+        button.isEnabled = canProceed
+        button.tintColor = .vridgeGreen
+        button.titleLabel?.font = UIFont.SFSemiBold(size: 16)
+        return button
+    }()
+    
+    let customNavigationBar: UIView = {
+        let view = UIView()
+        view.setDimensions(width: view.frame.width, height: 44)
+        view.backgroundColor = UIColor(named: headerBackgroundColor)
+        let underLineView = UIView()
+        underLineView.backgroundColor = UIColor(named: "color_all_line")
+        view.addSubview(underLineView)
+        underLineView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, height: 0.5)
+        return view
+    }()
+    
+    lazy var header = SelectTypeHeader(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 319))
+    
+    lazy var gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
+    
+    var firstStage = false
+    var secondStage = false
+    var canProceed = false {
+        didSet { okButton.isEnabled = canProceed }
+    }
     
     
     // MARK: - Lifecycle
@@ -49,32 +76,35 @@ class SelectTypeViewController: UIViewController {
         configureUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        navigationController?.navigationBar.isHidden = false
+    }
+    
     
     // MARK: - Selectors
     
-    @objc func handleAddPhoto() {
-        present(imagePicker, animated: true, completion: nil)
+    @objc func viewDidTap() {
+        view.endEditing(true)
     }
     
     @objc func handleRegistration() {
-        guard let profileImage = profileImage else {
-            print("DEBUG: please select profile image")
-            return
-        }
-        guard let type = type else {
-            print("DEBUG: please select vegie type")
-            return
-        }
-        
-        
-        // existed user change vegie type으로 실행 시켜보기
         
         indicator.startAnimating()
         
-        // lottie로 바꿔주도록 하자.
+        guard let type = userSelectedType else { return }
+        guard let image = profileImage else { return }
+        guard let username = newUsername else { return }
         
-        AuthService.shared.submitNewUserProfile(viewController: self, type: type,
-                                             photo: profileImage) { (err, ref) in
+        AuthService.shared.submitNewUserProfile(indicator: indicator, type: type, photo: image,
+                                                username: username) { (err, ref) in
             self.dismiss(animated: true) {
                 self.indicator.stopAnimating()
             }
@@ -85,29 +115,133 @@ class SelectTypeViewController: UIViewController {
     // MARK: - Helpers
     
     func configureUI() {
-        view.backgroundColor = .systemPink
         
-        navigationItem.rightBarButtonItem = okButton
+        view.backgroundColor = UIColor(named: headerBackgroundColor)
+        navigationItem.hidesBackButton = true
         
-        view.addSubview(profileImageButton)
+        view.addSubview(customNavigationBar)
+        view.addSubview(okButton)
         view.addSubview(tableView)
         view.addSubview(indicator)
+        
+        view.addGestureRecognizer(gestureRecognizer)
+        gestureRecognizer.cancelsTouchesInView = false
+        
         indicator.center = view.center
         
-        tableView.register(TypeTestCell.self, forCellReuseIdentifier: cellID)
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        imagePicker.delegate = self
         imagePicker.allowsEditing = true
+        imagePicker.delegate = self
+        header.delegate = self
         
-        profileImageButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 100)
-        profileImageButton.centerX(inView: view)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(SelectTypeCell.self, forCellReuseIdentifier: cellID)
+        tableView.tableHeaderView = header
+        tableView.separatorStyle = .none
         
-        tableView.anchor(top: profileImageButton.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 40, paddingLeft: 8, paddingRight: 8)
+        customNavigationBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor)
+        tableView.anchor(top: customNavigationBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
+                         right: view.rightAnchor)
+        okButton.centerY(inView: customNavigationBar)
+        okButton.anchor(right: view.rightAnchor, paddingRight: 16)
+    }
+    
+    func openLibrary(_ action: UIAlertAction) {
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func openCamera(_ action: UIAlertAction) {
+        if (UIImagePickerController .isSourceTypeAvailable(.camera)) {
+            imagePicker.sourceType = .camera
+            present(imagePicker, animated: true, completion: nil)
+        } else {
+            print("Camera not available")
+        }
+    }
+    
+    func selectDefaultImage(_ action: UIAlertAction) {
+        print("DEBUG: set default image here")
+        header.profileImage.image = UIImage(named: "imgDefaultProfile")
+//        tableView.reloadData()
     }
     
 }
+
+
+extension SelectTypeViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return VegieType.allCases.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! SelectTypeCell
+        
+        cell.vegieTypeName.text = VegieType.allCases[indexPath.row].rawValue
+        cell.vegieTypeDescription.text = VegieType.allCases[indexPath.row].typeDetail
+        cell.vegieTypeImage.image = VegieType.allCases[indexPath.row].typeImage
+        cell.typeColor = VegieType.allCases[indexPath.row].typeColor
+//        cell.delegate = self
+        
+        return cell
+    }
+    
+    
+    // 테이블뷰 셋팅합시다.
+    
+    
+}
+
+// MARK: - UITableViewDelegate
+
+extension SelectTypeViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("DEBUG: user selected type is === \(VegieType.allCases[indexPath.row].rawValue)")
+        self.userSelectedType = VegieType.allCases[indexPath.row].rawValue
+        
+        self.firstStage = true
+        
+        if firstStage == true && secondStage == true {
+            canProceed = true
+        } else {
+            canProceed = false
+        }
+    }
+}
+
+// MARK: - SelectTypeHeaderDelegate
+
+extension SelectTypeViewController: SelectTypeHeaderDelegate {
+    
+    func usernameDidSet(usernameText: String, canUse: Bool) {
+        print("DEBUG: new username ====== \(usernameText)")
+        self.newUsername = usernameText
+        
+        secondStage = canUse
+        
+        if firstStage == true && secondStage == true {
+            canProceed = true
+        } else {
+            canProceed = false
+        }
+    }
+    
+    
+    func setProfilePhotoDidTap() {
+        print("DEBUG: button tapped from the vc")
+        let alert = UIAlertController(title: "프로필 사진 수정", message: "원하는 사진으로 프로필 사진을 수정해주세요", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: camera, style: .default, handler: openCamera))
+        alert.addAction(UIAlertAction(title: library, style: .default, handler: openLibrary))
+        alert.addAction(UIAlertAction(title: defaultImage, style: .default, handler: selectDefaultImage))
+        alert.addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
+}
+
+// MARK: - UIImagePickerControllerDelegate/UINavigationControllerDelegate
 
 extension SelectTypeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -116,39 +250,8 @@ extension SelectTypeViewController: UIImagePickerControllerDelegate, UINavigatio
         
         guard let image = info[.editedImage] as? UIImage else { return }
         self.profileImage = image
-        
-        profileImageButton.layer.cornerRadius = 120 / 2
-        profileImageButton.layer.masksToBounds = true
-        profileImageButton.imageView?.contentMode = .scaleAspectFill
-        profileImageButton.imageView?.clipsToBounds = true
-        profileImageButton.layer.borderColor = UIColor.white.cgColor
-        profileImageButton.layer.borderWidth = 1
-        
-        self.profileImageButton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
-        
+        header.profileImage.image = image
         dismiss(animated: true, completion: nil)
-    }
-}
-
-extension SelectTypeViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return VegieType.allCases.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TypeTestCell
         
-        cell.textLabel?.text = VegieType.allCases[indexPath.row].rawValue
-        
-        return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.type = VegieType.allCases[indexPath.row].rawValue
-        print("DEBUG: \(type)")
-    }
-    
-    
-    
 }

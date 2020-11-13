@@ -32,7 +32,7 @@ struct AuthService {
                     let selectTypeController = SelectTypeViewController()
                     
                     if bulletin == false {
-                        
+                        viewController.title = ""
                         viewController.navigationController?.pushViewController(selectTypeController, animated: true)
                         print("DEBUG: New user logged in.")
                         indicator.stopAnimating()
@@ -130,9 +130,9 @@ struct AuthService {
     }
     
     // 유저 프로필사진, 채식타입 등록 테스트 필요 API
-    func submitNewUserProfile(viewController: SelectTypeViewController, type: String, photo: UIImage,
+    func submitNewUserProfile(indicator: UIActivityIndicatorView, type: String, photo: UIImage, username: String,
                            completion: @escaping(Error?, DatabaseReference) -> Void) {
-        viewController.indicator.startAnimating()
+        indicator.startAnimating()
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         guard let imageData = photo.jpegData(compressionQuality: 0.3) else { return }
@@ -143,9 +143,10 @@ struct AuthService {
                 guard let imageURL = url?.absoluteString else { return }
                 
                 REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL,
-                                                        "type": type]) { (err, ref) in
+                                                        "type": type,
+                                                        "username": username]) { (err, ref) in
                     DB_REF.child("\(type)-point").updateChildValues([uid: 0], withCompletionBlock: completion)
-                    viewController.indicator.stopAnimating()
+                    indicator.stopAnimating()
                     
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
                     guard let tab = window.rootViewController as? MainTabBarController else { return }
@@ -157,40 +158,72 @@ struct AuthService {
     }
     
     // 유저네임 중복확인. 테스트 필요 API
-    func checkUserNameExistency(user: User, username: String, completion: @escaping(Bool) -> Void) {
+    func checkUserNameExistency(user: User? = nil, username: String, completion: @escaping(Bool) -> Void) {
         
-        let currentUsername = user.username
-        var safeUsername = username
-        
-        if username.contains(".") {
-            safeUsername = username.replacingOccurrences(of: ".", with: "")
-        } else if username.contains("#") {
-            safeUsername = username.replacingOccurrences(of: "#", with: "")
-        } else if username.contains("$") {
-            safeUsername = username.replacingOccurrences(of: "$", with: "")
-        } else if username.contains("[") {
-            safeUsername = username.replacingOccurrences(of: "[", with: "")
-        } else if username.contains("]") {
-            safeUsername = username.replacingOccurrences(of: "]", with: "")
-        } else if username.contains(" ") {
-            safeUsername = username.replacingOccurrences(of: " ", with: "")
-        } else if username == "" {
-            completion(false)
-        } else {
+        if let user = user {
+            let currentUsername = user.username
+            var safeUsername = username
             
-            REF_USERNAMES.child(":" + safeUsername).observeSingleEvent(of: .value) { snapshot in
+            if username.contains(".") {
+                safeUsername = username.replacingOccurrences(of: ".", with: "")
+            } else if username.contains("#") {
+                safeUsername = username.replacingOccurrences(of: "#", with: "")
+            } else if username.contains("$") {
+                safeUsername = username.replacingOccurrences(of: "$", with: "")
+            } else if username.contains("[") {
+                safeUsername = username.replacingOccurrences(of: "[", with: "")
+            } else if username.contains("]") {
+                safeUsername = username.replacingOccurrences(of: "]", with: "")
+            } else if username.contains(" ") {
+                safeUsername = username.replacingOccurrences(of: " ", with: "")
+            } else if username == "" {
+                completion(false)
+            } else {
                 
-                if snapshot.exists() {
-                    if safeUsername == currentUsername {
-                        completion(true)
+                REF_USERNAMES.child(":" + safeUsername).observeSingleEvent(of: .value) { snapshot in
+                    
+                    if snapshot.exists() {
+                        if safeUsername == currentUsername {
+                            completion(true)
+                        } else {
+                            completion(false)
+                        }
                     } else {
-                        completion(false)
+                        completion(true)
                     }
-                } else {
-                    completion(true)
+                }
+            }
+        } else {
+            var safeUsername = username
+            
+            if username.contains(".") {
+                safeUsername = username.replacingOccurrences(of: ".", with: "")
+            } else if username.contains("#") {
+                safeUsername = username.replacingOccurrences(of: "#", with: "")
+            } else if username.contains("$") {
+                safeUsername = username.replacingOccurrences(of: "$", with: "")
+            } else if username.contains("[") {
+                safeUsername = username.replacingOccurrences(of: "[", with: "")
+            } else if username.contains("]") {
+                safeUsername = username.replacingOccurrences(of: "]", with: "")
+            } else if username.contains(" ") {
+                safeUsername = username.replacingOccurrences(of: " ", with: "")
+            } else if username == "" {
+                completion(false)
+            } else {
+                
+                REF_USERNAMES.child(":" + safeUsername).observeSingleEvent(of: .value) { snapshot in
+                    
+                    if snapshot.exists() {
+                        completion(false)
+                    } else {
+                        completion(true)
+                    }
                 }
             }
         }
+        
+        
     }
     
     // 프로필 사진 올리기 테스트 필요 API

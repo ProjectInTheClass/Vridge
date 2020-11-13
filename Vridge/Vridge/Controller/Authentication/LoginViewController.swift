@@ -117,11 +117,11 @@ class LoginViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        
-        navigationController?.navigationBar.isHidden = false
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(true)
+//        
+//        navigationController?.navigationBar.isHidden = false
+//    }
     
     
     // MARK: - Selectors

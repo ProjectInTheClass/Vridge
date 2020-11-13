@@ -10,12 +10,12 @@ import UIKit
 //struct vegieType {
 //    var name : String
 //    var description : String
-//    
+//
 //    init(name: String, description: String) {
 //        self.name = name
 //        self.description = description
 //    }
-//    
+//
 //}
 
 private let cellID = "Cell"
@@ -98,7 +98,6 @@ class EditProfileViewController: UIViewController {
     
     @objc func handleUpload() {
         // 이 곳에 lottie 필요
-//        guard let currentType = currentType else { return }
         UserService.shared.editProfile(user: user, vegieType: currentType, profileImage: profileImage,
                                        username: newUsername) { (err, ref) in
             let alert = UIAlertController(title: "프로필이 수정되었어요", message: "", preferredStyle: .alert)
