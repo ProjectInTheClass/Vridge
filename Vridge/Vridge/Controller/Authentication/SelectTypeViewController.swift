@@ -22,7 +22,7 @@ class SelectTypeViewController: UIViewController {
         return idc
     }()
     
-    var profileImage: UIImage? {
+    var profileImage = UIImage(named: "imgDefaultProfile") {
         didSet { tableView.reloadData() }
     }
     
