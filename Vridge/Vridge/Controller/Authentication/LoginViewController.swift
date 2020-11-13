@@ -84,6 +84,20 @@ class LoginViewController: UIViewController {
         return av
     }()
     
+    let backgroundImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "background_img")
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
+    
+    let logoImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "Vridge_logo")
+        iv.contentMode = .scaleAspectFit
+        return iv
+    }()
+    
     
     // MARK: - Lifecycle
     
@@ -102,6 +116,12 @@ class LoginViewController: UIViewController {
         
         navigationController?.navigationBar.isHidden = true
     }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(true)
+//        
+//        navigationController?.navigationBar.isHidden = false
+//    }
     
     
     // MARK: - Selectors
@@ -124,6 +144,8 @@ class LoginViewController: UIViewController {
     func configureUI() {
         
         let animationView = Lottie.AnimationView(name: "loading")
+        view.addSubview(backgroundImageView)
+        backgroundImageView.addConstraintsToFillView(view)
         view.addSubview(animationView)
         
         animationView.play()
@@ -132,6 +154,9 @@ class LoginViewController: UIViewController {
         view.addSubview(browseButton)
         view.addSubview(label)
         view.addSubview(logOutButton)
+        view.addSubview(logoImageView)
+        logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                             paddingTop: 151, paddingLeft: 87, paddingRight: 87)
         
         view.addSubview(animationView)
         animationView.center(inView: view)
@@ -276,8 +301,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             let firstName = name.givenName ?? ""
             let familyName = name.familyName ?? ""
             let username = familyName + firstName
-            AuthService.shared.signInNewUser(viewController: self, credential: credential,
-                                             email: email, username: username)
+            AuthService.shared.signInNewUser(viewController: self, indicator: indicator, credential: credential,
+                                             email: email)
             
             print("DEBUG: logged in and update home tab")
             guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }

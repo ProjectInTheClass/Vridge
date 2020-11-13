@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 import Lottie
 import BLTNBoard
+import Firebase
 
 private let cellID = "cellID"
 private let headerID = "headerID"
@@ -52,12 +54,15 @@ class HomeViewController: UIViewController {
     }
     
     var user: User? {
-        didSet { print("DEBUG: user did set as \(user?.username)"); tableView.reloadData() }
+        didSet { print("DEBUG: user did set as \(user?.username)");
+            print("DEBUG: user point now == \(user?.point)"); tableView.reloadData() }
     }
     
-    var point: Int? {
-        didSet { tableView.reloadData() }
-    }
+//    var point: Int? {
+//        didSet { tableView.reloadData() }
+//    }
+    
+//    lazy var point = user?.point
     
     var type: String? {
         didSet { tableView.reloadData() }
@@ -102,7 +107,7 @@ class HomeViewController: UIViewController {
         rootItem.appearance.alternativeButtonTitleColor = .vridgeGreen
         
         rootItem.actionHandler = { _ in
-            self.showLoginView()
+            self.performSignin()
         }
         
         rootItem.alternativeHandler = { _ in
@@ -148,7 +153,7 @@ class HomeViewController: UIViewController {
         
         configureUI()
         fetchPosts()
-        fetchPoint()
+//        fetchPoint()
         fetchUserType()
         
         view.addSubview(animationView)
@@ -157,13 +162,17 @@ class HomeViewController: UIViewController {
         animationView.contentMode = .scaleAspectFill
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchAgain),
-                                               name: Notification.Name("fetchAgain"), object: nil)
+                                               name: Notification.Name("fetchAgain"),
+                                               object: nil)
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
         numberOfPosts()
+        fetchUser()
+        
+        print("DEBUG: user point now ================= \(user?.point)")
         
         super.viewWillAppear(true)
         NotificationCenter.default.post(name: Notification.Name("showPostButton"), object: nil)
@@ -172,17 +181,24 @@ class HomeViewController: UIViewController {
     
     // MARK: - API
     
+    func fetchUser() {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        UserService.shared.fetchUser(uid: uid) { user in
+            self.user = user
+        }
+    }
+    
     func fetchUserType() {
         UserService.shared.fetchUserType { type in
             self.type = type
         }
     }
     
-    func fetchPoint() {
-        UserService.shared.fetchUserPoint { point in
-            self.point = point
-        }
-    }
+//    func fetchPoint() {
+//        UserService.shared.fetchUserPoint { point in
+//            self.point = point
+//        }
+//    }
     
     func numberOfPosts() {
         PostService.shared.numberOfPosts { nums in
@@ -237,14 +253,14 @@ class HomeViewController: UIViewController {
     
     @objc func fetchAgain() {
         fetchPosts()
-        fetchPoint()
+//        fetchPoint()
         print("DEBUG: it worked!!")
     }
     
     @objc func handleRefresh() {
         print("DEBUG: Refresh feed")
         fetchPosts()
-        fetchPoint()
+//        fetchPoint()
     }
     
     @objc func handleShowRanking() {
@@ -285,17 +301,16 @@ class HomeViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor(named: viewBackgroundColor)
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
         view.addSubview(tableView)
+        view.addSubview(indicator)
+        indicator.center = view.center
         
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                          bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(refetchPosts),
-                                               name: Notification.Name("refetchPosts"),
-                                               object: nil)
         
     }
     
@@ -319,6 +334,63 @@ class HomeViewController: UIViewController {
     func dismissBulletin() {
         bulletinManager.dismissBulletin(animated: true)
     }
+    
+    func performSignin() {
+        bulletinManager.dismissBulletin(animated: true)
+        
+        let request = createAppleIdRequest()
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        
+        authorizationController.performRequests()
+    }
+    
+    func createAppleIdRequest() -> ASAuthorizationAppleIDRequest {
+        let appleIdProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIdProvider.createRequest()
+        
+        request.requestedScopes = [.fullName, .email]
+        
+        let nonce = randomNonceString()
+        request.nonce = sha256(nonce)
+        currentNonce = nonce
+        
+        return request
+    }
+    
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: Array<Character> =
+            Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
+        
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+                }
+                return random
+            }
+            
+            randoms.forEach { random in
+                if remainingLength == 0 {
+                    return
+                }
+                
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
+                }
+            }
+        }
+        return result
+    }
+
     
 }
 
@@ -361,11 +433,11 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if user == nil {
-            let header = HomeHeaderView(frame: .zero, user: nil, point: user?.point ?? 0)
+            let header = HomeHeaderView(frame: .zero, user: nil)
             header.backgroundColor = UIColor(named: "color_all_viewBackground")
             return header
         } else {
-            let header = HomeHeaderView(frame: .zero, user: user, point: user!.point)
+            let header = HomeHeaderView(frame: .zero, user: user)
             header.backgroundColor = UIColor(named: "color_all_viewBackground")
             return header
         }
@@ -453,3 +525,86 @@ extension HomeViewController: ActionSheetViewModelDelegate {
     }
     
 }
+
+// MARK: - Apple Login Method
+
+
+import CryptoKit
+
+// Unhashed nonce.
+fileprivate var currentNonce: String?
+
+@available(iOS 13, *)
+private func sha256(_ input: String) -> String {
+    let inputData = Data(input.utf8)
+    let hashedData = SHA256.hash(data: inputData)
+    let hashString = hashedData.compactMap {
+        return String(format: "%02x", $0)
+    }.joined()
+    
+    return hashString
+}
+
+
+extension HomeViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            guard let nonce = currentNonce else {
+                fatalError("INVALID STATE : a login callback was received, but no request sent.")
+            }
+            guard let appleIDToken = appleIDCredential.identityToken else {
+                print("unable to fetch identity token")
+                return
+            }
+            guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
+                print("Unable to serialize token string")
+                return
+            }
+            
+            let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
+            
+            guard let email = appleIDCredential.email, let name = appleIDCredential.fullName else {
+                
+                // handle if user already once registered... or ex user rejoining...
+                
+                AuthService.shared.loginExistUser(viewController: self, animationView: animationView, credential: credential, bulletin: true) { user in
+                    print("DEBUG: logged in and update home tab")
+                    
+                    guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+                    guard let tab = window.rootViewController as? MainTabBarController else { return }
+                    
+                    tab.fetchUser()
+                }
+                
+                
+                // 이 곳을 바꿔보자 Auth Service 안에서 lottie 넣기.
+                
+                return
+            }
+//             handle if user hasn't registered...
+            
+            let firstName = name.givenName ?? ""
+            let familyName = name.familyName ?? ""
+            let username = familyName + firstName
+//            AuthService.shared.signInNewUser(viewController: self, credential: credential,
+//                                             email: email, username: username)
+            
+            print("DEBUG: logged in and update home tab")
+            guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
+            guard let tab = window.rootViewController as? MainTabBarController else { return }
+            
+            tab.fetchUser()
+            print("DEBUG: New user is '\(username)'")
+            
+            return
+        }
+    }
+}
+

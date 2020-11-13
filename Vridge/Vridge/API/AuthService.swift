@@ -15,32 +15,43 @@ struct AuthService {
     
     static let shared = AuthService()
     
-    func signInNewUser(viewController: LoginViewController, credential: AuthCredential,
-                       email: String, username: String) {
-        viewController.indicator.startAnimating()
+    func signInNewUser(viewController: UIViewController, indicator: UIActivityIndicatorView,
+                       credential: AuthCredential, email: String, bulletin: Bool? = false) {
+        indicator.startAnimating()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             
             let values = ["uid": uid,
                           "email": email,
-                          "point": 0,
-                          "username": username] as [String: Any]
+                          "point": 0] as [String: Any]
             
             REF_USERS.child(uid).updateChildValues(values) { (err, ref) in
                 REF_USER_POINT.updateChildValues([uid: 0]) { (err, ref) in
                     print("DEBUG: New user's email is \(email)")
                     
                     let selectTypeController = SelectTypeViewController()
-                    viewController.navigationController?.pushViewController(selectTypeController, animated: true)
-                    print("DEBUG: New user logged in.")
-                    viewController.indicator.stopAnimating()
+                    
+                    if bulletin == false {
+                        viewController.title = ""
+                        viewController.navigationController?.pushViewController(selectTypeController, animated: true)
+                        print("DEBUG: New user logged in.")
+                        indicator.stopAnimating()
+                        
+                    } else {
+                        
+                        let navigation = UINavigationController(rootViewController: selectTypeController)
+                        navigation.modalPresentationStyle = .fullScreen
+                        viewController.present(navigation, animated: true, completion: nil)
+                        indicator.stopAnimating()
+                    }
+                    
                 }
             }
         }
     }
     
     func loginExistUser(viewController: UIViewController, animationView: AnimationView, credential: AuthCredential,
-                        completion: @escaping(User) -> Void) {
+                        bulletin: Bool? = false, completion: @escaping(User) -> Void) {
         animationView.play()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
@@ -49,7 +60,24 @@ struct AuthService {
             REF_USERS.child(uid).observeSingleEvent(of: .value) { snapshot in
                 
                 guard (snapshot.value as? [String: AnyObject]) != nil else {
-                    rejoinLeftUser(credential: credential, uid: uid, email: email) { (err, ref) in
+                    
+                    rejoinLeftUser(credential: credential, uid: uid, email: email, bulletin: bulletin) { (err, ref) in
+                        
+                        let selectTypeController = SelectTypeViewController()
+                        
+                        if bulletin == false {
+                            
+                            viewController.navigationController?.pushViewController(selectTypeController, animated: true)
+                            print("DEBUG: New user logged in.")
+//                            indicator.stopAnimating()
+                            
+                        } else {
+                            
+                            let navigation = UINavigationController(rootViewController: selectTypeController)
+                            navigation.modalPresentationStyle = .fullScreen
+                            viewController.present(navigation, animated: true, completion: nil)
+//                            indicator.stopAnimating()
+                        }
                         print("DEBUG: left user rejoined...")
                     }
                     return
@@ -75,7 +103,7 @@ struct AuthService {
         }
     }
     
-    func rejoinLeftUser(credential: AuthCredential, uid: String, email: String,
+    func rejoinLeftUser(credential: AuthCredential, uid: String, email: String, bulletin: Bool? = false,
                         completion: @escaping(Error?, DatabaseReference) -> Void) {
         // Deleted account and rejoining
         
@@ -96,15 +124,15 @@ struct AuthService {
     func submitUsername(username: String, completion: @escaping(Error?, DatabaseReference) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        REF_USERNAMES.updateChildValues([username: 1]) { (err, ref) in
+        REF_USERNAMES.updateChildValues([":" + username: 1]) { (err, ref) in
             REF_USERS.child(uid).updateChildValues(["username": username], withCompletionBlock: completion)
         }
     }
     
     // 유저 프로필사진, 채식타입 등록 테스트 필요 API
-    func submitNewUserProfile(viewController: SelectTypeViewController, type: String, photo: UIImage,
+    func submitNewUserProfile(indicator: UIActivityIndicatorView, type: String, photo: UIImage, username: String,
                            completion: @escaping(Error?, DatabaseReference) -> Void) {
-        viewController.indicator.startAnimating()
+        indicator.startAnimating()
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         guard let imageData = photo.jpegData(compressionQuality: 0.3) else { return }
@@ -115,9 +143,10 @@ struct AuthService {
                 guard let imageURL = url?.absoluteString else { return }
                 
                 REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL,
-                                                        "type": type]) { (err, ref) in
-                    DB_REF.child("\(type)-point").updateChildValues([uid: 13], withCompletionBlock: completion)
-                    viewController.indicator.stopAnimating()
+                                                        "type": type,
+                                                        "username": username]) { (err, ref) in
+                    DB_REF.child("\(type)-point").updateChildValues([uid: 0], withCompletionBlock: completion)
+                    indicator.stopAnimating()
                     
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
                     guard let tab = window.rootViewController as? MainTabBarController else { return }
@@ -129,16 +158,72 @@ struct AuthService {
     }
     
     // 유저네임 중복확인. 테스트 필요 API
-    func checkUserNameExistency(username: String, completion: @escaping(Bool) -> Void) {
-        REF_USERNAMES.child(username).observeSingleEvent(of: .value) { snapshot in
-            if snapshot.exists() {
-                print("DEBUG: user exist, you can't use this id")
+    func checkUserNameExistency(user: User? = nil, username: String, completion: @escaping(Bool) -> Void) {
+        
+        if let user = user {
+            let currentUsername = user.username
+            var safeUsername = username
+            
+            if username.contains(".") {
+                safeUsername = username.replacingOccurrences(of: ".", with: "")
+            } else if username.contains("#") {
+                safeUsername = username.replacingOccurrences(of: "#", with: "")
+            } else if username.contains("$") {
+                safeUsername = username.replacingOccurrences(of: "$", with: "")
+            } else if username.contains("[") {
+                safeUsername = username.replacingOccurrences(of: "[", with: "")
+            } else if username.contains("]") {
+                safeUsername = username.replacingOccurrences(of: "]", with: "")
+            } else if username.contains(" ") {
+                safeUsername = username.replacingOccurrences(of: " ", with: "")
+            } else if username == "" {
                 completion(false)
             } else {
-                print("DEBUG: user not exist, you can use this id")
-                completion(true)
+                
+                REF_USERNAMES.child(":" + safeUsername).observeSingleEvent(of: .value) { snapshot in
+                    
+                    if snapshot.exists() {
+                        if safeUsername == currentUsername {
+                            completion(true)
+                        } else {
+                            completion(false)
+                        }
+                    } else {
+                        completion(true)
+                    }
+                }
+            }
+        } else {
+            var safeUsername = username
+            
+            if username.contains(".") {
+                safeUsername = username.replacingOccurrences(of: ".", with: "")
+            } else if username.contains("#") {
+                safeUsername = username.replacingOccurrences(of: "#", with: "")
+            } else if username.contains("$") {
+                safeUsername = username.replacingOccurrences(of: "$", with: "")
+            } else if username.contains("[") {
+                safeUsername = username.replacingOccurrences(of: "[", with: "")
+            } else if username.contains("]") {
+                safeUsername = username.replacingOccurrences(of: "]", with: "")
+            } else if username.contains(" ") {
+                safeUsername = username.replacingOccurrences(of: " ", with: "")
+            } else if username == "" {
+                completion(false)
+            } else {
+                
+                REF_USERNAMES.child(":" + safeUsername).observeSingleEvent(of: .value) { snapshot in
+                    
+                    if snapshot.exists() {
+                        completion(false)
+                    } else {
+                        completion(true)
+                    }
+                }
             }
         }
+        
+        
     }
     
     // 프로필 사진 올리기 테스트 필요 API
@@ -163,7 +248,7 @@ struct AuthService {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         REF_USERS.child(uid).updateChildValues(["type": type]) { (err, ref) in
-            DB_REF.child("\(type)-point").updateChildValues([uid: 13], withCompletionBlock: completion)
+            DB_REF.child("\(type)-point").updateChildValues([uid: 0], withCompletionBlock: completion)
         }
     }
     

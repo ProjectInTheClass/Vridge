@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D03BE9E2544238C0080C3A6 /* TypeTestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D03BE9D2544238C0080C3A6 /* TypeTestCell.swift */; };
+		3D03BE9E2544238C0080C3A6 /* SelectTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D03BE9D2544238C0080C3A6 /* SelectTypeCell.swift */; };
 		3D106EEC254698970074DB2F /* cat_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D106EEB254698960074DB2F /* cat_animation.json */; };
 		3D106EF92546A6D00074DB2F /* poise_logo_colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D106EF82546A6D00074DB2F /* poise_logo_colors.json */; };
 		3D106EFC2546AC470074DB2F /* post_upload.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D106EFB2546AC470074DB2F /* post_upload.json */; };
@@ -27,6 +27,8 @@
 		3D1FA4892526F51900C6388A /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4882526F51900C6388A /* MainTabBarController.swift */; };
 		3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA48B2526FC9400C6388A /* Extension.swift */; };
 		3D3E4B18252D866700E25323 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E4B17252D866700E25323 /* SF-Pro.ttf */; };
+		3D7407F1255E66FE00F3887B /* upload_success.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D7407F0255E66FE00F3887B /* upload_success.json */; };
+		3D7407F6255E877D00F3887B /* SelectTypeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7407F5255E877D00F3887B /* SelectTypeHeader.swift */; };
 		3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */; };
 		3D7F9CD925299552006E23F4 /* MyPageStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD825299552006E23F4 /* MyPageStoryboard.storyboard */; };
 		3D7F9CDC252998CC006E23F4 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */; };
@@ -45,6 +47,7 @@
 		3D8B135D2530BCEE0022AE88 /* RankingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */; };
 		3D8B13602530BCFD0022AE88 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */; };
 		3D8BD952255BA5B20021BD4D /* BulletinBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8BD951255BA5B20021BD4D /* BulletinBoard.swift */; };
+		3D8BD986255D2D380021BD4D /* WorkToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8BD985255D2D370021BD4D /* WorkToDo.swift */; };
 		3D9240E3254AA94300F92C9D /* upload_post.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D9240E2254AA94300F92C9D /* upload_post.json */; };
 		3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */; };
 		3D9914D12536C12200E17AF5 /* PostingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914D02536C12100E17AF5 /* PostingViewModel.swift */; };
@@ -87,7 +90,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3D03BE9D2544238C0080C3A6 /* TypeTestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeTestCell.swift; sourceTree = "<group>"; };
+		3D03BE9D2544238C0080C3A6 /* SelectTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeCell.swift; sourceTree = "<group>"; };
 		3D106EEB254698960074DB2F /* cat_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cat_animation.json; sourceTree = "<group>"; };
 		3D106EF82546A6D00074DB2F /* poise_logo_colors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = poise_logo_colors.json; sourceTree = "<group>"; };
 		3D106EFB2546AC470074DB2F /* post_upload.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = post_upload.json; sourceTree = "<group>"; };
@@ -109,6 +112,8 @@
 		3D1FA4882526F51900C6388A /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		3D1FA48B2526FC9400C6388A /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		3D3E4B17252D866700E25323 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
+		3D7407F0255E66FE00F3887B /* upload_success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = upload_success.json; sourceTree = "<group>"; };
+		3D7407F5255E877D00F3887B /* SelectTypeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeHeader.swift; sourceTree = "<group>"; };
 		3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeStoryboard.storyboard; sourceTree = "<group>"; };
 		3D7F9CD825299552006E23F4 /* MyPageStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyPageStoryboard.storyboard; sourceTree = "<group>"; };
 		3D7F9CDB252998CC006E23F4 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
@@ -127,6 +132,7 @@
 		3D8B135C2530BCEE0022AE88 /* RankingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewController.swift; sourceTree = "<group>"; };
 		3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
 		3D8BD951255BA5B20021BD4D /* BulletinBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletinBoard.swift; sourceTree = "<group>"; };
+		3D8BD985255D2D370021BD4D /* WorkToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkToDo.swift; sourceTree = "<group>"; };
 		3D9240E2254AA94300F92C9D /* upload_post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = upload_post.json; sourceTree = "<group>"; };
 		3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
 		3D9914D02536C12100E17AF5 /* PostingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingViewModel.swift; sourceTree = "<group>"; };
@@ -195,6 +201,7 @@
 		3D106EEF25469BB00074DB2F /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				3D7407F0255E66FE00F3887B /* upload_success.json */,
 				3D9240E2254AA94300F92C9D /* upload_post.json */,
 				3D106EFB2546AC470074DB2F /* post_upload.json */,
 				3D106EF82546A6D00074DB2F /* poise_logo_colors.json */,
@@ -236,6 +243,7 @@
 		3D1FA4712526F30100C6388A /* Vridge */ = {
 			isa = PBXGroup;
 			children = (
+				3D8BD985255D2D370021BD4D /* WorkToDo.swift */,
 				3DE62388252C533C005F16A9 /* Vridge.entitlements */,
 				3D1FA4722526F30100C6388A /* AppDelegate.swift */,
 				3D1FA4742526F30100C6388A /* SceneDelegate.swift */,
@@ -370,7 +378,8 @@
 			children = (
 				3DE62374252C180D005F16A9 /* LoginViewController.swift */,
 				3D15EE3125381C6900402476 /* SelectTypeViewController.swift */,
-				3D03BE9D2544238C0080C3A6 /* TypeTestCell.swift */,
+				3D7407F5255E877D00F3887B /* SelectTypeHeader.swift */,
+				3D03BE9D2544238C0080C3A6 /* SelectTypeCell.swift */,
 				3D1D880C253AD0B1005A0FE9 /* TestViewController.swift */,
 				3D1D880F253AD16D005A0FE9 /* TestCell.swift */,
 			);
@@ -475,6 +484,7 @@
 				3D106EFC2546AC470074DB2F /* post_upload.json in Resources */,
 				3D9240E3254AA94300F92C9D /* upload_post.json in Resources */,
 				3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */,
+				3D7407F1255E66FE00F3887B /* upload_success.json in Resources */,
 				3D3E4B18252D866700E25323 /* SF-Pro.ttf in Resources */,
 				3D106EF92546A6D00074DB2F /* poise_logo_colors.json in Resources */,
 				3D1FA47A2526F30100C6388A /* Main.storyboard in Resources */,
@@ -570,12 +580,13 @@
 				3D8B135D2530BCEE0022AE88 /* RankingViewController.swift in Sources */,
 				3D1D8808253ACAE6005A0FE9 /* Post.swift in Sources */,
 				3D7F9D3C2529E388006E23F4 /* CaptionTextView.swift in Sources */,
-				3D03BE9E2544238C0080C3A6 /* TypeTestCell.swift in Sources */,
+				3D03BE9E2544238C0080C3A6 /* SelectTypeCell.swift in Sources */,
 				3D8B13452530BC990022AE88 /* HomeHeaderView.swift in Sources */,
 				3D8B13542530BCCD0022AE88 /* RankingSecondViewCell.swift in Sources */,
 				BBBED5DE255148E200ED95B1 /* AboutVridgeCell.swift in Sources */,
 				3D9F555025545C12003C84AD /* FeedDetailViewModel.swift in Sources */,
 				3D8B13572530BCD60022AE88 /* RankingHeader.swift in Sources */,
+				3D7407F6255E877D00F3887B /* SelectTypeHeader.swift in Sources */,
 				3DE62385252C4B79005F16A9 /* UserService.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,
 				3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */,
@@ -592,6 +603,7 @@
 				BBF9E9A82559AB8C0045B6FD /* NicknameTextView.swift in Sources */,
 				3DB73AF125566C8C00EAA49A /* FeedDetailHeader.swift in Sources */,
 				BBBED5E0255148E200ED95B1 /* NoticeCell.swift in Sources */,
+				3D8BD986255D2D380021BD4D /* WorkToDo.swift in Sources */,
 				3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */,
 				3D1D8810253AD16D005A0FE9 /* TestCell.swift in Sources */,
 			);
@@ -743,7 +755,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vridge/Vridge.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3YAPL3Q6FM;
+				DEVELOPMENT_TEAM = 4QG3GC35LA;
 				INFOPLIST_FILE = Vridge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -764,7 +776,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vridge/Vridge.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3YAPL3Q6FM;
+				DEVELOPMENT_TEAM = 4QG3GC35LA;
 				INFOPLIST_FILE = Vridge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

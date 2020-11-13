@@ -194,7 +194,7 @@ extension FeedDetailViewController: FeedDetailHeaderDelegate {
                 // delete service
                 PostService.shared.deletePostFromMyPost(post: self.post) { (err, ref) in
                     self.delegate?.reloadMyFeeds()
-                    NotificationCenter.default.post(name: Notification.Name("refetchPosts"), object: nil)
+                    
                     self.navigationController?.popViewController(animated: true)
                     print("DEBUG: 삭제 완료 !!")
                 }
