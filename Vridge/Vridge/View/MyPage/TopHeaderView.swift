@@ -19,7 +19,8 @@ class TopHeaderView: UIView {
     
     let typeColorView: UIView = {
         let view = UIView()
-        view.backgroundColor = .vridgeGreen // 여기에 채식 타입 별 색상 코드 입력해야 함
+//        view.backgroundColor = .vridgeGreen // 여기에 채식 타입 별 색상 코드 입력해야 함
+        view.backgroundColor = UIColor(hex: "#FFFFFF")
         return view
     }()
     
