@@ -36,6 +36,12 @@ class MainTabBarController: UITabBarController {
         btn.setBackgroundImage(UIImage(named: "icPost"), for: .normal)
         btn.backgroundColor = .vridgeGreen
         btn.addTarget(self, action: #selector(handleButtonTapped), for: .touchUpInside)
+        
+        btn.layer.shadowOpacity = 0.2
+        btn.layer.shadowOffset = CGSize(width: 0, height: 0)
+        btn.layer.shadowColor = UIColor.black.cgColor
+        btn.layer.shadowRadius = 12
+        
         return btn
     }()
     

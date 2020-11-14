@@ -33,7 +33,7 @@ let REF_NOTICE = DB_REF.child("notice")
 
 // MARK: -  Strings
 
-let reportMessage = "알려주셔서 감사해요. 신고가 정상적으로 반영되었어요"
+let reportMessage = "알려주셔서 감사해요.\n신고가 정상적으로 반영되었어요"
 let noTitle = ""
 let amendTitle = "수정하기"
 let deleteButtonTitle = "삭제하기"
