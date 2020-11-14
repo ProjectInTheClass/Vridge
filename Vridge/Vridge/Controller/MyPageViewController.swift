@@ -44,7 +44,7 @@ class MyPageViewController: UIViewController {
     
     let animationView: AnimationView = {
         let av = Lottie.AnimationView(name: loadingAnimation)
-        av.isHidden = true
+//        av.isHidden = true
         av.loopMode = .loop
         return av
     }()
@@ -87,6 +87,11 @@ class MyPageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        
+        view.addSubview(animationView)
+        animationView.center(inView: view)
+        animationView.setDimensions(width: 100, height: 100)
+        animationView.contentMode = .scaleAspectFill
         
     }
     
@@ -140,11 +145,6 @@ class MyPageViewController: UIViewController {
         view.addSubview(backView)
         view.addSubview(tableView)
         
-        view.addSubview(animationView)
-        animationView.center(inView: view)
-        animationView.setDimensions(width: 100, height: 100)
-        animationView.contentMode = .scaleAspectFill
-        
         view.backgroundColor = UIColor(named: viewBackgroundColor)
         
         tableView.backgroundColor = .clear
@@ -170,16 +170,16 @@ class MyPageViewController: UIViewController {
         
     }
     
-    func showLoginView() {
-        
-        bulletinManager.dismissBulletin(animated: true)
-        
-        print("DEBUG: show login view")
-        let controller = LoginViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        nav.modalPresentationStyle = .fullScreen
-        present(nav, animated: true, completion: nil)
-    }
+//    func showLoginView() {
+//
+//        bulletinManager.dismissBulletin(animated: true)
+//
+//        print("DEBUG: show login view")
+//        let controller = LoginViewController()
+//        let nav = UINavigationController(rootViewController: controller)
+//        nav.modalPresentationStyle = .fullScreen
+//        present(nav, animated: true, completion: nil)
+//    }
     
     func dismissBulletin() {
         bulletinManager.dismissBulletin(animated: true)
@@ -312,8 +312,9 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
             
             if Auth.auth().currentUser == nil {
                 let loginController = LoginViewController()
-                loginController.modalPresentationStyle = .fullScreen
-                present(loginController, animated: true, completion: nil)
+                let nav = UINavigationController(rootViewController: loginController)
+                nav.modalPresentationStyle = .fullScreen
+                present(nav, animated: true, completion: nil)
                 
             } else {
                 
@@ -444,7 +445,7 @@ extension MyPageViewController: ASAuthorizationControllerDelegate, ASAuthorizati
             let firstName = name.givenName ?? ""
             let familyName = name.familyName ?? ""
             let username = familyName + firstName
-            AuthService.shared.signInNewUser(viewController: self, indicator: indicator, credential: credential,
+            AuthService.shared.signInNewUser(viewController: self, indicator: animationView, credential: credential,
                                              email: email, bulletin: true)
             
             print("DEBUG: logged in and update home tab")
@@ -453,6 +454,7 @@ extension MyPageViewController: ASAuthorizationControllerDelegate, ASAuthorizati
             
             tab.fetchUser()
             print("DEBUG: New user is '\(username)'")
+//            self.animationView.isHidden = true
             
             return
         }

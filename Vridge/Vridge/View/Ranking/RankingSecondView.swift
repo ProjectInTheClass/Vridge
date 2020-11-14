@@ -11,7 +11,7 @@ import Firebase
 
 protocol RankingSecondViewDelegate: class {
     func selection(_ view: RankingSecondView, didselect index: Int)
-    func showLogin()
+    func showBulletin()
 }
 
 private let reusableCell = "reuseCell"
@@ -110,7 +110,7 @@ extension RankingSecondView: UICollectionViewDelegate {
                 let selectedIndexPath = IndexPath(item: 0, section: 0)
                 collectionView.selectItem(at: selectedIndexPath, animated: true, scrollPosition: .left)
                 
-                delegate?.showLogin()
+                delegate?.showBulletin()
             }
         } else {
             UIView.animate(withDuration: 0.3) {

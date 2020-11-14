@@ -120,6 +120,7 @@ class RankingHeader: UIView {
         label.font = UIFont.SFSemiBold(size: 16)
         label.text = " "
         label.textColor = UIColor(named: allTextColor)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -128,6 +129,7 @@ class RankingHeader: UIView {
         label.font = UIFont.SFSemiBold(size: 16)
         label.text = " "
         label.textColor = UIColor(named: allTextColor)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -136,6 +138,7 @@ class RankingHeader: UIView {
         label.font = UIFont.SFSemiBold(size: 16)
         label.text = " "
         label.textColor = UIColor(named: allTextColor)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -287,15 +290,47 @@ class RankingHeader: UIView {
         userStack3.setCustomSpacing(0, after: type3)
         userStack3.alignment = .center
         
+        let width = UIScreen.main.bounds.size.width
         
-        let stack = UIStackView(arrangedSubviews: [userStack2, userStack1, userStack3])
-        stack.axis = .horizontal
-        stack.spacing = 30
-        stack.alignment = .bottom
+        let userView1 = UIView()
+        userView1.backgroundColor = .clear
+        userView1.addSubview(userStack1)
+        userStack1.centerX(inView: userView1)
+        userStack1.anchor(bottom: userView1.bottomAnchor, paddingBottom: 32)
+        username1.widthAnchor.constraint(lessThanOrEqualToConstant: width / 3 - 8).isActive = true
         
-        addSubview(stack)
+        addSubview(userView1)
+        userView1.centerX(inView: self)
+        userView1.setDimensions(width: width / 3 - 8, height: 243)
         
-        stack.centerX(inView: self, topAnchor: topAnchor, paddingTop: 30)
+        let userView2 = UIView()
+        userView2.backgroundColor = .clear
+        userView2.addSubview(userStack2)
+        userStack2.centerX(inView: userView2)
+        userStack2.anchor(bottom: userView2.bottomAnchor, paddingBottom: 32)
+        username2.widthAnchor.constraint(lessThanOrEqualToConstant: width / 3 - 8).isActive = true
+        
+        addSubview(userView2)
+        userView2.anchor(top: topAnchor, right: userView1.leftAnchor, paddingRight: 8, width: width / 3 - 8, height: 243)
+        
+        let userView3 = UIView()
+        userView3.backgroundColor = .clear
+        userView3.addSubview(userStack3)
+        userStack3.centerX(inView: userView3)
+        userStack3.anchor(bottom: userView3.bottomAnchor, paddingBottom: 32)
+        username3.widthAnchor.constraint(lessThanOrEqualToConstant: width / 3 - 8).isActive = true
+        
+        addSubview(userView3)
+        userView3.anchor(top: topAnchor, left: userView1.rightAnchor, paddingRight: 8, width: width / 3 - 8, height: 243)
+        
+//        let stack = UIStackView(arrangedSubviews: [userStack2, userStack1, userStack3])
+//        stack.axis = .horizontal
+//        stack.spacing = 30
+//        stack.alignment = .bottom
+//
+//        addSubview(stack)
+//
+//        stack.centerX(inView: self, topAnchor: topAnchor, paddingTop: 30)
     }
     
 }

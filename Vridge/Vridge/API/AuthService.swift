@@ -15,9 +15,10 @@ struct AuthService {
     
     static let shared = AuthService()
     
-    func signInNewUser(viewController: UIViewController, indicator: UIActivityIndicatorView,
+    func signInNewUser(viewController: UIViewController, indicator: AnimationView,
                        credential: AuthCredential, email: String, bulletin: Bool? = false) {
-        indicator.startAnimating()
+        indicator.isHidden = false
+        indicator.play()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
             
@@ -35,14 +36,16 @@ struct AuthService {
                         viewController.title = ""
                         viewController.navigationController?.pushViewController(selectTypeController, animated: true)
                         print("DEBUG: New user logged in.")
-                        indicator.stopAnimating()
+                        indicator.stop()
+                        indicator.isHidden = true
                         
                     } else {
                         
                         let navigation = UINavigationController(rootViewController: selectTypeController)
                         navigation.modalPresentationStyle = .fullScreen
                         viewController.present(navigation, animated: true, completion: nil)
-                        indicator.stopAnimating()
+                        indicator.stop()
+                        indicator.isHidden = true
                     }
                     
                 }
@@ -52,6 +55,7 @@ struct AuthService {
     
     func loginExistUser(viewController: UIViewController, animationView: AnimationView, credential: AuthCredential,
                         bulletin: Bool? = false, completion: @escaping(User) -> Void) {
+        animationView.isHidden = false
         animationView.play()
         Auth.auth().signIn(with: credential) { (result, error) in
             guard let uid = result?.user.uid else { return }
@@ -283,6 +287,18 @@ struct AuthService {
             }
         } catch (let err) {
             print("DEBUG: FAILED LOG OUT with error \(err.localizedDescription)")
+        }
+    }
+    
+    func checkIfUserHasUsername(completion: @escaping(Bool) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        REF_USERS.child(uid).child("username").observeSingleEvent(of: .value) { snapshot in
+            if snapshot.exists() {
+                completion(true)
+            } else {
+                completion(false)
+            }
         }
     }
 }
