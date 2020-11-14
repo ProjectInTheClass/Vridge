@@ -321,7 +321,7 @@ class RankingHeader: UIView {
         username3.widthAnchor.constraint(lessThanOrEqualToConstant: width / 3 - 8).isActive = true
         
         addSubview(userView3)
-        userView3.anchor(top: topAnchor, left: userView1.rightAnchor, paddingRight: 8, width: width / 3 - 8, height: 243)
+        userView3.anchor(top: topAnchor, left: userView1.rightAnchor, paddingLeft: 8, width: width / 3 - 8, height: 243)
         
 //        let stack = UIStackView(arrangedSubviews: [userStack2, userStack1, userStack3])
 //        stack.axis = .horizontal
