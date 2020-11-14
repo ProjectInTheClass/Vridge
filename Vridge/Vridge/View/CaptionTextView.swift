@@ -15,7 +15,7 @@ class CaptionTextView: UITextView {
     let placeholderLabel: UILabel = {
         let label = UILabel()
         
-        let text = NSMutableAttributedString(string: "오늘 하루 채식 식단을 기록해보세요.\n단, 채식과 관련 없는 내용은 지양해 주세요.\n* 200자까지 작성 할 수 있어요.\n** 사진은 필수로 선택해 주셔야 해요.")
+        let text = NSMutableAttributedString(string: "오늘 하루 채식 식단을 기록해보세요\n단, 채식과 관련 없는 내용은 지양해 주세요\n* 200자까지 작성 할 수 있어요")
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 8
         text.addAttribute(.paragraphStyle, value: style, range: NSMakeRange(0, text.length))
@@ -23,8 +23,9 @@ class CaptionTextView: UITextView {
         label.attributedText = text
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.font = UIFont.SFRegular(size: 14)
+        label.font = UIFont.SFMedium(size: 14)
         label.textColor = UIColor(named: "color_posting_placeHolder")
+        
         return label
     }()
     
@@ -39,6 +40,8 @@ class CaptionTextView: UITextView {
         backgroundColor = UIColor(named: borderColor)
         isUserInteractionEnabled = true
         isScrollEnabled = true
+        tintColor = UIColor(named: "color_cursor")
+        
         
         addSubview(placeholderLabel)
         

@@ -38,8 +38,8 @@ class PostingViewController: UIViewController {
     }()
     
     private var addphotoAttributedText: NSAttributedString {
-        let text = NSMutableAttributedString(string: "채식 사진", attributes: [.font: UIFont.SFRegular(size: 14)!,.foregroundColor: UIColor.vridgeGreen])
-        text.append(NSAttributedString(string: "을 추가해주세요", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14), .foregroundColor: UIColor(named: allTextColor)!]))
+        let text = NSMutableAttributedString(string: "채식 사진", attributes: [.font: UIFont.SFSemiBold(size: 14)!,.foregroundColor: UIColor.vridgeGreen])
+        text.append(NSAttributedString(string: "을 최소 한 장 이상 추가해주세요 :)", attributes: [.font: UIFont.SFSemiBold(size: 14) ?? .systemFont(ofSize: 14), .foregroundColor: UIColor(named: allTextColor)!]))
         return text
     }
     
@@ -50,8 +50,8 @@ class PostingViewController: UIViewController {
     }()
     
     private var writeCaptionAttributedText: NSAttributedString {
-        let text = NSMutableAttributedString(string: "채식 식단", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14),.foregroundColor: UIColor.vridgeGreen])
-        text.append(NSAttributedString(string: "을 기록해주세요", attributes: [.font: UIFont.SFRegular(size: 14) ?? .systemFont(ofSize: 14), .foregroundColor: UIColor(named: allTextColor)!]))
+        let text = NSMutableAttributedString(string: "채식 식단", attributes: [.font: UIFont.SFSemiBold(size: 14) ?? .systemFont(ofSize: 14),.foregroundColor: UIColor.vridgeGreen])
+        text.append(NSAttributedString(string: "을 기록해주세요 :)", attributes: [.font: UIFont.SFSemiBold(size: 14) ?? .systemFont(ofSize: 14), .foregroundColor: UIColor(named: allTextColor)!]))
         return text
     }
     

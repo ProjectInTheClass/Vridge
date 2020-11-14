@@ -38,41 +38,42 @@ class LoginViewController: UIViewController {
     let appleLoginButton: UIButton = {
         let button = UIButton(type: .system)
         button.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
-        button.backgroundColor = .black
+        button.backgroundColor = UIColor(named: "color_all_button_normal")
         button.layer.cornerRadius = 8
         button.setTitle("Apple ID로 시작하기", for: .normal)
         button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(UIColor(named: "color_all_viewBackground"), for: .normal)
         
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "person.fill")
-        imageView.tintColor = .white
+        imageView.tintColor = UIColor(named: "color_all_viewBackground")
         button.addSubview(imageView)
         imageView.centerY(inView: button, leftAnchor: button.leftAnchor, paddingLeft: 23.5)
         return button
     }()
     
-    private let label: UILabel = {
+    private let captionLabel: UILabel = {
         let label = UILabel()
-        label.text = "이것은 임시 로그인 뷰입니다."
-        label.textColor = .black
+        label.text = "다양한 사람들과 함께하는 나의 첫 채식 기록장"
+        label.textColor = UIColor(named: "color_splash_caption")
+        label.font = UIFont.SFRegular(size: 14)
         return label
     }()
     
-    private let logOutButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Log out", for: .normal)
-        button.addTarget(self, action: #selector(handleLogOut), for: .touchUpInside)
-        return button
-    }()
+//    private let logOutButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setTitle("Log out", for: .normal)
+//        button.addTarget(self, action: #selector(handleLogOut), for: .touchUpInside)
+//        return button
+//    }()
     
     private let browseButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("그냥 둘러볼래요", for: .normal)
+        button.setTitle("그냥 둘러보기", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
         button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
-        button.backgroundColor = .vridgeGreen
+        button.backgroundColor = UIColor.rgb(red: 0, green: 214, blue: 132)
         button.layer.cornerRadius = 8
         return button
     }()
@@ -86,7 +87,7 @@ class LoginViewController: UIViewController {
     
     let backgroundImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "background_img")
+        iv.image = UIImage(named: "")
         iv.contentMode = .scaleAspectFill
         return iv
     }()
@@ -107,7 +108,7 @@ class LoginViewController: UIViewController {
         view.addSubview(indicator)
         indicator.center = view.center
         
-        view.backgroundColor = .vridgeGray
+        view.backgroundColor = UIColor(named: "color_all_viewBackground")
         configureUI()
     }
     
@@ -152,11 +153,11 @@ class LoginViewController: UIViewController {
         
         view.addSubview(appleLoginButton)
         view.addSubview(browseButton)
-        view.addSubview(label)
-        view.addSubview(logOutButton)
+        view.addSubview(captionLabel)
+//        view.addSubview(logOutButton)
         view.addSubview(logoImageView)
         logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                             paddingTop: 151, paddingLeft: 87, paddingRight: 87)
+                             paddingTop: 286, paddingLeft: 103, paddingRight: 102)
         
         view.addSubview(animationView)
         animationView.center(inView: view)
@@ -169,10 +170,10 @@ class LoginViewController: UIViewController {
         appleLoginButton.anchor(left: view.leftAnchor, bottom: browseButton.topAnchor, right: view.rightAnchor,
                                 paddingLeft: 36, paddingBottom: 12, paddingRight: 36, height: 48)
         
-        label.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 10)
-        label.centerX(inView: view)
-        logOutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor,
-                            paddingTop: 40, paddingRight: 40)
+        captionLabel.anchor(top: logoImageView.bottomAnchor, paddingTop: 8)
+        captionLabel.centerX(inView: view)
+//        logOutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor,
+//                            paddingTop: 40, paddingRight: 40)
         
         animationView.center(inView: view)
         animationView.contentMode = .scaleAspectFill
