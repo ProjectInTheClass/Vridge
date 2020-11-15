@@ -73,7 +73,7 @@ class LoginViewController: UIViewController {
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
         button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
-        button.backgroundColor = UIColor.rgb(red: 0, green: 214, blue: 132)
+        button.backgroundColor = UIColor.rgb(red: 5, green: 213, blue: 125)
         button.layer.cornerRadius = 8
         return button
     }()
