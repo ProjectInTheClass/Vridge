@@ -70,11 +70,30 @@ struct PostService {
     }
     
     
-    // 모든 게시글 다 보기
+    // 모든 게시글 다 보기 + 10개씩 불러오기
+//    func fetchPosts(completion: @escaping([Post]) -> Void) {
+//        var posts = [Post]()
+//
+//        REF_POSTS.queryLimited(toLast: UInt(POST_LOAD_AT_ONCE)).observe(.childAdded) { snapshot in
+//            guard let dictionary = snapshot.value as? [String: Any] else { return }
+//            guard let uid = dictionary["uid"] as? String else { return }
+//            let postID = snapshot.key
+//
+//            UserService.shared.fetchUser(uid: uid) { user in
+//
+//                let post = Post(user: user, postID: postID, dictionary: dictionary)
+//                posts.append(post)
+//                completion(posts)
+//            }
+//        }
+//    }
+    
+    
+    //이건 그냥 모든 게시글 paging 없이 걍 싺 다 불러오기.
     func fetchPosts(completion: @escaping([Post]) -> Void) {
         var posts = [Post]()
         
-        REF_POSTS.queryLimited(toLast: UInt(POST_LOAD_AT_ONCE)).observe(.childAdded) { snapshot in
+        REF_POSTS.observe(.childAdded) { snapshot in
             guard let dictionary = snapshot.value as? [String: Any] else { return }
             guard let uid = dictionary["uid"] as? String else { return }
             let postID = snapshot.key

@@ -123,7 +123,7 @@ class HomeFeedCell: UITableViewCell {
     let reportedView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "color_reported_background")
-        view.alpha = 1
+        view.alpha = 0
         return view
     }()
     
