@@ -412,7 +412,7 @@ extension HomeViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         
         cell.reportedLabel.isHidden = !posts[indexPath.row].isReported
-        cell.reportedView.alpha = posts[indexPath.row].isReported ? 0.9 : 0
+        cell.reportedView.alpha = posts[indexPath.row].isReported ? 1 : 0
         cell.captionLabel.isHidden = posts[indexPath.row].isReported
         cell.collectionView.isHidden = posts[indexPath.row].isReported
         cell.profileImageView.isHidden = posts[indexPath.row].isReported
@@ -420,7 +420,10 @@ extension HomeViewController: UITableViewDataSource {
         cell.username.isHidden = posts[indexPath.row].isReported
         cell.type.isHidden = posts[indexPath.row].isReported
         cell.time.isHidden = posts[indexPath.row].isReported
-//        cell.pageControl.isHidden = posts[indexPath.row].isReported
+        
+        if posts[indexPath.row].isReported {
+            cell.pageControl.isHidden = true
+        }
         
         if posts[indexPath.row].isReported {
             // array에서 없애버리기
@@ -485,11 +488,11 @@ extension HomeViewController: UITableViewDelegate {
         }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = FeedDetailViewController(post: posts[indexPath.row], index: indexPath.row)
-        navigationController?.pushViewController(controller, animated: true)
-        print("DEBUG: cell tapped ! ")
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let controller = FeedDetailViewController(post: posts[indexPath.row], index: indexPath.row)
+//        navigationController?.pushViewController(controller, animated: true)
+//        print("DEBUG: cell tapped ! ")
+//    }
     
 }
 
