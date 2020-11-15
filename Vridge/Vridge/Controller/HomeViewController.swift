@@ -484,7 +484,7 @@ extension HomeViewController: UITableViewDelegate {
         let lastElement = posts.count - 1
         if indexPath.row == lastElement {
             page += 1
-            loadMore()
+//            loadMore()
         }
     }
     
