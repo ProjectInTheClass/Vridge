@@ -68,7 +68,7 @@ class MyPageViewController: UIViewController {
         
         rootItem.requiresCloseButton = false
         
-        rootItem.alternativeButtonTitle = "그냥 둘러볼래요"
+        rootItem.alternativeButtonTitle = "그냥 둘러보기"
         rootItem.appearance.alternativeButtonTitleColor = .vridgeGreen
         
         rootItem.actionHandler = { _ in
