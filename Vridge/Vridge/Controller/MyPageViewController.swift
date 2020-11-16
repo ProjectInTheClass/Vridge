@@ -19,8 +19,11 @@ class MyPageViewController: UIViewController {
     // MARK: - Properties
 
     let tableView = UITableView(frame: .zero, style: .grouped)
-    let firstSectionMenu = ["공지사항", "브릿지란?", "앱 버전 1.0.0"]
+    lazy var firstSectionMenu = ["공지사항", "브릿지란?", "앱 버전 \(version)"]
     var secondSectionMenu = ["프로필 수정", "로그아웃"]
+    
+    let version = "\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
+    var dbVersion: String!
     
     var user: User? {
         didSet { tableView.reloadData(); configureUI() }
@@ -136,10 +139,26 @@ class MyPageViewController: UIViewController {
         }
     }
     
+//    func fetchCurrentVersion() -> String {
+//        var sameVersion = ""
+//        NoticeService.shared.fetchCurrentVersion { version in
+//            return version
+//        }
+////        return
+//    }
+    
+    func fetchCurrentVersion() {
+        NoticeService.shared.fetchCurrentVersion { version in
+            self.dbVersion = version
+        }
+    }
+    
     
     // MARK: - Helpers
     
     func configureUI() {
+        
+        fetchCurrentVersion()
         
         bulletinManager.backgroundColor = UIColor(named: "color_mypage_myPostCountBoxBg") ?? .white
         view.addSubview(backView)
@@ -301,9 +320,18 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 navigationController?.pushViewController(controller, animated: true)
                 
             case 2:
-                let alert = UIAlertController(title: versionCheckTitle, message: "", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: confirm, style: .default, handler: nil))
-                self.present(alert, animated: true)
+                
+                if dbVersion == version {
+                    let alert = UIAlertController(title: versionCheckTitle, message: "", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: confirm, style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                } else {
+                    let alert = UIAlertController(title: "업데이트가 있어요!", message: "", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: confirm, style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+                
+                
                 
             default: print("DEBUG: error")
             }

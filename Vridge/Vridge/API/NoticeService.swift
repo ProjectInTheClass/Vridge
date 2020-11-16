@@ -24,4 +24,11 @@ struct NoticeService {
             completion(notices)
         }
     }
+    
+    func fetchCurrentVersion(completion: @escaping(String) -> Void) {
+        REF_VERSION.child("currentVersion").observeSingleEvent(of: .value) { snapshot in
+            guard let version = snapshot.value as? String else { return }
+            completion(version)
+        }
+    }
 }

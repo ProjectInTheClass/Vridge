@@ -27,6 +27,7 @@ let REF_USER_POINT = DB_REF.child("user-point")
 let REF_USERNAMES = DB_REF.child("usernames")
 let REF_POST_REPORT = DB_REF.child("post-report")
 let REF_USER_REPORT = DB_REF.child("user-report")
+let REF_VERSION = DB_REF.child("version")
 
 let REF_NOTICE = DB_REF.child("notice")
 
