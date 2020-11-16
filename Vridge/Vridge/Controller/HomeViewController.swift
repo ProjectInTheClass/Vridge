@@ -302,6 +302,7 @@ class HomeViewController: UIViewController {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor(named: viewBackgroundColor)
+        tableView.showsVerticalScrollIndicator = false
         
         tableView.register(HomeFeedCell.self, forCellReuseIdentifier: cellID)
         
