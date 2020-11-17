@@ -138,6 +138,7 @@ class SelectTypeViewController: UIViewController {
         tableView.register(SelectTypeCell.self, forCellReuseIdentifier: cellID)
         tableView.tableHeaderView = header
         tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor(named: viewBackgroundColor)
         
         customNavigationBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor)
         tableView.anchor(top: customNavigationBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
