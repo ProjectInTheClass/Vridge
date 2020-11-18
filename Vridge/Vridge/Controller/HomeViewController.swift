@@ -54,8 +54,9 @@ class HomeViewController: UIViewController {
     }
     
     var user: User? {
-        didSet { print("DEBUG: user did set as \(user?.username)");
-            print("DEBUG: user point now == \(user?.point)"); tableView.reloadData() }
+        didSet { print("DEBUG: user did set as \(user?.username)")
+            print("DEBUG: user point now == \(user?.point)")
+            tableView.reloadData() }
     }
     
 //    var point: Int? {
