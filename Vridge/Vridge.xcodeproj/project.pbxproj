@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3D03BE9E2544238C0080C3A6 /* SelectTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D03BE9D2544238C0080C3A6 /* SelectTypeCell.swift */; };
 		3D106EEC254698970074DB2F /* cat_animation.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D106EEB254698960074DB2F /* cat_animation.json */; };
-		3D106EF92546A6D00074DB2F /* poise_logo_colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D106EF82546A6D00074DB2F /* poise_logo_colors.json */; };
 		3D106EFC2546AC470074DB2F /* post_upload.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D106EFB2546AC470074DB2F /* post_upload.json */; };
 		3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D15CD4A252C7DF9005879CD /* AuthService.swift */; };
 		3D15EE3225381C6900402476 /* SelectTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D15EE3125381C6900402476 /* SelectTypeViewController.swift */; };
@@ -64,6 +63,7 @@
 		3DE62375252C180D005F16A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62374252C180D005F16A9 /* LoginViewController.swift */; };
 		3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DE62379252C1FAB005F16A9 /* LoginStoryboard.storyboard */; };
 		3DE62385252C4B79005F16A9 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62384252C4B79005F16A9 /* UserService.swift */; };
+		3DFBB32025651E4A0008FAC9 /* poise_logo_colors.json in Resources */ = {isa = PBXBuildFile; fileRef = 3DFBB31F25651E4A0008FAC9 /* poise_logo_colors.json */; };
 		BBBED5C82551485100ED95B1 /* MyPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5C72551485100ED95B1 /* MyPostViewController.swift */; };
 		BBBED5CB2551486000ED95B1 /* NoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5CA2551485F00ED95B1 /* NoticeViewController.swift */; };
 		BBBED5CE2551486B00ED95B1 /* NoticeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBED5CD2551486B00ED95B1 /* NoticeDetailViewController.swift */; };
@@ -92,7 +92,6 @@
 /* Begin PBXFileReference section */
 		3D03BE9D2544238C0080C3A6 /* SelectTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeCell.swift; sourceTree = "<group>"; };
 		3D106EEB254698960074DB2F /* cat_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cat_animation.json; sourceTree = "<group>"; };
-		3D106EF82546A6D00074DB2F /* poise_logo_colors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = poise_logo_colors.json; sourceTree = "<group>"; };
 		3D106EFB2546AC470074DB2F /* post_upload.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = post_upload.json; sourceTree = "<group>"; };
 		3D15CD4A252C7DF9005879CD /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		3D15EE3125381C6900402476 /* SelectTypeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +149,7 @@
 		3DE62379252C1FAB005F16A9 /* LoginStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LoginStoryboard.storyboard; sourceTree = "<group>"; };
 		3DE62384252C4B79005F16A9 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		3DE62388252C533C005F16A9 /* Vridge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vridge.entitlements; sourceTree = "<group>"; };
+		3DFBB31F25651E4A0008FAC9 /* poise_logo_colors.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = poise_logo_colors.json; sourceTree = "<group>"; };
 		4EFB8696AD19739B99C5BA46 /* Pods-Vridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.debug.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.debug.xcconfig"; sourceTree = "<group>"; };
 		72092CD734F1544741759B80 /* Pods-Vridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vridge.release.xcconfig"; path = "Target Support Files/Pods-Vridge/Pods-Vridge.release.xcconfig"; sourceTree = "<group>"; };
 		A33ACCF0421075477663B637 /* Pods_Vridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,7 +204,7 @@
 				3D7407F0255E66FE00F3887B /* upload_success.json */,
 				3D9240E2254AA94300F92C9D /* upload_post.json */,
 				3D106EFB2546AC470074DB2F /* post_upload.json */,
-				3D106EF82546A6D00074DB2F /* poise_logo_colors.json */,
+				3DFBB31F25651E4A0008FAC9 /* poise_logo_colors.json */,
 				3D106EEB254698960074DB2F /* cat_animation.json */,
 			);
 			path = Lottie;
@@ -479,6 +479,7 @@
 				3D7F9CD925299552006E23F4 /* MyPageStoryboard.storyboard in Resources */,
 				3D1FA47C2526F30400C6388A /* Assets.xcassets in Resources */,
 				3D106EEC254698970074DB2F /* cat_animation.json in Resources */,
+				3DFBB32025651E4A0008FAC9 /* poise_logo_colors.json in Resources */,
 				3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */,
 				3DBA138B2559AB7600A04002 /* GoogleService-Info.plist in Resources */,
 				3D106EFC2546AC470074DB2F /* post_upload.json in Resources */,
@@ -486,7 +487,6 @@
 				3DE6237A252C1FAB005F16A9 /* LoginStoryboard.storyboard in Resources */,
 				3D7407F1255E66FE00F3887B /* upload_success.json in Resources */,
 				3D3E4B18252D866700E25323 /* SF-Pro.ttf in Resources */,
-				3D106EF92546A6D00074DB2F /* poise_logo_colors.json in Resources */,
 				3D1FA47A2526F30100C6388A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
