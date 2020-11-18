@@ -41,9 +41,9 @@ class HomeViewController: UIViewController {
         
     private lazy var rankButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setImage(UIImage(named: "btnRank"), for: .normal)
+        btn.setBackgroundImage(UIImage(named: "btnRank"), for: .normal)
         btn.addTarget(self, action: #selector(handleShowRanking), for: .touchUpInside)
-        btn.tintColor = UIColor(named: normalButtonColor)
+        btn.backgroundColor = UIColor(named: "vridgeGreen")
         return btn
     }()
     
