@@ -13,7 +13,8 @@ class MyPostCell: UICollectionViewCell {
     
     let myPostImage : UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
         return iv
     }()
     
