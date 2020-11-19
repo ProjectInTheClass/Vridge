@@ -35,7 +35,6 @@ class HomeViewController: UIViewController {
         let imgView = UIButton(type: .system)
         imgView.tintColor = UIColor(named: "home_vridgeTypo")
         imgView.setImage(UIImage(named: "vridgetext"), for: .normal)
-//        imgView.isUserInteractionEnabled = false
         return imgView
     }()
         
@@ -55,7 +54,6 @@ class HomeViewController: UIViewController {
     
     var user: User? {
         didSet { print("DEBUG: user did set as \(user?.username)")
-            print("DEBUG: user point now == \(user?.point)")
             tableView.reloadData() }
     }
     
