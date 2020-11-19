@@ -110,7 +110,6 @@ class MainTabBarController: UITabBarController {
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         
         configure()
-        //        fetchUser()
         authenticateAndConfigureUI()
         
         view.addSubview(animationView)
@@ -127,7 +126,6 @@ class MainTabBarController: UITabBarController {
         UserService.shared.fetchUser(uid: uid) { user in
             self.user = user
             print("DEBUG: user update!")
-            print("DEBUG: current point -== \(user.point)")
         }
     }
     
@@ -163,10 +161,8 @@ class MainTabBarController: UITabBarController {
         let actionSheetViewModel = ActionSheetViewModel()
         
         if Auth.auth().currentUser == nil {
-//            present(actionSheetViewModel.pleaseLogin(self), animated: true)
             bulletinManager.backgroundColor = UIColor(named: "color_mypage_myPostCountBoxBg") ?? .white
             bulletinManager.showBulletin(above: self)
-            
             
         } else {
         

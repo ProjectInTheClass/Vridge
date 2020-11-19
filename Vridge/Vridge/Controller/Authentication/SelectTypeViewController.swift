@@ -67,6 +67,15 @@ class SelectTypeViewController: UIViewController {
         didSet { okButton.isEnabled = canProceed }
     }
     
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "프로필 설정"
+        label.font = UIFont.SFSemiBold(size: 18)
+        label.textAlignment = .center
+        label.textColor = UIColor(named: allTextColor)
+        return label
+    }()
+    
     
     // MARK: - Lifecycle
 
@@ -123,6 +132,7 @@ class SelectTypeViewController: UIViewController {
         view.addSubview(okButton)
         view.addSubview(tableView)
         view.addSubview(indicator)
+        view.addSubview(titleLabel)
         
         view.addGestureRecognizer(gestureRecognizer)
         gestureRecognizer.cancelsTouchesInView = false
@@ -140,11 +150,14 @@ class SelectTypeViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor(named: viewBackgroundColor)
         
-        customNavigationBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor)
+        customNavigationBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                                   right: view.rightAnchor)
         tableView.anchor(top: customNavigationBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
                          right: view.rightAnchor)
         okButton.centerY(inView: customNavigationBar)
         okButton.anchor(right: view.rightAnchor, paddingRight: 16)
+        titleLabel.centerY(inView: customNavigationBar)
+        titleLabel.centerX(inView: view)
     }
     
     func openLibrary(_ action: UIAlertAction) {
