@@ -1,5 +1,5 @@
 //
-//  TestViewController.swift
+//  PostingViewController.swift
 //  Vridge
 //
 //  Created by Kang Mingu on 2020/10/04.
