@@ -61,7 +61,7 @@
 | Mingu Kang | Ruhee Kim | Sangwook Park |
 | :---: | :---: | :---: |
 | <img width="200" src="https://user-images.githubusercontent.com/63235947/96337470-6179bc80-10c2-11eb-9857-a68c36b2f4dc.png"> | <img width='200' src="https://user-images.githubusercontent.com/63235947/96337483-76565000-10c2-11eb-9ae9-fed0571f445e.png"> | <img width="200" src="https://user-images.githubusercontent.com/63235947/96337493-84a46c00-10c2-11eb-8c98-24192c800f9b.png"> |
-| 메인/리드 개발 | UIUX 디자인 및 UI개발 | UX 기획/브랜딩 및 디자인QA |
+| 메인/리드 개발 | UIUX 디자인 및 UI개발 | UX 기획/브랜딩 및 디자인 및 QA |
 | ? | ISFP | ? |
 | ? | 테이블 뷰 안했음 어쩔 뻔! iOS짱! | ? |
 
