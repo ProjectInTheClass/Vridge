@@ -164,7 +164,6 @@ class MyPageTopHeaderView: UIView {
         seeMyPostButton.anchor(top: whiteRect.topAnchor, right: whiteRect.rightAnchor,
                                paddingTop: 32, paddingRight: 28, width: 64, height: 64)
         
-//        usernameLabel.text = user?.username ?? "로그인이 필요해요"
         typeColorView.backgroundColor = user?.vegieType?.typeColor ?? .vridgeGreen
         typeLabel.text = user?.vegieType?.typeDescription ?? "채식타입 | 채식"
         if let profileImageURL = user?.profileImageURL {
