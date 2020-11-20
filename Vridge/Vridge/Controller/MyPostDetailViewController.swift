@@ -17,7 +17,7 @@ class MyPostDetailViewController: UIViewController {
     
     let customNavBar = CustomNavBar()
     
-    // MARK : - Lifecycle
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

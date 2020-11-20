@@ -41,7 +41,6 @@ class CustomNavBar: UIView {
     let navBarView : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "color_all_headerBg")
-//        view.backgroundColor = .blue
         return view
     }()
     

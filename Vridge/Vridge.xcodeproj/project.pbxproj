@@ -15,8 +15,6 @@
 		3D1D8807253ACAE6005A0FE9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D8804253ACAE6005A0FE9 /* User.swift */; };
 		3D1D8808253ACAE6005A0FE9 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D8805253ACAE6005A0FE9 /* Post.swift */; };
 		3D1D8809253ACAE6005A0FE9 /* VegieType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D8806253ACAE6005A0FE9 /* VegieType.swift */; };
-		3D1D880D253AD0B1005A0FE9 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D880C253AD0B1005A0FE9 /* TestViewController.swift */; };
-		3D1D8810253AD16D005A0FE9 /* TestCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1D880F253AD16D005A0FE9 /* TestCell.swift */; };
 		3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4722526F30100C6388A /* AppDelegate.swift */; };
 		3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4742526F30100C6388A /* SceneDelegate.swift */; };
 		3D1FA4772526F30100C6388A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4762526F30100C6388A /* HomeViewController.swift */; };
@@ -98,8 +96,6 @@
 		3D1D8804253ACAE6005A0FE9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3D1D8805253ACAE6005A0FE9 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		3D1D8806253ACAE6005A0FE9 /* VegieType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VegieType.swift; sourceTree = "<group>"; };
-		3D1D880C253AD0B1005A0FE9 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
-		3D1D880F253AD16D005A0FE9 /* TestCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCell.swift; sourceTree = "<group>"; };
 		3D1FA46F2526F30100C6388A /* Vridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D1FA4722526F30100C6388A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D1FA4742526F30100C6388A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -380,8 +376,6 @@
 				3D15EE3125381C6900402476 /* SelectTypeViewController.swift */,
 				3D7407F5255E877D00F3887B /* SelectTypeHeader.swift */,
 				3D03BE9D2544238C0080C3A6 /* SelectTypeCell.swift */,
-				3D1D880C253AD0B1005A0FE9 /* TestViewController.swift */,
-				3D1D880F253AD16D005A0FE9 /* TestCell.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -564,7 +558,6 @@
 				3D8BD952255BA5B20021BD4D /* BulletinBoard.swift in Sources */,
 				3D1FA4892526F51900C6388A /* MainTabBarController.swift in Sources */,
 				BBBED60C2554761A00ED95B1 /* MyPostDetailCell.swift in Sources */,
-				3D1D880D253AD0B1005A0FE9 /* TestViewController.swift in Sources */,
 				3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */,
 				BBBED5F02551493200ED95B1 /* EditProfileHeaderView.swift in Sources */,
 				3D9914D12536C12200E17AF5 /* PostingViewModel.swift in Sources */,
@@ -605,7 +598,6 @@
 				BBBED5E0255148E200ED95B1 /* NoticeCell.swift in Sources */,
 				3D8BD986255D2D380021BD4D /* WorkToDo.swift in Sources */,
 				3D1FA4752526F30100C6388A /* SceneDelegate.swift in Sources */,
-				3D1D8810253AD16D005A0FE9 /* TestCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -67,9 +67,6 @@ class MyPostDetailCell: UITableViewCell {
         iv.layer.cornerRadius = 10
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(<#T##@objc method#>))
-//        iv.isUserInteractionEnabled = true
-//        iv.addGestureRecognizer(tap)
         iv.backgroundColor = .vridgeGreen
         return iv
     }()
