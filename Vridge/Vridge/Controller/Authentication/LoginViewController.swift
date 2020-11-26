@@ -40,7 +40,7 @@ class LoginViewController: UIViewController {
         button.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
         button.backgroundColor = UIColor(named: "color_all_button_normal")
         button.layer.cornerRadius = 8
-        button.setTitle("Apple ID로 시작하기", for: .normal)
+        button.setTitle("Apple로 계속하기", for: .normal)
         button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
         button.setTitleColor(UIColor(named: "color_all_viewBackground"), for: .normal)
         
