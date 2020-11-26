@@ -64,7 +64,7 @@ class MyPageViewController: UIViewController {
         rootItem.appearance.descriptionFontDescriptor = UIFont.SFRegular(size: 14)?.fontDescriptor
         rootItem.appearance.descriptionTextColor = UIColor(named: allTextColor) ?? .black
     
-        rootItem.actionButtonTitle = "Apple ID로 시작하기"
+        rootItem.actionButtonTitle = "Apple로 계속하기"
         rootItem.appearance.actionButtonTitleColor = .white
         rootItem.appearance.actionButtonColor = .black
         rootItem.appearance.actionButtonCornerRadius = 8
