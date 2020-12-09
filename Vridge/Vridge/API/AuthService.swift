@@ -15,6 +15,7 @@ struct AuthService {
     
     static let shared = AuthService()
     
+    // 새 유저 로그인
     func signInNewUser(viewController: UIViewController, indicator: AnimationView,
                        credential: AuthCredential, email: String, bulletin: Bool? = false) {
         indicator.isHidden = false
@@ -53,6 +54,7 @@ struct AuthService {
         }
     }
     
+    // 유저 로그인
     func loginExistUser(viewController: UIViewController, animationView: AnimationView, credential: AuthCredential,
                         bulletin: Bool? = false, completion: @escaping(User) -> Void) {
         animationView.isHidden = false
@@ -65,6 +67,7 @@ struct AuthService {
                 
                 guard (snapshot.value as? [String: AnyObject]) != nil else {
                     
+                    // 탈퇴했던 유저 재가입 (하지만 우리 앱에 탈퇴 기능 빼버림...)
                     rejoinLeftUser(credential: credential, uid: uid, email: email, bulletin: bulletin) { (err, ref) in
                         
                         let selectTypeController = SelectTypeViewController()
@@ -107,6 +110,7 @@ struct AuthService {
         }
     }
     
+    // 탈퇴했던 유저 재가입 (하지만 우리 앱에 탈퇴 기능 빼버림...)
     func rejoinLeftUser(credential: AuthCredential, uid: String, email: String, bulletin: Bool? = false,
                         completion: @escaping(Error?, DatabaseReference) -> Void) {
         // Deleted account and rejoining
@@ -149,7 +153,9 @@ struct AuthService {
                 REF_USERS.child(uid).updateChildValues(["profileImageURL": imageURL,
                                                         "type": type,
                                                         "username": username]) { (err, ref) in
-                    DB_REF.child("\(type)-point").updateChildValues([uid: 0], withCompletionBlock: completion)
+                    DB_REF.child("\(type)-point").updateChildValues([uid: 0]) { (err, ref) in
+                        REF_USERNAMES.updateChildValues([":" + username: 1], withCompletionBlock: completion)
+                    }
                     indicator.stopAnimating()
                     
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }
