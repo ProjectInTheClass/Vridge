@@ -107,11 +107,6 @@ class LoginViewController: UIViewController {
         
         view.backgroundColor = UIColor(named: "color_all_viewBackground")
         configureUI()
-        
-        view.addSubview(indicator)
-        indicator.hidesWhenStopped = true
-        indicator.style = .large
-        indicator.center = view.center
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -163,8 +158,15 @@ class LoginViewController: UIViewController {
         view.addSubview(captionLabel)
 //        view.addSubview(logOutButton)
         view.addSubview(logoImageView)
+        view.addSubview(indicator)
+        
+        indicator.hidesWhenStopped = true
+        indicator.style = .large
+        
         logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
                              paddingTop: 286, paddingLeft: 103, paddingRight: 102)
+        indicator.anchor(bottom: logoImageView.topAnchor, paddingBottom: 12)
+        indicator.centerX(inView: view)
         
         view.addSubview(animationView)
         animationView.center(inView: view)
