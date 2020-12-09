@@ -105,11 +105,13 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(indicator)
-        indicator.center = view.center
-        
         view.backgroundColor = UIColor(named: "color_all_viewBackground")
         configureUI()
+        
+        view.addSubview(indicator)
+        indicator.hidesWhenStopped = true
+        indicator.style = .large
+        indicator.center = view.center
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,6 +143,11 @@ class LoginViewController: UIViewController {
     
     
     // MARK: - Helpers
+    
+    func disableButtons() {
+        appleLoginButton.isEnabled = false
+        browseButton.isEnabled = false
+    }
     
     func configureUI() {
         
@@ -292,9 +299,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
                     guard let tab = window.rootViewController as? MainTabBarController else { return }
 //                    self.indicator.stopAnimating()
                     
-                    tab.fetchUser()
+                    self.disableButtons()
+                    self.indicator.startAnimating()
                 }
-                
+                disableButtons()
+                indicator.startAnimating()
                 return
             }
 //             handle if user hasn't registered...
@@ -311,6 +320,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizatio
             
             tab.fetchUser()
             print("DEBUG: New user is '\(username)'")
+            
+            disableButtons()
+            indicator.startAnimating()
             
             return
         }
