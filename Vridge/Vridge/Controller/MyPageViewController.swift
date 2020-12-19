@@ -125,7 +125,7 @@ class MyPageViewController: UIViewController {
     // MARK: - API
     
     func fetchUser() {
-        print("DEBUG: fetchiing user from myPage Veiw")
+        print("DEBUG: fetching user from myPage Veiw")
         guard let uid = Auth.auth().currentUser?.uid else {
             secondSectionMenu = ["로그인"]
             user = nil

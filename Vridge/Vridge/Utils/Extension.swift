@@ -1,9 +1,9 @@
 //
 //  Extension.swift
-//  SIrenorder
+//  Vridge
 //
-//  Created by Dustin on 2020/08/21.
-//  Copyright © 2020 Dustin. All rights reserved.
+//  Created by Kang Mingu on 2020/10/05.
+//  Copyright © 2020 Kang Mingu. All rights reserved.
 //
 
 import Foundation
