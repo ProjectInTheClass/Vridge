@@ -40,6 +40,8 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        // Test ID and PW
         emailTf.text = "1@2.com"
         pwTf.text = "12345678"
         

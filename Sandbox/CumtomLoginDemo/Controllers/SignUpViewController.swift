@@ -23,6 +23,7 @@ class SignUpViewController: UIViewController {
     
     let indicator = UIActivityIndicatorView()
     
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -33,7 +34,6 @@ class SignUpViewController: UIViewController {
     
     
     // MARK: - Helper
-    
     
     // check the field and validate that the data is correct
     // if everything is correct, this method will return nil, otherwise it returns error message
