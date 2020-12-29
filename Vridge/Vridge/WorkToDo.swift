@@ -36,4 +36,11 @@ import Foundation
     EditProfileViewController를 .full 화면으로 모달을 띄워서 모든 정보를 기입하도록 유도해야만 한다!!
  
  
+ 
+ 2020. 12. 29..
+ 
+ 애플로그인은 차후로 미루고, 일단 이메일 로그인으로 가는걸로 해보즈아...
+ 
+ 
+ 
  */
