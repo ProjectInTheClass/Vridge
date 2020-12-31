@@ -129,7 +129,7 @@ struct ActionSheetViewModel {
                                       preferredStyle: .alert)
         let noButton = UIAlertAction(title: keepBrowsing, style: .cancel, handler: nil)
         let yesButton = UIAlertAction(title: signUp, style: .default) { _ in
-            let controller = UINavigationController(rootViewController: LoginViewController())
+            let controller = UINavigationController(rootViewController: IntroViewController())
             controller.modalPresentationStyle = .fullScreen
             viewController.present(controller, animated: true) {
                 // 랭킹뷰에서 메인으로 이동!

@@ -1,5 +1,5 @@
 //
-//  LoginViewController.swift
+//  IntroViewController.swift
 //  Vridge
 //
 //  Created by Kang Mingu on 2020/10/06.
@@ -11,11 +11,11 @@ import AuthenticationServices
 import Firebase
 import Lottie
 
-protocol LoginViewControllerDelegate: class {
+protocol IntroViewControllerDelegate: class {
     func userLogout()
 }
 
-class LoginViewController: UIViewController {
+class IntroViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -26,29 +26,33 @@ class LoginViewController: UIViewController {
         return idc
     }()
     
-    weak var delegate: LoginViewControllerDelegate?
+    weak var delegate: IntroViewControllerDelegate?
     
-//    let appleLoginButton: ASAuthorizationAppleIDButton = {
-//        let button = ASAuthorizationAppleIDButton()
+//    let appleLoginButton: UIButton = {
+//        let button = UIButton(type: .system)
 //        button.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
-//        button.backgroundColor = .yellow
+//        button.backgroundColor = UIColor(named: "color_all_button_normal")
+//        button.layer.cornerRadius = 8
+//        button.setTitle("Apple로 계속하기", for: .normal)
+//        button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
+//        button.setTitleColor(UIColor(named: "color_all_viewBackground"), for: .normal)
+//
+//        let imageView = UIImageView()
+//        imageView.image = UIImage(systemName: "person.fill")
+//        imageView.tintColor = UIColor(named: "color_all_viewBackground")
+//        button.addSubview(imageView)
+//        imageView.centerY(inView: button, leftAnchor: button.leftAnchor, paddingLeft: 23.5)
 //        return button
 //    }()
     
-    let appleLoginButton: UIButton = {
+    let loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.addTarget(self, action: #selector(handleAppleLogin), for: .touchUpInside)
-        button.backgroundColor = UIColor(named: "color_all_button_normal")
+        button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+        button.backgroundColor = .vridgeGray
         button.layer.cornerRadius = 8
-        button.setTitle("Apple로 계속하기", for: .normal)
+        button.setTitle("로그인", for: .normal)
         button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
         button.setTitleColor(UIColor(named: "color_all_viewBackground"), for: .normal)
-        
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.fill")
-        imageView.tintColor = UIColor(named: "color_all_viewBackground")
-        button.addSubview(imageView)
-        imageView.centerY(inView: button, leftAnchor: button.leftAnchor, paddingLeft: 23.5)
         return button
     }()
     
@@ -60,6 +64,32 @@ class LoginViewController: UIViewController {
         return label
     }()
     
+    let emailContainerImage = UIImage(systemName: "envelope")
+    let pwContainerImage = UIImage(systemName: "lock")
+    
+    private lazy var emailContainerView: UIView = {
+        let image = emailContainerImage
+        let view = Utilities().inputContainerView(withImage: image!, textField: emailTf, color: .lightGray)
+        return view
+    }()
+    
+    private lazy var pwContainerView: UIView = {
+        let image = pwContainerImage
+        let view = Utilities().inputContainerView(withImage: image!, textField: passwordTf, color: .lightGray)
+        return view
+    }()
+    
+    private let emailTf: UITextField = {
+        let tf = Utilities().textField(withPlaceholder: "Email")
+        return tf
+    }()
+    
+    private let passwordTf: UITextField = {
+        let tf = Utilities().textField(withPlaceholder: "Password")
+        tf.isSecureTextEntry = true
+        return tf
+    }()
+    
 //    private let logOutButton: UIButton = {
 //        let button = UIButton(type: .system)
 //        button.setTitle("Log out", for: .normal)
@@ -67,16 +97,16 @@ class LoginViewController: UIViewController {
 //        return button
 //    }()
     
-    private let browseButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("그냥 둘러보기", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
-        button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
-        button.backgroundColor = UIColor.rgb(red: 5, green: 213, blue: 125)
-        button.layer.cornerRadius = 8
-        return button
-    }()
+//    private let browseButton: UIButton = {
+//        let button = UIButton(type: .system)
+//        button.setTitle("그냥 둘러보기", for: .normal)
+//        button.setTitleColor(.white, for: .normal)
+//        button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
+//        button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
+//        button.backgroundColor = UIColor.rgb(red: 5, green: 213, blue: 125)
+//        button.layer.cornerRadius = 8
+//        return button
+//    }()
     
     let animationView: AnimationView = {
         let av = Lottie.AnimationView(name: loadingAnimation)
@@ -99,6 +129,44 @@ class LoginViewController: UIViewController {
         return iv
     }()
     
+    let joinButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("회원가입", for: .normal)
+        button.setTitleColor(.vridgeBlack, for: .normal)
+        button.backgroundColor = .white
+        button.addTarget(self, action: #selector(handleJoin), for: .touchUpInside)
+        button.setDimensions(width: 82, height: 43)
+        return button
+    }()
+    
+    let findPasswordButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("비밀번호 찾기", for: .normal)
+        button.setTitleColor(.vridgeBlack, for: .normal)
+        button.backgroundColor = .white
+        button.addTarget(self, action: #selector(handleFindPassword), for: .touchUpInside)
+        button.setDimensions(width: 106, height: 43)
+        return button
+    }()
+    
+    let browseButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("둘러보기", for: .normal)
+        button.setTitleColor(.vridgeBlack, for: .normal)
+        button.backgroundColor = .white
+        button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
+        button.setDimensions(width: 82, height: 43)
+        return button
+    }()
+    
+    let buttonStackBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .black
+        return view
+    }()
+    
+    lazy var recognizer = UITapGestureRecognizer(target: self, action: #selector(handleKeyboardDown))
+    
     
     // MARK: - Lifecycle
     
@@ -115,21 +183,32 @@ class LoginViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(true)
-//        
-//        navigationController?.navigationBar.isHidden = false
-//    }
-    
     
     // MARK: - Selectors
     
+    @objc func handleKeyboardDown() {
+        view.endEditing(true)
+    }
+    
+    @objc func handleJoin() {
+        print("DEBUG: handle join...")
+    }
+    
+    @objc func handleFindPassword() {
+        print("DEBUG: handle find password...")
+    }
+    
     @objc func handleBrowse() {
         dismiss(animated: true, completion: nil)
+        print("DEBUG: handle browse...")
     }
     
     @objc func handleAppleLogin() {
         performSignin()
+    }
+    
+    @objc func handleLogin() {
+        print("DEBUG: handle login...")
     }
     
     @objc func handleLogOut() {
@@ -140,44 +219,69 @@ class LoginViewController: UIViewController {
     // MARK: - Helpers
     
     func disableButtons() {
-        appleLoginButton.isEnabled = false
+//        appleLoginButton.isEnabled = false
+        loginButton.isEnabled = false
+        findPasswordButton.isEnabled = false
         browseButton.isEnabled = false
     }
     
     func configureUI() {
+        
+        view.addGestureRecognizer(recognizer)
+        
+        emailTf.delegate = self
+        passwordTf.delegate = self
         
         let animationView = Lottie.AnimationView(name: "loading")
         view.addSubview(backgroundImageView)
         backgroundImageView.addConstraintsToFillView(view)
         view.addSubview(animationView)
         
+        let stack = UIStackView(arrangedSubviews: [emailContainerView, pwContainerView])
+        stack.axis = .vertical
+        stack.spacing = 16
+        stack.distribution = .equalSpacing
+        
+        let buttonStack = UIStackView(arrangedSubviews: [joinButton, findPasswordButton, browseButton])
+        buttonStack.axis = .horizontal
+        buttonStack.spacing = 1
+        buttonStack.alignment = .center
+        stack.distribution = .equalSpacing
+        
         animationView.play()
         
-        view.addSubview(appleLoginButton)
-        view.addSubview(browseButton)
+        view.addSubview(loginButton)
         view.addSubview(captionLabel)
 //        view.addSubview(logOutButton)
         view.addSubview(logoImageView)
         view.addSubview(indicator)
+        view.addSubview(stack)
+        view.addSubview(buttonStackBackgroundView)
+        view.addSubview(buttonStack)
         
         indicator.hidesWhenStopped = true
         indicator.style = .large
         
-        logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, right: view.rightAnchor,
-                             paddingTop: 286, paddingLeft: 103, paddingRight: 102)
-        indicator.anchor(bottom: logoImageView.topAnchor, paddingBottom: 12)
-        indicator.centerX(inView: view)
+        logoImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
+        logoImageView.centerX(inView: view)
+        stack.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                     paddingTop: 48, paddingLeft: 32, paddingRight: 32)
+//        indicator.anchor(bottom: logoImageView.topAnchor, paddingBottom: 12)
+//        indicator.centerX(inView: view)
+        indicator.center(inView: view)
+        buttonStackBackgroundView.anchor(top: loginButton.bottomAnchor, paddingTop: 29, width: 140, height: 18)
+        buttonStackBackgroundView.centerX(inView: view)
+        buttonStack.anchor(top: loginButton.bottomAnchor, paddingTop: 16)
+        buttonStack.centerX(inView: view)
+        
         
         view.addSubview(animationView)
         animationView.center(inView: view)
         animationView.setDimensions(width: 100, height: 100)
         animationView.contentMode = .scaleAspectFill
         
-        browseButton.anchor(left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor,
-                            right: view.rightAnchor, paddingLeft: 36, paddingBottom: 47, paddingRight: 36,
-                            height: 48)
-        appleLoginButton.anchor(left: view.leftAnchor, bottom: browseButton.topAnchor, right: view.rightAnchor,
-                                paddingLeft: 36, paddingBottom: 12, paddingRight: 36, height: 48)
+        loginButton.anchor(top: stack.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                           paddingTop: 24, paddingLeft: 36, paddingRight: 32, height: 48)
         
         captionLabel.anchor(top: logoImageView.bottomAnchor, paddingTop: 8)
         captionLabel.centerX(inView: view)
@@ -188,8 +292,9 @@ class LoginViewController: UIViewController {
         animationView.contentMode = .scaleAspectFill
         animationView.loopMode = .loop
         
-        
     }
+    
+    // Apple Login 현재 사용하지 않음...
     
     func performSignin() {
         let request = createAppleIdRequest()
@@ -247,6 +352,29 @@ class LoginViewController: UIViewController {
     
 }
 
+extension IntroViewController: UITextFieldDelegate {
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == emailTf {
+            print("DEBUG: email")
+            // emailTf의 언더 라인 색을 vridge Green 으로 바꾸기
+        } else {
+            print("DEBUG: pw")
+            // pwTf의 언더 라인 색을 vridge Green 으로 바꾸기
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == emailTf {
+            print("DEBUG: email change done")
+            // emailTf의 언더 라인 색을 다시 회색 으로 바꾸기
+        } else {
+            print("DEBUG: pw change done")
+            // pwTf의 언더 라인 색을 다시 회색 으로 바꾸기
+        }
+    }
+}
+
 
 
 import CryptoKit
@@ -266,7 +394,7 @@ private func sha256(_ input: String) -> String {
 }
 
 
-extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension IntroViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {

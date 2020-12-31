@@ -15,7 +15,7 @@ struct AuthService {
     
     static let shared = AuthService()
     
-    // 새 유저 로그인
+    // Apple 새 유저 로그인
     func signInNewUser(viewController: UIViewController, indicator: AnimationView,
                        credential: AuthCredential, email: String, bulletin: Bool? = false) {
         indicator.isHidden = false
@@ -54,7 +54,7 @@ struct AuthService {
         }
     }
     
-    // 유저 로그인
+    // Apple 유저 로그인
     func loginExistUser(viewController: UIViewController, animationView: AnimationView, credential: AuthCredential,
                         bulletin: Bool? = false, completion: @escaping(User) -> Void) {
         animationView.isHidden = false
@@ -110,7 +110,7 @@ struct AuthService {
         }
     }
     
-    // 탈퇴했던 유저 재가입 (하지만 우리 앱에 탈퇴 기능 빼버림...)
+    // Apple 탈퇴했던 유저 재가입 (하지만 우리 앱에 탈퇴 기능 빼버림...)
     func rejoinLeftUser(credential: AuthCredential, uid: String, email: String, bulletin: Bool? = false,
                         completion: @escaping(Error?, DatabaseReference) -> Void) {
         // Deleted account and rejoining
@@ -282,7 +282,7 @@ struct AuthService {
         do {
             try Auth.auth().signOut()
             viewController.dismiss(animated: true) {
-                let nav = UINavigationController(rootViewController: LoginViewController())
+                let nav = UINavigationController(rootViewController: IntroViewController())
                 nav.modalPresentationStyle = .fullScreen
                 viewController.present(nav, animated: true) {
                     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) else { return }

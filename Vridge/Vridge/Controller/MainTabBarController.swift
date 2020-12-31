@@ -132,7 +132,7 @@ class MainTabBarController: UITabBarController {
     func authenticateAndConfigureUI() {
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
-                let controller = LoginViewController()
+                let controller = IntroViewController()
                 let nav = UINavigationController(rootViewController: controller)
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true, completion: nil)
@@ -171,7 +171,7 @@ class MainTabBarController: UITabBarController {
             let nav = UINavigationController(rootViewController: controller)
             nav.modalPresentationStyle = .fullScreen
         
-//        let controller = LoginViewController()
+//        let controller = IntroViewController()
 //        controller.delegate = self
 //        let nav = UINavigationController(rootViewController: controller)
 //        nav.modalPresentationStyle = .fullScreen
@@ -237,7 +237,7 @@ class MainTabBarController: UITabBarController {
         bulletinManager.dismissBulletin(animated: true)
         
         print("DEBUG: show login view")
-        let controller = LoginViewController()
+        let controller = IntroViewController()
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)
@@ -305,9 +305,9 @@ class MainTabBarController: UITabBarController {
     
 }
 
-// MARK: - LoginViewControllerDelegate
+// MARK: - IntroViewControllerDelegate
 
-extension MainTabBarController: LoginViewControllerDelegate {
+extension MainTabBarController: IntroViewControllerDelegate {
     
     func userLogout() {
         print("DEBUG: handle log out man")
@@ -315,7 +315,7 @@ extension MainTabBarController: LoginViewControllerDelegate {
             try Auth.auth().signOut()
             dismiss(animated: true) {
                 self.user = nil
-                let nav = UINavigationController(rootViewController: LoginViewController())
+                let nav = UINavigationController(rootViewController: IntroViewController())
                 nav.modalPresentationStyle = .fullScreen
                 self.present(nav, animated: true, completion: nil)
             }

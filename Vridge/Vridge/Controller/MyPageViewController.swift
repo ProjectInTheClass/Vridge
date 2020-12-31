@@ -194,7 +194,7 @@ class MyPageViewController: UIViewController {
 //        bulletinManager.dismissBulletin(animated: true)
 //
 //        print("DEBUG: show login view")
-//        let controller = LoginViewController()
+//        let controller = IntroViewController()
 //        let nav = UINavigationController(rootViewController: controller)
 //        nav.modalPresentationStyle = .fullScreen
 //        present(nav, animated: true, completion: nil)
@@ -339,7 +339,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             
             if Auth.auth().currentUser == nil {
-                let loginController = LoginViewController()
+                let loginController = IntroViewController()
                 let nav = UINavigationController(rootViewController: loginController)
                 nav.modalPresentationStyle = .fullScreen
                 present(nav, animated: true, completion: nil)
