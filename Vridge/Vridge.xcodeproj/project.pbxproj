@@ -24,6 +24,7 @@
 		3D1FA4892526F51900C6388A /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA4882526F51900C6388A /* MainTabBarController.swift */; };
 		3D1FA48C2526FC9500C6388A /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1FA48B2526FC9400C6388A /* Extension.swift */; };
 		3D3E4B18252D866700E25323 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D3E4B17252D866700E25323 /* SF-Pro.ttf */; };
+		3D5C29CA25A03DCF00787E34 /* JoiningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C29C925A03DCF00787E34 /* JoiningViewController.swift */; };
 		3D7407F1255E66FE00F3887B /* upload_success.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D7407F0255E66FE00F3887B /* upload_success.json */; };
 		3D7407F6255E877D00F3887B /* SelectTypeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7407F5255E877D00F3887B /* SelectTypeHeader.swift */; };
 		3D7F9CD62529954A006E23F4 /* HomeStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */; };
@@ -108,6 +109,7 @@
 		3D1FA4882526F51900C6388A /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		3D1FA48B2526FC9400C6388A /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		3D3E4B17252D866700E25323 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
+		3D5C29C925A03DCF00787E34 /* JoiningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningViewController.swift; sourceTree = "<group>"; };
 		3D7407F0255E66FE00F3887B /* upload_success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = upload_success.json; sourceTree = "<group>"; };
 		3D7407F5255E877D00F3887B /* SelectTypeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTypeHeader.swift; sourceTree = "<group>"; };
 		3D7F9CD52529954A006E23F4 /* HomeStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomeStoryboard.storyboard; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 			isa = PBXGroup;
 			children = (
 				3DE62374252C180D005F16A9 /* IntroViewController.swift */,
+				3D5C29C925A03DCF00787E34 /* JoiningViewController.swift */,
 				3D15EE3125381C6900402476 /* SelectTypeViewController.swift */,
 				3D7407F5255E877D00F3887B /* SelectTypeHeader.swift */,
 				3D03BE9D2544238C0080C3A6 /* SelectTypeCell.swift */,
@@ -562,6 +565,7 @@
 				3D1FA4892526F51900C6388A /* MainTabBarController.swift in Sources */,
 				BBBED60C2554761A00ED95B1 /* MyPostDetailCell.swift in Sources */,
 				3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */,
+				3D5C29CA25A03DCF00787E34 /* JoiningViewController.swift in Sources */,
 				BBBED5F02551493200ED95B1 /* EditProfileHeaderView.swift in Sources */,
 				3D9914D12536C12200E17AF5 /* PostingViewModel.swift in Sources */,
 				BBBED5E72551490200ED95B1 /* SecondSectionHeader.swift in Sources */,
