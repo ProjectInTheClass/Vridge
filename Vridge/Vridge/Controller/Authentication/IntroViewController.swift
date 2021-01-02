@@ -52,7 +52,9 @@ class IntroViewController: UIViewController {
         button.layer.cornerRadius = 8
         button.setTitle("로그인", for: .normal)
         button.titleLabel?.font = UIFont.SFSemiBold(size: 16)
-        button.setTitleColor(UIColor(named: "color_all_viewBackground"), for: .normal)
+//        button.setTitleColor(UIColor(named: viewBackgroundColor), for: .normal)
+        button.tintColor = UIColor(named: viewBackgroundColor)
+        button.isEnabled = false
         return button
     }()
     
@@ -390,8 +392,10 @@ extension IntroViewController: UITextFieldDelegate {
         if emailTf.text!.count > 4 && passwordTf.text!.count > 5 {
             print("DEBUG: enabled")
             loginButton.backgroundColor = .vridgeGreen
+            loginButton.isEnabled = true
         } else {
             loginButton.backgroundColor = .vridgeGray
+            loginButton.isEnabled = false
         }
     }
     

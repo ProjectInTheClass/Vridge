@@ -307,4 +307,17 @@ struct AuthService {
             }
         }
     }
+    
+    
+    // email login APIs
+    
+    func joinNewUser(email: String, password: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                print("DEBUG: failed creating user with error: \(error.localizedDescription)")
+            } else {
+                print("DEBUG: created user successfully. uid = \(result?.user.uid)")
+            }
+        }
+    }
 }

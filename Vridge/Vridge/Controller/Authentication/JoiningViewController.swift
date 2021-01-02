@@ -62,6 +62,17 @@ class JoiningViewController: UIViewController {
         return tf
     }()
     
+    private let nextButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("다음", for: .normal)
+        button.tintColor = UIColor(named: viewBackgroundColor)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
+        button.backgroundColor = .vridgeGray
+        button.layer.cornerRadius = 8
+        button.isEnabled = false
+        return button
+    }()
+    
     let emailContainerUnderLine: UIView = {
         let view = UIView()
         view.backgroundColor = .vridgeGreen
@@ -105,6 +116,12 @@ class JoiningViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @objc func handleNext() {
+        print("DEBUG: handle next...")
+        
+        AuthService.shared.joinNewUser(email: emailTf.text!, password: passwordTf.text!)
+    }
+    
     
     // MARK: - Helpers
     
@@ -124,6 +141,7 @@ class JoiningViewController: UIViewController {
         view.addSubview(emailContainerUnderLine)
         view.addSubview(pwContainerUnderLine)
         view.addSubview(pwContainerUnderLine2)
+        view.addSubview(nextButton)
         
         emailTf.delegate = self
         passwordTf.delegate = self
@@ -146,6 +164,8 @@ class JoiningViewController: UIViewController {
                                        bottom: pwContainerView2.bottomAnchor,
                                        right: pwContainerView2.rightAnchor,
                                        paddingLeft: 8, height: 1)
+        nextButton.anchor(top: stack.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
+                          paddingTop: 32, paddingLeft: 36, paddingRight: 32, height: 48)
         
     }
 
@@ -164,14 +184,16 @@ extension JoiningViewController: UITextFieldDelegate {
         
     }
     
-//    func textFieldDidChangeSelection(_ textField: UITextField) {
-//        if emailTf.text!.count > 4 && passwordTf.text!.count > 5 {
-//            print("DEBUG: enabled")
-//            loginButton.backgroundColor = .vridgeGreen
-//        } else {
-//            loginButton.backgroundColor = .vridgeGray
-//        }
-//    }
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if emailTf.text!.count > 4 && passwordTf.text!.count > 5 && passwordTf.text == passwordTf2.text {
+            print("DEBUG: enabled")
+            nextButton.backgroundColor = .vridgeGreen
+            nextButton.isEnabled = true
+        } else {
+            nextButton.backgroundColor = .vridgeGray
+            nextButton.isEnabled = false
+        }
+    }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == emailTf {
