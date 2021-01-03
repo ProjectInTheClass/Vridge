@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Lottie
+
 class JoiningViewController: UIViewController {
     
     // MARK: - Properties
@@ -94,10 +96,22 @@ class JoiningViewController: UIViewController {
         return view
     }()
     
+    let animationView: AnimationView = {
+        let av = Lottie.AnimationView(name: loadingAnimation)
+        av.loopMode = .loop
+        av.isHidden = true
+        return av
+    }()
+    
     lazy var recognizer = UITapGestureRecognizer(target: self, action: #selector(handleKeyboardDown))
     
     
     // MARK: - Lifecycle
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,9 +131,15 @@ class JoiningViewController: UIViewController {
     }
     
     @objc func handleNext() {
-        print("DEBUG: handle next...")
-        
-        AuthService.shared.joinNewUser(email: emailTf.text!, password: passwordTf.text!)
+        animationView.isHidden = false
+        animationView.play()
+        AuthService.shared.joinNewUser(email: emailTf.text!, password: passwordTf.text!,
+                                       animation: animationView) { (error, ref) in
+            let controller = SelectTypeViewController()
+            self.navigationController?.pushViewController(controller, animated: true)
+            self.animationView.stop()
+            self.animationView.isHidden = true
+        }
     }
     
     
@@ -134,6 +154,11 @@ class JoiningViewController: UIViewController {
         stack.axis = .vertical
         stack.spacing = 16
         stack.distribution = .equalSpacing
+        
+        stack.addSubview(animationView)
+        animationView.center(inView: stack)
+        animationView.setDimensions(width: 100, height: 100)
+        animationView.contentMode = .scaleAspectFill
         
         view.addSubview(backButton)
         view.addSubview(stack)
