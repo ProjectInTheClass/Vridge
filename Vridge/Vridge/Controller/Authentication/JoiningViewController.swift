@@ -103,6 +103,24 @@ class JoiningViewController: UIViewController {
         return av
     }()
     
+    let emailAlertLabel: UILabel = {
+        let label = UILabel()
+        label.text = "이미 사용중인 이메일입니다."
+        label.textColor = .red
+        label.font = UIFont.SFRegular(size: 14)
+        label.isHidden = true
+        return label
+    }()
+    
+    let passwordAlertLabel: UILabel = {
+        let label = UILabel()
+        label.text = "비밀번호가 서로 다릅니다."
+        label.textColor = .red
+        label.font = UIFont.SFRegular(size: 14)
+        label.isHidden = true
+        return label
+    }()
+    
     lazy var recognizer = UITapGestureRecognizer(target: self, action: #selector(handleKeyboardDown))
     
     
@@ -134,7 +152,7 @@ class JoiningViewController: UIViewController {
         animationView.isHidden = false
         animationView.play()
         AuthService.shared.joinNewUser(email: emailTf.text!, password: passwordTf.text!,
-                                       animation: animationView) { (error, ref) in
+                                       errorLabel: emailAlertLabel, animation: animationView) { (error, ref) in
             let controller = SelectTypeViewController()
             self.navigationController?.pushViewController(controller, animated: true)
             self.animationView.stop()
@@ -167,6 +185,8 @@ class JoiningViewController: UIViewController {
         view.addSubview(pwContainerUnderLine)
         view.addSubview(pwContainerUnderLine2)
         view.addSubview(nextButton)
+        view.addSubview(emailAlertLabel)
+        view.addSubview(passwordAlertLabel)
         
         emailTf.delegate = self
         passwordTf.delegate = self
@@ -177,6 +197,10 @@ class JoiningViewController: UIViewController {
                               paddingTop: 16, paddingLeft: 36)
         stack.anchor(top: pageTitleLabel.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
                      paddingTop: 32, paddingLeft: 32, paddingRight: 32)
+        emailAlertLabel.anchor(top: emailContainerView.bottomAnchor, left: emailContainerView.leftAnchor,
+                               paddingTop: 4, paddingLeft: 10)
+        passwordAlertLabel.anchor(top: pwContainerView.bottomAnchor, left: pwContainerView.leftAnchor,
+                                  paddingTop: 4, paddingLeft: 10)
         emailContainerUnderLine.anchor(left: emailContainerView.leftAnchor,
                                        bottom: emailContainerView.bottomAnchor,
                                        right: emailContainerView.rightAnchor,
@@ -201,6 +225,7 @@ extension JoiningViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == emailTf {
             emailContainerUnderLine.isHidden = false
+            emailAlertLabel.isHidden = true
         } else if textField == passwordTf {
             pwContainerUnderLine.isHidden = false
         } else {
@@ -210,8 +235,14 @@ extension JoiningViewController: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        if passwordTf2.hasText && passwordTf.text != passwordTf2.text {
+            passwordAlertLabel.isHidden = false
+        } else {
+            passwordAlertLabel.isHidden = true
+        }
+        
         if emailTf.text!.count > 4 && passwordTf.text!.count > 5 && passwordTf.text == passwordTf2.text {
-            print("DEBUG: enabled")
             nextButton.backgroundColor = .vridgeGreen
             nextButton.isEnabled = true
         } else {

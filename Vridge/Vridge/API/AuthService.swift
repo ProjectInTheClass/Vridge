@@ -311,12 +311,17 @@ struct AuthService {
     
     // email login APIs
     
-    func joinNewUser(email: String, password: String, animation: AnimationView, completion: @escaping(Error?, DatabaseReference) -> Void) {
+    func joinNewUser(email: String, password: String, errorLabel: UILabel, animation: AnimationView, completion: @escaping(Error?, DatabaseReference) -> Void) {
         Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
             if let error = error {
                 animation.stop()
                 animation.isHidden = true
-                print("DEBUG: error = \(error.localizedDescription)")
+                
+                errorLabel.isHidden = false
+                if error.localizedDescription.contains("another account.") {
+                } else {
+                    errorLabel.text = "메일 주소를 다시 한번 확인해 주세요."
+                }
             } else {
                 guard let uid = result?.user.uid else { return }
                 
