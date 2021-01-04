@@ -103,6 +103,15 @@ class IntroViewController: UIViewController {
         return tf
     }()
     
+    let wrongPasswordLabel: UILabel = {
+        let label = UILabel()
+        label.text = "메일 주소 혹은 비밀번호가 올바르지 않아요."
+        label.textColor = .red
+        label.font = UIFont.SFRegular(size: 14)
+        label.isHidden = true
+        return label
+    }()
+    
 //    private let logOutButton: UIButton = {
 //        let button = UIButton(type: .system)
 //        button.setTitle("Log out", for: .normal)
@@ -222,7 +231,26 @@ class IntroViewController: UIViewController {
     }
     
     @objc func handleLogin() {
-        print("DEBUG: handle login...")
+        animationView.isHidden = false
+        animationView.play()
+        AuthService.shared.loginWithEmail(email: emailTf.text!, password: passwordTf.text!) { (result, error) in
+            
+            if error != nil {
+                self.wrongPasswordLabel.isHidden = false
+                self.animationView.stop()
+                self.animationView.isHidden = true
+                return
+            }
+            
+            // if 유저네임이 없을 때 = SelectTypeViewController로 push.
+            
+            // 유저네임 있는 정상적인 로그인일 때는 dismiss.
+            
+            self.dismiss(animated: true) {
+                self.animationView.stop()
+                self.animationView.isHidden = true
+            }
+        }
     }
     
     @objc func handleLogOut() {
@@ -246,10 +274,9 @@ class IntroViewController: UIViewController {
         emailTf.delegate = self
         passwordTf.delegate = self
         
-        let animationView = Lottie.AnimationView(name: "loading")
+//        let animationView = Lottie.AnimationView(name: "loading")
         view.addSubview(backgroundImageView)
         backgroundImageView.addConstraintsToFillView(view)
-        view.addSubview(animationView)
         
         let stack = UIStackView(arrangedSubviews: [emailContainerView, pwContainerView])
         stack.axis = .vertical
@@ -262,12 +289,8 @@ class IntroViewController: UIViewController {
         buttonStack.alignment = .center
         stack.distribution = .equalSpacing
         
-        animationView.isHidden = false
-        animationView.play()
-        
         view.addSubview(loginButton)
         view.addSubview(captionLabel)
-//        view.addSubview(logOutButton)
         view.addSubview(logoImageView)
         view.addSubview(indicator)
         view.addSubview(stack)
@@ -275,28 +298,30 @@ class IntroViewController: UIViewController {
         view.addSubview(buttonStack)
         view.addSubview(emailContainerUnderLine)
         view.addSubview(pwContainerUnderLine)
+        view.addSubview(wrongPasswordLabel)
         
-        indicator.hidesWhenStopped = true
-        indicator.style = .large
+//        indicator.hidesWhenStopped = true
+//        indicator.style = .large
         
         logoImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
         logoImageView.centerX(inView: view)
         stack.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
                      paddingTop: 48, paddingLeft: 32, paddingRight: 32)
+        wrongPasswordLabel.anchor(top: emailContainerView.bottomAnchor, paddingTop: 8)
+        wrongPasswordLabel.centerX(inView: view)
 //        indicator.anchor(bottom: logoImageView.topAnchor, paddingBottom: 12)
 //        indicator.centerX(inView: view)
-        indicator.center(inView: view)
+//        indicator.center(inView: view)
         buttonStackBackgroundView.anchor(top: loginButton.bottomAnchor, paddingTop: 29, width: 140, height: 18)
         buttonStackBackgroundView.centerX(inView: view)
         buttonStack.anchor(top: loginButton.bottomAnchor, paddingTop: 16)
         buttonStack.centerX(inView: view)
         
-        
-        animationView.center(inView: view)
+        view.addSubview(animationView)
+        animationView.centerX(inView: view)
+        animationView.anchor(top: captionLabel.bottomAnchor, paddingTop: 36)
         animationView.setDimensions(width: 100, height: 100)
         animationView.contentMode = .scaleAspectFill
-//        view.addSubview(animationView)
-//        animationView.isHidden = true
         
         loginButton.anchor(top: stack.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
                            paddingTop: 24, paddingLeft: 36, paddingRight: 32, height: 48)
@@ -312,8 +337,6 @@ class IntroViewController: UIViewController {
         pwContainerUnderLine.anchor(left: pwContainerView.leftAnchor,
                                        bottom: pwContainerView.bottomAnchor,
                                        right: pwContainerView.rightAnchor, paddingLeft: 8, height: 1)
-        
-        animationView.center(inView: view)
         animationView.contentMode = .scaleAspectFill
         animationView.loopMode = .loop
         
@@ -389,8 +412,9 @@ extension IntroViewController: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        wrongPasswordLabel.isHidden = true
         if emailTf.text!.count > 4 && passwordTf.text!.count > 5 {
-            print("DEBUG: enabled")
             loginButton.backgroundColor = .vridgeGreen
             loginButton.isEnabled = true
         } else {

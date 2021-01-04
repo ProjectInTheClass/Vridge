@@ -137,6 +137,7 @@
 		3D9F554625544A29003C84AD /* FeedDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewController.swift; sourceTree = "<group>"; };
 		3D9F554925545454003C84AD /* FeedDetailCustomTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailCustomTopView.swift; sourceTree = "<group>"; };
 		3D9F554F25545C12003C84AD /* FeedDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailViewModel.swift; sourceTree = "<group>"; };
+		3DAEA2F325A34BEB007DFC88 /* VridgeRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VridgeRelease.entitlements; sourceTree = "<group>"; };
 		3DB09D7A254BD97D00062E49 /* PhotoAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAddView.swift; sourceTree = "<group>"; };
 		3DB73AF025566C8C00EAA49A /* FeedDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDetailHeader.swift; sourceTree = "<group>"; };
 		3DBA137E25599BB100A04002 /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
@@ -243,6 +244,7 @@
 		3D1FA4712526F30100C6388A /* Vridge */ = {
 			isa = PBXGroup;
 			children = (
+				3DAEA2F325A34BEB007DFC88 /* VridgeRelease.entitlements */,
 				3D8BD985255D2D370021BD4D /* WorkToDo.swift */,
 				3DE62388252C533C005F16A9 /* Vridge.entitlements */,
 				3D1FA4722526F30100C6388A /* AppDelegate.swift */,
@@ -762,7 +764,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dreamin.Vridge;
+				PRODUCT_BUNDLE_IDENTIFIER = com.minguking.Vridge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -775,7 +777,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Vridge/Vridge.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Vridge/VridgeRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3YAPL3Q6FM;
 				INFOPLIST_FILE = Vridge/Info.plist;
@@ -784,7 +786,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dreamin.Vridge;
+				PRODUCT_BUNDLE_IDENTIFIER = com.minguking.Vridge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

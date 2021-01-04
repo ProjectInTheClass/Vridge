@@ -317,6 +317,7 @@ struct AuthService {
                 animation.stop()
                 animation.isHidden = true
                 
+                print("DEBUG: error is \(error.localizedDescription)")
                 errorLabel.isHidden = false
                 if error.localizedDescription.contains("another account.") {
                 } else {
@@ -334,5 +335,9 @@ struct AuthService {
                 }
             }
         }
+    }
+    
+    func loginWithEmail(email: String, password: String, completion: AuthDataResultCallback?) {
+        Auth.auth().signIn(withEmail: email, password: password, completion: completion)
     }
 }

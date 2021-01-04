@@ -51,4 +51,8 @@ import Foundation
  세부 사항 조율이 필요함 e.g: 이미 사용중인 메일주소입니다. 등의 알림 레이블 만들기.
  && create user API 추가 시키기. 굿.
  
+ 2021. 1. 4..
+ 
+ // if 유저네임이 없을 때 = SelectTypeViewController로 push.
+ 
  */
