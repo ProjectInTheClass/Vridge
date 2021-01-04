@@ -244,12 +244,23 @@ class IntroViewController: UIViewController {
             
             // if 유저네임이 없을 때 = SelectTypeViewController로 push.
             
-            // 유저네임 있는 정상적인 로그인일 때는 dismiss.
-            
-            self.dismiss(animated: true) {
-                self.animationView.stop()
-                self.animationView.isHidden = true
+            AuthService.shared.checkIfUserHasUsername { hasUsername in
+                if hasUsername {
+//                    self.fetchUser()
+                    self.dismiss(animated: true) {
+                        self.animationView.stop()
+                        self.animationView.isHidden = true
+                    }
+                } else {
+                    print("DEBUG: this gus has no username man")
+                    let selectTypeController = SelectTypeViewController()
+                    self.navigationController?.pushViewController(selectTypeController, animated: true)
+                }
             }
+            
+//            print("DEBUG: username = \(REF_USERS.child(uid).value(forKey: "username"))")
+            
+            // 유저네임 있는 정상적인 로그인일 때는 dismiss.
         }
     }
     
