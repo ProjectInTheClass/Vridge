@@ -51,8 +51,10 @@ class IntroViewController: UIViewController {
         button.backgroundColor = .vridgeGray
         button.layer.cornerRadius = 8
         button.setTitle("로그인", for: .normal)
-        button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
-        button.setTitleColor(UIColor(named: "color_all_viewBackground"), for: .normal)
+        button.titleLabel?.font = UIFont.SFSemiBold(size: 16)
+//        button.setTitleColor(UIColor(named: viewBackgroundColor), for: .normal)
+        button.tintColor = UIColor(named: viewBackgroundColor)
+        button.isEnabled = false
         return button
     }()
     
@@ -64,49 +66,54 @@ class IntroViewController: UIViewController {
         return label
     }()
     
-    let emailContainerImage = UIImage(systemName: "envelope")
-    let pwContainerImage = UIImage(systemName: "lock")
-    
     private lazy var emailContainerView: UIView = {
-        let image = emailContainerImage
-        let view = Utilities().inputContainerView(withImage: image!, textField: emailTf, color: .lightGray)
+        let image = UIImage(systemName: "envelope")
+        let view = Utilities().inputContainerView(textField: emailTf, color: .lightGray)
+        return view
+    }()
+    
+    let emailContainerUnderLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .vridgeGreen
+        view.isHidden = true
         return view
     }()
     
     private lazy var pwContainerView: UIView = {
-        let image = pwContainerImage
-        let view = Utilities().inputContainerView(withImage: image!, textField: passwordTf, color: .lightGray)
+        let image = UIImage(systemName: "lock")
+        let view = Utilities().inputContainerView(textField: passwordTf, color: .lightGray)
+        return view
+    }()
+    
+    let pwContainerUnderLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .vridgeGreen
+        view.isHidden = true
         return view
     }()
     
     private let emailTf: UITextField = {
-        let tf = Utilities().textField(withPlaceholder: "Email")
+        let tf = Utilities().textField(withPlaceholder: "이메일")
+        tf.autocapitalizationType = .none
+        tf.keyboardType = .emailAddress
+        tf.autocorrectionType = .no
         return tf
     }()
     
     private let passwordTf: UITextField = {
-        let tf = Utilities().textField(withPlaceholder: "Password")
+        let tf = Utilities().textField(withPlaceholder: "비밀번호")
         tf.isSecureTextEntry = true
         return tf
     }()
     
-//    private let logOutButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("Log out", for: .normal)
-//        button.addTarget(self, action: #selector(handleLogOut), for: .touchUpInside)
-//        return button
-//    }()
-    
-//    private let browseButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("그냥 둘러보기", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
-//        button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
-//        button.backgroundColor = UIColor.rgb(red: 5, green: 213, blue: 125)
-//        button.layer.cornerRadius = 8
-//        return button
-//    }()
+    let loginErrorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "메일 주소 혹은 비밀번호가 올바르지 않아요."
+        label.textColor = .red
+        label.font = UIFont.SFRegular(size: 14)
+        label.isHidden = true
+        return label
+    }()
     
     let animationView: AnimationView = {
         let av = Lottie.AnimationView(name: loadingAnimation)
@@ -132,8 +139,8 @@ class IntroViewController: UIViewController {
     let joinButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("회원가입", for: .normal)
-        button.setTitleColor(.vridgeBlack, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(UIColor(named: allTextColor), for: .normal)
+        button.backgroundColor = UIColor(named: viewBackgroundColor)
         button.addTarget(self, action: #selector(handleJoin), for: .touchUpInside)
         button.setDimensions(width: 82, height: 43)
         return button
@@ -142,8 +149,8 @@ class IntroViewController: UIViewController {
     let findPasswordButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("비밀번호 찾기", for: .normal)
-        button.setTitleColor(.vridgeBlack, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(UIColor(named: allTextColor), for: .normal)
+        button.backgroundColor = UIColor(named: viewBackgroundColor)
         button.addTarget(self, action: #selector(handleFindPassword), for: .touchUpInside)
         button.setDimensions(width: 106, height: 43)
         return button
@@ -152,8 +159,8 @@ class IntroViewController: UIViewController {
     let browseButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("둘러보기", for: .normal)
-        button.setTitleColor(.vridgeBlack, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(UIColor(named: allTextColor), for: .normal)
+        button.backgroundColor = UIColor(named: viewBackgroundColor)
         button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
         button.setDimensions(width: 82, height: 43)
         return button
@@ -161,7 +168,7 @@ class IntroViewController: UIViewController {
     
     let buttonStackBackgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor(named: allTextColor)
         return view
     }()
     
@@ -191,11 +198,15 @@ class IntroViewController: UIViewController {
     }
     
     @objc func handleJoin() {
-        print("DEBUG: handle join...")
+        let controller = JoiningViewController()
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     @objc func handleFindPassword() {
-        print("DEBUG: handle find password...")
+        let alert = UIAlertController(title: "", message: "준비 중입니다.", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okButton)
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func handleBrowse() {
@@ -208,7 +219,37 @@ class IntroViewController: UIViewController {
     }
     
     @objc func handleLogin() {
-        print("DEBUG: handle login...")
+        animationView.isHidden = false
+        animationView.play()
+        AuthService.shared.loginWithEmail(email: emailTf.text!, password: passwordTf.text!) { (result, error) in
+            
+            if error != nil {
+                self.loginErrorLabel.isHidden = false
+                self.animationView.stop()
+                self.animationView.isHidden = true
+                return
+            }
+            
+            // if 유저네임이 없을 때 = SelectTypeViewController로 push.
+            
+            AuthService.shared.checkIfUserHasUsername { hasUsername in
+                if hasUsername {
+//                    self.fetchUser()
+                    self.dismiss(animated: true) {
+                        self.animationView.stop()
+                        self.animationView.isHidden = true
+                    }
+                } else {
+                    print("DEBUG: this gus has no username man")
+                    let selectTypeController = SelectTypeViewController()
+                    self.navigationController?.pushViewController(selectTypeController, animated: true)
+                }
+            }
+            
+//            print("DEBUG: username = \(REF_USERS.child(uid).value(forKey: "username"))")
+            
+            // 유저네임 있는 정상적인 로그인일 때는 dismiss.
+        }
     }
     
     @objc func handleLogOut() {
@@ -232,10 +273,9 @@ class IntroViewController: UIViewController {
         emailTf.delegate = self
         passwordTf.delegate = self
         
-        let animationView = Lottie.AnimationView(name: "loading")
+//        let animationView = Lottie.AnimationView(name: "loading")
         view.addSubview(backgroundImageView)
         backgroundImageView.addConstraintsToFillView(view)
-        view.addSubview(animationView)
         
         let stack = UIStackView(arrangedSubviews: [emailContainerView, pwContainerView])
         stack.axis = .vertical
@@ -248,35 +288,37 @@ class IntroViewController: UIViewController {
         buttonStack.alignment = .center
         stack.distribution = .equalSpacing
         
-        animationView.play()
-        
         view.addSubview(loginButton)
         view.addSubview(captionLabel)
-//        view.addSubview(logOutButton)
         view.addSubview(logoImageView)
         view.addSubview(indicator)
         view.addSubview(stack)
         view.addSubview(buttonStackBackgroundView)
         view.addSubview(buttonStack)
+        view.addSubview(emailContainerUnderLine)
+        view.addSubview(pwContainerUnderLine)
+        view.addSubview(loginErrorLabel)
         
-        indicator.hidesWhenStopped = true
-        indicator.style = .large
+//        indicator.hidesWhenStopped = true
+//        indicator.style = .large
         
         logoImageView.anchor(top: view.safeAreaLayoutGuide.topAnchor, paddingTop: 16)
         logoImageView.centerX(inView: view)
         stack.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
                      paddingTop: 48, paddingLeft: 32, paddingRight: 32)
+        loginErrorLabel.anchor(top: emailContainerView.bottomAnchor, paddingTop: 8)
+        loginErrorLabel.centerX(inView: view)
 //        indicator.anchor(bottom: logoImageView.topAnchor, paddingBottom: 12)
 //        indicator.centerX(inView: view)
-        indicator.center(inView: view)
+//        indicator.center(inView: view)
         buttonStackBackgroundView.anchor(top: loginButton.bottomAnchor, paddingTop: 29, width: 140, height: 18)
         buttonStackBackgroundView.centerX(inView: view)
         buttonStack.anchor(top: loginButton.bottomAnchor, paddingTop: 16)
         buttonStack.centerX(inView: view)
         
-        
         view.addSubview(animationView)
-        animationView.center(inView: view)
+        animationView.centerX(inView: view)
+        animationView.anchor(top: captionLabel.bottomAnchor, paddingTop: 36)
         animationView.setDimensions(width: 100, height: 100)
         animationView.contentMode = .scaleAspectFill
         
@@ -288,7 +330,12 @@ class IntroViewController: UIViewController {
 //        logOutButton.anchor(top: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor,
 //                            paddingTop: 40, paddingRight: 40)
         
-        animationView.center(inView: view)
+        emailContainerUnderLine.anchor(left: emailContainerView.leftAnchor,
+                                       bottom: emailContainerView.bottomAnchor,
+                                       right: emailContainerView.rightAnchor, paddingLeft: 8, height: 1)
+        pwContainerUnderLine.anchor(left: pwContainerView.leftAnchor,
+                                       bottom: pwContainerView.bottomAnchor,
+                                       right: pwContainerView.rightAnchor, paddingLeft: 8, height: 1)
         animationView.contentMode = .scaleAspectFill
         animationView.loopMode = .loop
         
@@ -355,24 +402,35 @@ class IntroViewController: UIViewController {
 extension IntroViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        loginErrorLabel.isHidden = true
         if textField == emailTf {
-            print("DEBUG: email")
-            // emailTf의 언더 라인 색을 vridge Green 으로 바꾸기
+            emailContainerUnderLine.isHidden = false
         } else {
-            print("DEBUG: pw")
-            // pwTf의 언더 라인 색을 vridge Green 으로 바꾸기
+            pwContainerUnderLine.isHidden = false
+        }
+        
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        loginErrorLabel.isHidden = true
+        if emailTf.text!.count > 4 && passwordTf.text!.count > 5 {
+            loginButton.backgroundColor = .vridgeGreen
+            loginButton.isEnabled = true
+        } else {
+            loginButton.backgroundColor = .vridgeGray
+            loginButton.isEnabled = false
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField == emailTf {
-            print("DEBUG: email change done")
-            // emailTf의 언더 라인 색을 다시 회색 으로 바꾸기
+            emailContainerUnderLine.isHidden = true
         } else {
-            print("DEBUG: pw change done")
-            // pwTf의 언더 라인 색을 다시 회색 으로 바꾸기
+            pwContainerUnderLine.isHidden = true
         }
     }
+    
 }
 
 

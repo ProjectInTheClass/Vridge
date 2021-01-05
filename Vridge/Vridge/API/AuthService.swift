@@ -307,4 +307,43 @@ struct AuthService {
             }
         }
     }
+    
+    
+    // email login APIs
+    
+    func joinNewUser(email: String, password: String, errorLabel: UILabel, emailUnderline: UIView, animation: AnimationView, completion: @escaping(Error?, DatabaseReference) -> Void) {
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            if let error = error {
+                animation.stop()
+                animation.isHidden = true
+                
+                print("DEBUG: error is \(error.localizedDescription)")
+                if error.localizedDescription.contains("another account.") {
+                    print("DEBUG: error msg = \(error.localizedDescription)")
+                    errorLabel.isHidden = false
+                    emailUnderline.isHidden = false
+                    emailUnderline.backgroundColor = .red
+                } else {
+                    errorLabel.text = "메일 주소를 다시 한번 확인해 주세요."
+                    errorLabel.isHidden = false
+                    emailUnderline.isHidden = false
+                    emailUnderline.backgroundColor = .red
+                }
+            } else {
+                guard let uid = result?.user.uid else { return }
+                
+                let values = ["uid": uid,
+                              "email": email,
+                              "point": 0] as [String: Any]
+                
+                REF_USERS.child(uid).updateChildValues(values) { (error, ref) in
+                    REF_USER_POINT.updateChildValues([uid: 0], withCompletionBlock: completion)
+                }
+            }
+        }
+    }
+    
+    func loginWithEmail(email: String, password: String, completion: AuthDataResultCallback?) {
+        Auth.auth().signIn(withEmail: email, password: password, completion: completion)
+    }
 }
