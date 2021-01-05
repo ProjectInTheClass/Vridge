@@ -103,7 +103,7 @@ class IntroViewController: UIViewController {
         return tf
     }()
     
-    let wrongPasswordLabel: UILabel = {
+    let loginErrorLabel: UILabel = {
         let label = UILabel()
         label.text = "메일 주소 혹은 비밀번호가 올바르지 않아요."
         label.textColor = .red
@@ -236,7 +236,7 @@ class IntroViewController: UIViewController {
         AuthService.shared.loginWithEmail(email: emailTf.text!, password: passwordTf.text!) { (result, error) in
             
             if error != nil {
-                self.wrongPasswordLabel.isHidden = false
+                self.loginErrorLabel.isHidden = false
                 self.animationView.stop()
                 self.animationView.isHidden = true
                 return
@@ -309,7 +309,7 @@ class IntroViewController: UIViewController {
         view.addSubview(buttonStack)
         view.addSubview(emailContainerUnderLine)
         view.addSubview(pwContainerUnderLine)
-        view.addSubview(wrongPasswordLabel)
+        view.addSubview(loginErrorLabel)
         
 //        indicator.hidesWhenStopped = true
 //        indicator.style = .large
@@ -318,8 +318,8 @@ class IntroViewController: UIViewController {
         logoImageView.centerX(inView: view)
         stack.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor,
                      paddingTop: 48, paddingLeft: 32, paddingRight: 32)
-        wrongPasswordLabel.anchor(top: emailContainerView.bottomAnchor, paddingTop: 8)
-        wrongPasswordLabel.centerX(inView: view)
+        loginErrorLabel.anchor(top: emailContainerView.bottomAnchor, paddingTop: 8)
+        loginErrorLabel.centerX(inView: view)
 //        indicator.anchor(bottom: logoImageView.topAnchor, paddingBottom: 12)
 //        indicator.centerX(inView: view)
 //        indicator.center(inView: view)
@@ -414,6 +414,7 @@ class IntroViewController: UIViewController {
 extension IntroViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        loginErrorLabel.isHidden = true
         if textField == emailTf {
             emailContainerUnderLine.isHidden = false
         } else {
@@ -424,7 +425,7 @@ extension IntroViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         
-        wrongPasswordLabel.isHidden = true
+        loginErrorLabel.isHidden = true
         if emailTf.text!.count > 4 && passwordTf.text!.count > 5 {
             loginButton.backgroundColor = .vridgeGreen
             loginButton.isEnabled = true

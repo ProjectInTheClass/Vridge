@@ -151,8 +151,15 @@ class JoiningViewController: UIViewController {
     @objc func handleNext() {
         animationView.isHidden = false
         animationView.play()
-        AuthService.shared.joinNewUser(email: emailTf.text!, password: passwordTf.text!,
-                                       errorLabel: emailAlertLabel, animation: animationView) { (error, ref) in
+        
+        guard let email = emailTf.text else { return }
+        guard let password = passwordTf.text else { return }
+        
+        AuthService.shared.joinNewUser(email: email,
+                                       password: password,
+                                       errorLabel: emailAlertLabel,
+                                       emailUnderline: emailContainerUnderLine,
+                                       animation: animationView) { (error, ref) in
             let controller = SelectTypeViewController()
             self.navigationController?.pushViewController(controller, animated: true)
             self.animationView.stop()
@@ -224,11 +231,14 @@ extension JoiningViewController: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == emailTf {
+            emailContainerUnderLine.backgroundColor = .vridgeGreen
             emailContainerUnderLine.isHidden = false
             emailAlertLabel.isHidden = true
         } else if textField == passwordTf {
+            pwContainerUnderLine.backgroundColor = .vridgeGreen
             pwContainerUnderLine.isHidden = false
         } else {
+            pwContainerUnderLine2.backgroundColor = .vridgeGreen
             pwContainerUnderLine2.isHidden = false
         }
         
