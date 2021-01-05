@@ -202,7 +202,10 @@ class IntroViewController: UIViewController {
     }
     
     @objc func handleFindPassword() {
-        print("DEBUG: handle find password...")
+        let alert = UIAlertController(title: "", message: "준비 중입니다.", preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okButton)
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func handleBrowse() {
