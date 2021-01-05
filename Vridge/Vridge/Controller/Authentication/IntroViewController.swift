@@ -96,6 +96,7 @@ class IntroViewController: UIViewController {
         let tf = Utilities().textField(withPlaceholder: "이메일")
         tf.autocapitalizationType = .none
         tf.keyboardType = .emailAddress
+        tf.autocorrectionType = .no
         return tf
     }()
     
