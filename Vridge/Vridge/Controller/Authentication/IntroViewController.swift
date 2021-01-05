@@ -94,6 +94,8 @@ class IntroViewController: UIViewController {
     
     private let emailTf: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "이메일")
+        tf.autocapitalizationType = .none
+        tf.keyboardType = .emailAddress
         return tf
     }()
     
@@ -111,24 +113,6 @@ class IntroViewController: UIViewController {
         label.isHidden = true
         return label
     }()
-    
-//    private let logOutButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("Log out", for: .normal)
-//        button.addTarget(self, action: #selector(handleLogOut), for: .touchUpInside)
-//        return button
-//    }()
-    
-//    private let browseButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setTitle("그냥 둘러보기", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.titleLabel?.font = UIFont.SFSemiBold(size: 15)
-//        button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
-//        button.backgroundColor = UIColor.rgb(red: 5, green: 213, blue: 125)
-//        button.layer.cornerRadius = 8
-//        return button
-//    }()
     
     let animationView: AnimationView = {
         let av = Lottie.AnimationView(name: loadingAnimation)

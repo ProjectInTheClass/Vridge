@@ -73,9 +73,9 @@ class RankingViewController: UIViewController {
         rootItem.appearance.descriptionFontDescriptor = UIFont.SFRegular(size: 14)?.fontDescriptor
         rootItem.appearance.descriptionTextColor = UIColor(named: allTextColor) ?? .black
     
-        rootItem.actionButtonTitle = "Apple로 계속하기"
+        rootItem.actionButtonTitle = "로그인하기"
         rootItem.appearance.actionButtonTitleColor = .white
-        rootItem.appearance.actionButtonColor = .black
+        rootItem.appearance.actionButtonColor = .vridgeGreen
         rootItem.appearance.actionButtonCornerRadius = 8
         
         rootItem.requiresCloseButton = false
@@ -84,8 +84,14 @@ class RankingViewController: UIViewController {
         rootItem.appearance.alternativeButtonTitleColor = .vridgeGreen
         
         rootItem.actionHandler = { _ in
-//            self.showLoginView()
-            self.performSignin()
+            //애플로그인 하지 않고, 로그인 창을 present로 열기.
+//            self.performSignin()
+            
+            self.dismissBulletin()
+            let loginController = IntroViewController()
+            let nav = UINavigationController(rootViewController: loginController)
+            nav.modalPresentationStyle = .fullScreen
+            self.present(nav, animated: true, completion: nil)
         }
         
         rootItem.alternativeHandler = { _ in

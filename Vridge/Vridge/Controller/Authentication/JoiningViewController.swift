@@ -43,12 +43,15 @@ class JoiningViewController: UIViewController {
     
     private let emailTf: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "이메일")
+        tf.autocapitalizationType = .none
+        tf.keyboardType = .emailAddress
         return tf
     }()
     
     private let passwordTf: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "비밀번호")
         tf.isSecureTextEntry = true
+        
         return tf
     }()
     
@@ -245,6 +248,12 @@ extension JoiningViewController: UITextFieldDelegate {
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        if textField == emailTf {
+            emailContainerUnderLine.backgroundColor = .vridgeGreen
+            emailContainerUnderLine.isHidden = false
+            emailAlertLabel.isHidden = true
+        }
         
         if passwordTf2.hasText && passwordTf.text != passwordTf2.text {
             passwordAlertLabel.isHidden = false
