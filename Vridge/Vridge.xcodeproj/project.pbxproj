@@ -57,7 +57,7 @@
 		3DBA137F25599BB100A04002 /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBA137E25599BB100A04002 /* Notice.swift */; };
 		3DBA138425599F5A00A04002 /* NoticeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBA138325599F5A00A04002 /* NoticeService.swift */; };
 		3DBA138B2559AB7600A04002 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DBA138A2559AB7600A04002 /* GoogleService-Info.plist */; };
-		3DD4D930259DB607000A4C6B /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD4D92F259DB607000A4C6B /* Utilities.swift */; };
+		3DC4292E25A6FD9F00E79C7E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC4292D25A6FD9F00E79C7E /* Utilities.swift */; };
 		3DE6236A252B2925005F16A9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62369252B2925005F16A9 /* Constants.swift */; };
 		3DE6236E252B298F005F16A9 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6236D252B298F005F16A9 /* PostService.swift */; };
 		3DE62375252C180D005F16A9 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE62374252C180D005F16A9 /* IntroViewController.swift */; };
@@ -143,7 +143,7 @@
 		3DBA137E25599BB100A04002 /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
 		3DBA138325599F5A00A04002 /* NoticeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeService.swift; sourceTree = "<group>"; };
 		3DBA138A2559AB7600A04002 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		3DD4D92F259DB607000A4C6B /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Utilities.swift; path = ../../../../../TwitterTutorial/TwitterTutorial/Utils/Utilities.swift; sourceTree = "<group>"; };
+		3DC4292D25A6FD9F00E79C7E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		3DE62369252B2925005F16A9 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3DE6236D252B298F005F16A9 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		3DE62374252C180D005F16A9 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
@@ -277,8 +277,8 @@
 		3D61FF53252AE61000AC90D2 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3DD4D92F259DB607000A4C6B /* Utilities.swift */,
 				3D1FA48B2526FC9400C6388A /* Extension.swift */,
+				3DC4292D25A6FD9F00E79C7E /* Utilities.swift */,
 				3DE62369252B2925005F16A9 /* Constants.swift */,
 				BBC7C9FF2546EC040004513F /* Constants_ruhee.swift */,
 				3D8BD951255BA5B20021BD4D /* BulletinBoard.swift */,
@@ -586,7 +586,6 @@
 				3D8B13452530BC990022AE88 /* HomeHeaderView.swift in Sources */,
 				3D8B13542530BCCD0022AE88 /* RankingSecondViewCell.swift in Sources */,
 				BBBED5DE255148E200ED95B1 /* AboutVridgeCell.swift in Sources */,
-				3DD4D930259DB607000A4C6B /* Utilities.swift in Sources */,
 				3D9F555025545C12003C84AD /* FeedDetailViewModel.swift in Sources */,
 				3D8B13572530BCD60022AE88 /* RankingHeader.swift in Sources */,
 				3D7407F6255E877D00F3887B /* SelectTypeHeader.swift in Sources */,
@@ -595,6 +594,7 @@
 				3D15CD4B252C7DF9005879CD /* AuthService.swift in Sources */,
 				BBBED5D12551487500ED95B1 /* AboutVridgeViewController.swift in Sources */,
 				3DBA137F25599BB100A04002 /* Notice.swift in Sources */,
+				3DC4292E25A6FD9F00E79C7E /* Utilities.swift in Sources */,
 				BBBED5F22551493200ED95B1 /* EditProfileFooterView.swift in Sources */,
 				3D9F554725544A29003C84AD /* FeedDetailViewController.swift in Sources */,
 				BBBED5DF255148E200ED95B1 /* NoticeDetailCell.swift in Sources */,
@@ -765,7 +765,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mingu-king.Vridge";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dreamin.Vridge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -788,7 +788,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mingu-king.Vridge";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dreamin.Vridge;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
