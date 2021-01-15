@@ -52,7 +52,7 @@ class JoiningViewController: UIViewController {
     private let passwordTf: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "비밀번호")
         tf.isSecureTextEntry = true
-        
+        tf.disableAutoFill()
         return tf
     }()
     
@@ -65,6 +65,7 @@ class JoiningViewController: UIViewController {
     private let passwordTf2: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "비밀번호 확인")
         tf.isSecureTextEntry = true
+        tf.disableAutoFill()
         return tf
     }()
     

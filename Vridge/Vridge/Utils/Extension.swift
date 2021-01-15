@@ -116,6 +116,16 @@ extension UIView {
     
 }
 
+extension UITextField {
+    func disableAutoFill() {
+        if #available(iOS 12, *) {
+            textContentType = .oneTimeCode
+        } else {
+            textContentType = .init(rawValue: "")
+        }
+    }
+}
+
 extension UIColor {
     
     static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {

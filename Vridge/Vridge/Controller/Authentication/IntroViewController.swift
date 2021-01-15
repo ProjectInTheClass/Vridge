@@ -102,6 +102,7 @@ class IntroViewController: UIViewController {
     
     private let passwordTf: UITextField = {
         let tf = Utilities().textField(withPlaceholder: "비밀번호")
+        tf.disableAutoFill()
         tf.isSecureTextEntry = true
         return tf
     }()
