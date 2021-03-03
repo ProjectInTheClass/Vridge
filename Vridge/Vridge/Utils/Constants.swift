@@ -84,4 +84,5 @@ let borderColor = "color_posting_boxBg"
 
 // Ad
 
-let adMobID = "ca-app-pub-3940256099942544/2934735716"
+//let adMobID = "ca-app-pub-3940256099942544/2934735716"
+let adMobID = "ca-app-pub-6604345149511637/7837607709"
