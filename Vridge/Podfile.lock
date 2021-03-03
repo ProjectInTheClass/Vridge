@@ -1,5 +1,8 @@
 PODS:
   - BulletinBoard (5.0.0)
+  - Firebase/AdMob (7.0.0):
+    - Firebase/CoreOnly
+    - Google-Mobile-Ads-SDK (~> 7.66)
   - Firebase/Analytics (7.0.0):
     - Firebase/Core
   - Firebase/Auth (7.0.0):
@@ -50,7 +53,7 @@ PODS:
   - FirebaseStorage (7.0.0):
     - FirebaseCore (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
-  - Google-Mobile-Ads-SDK (8.1.0):
+  - Google-Mobile-Ads-SDK (7.69.0):
     - GoogleAppMeasurement (~> 7.0)
     - GoogleUserMessagingPlatform (~> 1.1)
   - GoogleAppMeasurement (7.0.0):
@@ -99,12 +102,12 @@ PODS:
 
 DEPENDENCIES:
   - BulletinBoard
+  - Firebase/AdMob
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
-  - Google-Mobile-Ads-SDK
   - Kingfisher (~> 4.7)
   - lottie-ios
   - YPImagePicker
@@ -145,7 +148,7 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 2481b48ebfd233ef591095d79d76720ea85cde74
   FirebaseInstallations: c28d4bcbb5c6884d1a39afbc0bd7fc590e31e9b7
   FirebaseStorage: ea52bc7a1cb540406ed1e1acfc2bf3946621ed34
-  Google-Mobile-Ads-SDK: efb7fb74595668fbbe680f0d1c06f9a8ff694c7c
+  Google-Mobile-Ads-SDK: 2f288748a42920d1c744946a460896a95b0e9110
   GoogleAppMeasurement: 7790ef975d1d463c8614cd949a847e612edf087a
   GoogleDataTransport: 6ce8004a961db1b905740d7be106c61ba7e89c21
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
@@ -160,6 +163,6 @@ SPEC CHECKSUMS:
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   YPImagePicker: 15aed8bcaa4dad976e11b6114126d731a2f9f3c9
 
-PODFILE CHECKSUM: 2c0583afe797a3faf98bca9f9facc64ac3e8e672
+PODFILE CHECKSUM: 2dfbe30c8093f412d7d111223e6f817bf4f6c30a
 
 COCOAPODS: 1.9.1

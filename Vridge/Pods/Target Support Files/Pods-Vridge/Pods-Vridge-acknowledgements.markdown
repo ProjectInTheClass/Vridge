@@ -1681,7 +1681,7 @@ Copyright 2020 Google
 
 ## Google-Mobile-Ads-SDK
 
-Copyright 2021 Google
+Copyright 2020 Google
 
 ## GoogleAppMeasurement
 
