@@ -263,9 +263,10 @@ class HomeFeedCell: UITableViewCell {
         type.text = "@\(posts.user.vegieType!.rawValue)"
         type.textColor = posts.user.vegieType?.typeColor
         profileImageView.kf.setImage(with: posts.user.profileImageURL)
+        
         var timestamp: String {
             let formatter = DateComponentsFormatter()
-            formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfYear]
+            formatter.allowedUnits = [.second, .minute, .hour, .day, .weekOfMonth]
             formatter.maximumUnitCount = 1
             formatter.unitsStyle = .abbreviated
             formatter.calendar?.locale = Locale(identifier: "ko_KR")
