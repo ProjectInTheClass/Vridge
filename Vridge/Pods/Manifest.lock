@@ -50,6 +50,9 @@ PODS:
   - FirebaseStorage (7.0.0):
     - FirebaseCore (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
+  - Google-Mobile-Ads-SDK (8.1.0):
+    - GoogleAppMeasurement (~> 7.0)
+    - GoogleUserMessagingPlatform (~> 1.1)
   - GoogleAppMeasurement (7.0.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
@@ -58,6 +61,7 @@ PODS:
     - nanopb (~> 2.30906.0)
   - GoogleDataTransport (8.0.0):
     - nanopb (~> 2.30906.0)
+  - GoogleUserMessagingPlatform (1.4.0)
   - GoogleUtilities/AppDelegateSwizzler (7.0.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -100,6 +104,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - Google-Mobile-Ads-SDK
   - Kingfisher (~> 4.7)
   - lottie-ios
   - YPImagePicker
@@ -115,8 +120,10 @@ SPEC REPOS:
     - FirebaseDatabase
     - FirebaseInstallations
     - FirebaseStorage
+    - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
     - GoogleDataTransport
+    - GoogleUserMessagingPlatform
     - GoogleUtilities
     - GTMSessionFetcher
     - Kingfisher
@@ -138,8 +145,10 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 2481b48ebfd233ef591095d79d76720ea85cde74
   FirebaseInstallations: c28d4bcbb5c6884d1a39afbc0bd7fc590e31e9b7
   FirebaseStorage: ea52bc7a1cb540406ed1e1acfc2bf3946621ed34
+  Google-Mobile-Ads-SDK: efb7fb74595668fbbe680f0d1c06f9a8ff694c7c
   GoogleAppMeasurement: 7790ef975d1d463c8614cd949a847e612edf087a
   GoogleDataTransport: 6ce8004a961db1b905740d7be106c61ba7e89c21
+  GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
   GoogleUtilities: ffb2f4159f2c897c6e8992bd7fbcdef8a300589c
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
@@ -151,6 +160,6 @@ SPEC CHECKSUMS:
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   YPImagePicker: 15aed8bcaa4dad976e11b6114126d731a2f9f3c9
 
-PODFILE CHECKSUM: 648bc3a8484c7bbc89a14869f9df40fa3a36fb48
+PODFILE CHECKSUM: 2c0583afe797a3faf98bca9f9facc64ac3e8e672
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.9.1

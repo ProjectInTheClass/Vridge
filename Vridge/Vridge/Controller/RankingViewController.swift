@@ -11,6 +11,7 @@ import AuthenticationServices
 import Firebase
 import BLTNBoard
 import Lottie
+import GoogleMobileAds
 
 private let cellID = "rankingCell"
 
@@ -19,6 +20,11 @@ class RankingViewController: UIViewController {
     // MARK: - Properties
     
     var user: User?
+    
+    let bannerView: GADBannerView = {
+        let view = GADBannerView(adSize: kGADAdSizeBanner)
+        return view
+    }()
     
 //    var totalUser: Int? {
 //        didSet { fetchUserRanking() }
@@ -187,6 +193,10 @@ class RankingViewController: UIViewController {
     
     func configureUI() {
         
+        bannerView.adUnitID = adMobID
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        
         navigationController?.navigationBar.backIndicatorImage = UIImage()
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
         
@@ -195,6 +205,7 @@ class RankingViewController: UIViewController {
         view.addSubview(topView)
         view.addSubview(secondView)
         view.addSubview(tableView)
+        view.addSubview(bannerView)
         
         topView.delegate = self
         secondView.delegate = self
@@ -210,6 +221,7 @@ class RankingViewController: UIViewController {
                           right: view.rightAnchor, height: 44)
         tableView.anchor(top: secondView.bottomAnchor, left: view.leftAnchor,
                          bottom: view.bottomAnchor, right: view.rightAnchor)
+        bannerView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, height: 50)
         
     }
     

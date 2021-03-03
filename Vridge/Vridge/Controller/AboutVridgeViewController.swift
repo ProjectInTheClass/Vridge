@@ -7,6 +7,8 @@
 
 import UIKit
 
+import GoogleMobileAds
+
 private let cellID = "Cell"
 
 class AboutVridgeViewController: UIViewController {
@@ -15,6 +17,11 @@ class AboutVridgeViewController: UIViewController {
     
     let tableView = UITableView()
     let customNavBar = CustomNavBar()
+    
+    let bannerView: GADBannerView = {
+        let view = GADBannerView(adSize: kGADAdSizeBanner)
+        return view
+    }()
     
     
     // MARK: - Lifecycle
@@ -42,8 +49,11 @@ class AboutVridgeViewController: UIViewController {
     
     func configureUI() {
         
+        bannerView.adUnitID = adMobID
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        
         view.backgroundColor = UIColor(named: headerBackgroundColor)
-//        tableView.backgroundColor = UIColor(named: "color_all_viewBackground")
         navigationController?.navigationBar.barTintColor = UIColor.white.withAlphaComponent(1)
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "btnBack")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "btnBack")
@@ -61,13 +71,13 @@ class AboutVridgeViewController: UIViewController {
         
         view.addSubview(tableView)
         view.addSubview(customNavBar)
-        
+        view.addSubview(bannerView)
         
         tableView.anchor(top: customNavBar.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor,
                          right: view.rightAnchor)
         customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
                             right: view.rightAnchor, height: 44)
-
+        bannerView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, height: 50)
         
     }
 

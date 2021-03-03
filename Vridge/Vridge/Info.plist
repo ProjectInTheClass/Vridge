@@ -23,12 +23,12 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>"Vridge"에서 사용자의 카메라에 접근하려고 합니다.
+	<string>&quot;Vridge&quot;에서 사용자의 카메라에 접근하려고 합니다.
 권한허용을 통해 간편하게 채식한 기록을 바로 남겨보세요.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>want your mic</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>"Vridge"에서 사용자의 사진에 접근하려고 합니다.
+	<string>&quot;Vridge&quot;에서 사용자의 사진에 접근하려고 합니다.
 앨범에서 나의 채식했던 기록을 업로드해보세요.</string>
 	<key>UIAppFonts</key>
 	<array>
@@ -74,5 +74,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>SKAdNetworkIdentifier</key>
+	<array>
+		<dict>
+			<key>SKAdNetworkIdentifier</key>
+			<string>cstr6suwn9.skadnetwork</string>
+		</dict>
+	</array>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-6604345149511637~3191785680</string>
 </dict>
 </plist>

@@ -80,3 +80,8 @@ let normalButtonColor = "color_all_button_normal"
 let headerBackgroundColor = "color_all_headerBg"
 let viewBackgroundColor = "color_all_viewBackground"
 let borderColor = "color_posting_boxBg"
+
+
+// Ad
+
+let adMobID = "ca-app-pub-3940256099942544/2934735716"
