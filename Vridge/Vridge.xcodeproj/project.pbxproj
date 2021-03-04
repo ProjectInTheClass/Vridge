@@ -434,6 +434,7 @@
 				3D1FA46C2526F30000C6388A /* Frameworks */,
 				3D1FA46D2526F30000C6388A /* Resources */,
 				FA432716B723357500900218 /* [CP] Embed Pods Frameworks */,
+				0A2BF6F1D29F9EAA2DF84285 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -500,6 +501,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0A2BF6F1D29F9EAA2DF84285 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vridge/Pods-Vridge-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vridge/Pods-Vridge-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Vridge/Pods-Vridge-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E2CABE02254594AD36123B94 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

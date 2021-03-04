@@ -19,6 +19,8 @@ target 'Vridge' do
   pod 'lottie-ios'
   pod 'BulletinBoard'
   
+  pod 'SwiftyBootpay', '~> 3.3.9'
+  
 
   use_frameworks!
   # Pods for Vridge

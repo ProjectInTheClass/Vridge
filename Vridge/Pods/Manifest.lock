@@ -1,5 +1,7 @@
 PODS:
+  - Alamofire (5.2.2)
   - BulletinBoard (5.0.0)
+  - CryptoSwift (1.3.8)
   - Firebase/AdMob (7.0.0):
     - Firebase/CoreOnly
     - Google-Mobile-Ads-SDK (~> 7.66)
@@ -85,6 +87,7 @@ PODS:
   - GoogleUtilities/UserDefaults (7.0.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.5.0)
+  - JGProgressHUD (2.2)
   - Kingfisher (4.10.1)
   - leveldb-library (1.22)
   - lottie-ios (3.1.9)
@@ -93,9 +96,19 @@ PODS:
     - nanopb/encode (= 2.30906.0)
   - nanopb/decode (2.30906.0)
   - nanopb/encode (2.30906.0)
+  - ObjectMapper (4.2.0)
   - PromisesObjC (1.2.11)
   - PryntTrimmerView (4.0.2)
+  - SnapKit (5.0.1)
   - SteviaLayout (4.7.3)
+  - SwiftOTP (3.0.0)
+  - SwiftyBootpay (3.3.833):
+    - Alamofire (~> 5.2.2)
+    - CryptoSwift
+    - JGProgressHUD
+    - ObjectMapper
+    - SnapKit (~> 5.0.0)
+    - SwiftOTP
   - YPImagePicker (4.4.0):
     - PryntTrimmerView (~> 4.0.2)
     - SteviaLayout (~> 4.7.3)
@@ -110,11 +123,14 @@ DEPENDENCIES:
   - Firebase/Storage
   - Kingfisher (~> 4.7)
   - lottie-ios
+  - SwiftyBootpay (~> 3.3.9)
   - YPImagePicker
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - BulletinBoard
+    - CryptoSwift
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -129,17 +145,24 @@ SPEC REPOS:
     - GoogleUserMessagingPlatform
     - GoogleUtilities
     - GTMSessionFetcher
+    - JGProgressHUD
     - Kingfisher
     - leveldb-library
     - lottie-ios
     - nanopb
+    - ObjectMapper
     - PromisesObjC
     - PryntTrimmerView
+    - SnapKit
     - SteviaLayout
+    - SwiftOTP
+    - SwiftyBootpay
     - YPImagePicker
 
 SPEC CHECKSUMS:
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   BulletinBoard: dba77053c2a7b64953f63073f7534165af2edd21
+  CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
   Firebase: 50be68416f50eb4eb2ecb0e78acab9a051ef95df
   FirebaseAnalytics: c1166b7990bae464c6436132510bb718c6680f80
   FirebaseAuth: 228dd0faa5b5263eaa8c63518b16faef438289a3
@@ -154,15 +177,20 @@ SPEC CHECKSUMS:
   GoogleUserMessagingPlatform: b168e8c46cd8f92aa3e34b584c4ca78a411ce367
   GoogleUtilities: ffb2f4159f2c897c6e8992bd7fbcdef8a300589c
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  JGProgressHUD: d83d7a981b85d11205e19ff8ad5bb9c40571c847
   Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   lottie-ios: 3a3758ef5a008e762faec9c9d50a39842f26d124
   nanopb: 1bf24dd71191072e120b83dd02d08f3da0d65e53
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
   PryntTrimmerView: 6a43cc90df5d99addeabd33d4ba09b1365322130
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
+  SwiftOTP: ec3848f12a4541f29d96f6a0fe63dcbb8448d96f
+  SwiftyBootpay: 5313189ecd6ae8f46132b48ff78060daeaa724ca
   YPImagePicker: 15aed8bcaa4dad976e11b6114126d731a2f9f3c9
 
-PODFILE CHECKSUM: 2dfbe30c8093f412d7d111223e6f817bf4f6c30a
+PODFILE CHECKSUM: cc72c897a18dbebfabe402fd346f0a81c57f6aef
 
 COCOAPODS: 1.9.1
