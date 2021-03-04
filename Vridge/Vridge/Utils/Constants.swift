@@ -85,5 +85,5 @@ let borderColor = "color_posting_boxBg"
 // Ad
 
 //let adMobID = "ca-app-pub-3940256099942544/2934735716" // 테스트 광고
-let adMobID = "ca-app-pub-6604345149511637/7837607709"
+let adMobID = "ca-app-pub-6604345149511637/7837607709" // 진짜 광고 아이디
 
