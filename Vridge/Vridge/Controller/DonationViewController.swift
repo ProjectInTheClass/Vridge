@@ -11,6 +11,8 @@ class DonationViewController: UIViewController {
     
     // MARK: - Properties
     
+    let customNavBar = CustomNavBar()
+    
     
     // MARK: - Lifecycle
 
@@ -24,7 +26,6 @@ class DonationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         tabBarController?.tabBar.isHidden = true
-//        navigationController?.navigationBar.isHidden = true
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
     }
     
@@ -43,6 +44,13 @@ class DonationViewController: UIViewController {
     func configureUI() {
         
         view.backgroundColor = .yellow
+        
+        customNavBar.delegate = self
+        
+        view.addSubview(customNavBar)
+        
+        customNavBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor,
+                            right: view.rightAnchor, height: 44)
     }
 
 }
@@ -54,4 +62,13 @@ extension DonationViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+}
+
+
+extension DonationViewController: CustomNavBarDelegate {
+    
+    func backButtonDidTap() {
+        navigationController?.popViewController(animated: true)
+    }
+    
 }
