@@ -39,7 +39,6 @@ class NoticeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         configureUI()
     }
     
@@ -47,6 +46,7 @@ class NoticeViewController: UIViewController {
         super.viewWillAppear(true)
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
     }
     

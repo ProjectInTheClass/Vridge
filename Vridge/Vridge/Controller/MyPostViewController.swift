@@ -55,7 +55,6 @@ class MyPostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         customNavBar.titleLabel.text = "내 게시글"
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         configureUI()
     }
     
@@ -63,6 +62,7 @@ class MyPostViewController: UIViewController {
         super.viewWillAppear(true)
         tabBarController?.tabBar.isHidden = true
         navigationController?.navigationBar.isHidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         NotificationCenter.default.post(name: Notification.Name("hidePostButton"), object: nil)
     }
     
