@@ -98,6 +98,8 @@ class MyPageViewController: UIViewController {
         super.viewDidLoad()
         configureUI()
         
+        navigationController?.delegate = self
+        
         view.addSubview(animationView)
         animationView.center(inView: view)
         animationView.setDimensions(width: 100, height: 100)
@@ -390,6 +392,7 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - MyPageTopHeaderViewDelegate
 
 extension MyPageViewController: MyPageTopHeaderViewDelegate {
     
@@ -405,6 +408,16 @@ extension MyPageViewController: MyPageTopHeaderViewDelegate {
         }
     }
     
+}
+
+// MARK: - UINavigationControllerDelegate
+
+extension MyPageViewController: UINavigationControllerDelegate {
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = navigationController.viewControllers.count > 1
+    }
 }
 
 // MARK: - Apple Login Method
