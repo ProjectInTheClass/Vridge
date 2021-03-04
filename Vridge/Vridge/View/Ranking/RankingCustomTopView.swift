@@ -26,7 +26,7 @@ class RankingCustomTopView: UIView {
         return button
     }()
     
-    private let backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "btnBack"), for: .normal)
         button.tintColor = UIColor(named: "color_all_button_normal")
