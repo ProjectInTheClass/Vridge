@@ -46,6 +46,7 @@
 		3D8B13602530BCFD0022AE88 /* RankingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */; };
 		3D8BD952255BA5B20021BD4D /* BulletinBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8BD951255BA5B20021BD4D /* BulletinBoard.swift */; };
 		3D8BD986255D2D380021BD4D /* WorkToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8BD985255D2D370021BD4D /* WorkToDo.swift */; };
+		3D8C4FA225F1041A0072E1BA /* DonationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D8C4FA125F1041A0072E1BA /* DonationViewController.swift */; };
 		3D9240E3254AA94300F92C9D /* upload_post.json in Resources */ = {isa = PBXBuildFile; fileRef = 3D9240E2254AA94300F92C9D /* upload_post.json */; };
 		3D9914CE2535C4D400E17AF5 /* ActionSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */; };
 		3D9914D12536C12200E17AF5 /* PostingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9914D02536C12100E17AF5 /* PostingViewModel.swift */; };
@@ -131,6 +132,7 @@
 		3D8B135F2530BCFD0022AE88 /* RankingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankingViewModel.swift; sourceTree = "<group>"; };
 		3D8BD951255BA5B20021BD4D /* BulletinBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletinBoard.swift; sourceTree = "<group>"; };
 		3D8BD985255D2D370021BD4D /* WorkToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkToDo.swift; sourceTree = "<group>"; };
+		3D8C4FA125F1041A0072E1BA /* DonationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationViewController.swift; sourceTree = "<group>"; };
 		3D9240E2254AA94300F92C9D /* upload_post.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = upload_post.json; sourceTree = "<group>"; };
 		3D9914CD2535C4D200E17AF5 /* ActionSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetViewModel.swift; sourceTree = "<group>"; };
 		3D9914D02536C12100E17AF5 /* PostingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostingViewModel.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				BBBED5CD2551486B00ED95B1 /* NoticeDetailViewController.swift */,
 				BBBED5D02551487500ED95B1 /* AboutVridgeViewController.swift */,
 				BBBED5D32551487A00ED95B1 /* EditProfileViewController.swift */,
+				3D8C4FA125F1041A0072E1BA /* DonationViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				BBBED5DE255148E200ED95B1 /* AboutVridgeCell.swift in Sources */,
 				3D9F555025545C12003C84AD /* FeedDetailViewModel.swift in Sources */,
 				3D8B13572530BCD60022AE88 /* RankingHeader.swift in Sources */,
+				3D8C4FA225F1041A0072E1BA /* DonationViewController.swift in Sources */,
 				3D7407F6255E877D00F3887B /* SelectTypeHeader.swift in Sources */,
 				3DE62385252C4B79005F16A9 /* UserService.swift in Sources */,
 				3D1FA4732526F30100C6388A /* AppDelegate.swift in Sources */,

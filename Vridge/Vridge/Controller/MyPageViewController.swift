@@ -19,7 +19,7 @@ class MyPageViewController: UIViewController {
     // MARK: - Properties
 
     let tableView = UITableView(frame: .zero, style: .grouped)
-    lazy var firstSectionMenu = ["공지사항", "브릿지란?", "앱 버전 \(version)"]
+    lazy var firstSectionMenu = ["공지사항", "브릿지란?", "앱 버전 \(version)", "기부하기"]
     var secondSectionMenu = ["프로필 수정", "로그아웃"]
     
     let version = "\(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)"
@@ -327,7 +327,6 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                 navigationController?.pushViewController(controller, animated: true)
                 
             case 2:
-                
                 if dbVersion == version {
                     let alert = UIAlertController(title: versionCheckTitle, message: "", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: confirm, style: .default, handler: nil))
@@ -338,7 +337,11 @@ extension MyPageViewController: UITableViewDelegate, UITableViewDataSource {
                     self.present(alert, animated: true)
                 }
                 
+            case 3:
                 
+                navigationController?.navigationBar.isHidden = false
+                let controller = DonationViewController()
+                navigationController?.pushViewController(controller, animated: true)
                 
             default: print("DEBUG: error")
             }
