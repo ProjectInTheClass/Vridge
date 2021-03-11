@@ -7,6 +7,7 @@
 
 import UIKit
 import AuthenticationServices
+import AdSupport
 
 import Lottie
 import BLTNBoard
@@ -154,6 +155,9 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let id = ASIdentifierManager.shared().advertisingIdentifier
+        print("DEBUG: device id = \(id)")
         
         bulletinManager.backgroundColor = UIColor(named: "color_mypage_myPostCountBoxBg") ?? .white
         
