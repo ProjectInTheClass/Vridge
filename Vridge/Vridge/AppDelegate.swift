@@ -17,6 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
+        // 내 아이폰 12미니를 테스트 기기로
+//        GADMobileAds.sharedInstance().requestConfiguration.testDeviceIdentifiers = ["12924bb4cc04cc0b188f71d01146c358"]
         UITabBar.appearance().tintColor = .vridgeTabBar
         
         FirebaseApp.configure()
