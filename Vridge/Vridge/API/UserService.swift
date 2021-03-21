@@ -33,7 +33,13 @@ struct UserService {
                 users.append(user)
                 
                 if users.count >= 100 {
-                    completion(users[0...99].sorted(by: { $0.point > $1.point }))
+//                    completion(users[0...99].sorted(by: { $0.point > $1.point }))
+                    let countedUsers = users.sorted { $0.point > $1.point }
+                    var limitedUsers = [User]()
+                    for i in 0...99 {
+                        limitedUsers.append(countedUsers[i])
+                    }
+                    completion(limitedUsers)
                 } else {
                     completion(users.sorted(by: { $0.point > $1.point }))
                 }
